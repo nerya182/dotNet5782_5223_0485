@@ -10,7 +10,7 @@ namespace DalObject
     public class DataSource
     {
         internal class config
-        {
+        { 
             internal static int newCustomerId = 0;
         }
        
