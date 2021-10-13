@@ -16,9 +16,6 @@ namespace IDAL
             {
                 return $"Customer #{Id}, Name:{Name}, Phone #:{Phone}, {Longitude}, {Lattitude}";
             }
-               
-            }
         }
-    }
-   
+    }  
 }

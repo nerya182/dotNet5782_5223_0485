@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LDAL
+namespace IDAL
 {
     namespace DO
     {
@@ -14,12 +14,12 @@ namespace LDAL
             public string MOdel { get; set; }
             public WeightCategories MaxWeight { get; set; }
             public DroneStatuses Status { get; set; }
-            public double Battery ToString()
+            public double Battery { get; set;}
+
+            public override string ToString()
             {
                 return $"Drone #{Id}: Model={MOdel}, { Status} , { MaxWeight}, battery={(int)Battery} ";
             }
-
         }
-    }
-   
+    } 
 }
