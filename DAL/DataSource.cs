@@ -16,7 +16,7 @@ namespace DalObject
             internal static int newStationId = 0;
 
         }
-
+       
 
         public static Customer[] customers = new Customer[100];
         public static Station[] stations = new Station[5];
