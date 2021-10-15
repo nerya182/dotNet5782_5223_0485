@@ -28,15 +28,97 @@ namespace DalObject
         {
             CreateStations();
             CreateDrones();
+            CreateCustomers();
+            CreateParcels();
         }
         private static void CreateStations()
         {
+            stations[Config.newStationId]= new Station()
+            {
+                Id=Config.newStationId,
+                Name= "Tachana Merkazit",
+                ChargeSlots = 10,
+                Lattitude = 31.78907,
+                Longitude = 35.20319
+            };
+            Config.newStationId++;
 
+            stations[Config.newStationId]=new Station()
+            {
+                Id=Config.newStationId,
+                Name= "Shuk Machane Yehudah",
+                ChargeSlots = 10,
+                Lattitude = 31.78489,
+                Longitude = 35.21257
+            };
+            Config.newStationId++;      
         }
-        private static void CreateStations()
+        private static void  CreateDrones()
+        {
+            drones[Config.newDroneId]= new Drone()
+            {
+                Id=Config.newDroneId,
+                Model= "mavic",
+                MaxWeight = WeightCategories.Heavy,
+                Status = DroneStatuses.Available,
+                Battery = 100
+            };
+            Config.newDroneId++;
+
+            drones[Config.newDroneId]= new Drone()
+            {
+                Id=Config.newDroneId,
+                Model= "tello",
+                MaxWeight = WeightCategories.Light,
+                Status = DroneStatuses.Available,
+                Battery = 100
+            };
+            Config.newDroneId++;
+
+            drones[Config.newDroneId] = new Drone()
+            {
+                Id = Config.newDroneId,
+                Model = "syma",
+                MaxWeight = WeightCategories.Medium,
+                Status = DroneStatuses.Available,
+                Battery = 100
+            };
+            Config.newDroneId++;
+
+            drones[Config.newDroneId] = new Drone()
+            {
+                Id = Config.newDroneId,
+                Model = "cobra",
+                MaxWeight = WeightCategories.Medium,
+                Status = DroneStatuses.Available,
+                Battery = 100
+            };
+            Config.newDroneId++;
+
+            drones[Config.newDroneId] = new Drone()
+            {
+                Id = Config.newDroneId,
+                Model = "parrot",
+                MaxWeight = WeightCategories.Light,
+                Status = DroneStatuses.Available,
+                Battery = 100
+            };
+            Config.newDroneId++;
+        }
+        private static void CreateCustomers()
+        {
+            customers[Config.newCustomerId] = new Customer()
+            {
+
+            };
+        }
+
+        private static void CreateParcels()
         {
 
-        }   
+        }
     }
+
 }
+
 
