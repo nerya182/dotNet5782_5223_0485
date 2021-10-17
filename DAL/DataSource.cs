@@ -58,7 +58,15 @@ namespace DalObject
         }
         private static void  CreateDrones()
         {
-            drones[Config.newDroneId]= new Drone()
+            Random random=new Random();
+            for (int i =0 ; i < 5; i++,Config.newDroneId++)
+			{
+                NameDrone NameD= (NameDrone)random.Next(0,10);
+                Drone  drone=new Drone() {Id=Config.newDroneId ,Model=NameD, }
+
+
+			}
+            
             {
                 Id=Config.newDroneId,
                 Model= "mavic",

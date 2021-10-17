@@ -26,8 +26,11 @@ namespace IDAL
             [Description("Being charged")]
             Charging
         }
-
-        public enum NameDrone { }
+        public enum NameDrone
+        { 
+            mavic, tello, syma, flybird, lion, cobra, cheetah, beck, worm, bean
+        }
+       
      
         
     }
