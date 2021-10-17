@@ -71,24 +71,24 @@ namespace DalObject
 
         private static void CreateCustomers()
         {
-
-
-            customers[Config.newCustomerId] = new Customer()
+            Random R = new Random();
+            for (int i = 0; i < 10; i++, Config.newCustomerId++)
             {
-              Id = Config.newDroneId,
-              Name = "Avi",
-              Phone = "050-1112222",
-              Longitude = 30.99999,
-              Lattitude = 36.12457
-            }; 
-            Config.newCustomerId++;
-
+                CustomerName customerName = (CustomerName)R.Next(0, 11);
+                Customer customer = new Customer() { Id = Config.newDroneId, Name = customerName.ToString(), Phone = "050" + R.Next(111111, 999999), Lattitude = R.Next(3000000, 3700000), Longitude = R.Next(3000000, 3700000) };
+                customers[i] = customer;
+            }
         }
 
         private static void CreateParcels()
         {
-            
-        }
+            Random R = new Random();
+            for (int i = 0; i < 10; i++, Config.newParcelId++)
+            {
+                Priorities priorities = (Priorities)R.Next(0, 2);
+                WeightCategories weightCategories = (WeightCategories)R.Next(0, 2);
+                Parcel parcel = new Parcel() { Id = Config.newParcelId, SenderId = R.Next(), TargetId = R.Next(), DroneId = R.Next(), Weight = weightCategories, Priority = priorities,  }
+            }
     }
 
 }
