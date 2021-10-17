@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel
+
 
 
 namespace IDAL
@@ -7,12 +9,7 @@ namespace IDAL
     {
         public enum WeightCategories
         {
-            [Description("Light Weight")]
-            Light,
-            [Description("Medium Weight")]
-            Medium,
-            [Description("Heavy Weight")]
-            Heavy
+            Light, Medium, Heavy
         }
 
         public enum Priorities {Regular, Express, Urgent }
@@ -26,11 +23,11 @@ namespace IDAL
             [Description("Being charged")]
             Charging
         }
+
         public enum NameDrone
         { 
             mavic, tello, syma, flybird, lion, cobra, cheetah, beck, worm, bean
         }
-       
      
         
     }

@@ -24,7 +24,7 @@ namespace DalObject
         public static Drone[] drones = new Drone[10];
         public static Parcel[] parcels = new Parcel[1000];
 
-        public static Random R = new Random();
+        
         internal static void Initialize()
         {
             CreateStations();
@@ -33,10 +33,10 @@ namespace DalObject
             CreateParcels();
         }
 
-        public static Random R;
+        
         private static void CreateStations()
         {
-            stations[Config.newStationId]= new Station()
+            stations[Config.newStationId] = new Station()
             {
                 Id = Config.newStationId,
                 Name= "Tachana Merkazit",
@@ -56,69 +56,23 @@ namespace DalObject
             };
             Config.newStationId++;      
         }
+
         private static void  CreateDrones()
         {
-            Random random=new Random();
-            for (int i =0 ; i < 5; i++,Config.newDroneId++)
-			{
-                NameDrone NameD= (NameDrone)random.Next(0,10);
-                Drone  drone=new Drone() {Id=Config.newDroneId ,Model=NameD, }
-
-
-			}
-            
+            Random R = new Random();
+            for (int i=0;i<5;i++, Config.newDroneId++)
             {
-                Id=Config.newDroneId,
-                Model= "mavic",
-                MaxWeight = (WeightCategories).Random.next(1,4),
-                Status = DroneStatuses.Available,
-                Battery = 100
-            };
-            Config.newDroneId++;
-            
-            drones[Config.newDroneId]= new Drone()
-            {
-                Id=Config.newDroneId,
-                Model= "tello",
-                MaxWeight = WeightCategories.Light,
-                Status = DroneStatuses.Available,
-                Battery = 100
-            };
-            Config.newDroneId++;
-
-            drones[Config.newDroneId] = new Drone()
-            {
-                Id = Config.newDroneId,
-                Model = "syma",
-                MaxWeight = WeightCategories.Medium,
-                Status = DroneStatuses.Available,
-                Battery = 100
-            };
-            Config.newDroneId++;
-
-            drones[Config.newDroneId] = new Drone()
-            {
-                Id = Config.newDroneId,
-                Model = "cobra",
-                MaxWeight = WeightCategories.Medium,
-                Status = DroneStatuses.Available,
-                Battery = 100
-            };
-            Config.newDroneId++;
-
-            drones[Config.newDroneId] = new Drone()
-            {
-                Id = Config.newDroneId,
-                Model = "parrot",
-                MaxWeight = WeightCategories.Light,
-                Status = DroneStatuses.Available,
-                Battery = 100
-            };
-            Config.newDroneId++;
+                NameDrone nameDrone = (NameDrone)R.Next(0,9);
+                WeightCategories weightCategories = (WeightCategories)R.Next(0, 2);
+                Drone drone = new Drone() { Id = Config.newDroneId, Model = nameDrone.ToString(), MaxWeight = weightCategories, Status = DroneStatuses.Available, Battery = 100 };
+                drones[i] = drone;
+            }
         }
 
         private static void CreateCustomers()
         {
+
+
             customers[Config.newCustomerId] = new Customer()
             {
               Id = Config.newDroneId,
@@ -129,94 +83,6 @@ namespace DalObject
             }; 
             Config.newCustomerId++;
 
-            customers[Config.newCustomerId] = new Customer()
-            {
-                Id = Config.newDroneId,
-                Name = "Benny",
-                Phone = "050 - 1112222",
-                Longitude = 30.99999,
-                Lattitude = 36.12457
-            };
-            Config.newCustomerId++;
-
-            customers[Config.newCustomerId] = new Customer()
-            {
-                Id = Config.newCustomerId,
-                Name = Danny,
-                Phone = 050 - 1112222,
-                Longitude = 30.99999,
-                Lattitude = 36.12457
-            };
-            Config.newCustomerId++;
-
-            customers[Config.newCustomerId] = new Customer()
-            {
-                Id = Config.newCustomerId,
-                Name = Avi,
-                Phone = 050 - 1112222,
-                Longitude = 30.99999,
-                Lattitude = 36.12457
-            };
-            Config.newCustomerId++;
-
-            customers[Config.newCustomerId] = new Customer()
-            {
-                Id = Config.newCustomerId,
-                Name = Avi,
-                Phone = 050 - 1112222,
-                Longitude = 30.99999,
-                Lattitude = 36.12457
-            };
-            Config.newCustomerId++;
-
-            customers[Config.newCustomerId] = new Customer()
-            {
-                Id = Config.newCustomerId,
-                Name = Avi,
-                Phone = 050 - 1112222,
-                Longitude = 30.99999,
-                Lattitude = 36.12457
-            };
-            Config.newCustomerId++;
-
-            customers[Config.newCustomerId] = new Customer()
-            {
-                Id = Config.newCustomerId,
-                Name = Avi,
-                Phone = 050 - 1112222,
-                Longitude = 30.99999,
-                Lattitude = 36.12457
-            };
-            Config.newCustomerId++;
-
-            customers[Config.newCustomerId] = new Customer()
-            {
-                Id = Config.newCustomerId,
-                Name = Avi,
-                Phone = 050 - 1112222,
-                Longitude = 30.99999,
-                Lattitude = 36.12457
-            };
-            Config.newCustomerId++;
-
-            customers[Config.newCustomerId] = new Customer()
-            {
-                Id = Config.newCustomerId,
-                Name = Avi,
-                Phone = 050 - 1112222,
-                Longitude = 30.99999,
-                Lattitude = 36.12457
-            };
-            Config.newCustomerId++;
-
-            customers[Config.newCustomerId] = new Customer()
-            {
-                Id = Config.newCustomerId,
-                Name = Avi,
-                Phone = 050 - 1112222,
-                Longitude = 30.99999,
-                Lattitude = 36.12457
-            };
         }
 
         private static void CreateParcels()
