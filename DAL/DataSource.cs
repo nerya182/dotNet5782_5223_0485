@@ -24,6 +24,8 @@ namespace DalObject
         public static Drone[] drones = new Drone[10];
         public static Parcel[] parcels = new Parcel[1000];
 
+        public static string Avi { get; private set; }
+
         internal static void Initialize()
         {
             CreateStations();
@@ -109,16 +111,135 @@ namespace DalObject
         {
             customers[Config.newCustomerId] = new Customer()
             {
+              Id = 111111111,
+              Name = "Avi",
+              Phone = "050-1112222",
+              Longitude = 30.99999,
+              Lattitude = 36.12457
+            }; 
+            Config.newCustomerId++;
 
+            customers[Config.newCustomerId] = new Customer()
+            {
+                Id = 111111111,
+                Name = "Benny",
+                Phone = "050 - 1112222",
+                Longitude = 30.99999,
+                Lattitude = 36.12457
+            };
+            Config.newCustomerId++;
+
+            customers[Config.newCustomerId] = new Customer()
+            {
+                Id = Config.newCustomerId,
+                Name = Danny,
+                Phone = 050 - 1112222,
+                Longitude = 30.99999,
+                Lattitude = 36.12457
+            };
+            Config.newCustomerId++;
+
+            customers[Config.newCustomerId] = new Customer()
+            {
+                Id = Config.newCustomerId,
+                Name = Avi,
+                Phone = 050 - 1112222,
+                Longitude = 30.99999,
+                Lattitude = 36.12457
+            };
+            Config.newCustomerId++;
+
+            customers[Config.newCustomerId] = new Customer()
+            {
+                Id = Config.newCustomerId,
+                Name = Avi,
+                Phone = 050 - 1112222,
+                Longitude = 30.99999,
+                Lattitude = 36.12457
+            };
+            Config.newCustomerId++;
+
+            customers[Config.newCustomerId] = new Customer()
+            {
+                Id = Config.newCustomerId,
+                Name = Avi,
+                Phone = 050 - 1112222,
+                Longitude = 30.99999,
+                Lattitude = 36.12457
+            };
+            Config.newCustomerId++;
+
+            customers[Config.newCustomerId] = new Customer()
+            {
+                Id = Config.newCustomerId,
+                Name = Avi,
+                Phone = 050 - 1112222,
+                Longitude = 30.99999,
+                Lattitude = 36.12457
+            };
+            Config.newCustomerId++;
+
+            customers[Config.newCustomerId] = new Customer()
+            {
+                Id = Config.newCustomerId,
+                Name = Avi,
+                Phone = 050 - 1112222,
+                Longitude = 30.99999,
+                Lattitude = 36.12457
+            };
+            Config.newCustomerId++;
+
+            customers[Config.newCustomerId] = new Customer()
+            {
+                Id = Config.newCustomerId,
+                Name = Avi,
+                Phone = 050 - 1112222,
+                Longitude = 30.99999,
+                Lattitude = 36.12457
+            };
+            Config.newCustomerId++;
+
+            customers[Config.newCustomerId] = new Customer()
+            {
+                Id = Config.newCustomerId,
+                Name = Avi,
+                Phone = 050 - 1112222,
+                Longitude = 30.99999,
+                Lattitude = 36.12457
             };
         }
 
         private static void CreateParcels()
         {
-
+            
         }
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
