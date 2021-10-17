@@ -14,10 +14,7 @@ namespace DalObject
             DataSource.Initialize();
         }
 
-        public static void AddStation()
-        {
-            throw new NotImplementedException();
-        }
+
 
         public static Station GetStation(int StationId)
         {

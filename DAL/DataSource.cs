@@ -24,7 +24,7 @@ namespace DalObject
         public static Drone[] drones = new Drone[10];
         public static Parcel[] parcels = new Parcel[1000];
 
-        public static string Avi { get; private set; }
+      
 
         internal static void Initialize()
         {
