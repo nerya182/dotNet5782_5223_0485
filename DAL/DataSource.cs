@@ -33,6 +33,7 @@ namespace DalObject
             CreateCustomers();
             CreateParcels();
         }
+
         private static void CreateStations()
         {
             stations[Config.newStationId]= new Station()
