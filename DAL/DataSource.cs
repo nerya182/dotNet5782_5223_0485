@@ -33,12 +33,12 @@ namespace DalObject
             CreateParcels();
         }
 
-        public static Random
+        public static Random R;
         private static void CreateStations()
         {
             stations[Config.newStationId]= new Station()
             {
-                Id = R.Next(100000000, 999999999),
+                Id = Config.newStationId,
                 Name= "Tachana Merkazit",
                 ChargeSlots = 10,
                 Lattitude = 31.78907,
@@ -62,7 +62,7 @@ namespace DalObject
             {
                 Id=Config.newDroneId,
                 Model= "mavic",
-                MaxWeight = WeightCategories.Heavy,
+                MaxWeight = (WeightCategories).Random.next(1,4),
                 Status = DroneStatuses.Available,
                 Battery = 100
             };
@@ -108,11 +108,12 @@ namespace DalObject
             };
             Config.newDroneId++;
         }
+
         private static void CreateCustomers()
         {
             customers[Config.newCustomerId] = new Customer()
             {
-              Id = 111111111,
+              Id = Config.newDroneId,
               Name = "Avi",
               Phone = "050-1112222",
               Longitude = 30.99999,
@@ -122,7 +123,7 @@ namespace DalObject
 
             customers[Config.newCustomerId] = new Customer()
             {
-                Id = 111111111,
+                Id = Config.newDroneId,
                 Name = "Benny",
                 Phone = "050 - 1112222",
                 Longitude = 30.99999,
