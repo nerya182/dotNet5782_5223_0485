@@ -33,7 +33,7 @@ namespace DalObject
             CreateParcels();
         }
 
-        public static Random
+        public static Random;
         private static void CreateStations()
         {
             stations[Config.newStationId]= new Station()
