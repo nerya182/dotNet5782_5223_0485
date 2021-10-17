@@ -13,22 +13,8 @@ namespace IDAL
         }
 
         public enum Priorities {Regular, Express, Urgent }
-
-        public enum DroneStatuses
-        {
-            [Description("Free for delivery")]
-            Available,
-            [Description("Doing delivery")]
-            Delivery,
-            [Description("Being charged")]
-            Charging
-        }
-
-        public enum NameDrone
-        { 
-            mavic, tello, syma, flybird, lion, cobra, cheetah, beck, worm, bean
-        }
-     
-        
+        public enum DroneStatuses {Available, Delivery, Charging }
+        public enum CustomerName{Avi, Benny, Gadi, Danny, Freddy, Alex, Nati, Oren, channan, Yair, Tal, Noam}
+        public enum NameDrone{mavic, tello, syma, flybird, lion, cobra, cheetah, beck, worm, bean}   
     }
 }
