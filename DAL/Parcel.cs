@@ -18,7 +18,7 @@ namespace IDAL
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
             public DateTime Requested { get; set; }
-            public DateTime Scheduled { get; set; }
+            public DateTime Scheduled { get; set; } 
             public DateTime PickedUp { get; set; }
             public DateTime Delivered { get; set; }
 
@@ -28,6 +28,20 @@ namespace IDAL
                 return $"Parcel #{Id}, SenderId: #{SenderId}, TargetId: #{TargetId}, DroneId: #{DroneId}, {Weight}, {Priority},{Requested},{Scheduled},{PickedUp},{Delivered},";
             }
 
+            internal Parcel Requested()
+            {
+                throw new NotImplementedException();
+            }
+
+            internal Parcel Scheduled()
+            {
+                throw new NotImplementedException();
+            }
+
+            internal Parcel Delivered()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

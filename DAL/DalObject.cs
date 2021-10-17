@@ -35,8 +35,33 @@ namespace DalObject
         {
             return DataSource.parcels[parcelId];
         }
+        public static Parcel GeParcelRequested(int parcelId)
+        {
+            return DataSource.parcels[parcelId].Requested();
+        }
+        public static Parcel GeParcelScheduled(int parcelId)
+        {
+            return DataSource.parcels[parcelId].Scheduled();
+        }
 
-        
+        public static Parcel GeParcelPickedUp(int parcelId)
+        {
+            return DataSource.parcels[parcelId].Scheduled();
+        }
+
+        public static Parcel GeParcelDelivered(int parcelId)
+        {
+            return DataSource.parcels[parcelId].Delivered();
+        }
+
+
+
+
+
+
+
+
+
     }
 }
 
