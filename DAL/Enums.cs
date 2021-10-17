@@ -26,6 +26,8 @@ namespace IDAL
             [Description("Being charged")]
             Charging
         }
+
+        public enum NameDrone { }
      
         
     }

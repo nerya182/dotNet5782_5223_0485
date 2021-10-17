@@ -67,7 +67,7 @@ namespace DalObject
                 Battery = 100
             };
             Config.newDroneId++;
-
+            
             drones[Config.newDroneId]= new Drone()
             {
                 Id=Config.newDroneId,
