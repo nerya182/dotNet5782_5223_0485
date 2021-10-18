@@ -25,7 +25,7 @@ namespace DalObject
         public static Parcel[] parcels = new Parcel[1000];
 
         
-        internal static void Initialize()
+        public static void Initialize()
         {
             CreateStations();
             CreateDrones();
