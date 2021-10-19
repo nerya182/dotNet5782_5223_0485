@@ -7,6 +7,10 @@ namespace IDAL
 {
     namespace DO
     {
+        public enum CHOICE
+        {
+			ADD,UPDATE, DISPLAY, VIEW_LISTS, EXIT
+        }
         public enum WeightCategories
         {
             Light, Medium, Heavy

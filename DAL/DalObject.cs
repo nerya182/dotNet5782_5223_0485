@@ -59,16 +59,23 @@ namespace DalObject
 
         public static void AddStation()
         {
+            Station newStation = new Station();
+
             Console.WriteLine("enter name od staion\n");
-            string nameStaion = Console.ReadLine();
+            newStation.Name = Console.ReadLine();
+           
             Console.WriteLine("Enter the longitude of the station\n");
-            double longitudeStaion = double.Parse(Console.ReadLine());
+            newStation.Longitude = double.Parse(Console.ReadLine());
+            
             Console.WriteLine("Enter the Lattitude of the station\n");
-            double lattitudeStaion = double.Parse(Console.ReadLine());
+            newStation.Lattitude = double.Parse(Console.ReadLine());
+            
             Console.WriteLine("Enter the number of charging points available at the station\n");
-            int chargeSlotsStaion = int.Parse(Console.ReadLine());
-            Station newStation = new Station() { Id = Config.newStationId,Name= nameStaion ,Longitude=longitudeStaion ,Lattitude=lattitudeStaion,ChargeSlots=chargeSlotsStaion};
-            stations[Config.newStationId] = newStation;
+            newStation.ChargeSlots = int.Parse(Console.ReadLine());
+
+            newStation.Id = Config.newStationId;
+
+            stations[Config.newStationId++] = newStation;
         }
 
 

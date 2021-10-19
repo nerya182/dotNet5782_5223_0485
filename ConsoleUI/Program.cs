@@ -8,57 +8,35 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            Char ch;
-            do
+            CHOICE choice;
+            Console.WriteLine("Menu:\n" +
+                   "ADD- Add a new base Station/Drone/Customer/Parcel.\n" +
+                   "UPDATE- Update assignment/Collection /Delivery /Charging /Release.\n" +
+                   "DISPLAY- Display of base stations/Drone/Customer/ Parcel\n" +
+                   "VIEW_LIST- Print all bbase stations/Drone/Customer/Parcel/Packages not yet associated/Base stations with available charging stations.\n" +
+                   "EXIT- Exit");
+           Enum.TryParse(Console.ReadLine(),out choice);
+            switch (choice)
             {
-                Console.WriteLine("Menu:\n" +
-                   "a- Add a new base Station/Drone/Customer/Parcel.\n" +
-                   "u- Update assignment/Collection /Delivery /Charging /Release.\n" +
-                   "d- Display of base stations/Drone/Customer/ Parcel\n" +
-                   "p- Print all bbase stations/Drone/Customer/Parcel/Packages not yet associated/Base stations with available charging stations.\n" +
-                   "e- Exit");
-                while(char.TryParse(Console.ReadLine(),out ch))
-                {
-                    Console.WriteLine("ERROR, try again\n");
-                }
-                DalObject.DataSource.Initialize();
+                case CHOICE.ADD:
 
-                switch (ch)
-                {
-                    case 'a':
-                        Console.WriteLine("What would you like to add? \n" +
-                                     "1- Add a new base Station.\n" +
-                                     "2- Add a new Drone.\n" +
-                                     "3-Add a new Customer.\n" +
-                                     "4-Add a new Parcel.\n");
-                        int choice;
-                        do
-                        {
-                            while (!int.TryParse(Console.ReadLine(), out choice))
-                            {
-                                Console.WriteLine("ERROR, try again\n");
-                            }
-                        } while (choice != 1 && choice != 2 && choice != 3 && choice != 4);
-                        switch (choice)
-                        {
-                            case '1': DalObject.DalObject.
-                                break;
-                            case '2':
-                                break;
-                            case '3':
-                                break;
-                            case '4':
-                                break;
+                    break;
+                case CHOICE.UPDATE:
+                    break;
+                case CHOICE.DISPLAY:
+                    break;
+                case CHOICE.VIEW_LISTS:
+                    break;
+                case CHOICE.EXIT:
+                    break;
+                default:
+                    break;
+            }
 
-                            default:
-                                break;
-                        }
-                        break;
-                    default:
-                        break;
-                }
 
-            } while (ch!='e');
+
+
+
         }
 
     }
