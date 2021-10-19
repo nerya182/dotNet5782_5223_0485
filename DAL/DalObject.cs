@@ -84,14 +84,22 @@ namespace DalObject
 
             newDrone.Id = Config.newDroneId;
 
-            Console.WriteLine("enter name a new staion\n");
+            Console.WriteLine("enter name have new staion\n");
             newDrone.Model = Console.ReadLine();
 
             Console.WriteLine("enter Light/Medium/Heavy\n");
-            WeightCategories myStatus;
+            WeightCategories myMaxWeight;
+            Enum.TryParse(Console.ReadLine(), out myMaxWeight);
+            newDrone.MaxWeight = (WeightCategories)myMaxWeight;
+
+            Console.WriteLine("enter Available/Delivery/Charging\n");
+            DroneStatuses myStatus;
             Enum.TryParse(Console.ReadLine(), out myStatus);
             newDrone.Status = (DroneStatuses)myStatus;
 
+            newDrone.Battery = 100;
+
+            drones[Config.newDroneId++] = newDrone;
         }
 
         public static void Affiliate()
@@ -110,12 +118,40 @@ namespace DalObject
                 }
             }
         }
-
-        public static void PickupParcel()
+        
+                public static void PickupParcel()
         {
 
         }
+
+
+        public static void AddCustomer()
+        {
+            Customer newCustomer = new Customer();
+
+            newCustomer.Id = Config.newCustomerId;
+
+            Console.WriteLine("enter name have new Customer\n");
+            newCustomer.Name = Console.ReadLine();
+
+            Console.WriteLine("enter number of phone\n");
+            newCustomer.Phone = Console.ReadLine();
+
+            Console.WriteLine("enter longitude\n");
+            newCustomer.Longitude = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("enter Lattitude\n");
+            newCustomer.Lattitude = double.Parse(Console.ReadLine());
+
+            customers[Config.newCustomerId++] = newCustomer;
+        }
     }
+
+
+    
+
+
+
 }
 
 

@@ -31,9 +31,9 @@ namespace ConsoleUI
                     {
                         case 'a':DalObject.DalObject.AddStation();
                             break;
-                        case 'b':
+                        case 'b':DalObject.DalObject.addDrone();
                             break;
-                        case 'c':
+                        case 'c':DalObject.DalObject.AddCustomer();
                             break;
                         case 'd':
                             break;
