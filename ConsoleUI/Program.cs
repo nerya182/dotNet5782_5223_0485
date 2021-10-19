@@ -21,7 +21,45 @@ namespace ConsoleUI
                 case CHOICE.ADD:
 
                     break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case CHOICE.UPDATE:
+                    Console.WriteLine(" What would you like to do?" +
+                        "a-Affiliate Parcel to Drone?\n" +
+                        "b- Pickup Parcel with Drone? \n" +
+                        "c- Deliver Parcel to Customer? \n" +
+                        "d- Send Drone to Charge? \n" +
+                        "e- Release Drone from Charge? \n");
+                    char input;
+                    char.TryParse(Console.ReadLine(), out input);
+                    switch (input)
+                    {
+                        case 'a':
+                            DalObject.DalObject.Affiliate();
+                            break;
+                        case 'b':
+
+
+                    }
+
                     break;
                 case CHOICE.DISPLAY:
                     break;

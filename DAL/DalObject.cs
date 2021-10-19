@@ -34,25 +34,25 @@ namespace DalObject
             return DataSource.customers[customerId];
         }
 
-        public static Parcel GeParcel(int parcelId)
+        public static Parcel GetParcel(int parcelId)
         {
             return DataSource.parcels[parcelId];
         }
-        public static Parcel GeParcelRequested(int parcelId)
+        public static Parcel GetParcelRequested(int parcelId)
         {
             return DataSource.parcels[parcelId].Requested();
         }
-        public static Parcel GeParcelScheduled(int parcelId)
+        public static Parcel GetParcelScheduled(int parcelId)
         {
             return DataSource.parcels[parcelId].Scheduled();
         }
 
-        public static Parcel GeParcelPickedUp(int parcelId)
+        public static Parcel GetParcelPickedUp(int parcelId)
         {
             return DataSource.parcels[parcelId].Scheduled();
         }
 
-        public static Parcel GeParcelDelivered(int parcelId)
+        public static Parcel GetParcelDelivered(int parcelId)
         {
             return DataSource.parcels[parcelId].Delivered();
         }
@@ -78,7 +78,9 @@ namespace DalObject
             stations[Config.newStationId++] = newStation;
         }
 
+        
 
+        
 
 
 
