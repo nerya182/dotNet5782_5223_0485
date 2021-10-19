@@ -9,6 +9,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             CHOICE choice;
+          
             Console.WriteLine("Menu:\n" +
                    "ADD- Add a new base Station/Drone/Customer/Parcel.\n" +
                    "UPDATE- Update assignment/Collection /Delivery /Charging /Release.\n" +
@@ -19,6 +20,25 @@ namespace ConsoleUI
             switch (choice)
             {
                 case CHOICE.ADD:
+                    Console.WriteLine("What would you like to add? \n" +
+                                     "a- Add a new base Station.\n" +
+                                     "b- Add a new Drone.\n" +
+                                     "c-Add a new Customer.\n" +
+                                     "d-Add a new Parcel.\n");
+                    char input;
+                    char.TryParse(Console.ReadLine(), out input);
+                    switch (input)
+                    {
+                        case 'a':DalObject.DalObject.AddStation();
+                            break;
+                        case 'b':
+                            break;
+                        case 'c':
+                            break;
+                        case 'd':
+                            break;
+                        
+                    }
 
                     break;
                 case CHOICE.UPDATE:

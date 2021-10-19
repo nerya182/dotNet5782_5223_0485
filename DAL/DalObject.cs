@@ -61,7 +61,9 @@ namespace DalObject
         {
             Station newStation = new Station();
 
-            Console.WriteLine("enter name od staion\n");
+            newStation.Id = Config.newStationId;
+
+            Console.WriteLine("enter name a new staion\n");
             newStation.Name = Console.ReadLine();
            
             Console.WriteLine("Enter the longitude of the station\n");
@@ -73,21 +75,52 @@ namespace DalObject
             Console.WriteLine("Enter the number of charging points available at the station\n");
             newStation.ChargeSlots = int.Parse(Console.ReadLine());
 
-            newStation.Id = Config.newStationId;
-
             stations[Config.newStationId++] = newStation;
         }
 
+        public static void addDrone()
+        {
+            Drone newDrone = new Drone();
+
+            newDrone.Id = Config.newDroneId;
+
+            Console.WriteLine("enter name a new staion\n");
+            newDrone.Model = Console.ReadLine();
+
+            Console.WriteLine("enter Light/Medium/Heavy\n");
+            WeightCategories myStatus;
+            Enum.TryParse(Console.ReadLine(), out myStatus);
+            newDrone.Status = (DroneStatuses)myStatus;
 
 
 
 
-
-
-
-
+        }   
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

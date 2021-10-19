@@ -27,12 +27,6 @@ namespace IDAL
             {
                 return $"Parcel #{Id}, SenderId: #{SenderId}, TargetId: #{TargetId}, DroneId: #{DroneId}, {Weight}, {Priority},{Requested},{Scheduled},{PickedUp},{Delivered},";
             }
-
-           // internal Parcel Requested()
-           // {
-             //   throw new NotImplementedException();
-            //}
-
         }
     }
 }
