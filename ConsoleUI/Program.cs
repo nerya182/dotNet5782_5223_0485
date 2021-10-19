@@ -26,6 +26,9 @@ namespace ConsoleUI
                                      "c-Add a new Customer.\n" +
                                      "d-Add a new Parcel.\n");
                     char input;
+                    int Id, SenderId, TargetId;
+                    WeightCategories myMaxWeight;
+                    Priorities myPriority;
                     char.TryParse(Console.ReadLine(), out input);
                     switch (input)
                     {
@@ -36,6 +39,16 @@ namespace ConsoleUI
                         case 'c':DalObject.DalObject.AddCustomer();
                             break;
                         case 'd':
+                            Console.WriteLine("Enter a unique number of the package\n");
+                            Id = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter a sending customer ID number\n");
+                            SenderId = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter a receives Customer  ID number\n");
+                            TargetId = int.Parse(Console.ReadLine());
+                            Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy\n");
+                            myMaxWeight = (WeightCategories)int.Parse(Console.ReadLine());
+                            Console.WriteLine("enter  1-Regular , 2-Express , 3-Urgent\n");
+                            myPriority = (Priorities)int.Parse(Console.ReadLine());
                             break;
                         
                     }

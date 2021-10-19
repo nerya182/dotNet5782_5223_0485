@@ -77,7 +77,7 @@ namespace DalObject
 
             stations[Config.newStationId++] = newStation;
         }
-
+         
         public static void addDrone()
         {
             Drone newDrone = new Drone();
@@ -134,26 +134,31 @@ namespace DalObject
             parcels[ID].PickedUp = DateTime.Now;
         }
 
-       
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        public static void addParcel(int myId, int SenderId,int TargetId, WeightCategories myMaxWeight, Priorities myPriority)
+        {
+            Parcel newParcel = new Parcel() { Id=myId,SenderId=SenderId,TargetId=TargetId,Weight=myMaxWeight,Priority=myPriority};
+            parcels[myId] = newParcel;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public static void SupplyParcel()
         {
             Console.WriteLine(" What is the Parcel Id? \n");

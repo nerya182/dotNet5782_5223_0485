@@ -63,7 +63,7 @@ namespace DalObject
             for (int i=0;i<5;i++, Config.newDroneId++)
             {
                 NameDrone nameDrone = (NameDrone)R.Next(0,9);
-                WeightCategories weightCategories = (WeightCategories)R.Next(0, 2);
+                WeightCategories weightCategories = (WeightCategories)R.Next(1, 3);
                 Drone drone = new Drone() { Id = Config.newDroneId, Model = nameDrone.ToString(), MaxWeight = weightCategories, Status = DroneStatuses.Available, Battery = 100 };
                 drones[i] = drone;
             }
@@ -85,8 +85,8 @@ namespace DalObject
             Random R = new Random();
             for (int i = 0; i < 10; i++, Config.newParcelId++)
             {
-                Priorities priorities = (Priorities)R.Next(0, 2);
-                WeightCategories weightCategories = (WeightCategories)R.Next(0, 2);
+                Priorities priorities = (Priorities)R.Next(1, 3);
+                WeightCategories weightCategories = (WeightCategories)R.Next(1, 3);
                 Parcel parcel = new Parcel() { Id = Config.newParcelId, SenderId = R.Next(), TargetId = R.Next(), DroneId = R.Next(0,Config.newDroneId), Weight = weightCategories, Priority = priorities, Requested = DateTime.Now, Delivered = DateTime.Now
                     , PickedUp = DateTime.Now, Scheduled = DateTime.Now };
                 parcels[i] = parcel;
