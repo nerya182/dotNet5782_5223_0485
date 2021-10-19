@@ -41,26 +41,6 @@ namespace ConsoleUI
                     }
 
                     break;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 case CHOICE.UPDATE:
                     Console.WriteLine(" What would you like to do?" +
                         "a-Affiliate Parcel to Drone?\n" +
@@ -68,14 +48,14 @@ namespace ConsoleUI
                         "c- Deliver Parcel to Customer? \n" +
                         "d- Send Drone to Charge? \n" +
                         "e- Release Drone from Charge? \n");
-                    char input;
-                    char.TryParse(Console.ReadLine(), out input);
-                    switch (input)
+                    int info;
+                    int.TryParse(Console.ReadLine(), out info);
+                    switch (info)
                     {
                         case 'a':
                             DalObject.DalObject.Affiliate();
                             break;
-                        case 'b':
+                        case 'b': break;
 
 
                     }
@@ -99,3 +79,25 @@ namespace ConsoleUI
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

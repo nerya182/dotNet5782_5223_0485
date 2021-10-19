@@ -92,10 +92,29 @@ namespace DalObject
             Enum.TryParse(Console.ReadLine(), out myStatus);
             newDrone.Status = (DroneStatuses)myStatus;
 
+        }
 
+        public static void Affiliate()
+        {
+            Console.WriteLine(" What is the Parcel Id? \n");
+            int ID;
+            int.TryParse(Console.ReadLine(), out ID);
+            Parcel parcel = GetParcel(ID);
+            for (int i = 0; i < Config.newDroneId; i++)
+            {
+                if (drones[i].Status == DroneStatuses.Available)
+                {
+                    drones[i].Status = DroneStatuses.Delivery;
+                    parcel.DroneId = drones[i].Id;
+                    break;
+                }
+            }
+        }
 
+        public static void PickupParcel()
+        {
 
-        }   
+        }
     }
 }
 
