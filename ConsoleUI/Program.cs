@@ -55,7 +55,14 @@ namespace ConsoleUI
                         case 'a':
                             DalObject.DalObject.Affiliate();
                             break;
-                        case 'b': break;
+                        case 'b':
+                            DalObject.DalObject.PickupParcel();
+                            break;
+                        case 'c':
+                            DalObject.DalObject.SupplyParcel();
+                            break;
+                        case 'd':
+                            break;
 
 
                     }
@@ -64,6 +71,9 @@ namespace ConsoleUI
                 case CHOICE.DISPLAY:
                     break;
                 case CHOICE.VIEW_LISTS:
+                    Console.WriteLine("Which List would you like to view? \n" +
+                        "s - Sations" + "d - Drones" + "c - Customers" + "p - Parcels" + "f - Parcels that have not yet been affiliated with a drone" + " o - Stations with open charge slots \n");
+
                     break;
                 case CHOICE.EXIT:
                     break;

@@ -94,24 +94,68 @@ namespace DalObject
 
         }
 
+      
+        
+        
+        
+        
+        
+        
         public static void Affiliate()
         {
             Console.WriteLine(" What is the Parcel Id? \n");
             int ID;
             int.TryParse(Console.ReadLine(), out ID);
-            Parcel parcel = GetParcel(ID);
+            //Parcel parcel = GetParcel(ID);
             for (int i = 0; i < Config.newDroneId; i++)
             {
                 if (drones[i].Status == DroneStatuses.Available)
                 {
                     drones[i].Status = DroneStatuses.Delivery;
-                    parcel.DroneId = drones[i].Id;
+                    parcels[ID].DroneId = drones[i].Id;
                     break;
                 }
             }
         }
-
         public static void PickupParcel()
+        {
+            Console.WriteLine(" What is the Parcel Id? \n");
+            int ID;
+            int.TryParse(Console.ReadLine(), out ID);
+            drones[parcels[ID].DroneId].Status = DroneStatuses.Delivery;
+            parcels[ID].PickedUp = DateTime.Now;
+        }
+
+       
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        public static void SupplyParcel()
+        {
+            Console.WriteLine(" What is the Parcel Id? \n");
+            int ID;
+            int.TryParse(Console.ReadLine(), out ID);
+            drones[parcels[ID].DroneId].Status = DroneStatuses.Available;
+            parcels[ID].Delivered = DateTime.Now;
+        }
+
+        public static void SendDroneToCharge()
         {
 
         }
