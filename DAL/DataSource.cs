@@ -16,6 +16,7 @@ namespace DalObject
             internal static int newStationId = 0;
             internal static int newDroneId=0;
             internal static int newParcelId=0;
+            internal static int newDroneChargeId = 0;
         }
        
 
@@ -23,6 +24,7 @@ namespace DalObject
         public static Station[] stations = new Station[5];
         public static Drone[] drones = new Drone[10];
         public static Parcel[] parcels = new Parcel[1000];
+        public static DroneCharge[] droneCharges = new DroneCharge[5];
 
         
         public static void Initialize()
@@ -90,6 +92,16 @@ namespace DalObject
                 Parcel parcel = new Parcel() { Id = Config.newParcelId, SenderId = R.Next(), TargetId = R.Next(), DroneId = R.Next(0,Config.newDroneId), Weight = weightCategories, Priority = priorities, Creating = DateTime.Now, Delivered = DateTime.Now
                     , PickedUp = DateTime.Now, Affiliation = DateTime.Now };
                 parcels[i] = parcel;
+            }
+        }
+
+        private static void CreateDroneCharge()
+        {
+            Random R = new Random();
+            for (int i = 0; i < 5; i++, Config.newDroneChargeId++)
+            {
+                DroneCharge droneCharge = new DroneCharge() { DroneId = R.Next(0, Config.newDroneId), StationId = R.Next(0, Config.newStationId) };
+                droneCharges[i] = droneCharge;
             }
         }
     }
