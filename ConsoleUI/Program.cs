@@ -80,6 +80,7 @@ namespace ConsoleUI
                     char.TryParse(Console.ReadLine(), out pick);
                     switch (pick)
                     {
+                       
                         case 's':
                             for (int i = 0; i < DalObject.DalObject.GetStationId(); i++ )
                                 Console.WriteLine(DalObject.DalObject.GetStation(i).ToString());

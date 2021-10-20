@@ -33,6 +33,7 @@ namespace DalObject
             CreateDrones();
             CreateCustomers();
             CreateParcels();
+            CreateDroneCharge();
         }
 
         
