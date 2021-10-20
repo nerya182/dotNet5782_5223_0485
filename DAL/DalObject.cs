@@ -62,50 +62,18 @@ namespace DalObject
             return DataSource.Config.newParcelId;
         }
 
-        public static void AddStation()
+        public static void AddStation(int myId,string myname,double myLongitude,double myLattitude,int myAvailableChargeSlots)
         {
-            Station newStation = new Station();
-
-            newStation.Id = Config.newStationId;
-
-            Console.WriteLine("enter name a new staion\n");
-            newStation.Name = Console.ReadLine();
-           
-            Console.WriteLine("Enter the longitude of the station\n");
-            newStation.Longitude = double.Parse(Console.ReadLine());
-            
-            Console.WriteLine("Enter the Lattitude of the station\n");
-            newStation.Lattitude = double.Parse(Console.ReadLine());
-            
-            Console.WriteLine("Enter the number of charging points available at the station\n");
-            newStation.ChargeSlots = int.Parse(Console.ReadLine());
-
+            Station newStation = new Station() { Id=myId,Name=myname,Longitude=myLongitude,Lattitude=myLattitude,ChargeSlots=myAvailableChargeSlots};
             stations[Config.newStationId++] = newStation;
         }
-         
-        public static void addDrone()
+
+        public static void addDrone(int myId, string myModel, WeightCategories myMaxWeight, DroneStatuses myStatuses, int myBattery)
         {
-            Drone newDrone = new Drone();
-
-            newDrone.Id = Config.newDroneId;
-
-            Console.WriteLine("enter name have new staion\n");
-            newDrone.Model = Console.ReadLine();
-
-            Console.WriteLine("enter Light/Medium/Heavy\n");
-            WeightCategories myMaxWeight;
-            Enum.TryParse(Console.ReadLine(), out myMaxWeight);
-            newDrone.MaxWeight = (WeightCategories)myMaxWeight;
-
-            Console.WriteLine("enter Available/Delivery/Charging\n");
-            DroneStatuses myStatus;
-            Enum.TryParse(Console.ReadLine(), out myStatus);
-            newDrone.Status = (DroneStatuses)myStatus;
-
-            newDrone.Battery = 100;
-
+            Drone newDrone = new Drone() { Id = myId, Model = myModel, MaxWeight = myMaxWeight, Status = myStatuses, Battery = myBattery };
             drones[Config.newDroneId++] = newDrone;
         }
+        
 
       
         
@@ -139,9 +107,9 @@ namespace DalObject
             parcels[ID].PickedUp = DateTime.Now;
         }
 
-        public static void addParcel(int myId, int SenderId,int TargetId, WeightCategories myMaxWeight, Priorities myPriority,DateTime CreatePackage)
+        public static void addParcel(int myId, int SenderId,int TargetId, WeightCategories myMaxWeight, Priorities myPriority,int myDroneId, DateTime CreatePackage)
         {
-            Parcel newParcel = new Parcel() { Id=myId,SenderId=SenderId,TargetId=TargetId,Weight=myMaxWeight,Priority=myPriority,da};
+            Parcel newParcel = new Parcel() { Id=myId,SenderId=SenderId,TargetId=TargetId,Weight=myMaxWeight,Priority=myPriority,DroneId=myDroneId};
             parcels[myId] = newParcel;
         }
 
@@ -179,33 +147,12 @@ namespace DalObject
         }
 
 
-        public static void AddCustomer()
+        public static void AddCustomer(int myId, string myName, string myPhone,Double myLongitude, double myLattitude)
         {
-            Customer newCustomer = new Customer();
-
-            newCustomer.Id = Config.newCustomerId;
-
-            Console.WriteLine("enter name have new Customer\n");
-            newCustomer.Name = Console.ReadLine();
-
-            Console.WriteLine("enter number of phone\n");
-            newCustomer.Phone = Console.ReadLine();
-
-            Console.WriteLine("enter longitude\n");
-            newCustomer.Longitude = double.Parse(Console.ReadLine());
-
-            Console.WriteLine("enter Lattitude\n");
-            newCustomer.Lattitude = double.Parse(Console.ReadLine());
-
+            Customer newCustomer = new Customer() {Id=myId,Name=myName,Phone=myPhone,Longitude=myLongitude,Lattitude=myLattitude };
             customers[Config.newCustomerId++] = newCustomer;
-        }
+        }   
     }
-
-
-    
-
-
-
 }
 
 

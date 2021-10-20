@@ -87,8 +87,8 @@ namespace DalObject
             {
                 Priorities priorities = (Priorities)R.Next(1, 3);
                 WeightCategories weightCategories = (WeightCategories)R.Next(1, 3);
-                Parcel parcel = new Parcel() { Id = Config.newParcelId, SenderId = R.Next(), TargetId = R.Next(), DroneId = R.Next(0,Config.newDroneId), Weight = weightCategories, Priority = priorities, Requested = DateTime.Now, Delivered = DateTime.Now
-                    , PickedUp = DateTime.Now, Scheduled = DateTime.Now };
+                Parcel parcel = new Parcel() { Id = Config.newParcelId, SenderId = R.Next(), TargetId = R.Next(), DroneId = R.Next(0,Config.newDroneId), Weight = weightCategories, Priority = priorities, Creating = DateTime.Now, Delivered = DateTime.Now
+                    , PickedUp = DateTime.Now, Affiliation = DateTime.Now };
                 parcels[i] = parcel;
             }
         }

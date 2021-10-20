@@ -25,17 +25,53 @@ namespace ConsoleUI
                                      "c-Add a new Customer.\n" +
                                      "d-Add a new Parcel.\n");
                     char input;
-                    int Id, SenderId, TargetId;
+                    int Id, SenderId, TargetId, Battery, AvailableChargeSlots;
+                    string name, phone,model;
+                    double Lattitude, Longitude;
                     WeightCategories myMaxWeight;
+                    DroneStatuses myStatuses;
                     Priorities myPriority;
                     char.TryParse(Console.ReadLine(), out input);
                     switch (input)
                     {
-                        case 'a':DalObject.DalObject.AddStation();
+                        case 'a':
+                            Console.WriteLine("Enter a unique ID number of staion\n");
+                            Id = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter the name of the station\n");
+                            name =Console.ReadLine();
+                            Console.WriteLine("Enter the longitude of the station\n");
+                            Longitude = double.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter the Lattitude of the station\n");
+                            Lattitude = double.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter the number of charging points available at the station\n");
+                            AvailableChargeSlots = int.Parse(Console.ReadLine());
+                            DalObject.DalObject.AddStation(Id,name,Longitude,Lattitude,AvailableChargeSlots);
                             break;
-                        case 'b':DalObject.DalObject.addDrone();
+                        case 'b':
+                            Console.WriteLine("Enter a unique ID number\n");
+                            Id = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Insert the model of the drone\n");
+                            model = Console.ReadLine();
+                            Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy\n");
+                            myMaxWeight = (WeightCategories)int.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter the condition of the drone 1- Available ,2- Delivery ,3-Charging\n");
+                            myStatuses = (DroneStatuses)int.Parse(Console.ReadLine();
+                            Console.WriteLine("Enter the battery status (in number)\n");
+                            Battery= int.Parse(Console.ReadLine());
+                            DalObject.DalObject.addDrone(Id,model,myMaxWeight,myStatuses,Battery);
                             break;
-                        case 'c':DalObject.DalObject.AddCustomer();
+                        case 'c':
+                            Console.WriteLine("Enter a unique ID number\n");
+                            Id = int.Parse(Console.ReadLine());
+                            Console.WriteLine(" Enter the customer name\n");
+                            name = Console.ReadLine();
+                            Console.WriteLine(" Enter a phone number\n");
+                            phone = Console.ReadLine();
+                            Console.WriteLine("enter longitude\n");
+                            Longitude = double.Parse(Console.ReadLine());
+                            Console.WriteLine("enter Lattitude\n");
+                            Lattitude = double.Parse(Console.ReadLine());
+                            DalObject.DalObject.AddCustomer(Id,name,phone,Longitude,Lattitude);
                             break;
                         case 'd':
                             Id = DalObject.DalObject.GetNewParcelId();
@@ -47,139 +83,105 @@ namespace ConsoleUI
                             myMaxWeight = (WeightCategories)int.Parse(Console.ReadLine());
                             Console.WriteLine("enter  1-Regular , 2-Express , 3-Urgent\n");
                             myPriority = (Priorities)int.Parse(Console.ReadLine());
-                            DalObject.DalObject.addParcel(Id, SenderId, TargetId, myMaxWeight, myPriority,DateTime.Now);
+                            DalObject.DalObject.addParcel(Id, SenderId, TargetId, myMaxWeight, myPriority,-1, DateTime.Now);
                             break;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     }
-
                     break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case CHOICE.UPDATE:
                     Console.WriteLine(" What would you like to do?" +
                         "a-Affiliate Parcel to Drone?\n" +
