@@ -128,11 +128,22 @@ namespace DalObject
         public static void SendDroneToCharge()
         {
             Console.WriteLine(" What is the Drone Id? \n");
-            int ID;
-            int.TryParse(Console.ReadLine(), out ID);
+            int DroneId, StationId;
+            int.TryParse(Console.ReadLine(), out DroneId);
+            for (int i = 0; i < Config.newDroneId; i++)
+            {
+                if (drones[i].Id == DroneId)
+                    drones[i].Status = DroneStatuses.Charging;
+            }
             Console.WriteLine(" Which Sattion would you like to charge your Drone? \n");
+            int.TryParse(Console.ReadLine(), out StationId);
             PrintStationsWithOpenSlots();
-
+            for(int i = 0; i<Config.newStationId; i++)
+            {
+                if(stations[i].Id == StationId)
+                    stations[i].AvailableChargeSlots--;
+            }
+            // need to add yeshut of DroneCharge but don't know how to save it
         }
         public static void AddCustomer(int myId, string myName, string myPhone,Double myLongitude, double myLattitude)
         {
@@ -147,6 +158,11 @@ namespace DalObject
                 if (DalObject.GetStation(i).AvailableChargeSlots > 0)
                     Console.WriteLine(DalObject.GetStation(i).ToString());
             }
+        }
+
+        public static void ReleaseDroneFromCharger()
+        {
+
         }
     }
 }
