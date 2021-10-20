@@ -85,7 +85,14 @@ namespace ConsoleUI
                 case CHOICE.VIEW_LISTS:
                     Console.WriteLine("Which List would you like to view? \n" +
                         "s - Sations" + "d - Drones" + "c - Customers" + "p - Parcels" + "f - Parcels that have not yet been affiliated with a drone" + " o - Stations with open charge slots \n");
-                    
+                    char pick;
+                    char.TryParse(Console.ReadLine(), out pick);
+                    switch (pick)
+                    {
+                        case 's':
+                            for (int i = 0; i < )
+                                break;
+                    }
 
                     break;
                 case CHOICE.EXIT:
