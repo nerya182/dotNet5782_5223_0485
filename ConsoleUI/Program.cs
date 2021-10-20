@@ -109,6 +109,10 @@ namespace ConsoleUI
                             DalObject.DalObject.SupplyParcel();
                             break;
                         case 'd':
+                            DalObject.DalObject.SendDroneToCharge();
+                            break;
+                        case 'e':
+
                             break;
 
 
