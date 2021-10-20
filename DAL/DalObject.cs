@@ -57,9 +57,8 @@ namespace DalObject
             return DataSource.parcels[parcelId].Delivered();
         }
 
-        public static void AddStation(int myId,string  myName, double myLongitude,double myLattitude,  int myAvailableChargeSlots)
-        {
-            Station newStation = new Station() { Id=myId, Name=myName, Longitude=myLongitude, Lattitude=myLattitude, AvailableChargeSlots=myAvailableChargeSlots};
+        public static void AddStation(Station newStation)
+        { 
             stations[Config.newStationId++] = newStation;
         }
 

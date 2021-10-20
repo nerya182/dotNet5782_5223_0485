@@ -35,17 +35,18 @@ namespace ConsoleUI
                     switch (input)
                     {
                         case 'a':
+                            Station newStation = new Station();
                             Console.WriteLine("Enter a unique ID number of staion\n");
-                            Id = int.Parse(Console.ReadLine());
+                            newStation.Id = int.Parse(Console.ReadLine());
                             Console.WriteLine("Enter the name of the station\n");
-                            name =Console.ReadLine();
+                            newStation.Name =Console.ReadLine();
                             Console.WriteLine("Enter the longitude of the station\n");
-                            Longitude = double.Parse(Console.ReadLine());
+                            newStation.Longitude = double.Parse(Console.ReadLine());
                             Console.WriteLine("Enter the Lattitude of the station\n");
-                            Lattitude = double.Parse(Console.ReadLine());
+                            newStation.Lattitude = double.Parse(Console.ReadLine());
                             Console.WriteLine("Enter the number of charging points available at the station\n");
-                            AvailableChargeSlots = int.Parse(Console.ReadLine());
-                            DalObject.DalObject.AddStation(Id,name,Longitude,Lattitude,AvailableChargeSlots);
+                            newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
+                            DalObject.DalObject.AddStation(newStation);
                             break;
                         case 'b':
                             Console.WriteLine("Enter a unique ID number\n");
@@ -164,8 +165,12 @@ namespace ConsoleUI
 
 
         }
+        public static void AddStation()
+        {
 
+        }
     }
+
 }
 
 
