@@ -11,13 +11,10 @@ namespace DalObject
     public class DalObject
     {
         
-
         public DalObject()
         {
             DataSource.Initialize();
         }
-
-
 
         public static Station GetStation(int StationId)
         {
@@ -38,23 +35,23 @@ namespace DalObject
         {
             return DataSource.parcels[parcelId];
         }
-        public static Parcel GetParcelRequested(int parcelId)
+        public static DateTime GetParcelCreating(int parcelId)
         {
-            return DataSource.parcels[parcelId].Requested();
+            return DataSource.parcels[parcelId].Creating;
         }
-        public static Parcel GetParcelScheduled(int parcelId)
+        public static DateTime GetParcelAffiliation(int parcelId)
         {
-            return DataSource.parcels[parcelId].Scheduled();
-        }
-
-        public static Parcel GetParcelPickedUp(int parcelId)
-        {
-            return DataSource.parcels[parcelId].Scheduled();
+            return DataSource.parcels[parcelId].Affiliation;
         }
 
-        public static Parcel GetParcelDelivered(int parcelId)
+        public static DateTime GetParcelPickedUp(int parcelId)
         {
-            return DataSource.parcels[parcelId].Delivered();
+            return DataSource.parcels[parcelId].PickedUp;
+        }
+
+        public static DateTime GetParcelDelivered(int parcelId)
+        {
+            return DataSource.parcels[parcelId].Delivered;
         }
 
         public static void AddStation(Station newStation)
@@ -191,6 +188,55 @@ namespace DalObject
                 }                   
             }
         }
+
+        public static void ParcelDisplay(int id)
+        {
+            string st;
+            st=parcels[id].ToString()+"\n";
+            Console.WriteLine(st);
+        }
+
+        public static void BaseStationDisplay(int id)
+        {
+            string st;
+            for (int i = 0; i <= Config.newStationId; i++)
+            {
+                if (DataSource.stations[i].Id == id)
+                {
+                    st=DataSource.stations[i].ToString()+"\n";
+                    Console.WriteLine(st);
+                    return;
+                }
+            }
+        }
+
+        public static void DroneDisplay(int id)
+        {
+            for (int i = 0; i <= Config.newDroneId; i++)
+            {
+                if (DataSource.drones[i].Id == id)
+                {
+                    DataSource.drones[i].ToString();
+                    return;
+                }
+            }
+        }
+
+        public static void CustomerDisplay(int id)
+        {
+            for (int i = 0; i <= Config.newCustomerId; i++)
+            {
+                if (DataSource.customers[i].Id == id)
+                {
+                    DataSource.customers[i].ToString();
+                    return;
+                }
+            }
+        }
+
+
+
+
     }
 }
 
