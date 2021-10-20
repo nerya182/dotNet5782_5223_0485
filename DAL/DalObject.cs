@@ -132,6 +132,7 @@ namespace DalObject
                 if (drones[i].Id == DroneId)
                     drones[i].Status = DroneStatuses.Charging;
             }
+            
             Console.WriteLine(" Which Sattion would you like to charge your Drone? \n");
             int.TryParse(Console.ReadLine(), out StationId);
             PrintStationsWithOpenSlots();
@@ -140,7 +141,12 @@ namespace DalObject
                 if(stations[i].Id == StationId)
                     stations[i].AvailableChargeSlots--;
             }
-            // need to add yeshut of DroneCharge but don't know how to save it
+
+            DroneCharge droneCharge = new DroneCharge();  // adding a DroneCharge
+            droneCharge.StationId = StationId;
+            droneCharge.DroneId = DroneId;
+            droneCharges[Config.newDroneChargeId++] = droneCharge;
+
         }
         public static void AddCustomer(Customer newCustomer)
         {
@@ -158,7 +164,32 @@ namespace DalObject
 
         public static void ReleaseDroneFromCharger()
         {
-
+            Console.WriteLine(" What is the Drone Id? \n");
+            int DroneId;
+            int.TryParse(Console.ReadLine(), out DroneId);
+            for(int i = 0; i < Config.newDroneChargeId; i++)
+            {
+                if(droneCharges[i].DroneId == DroneId)
+                {                   
+                    for (int k = 0; i < Config.newStationId; k++)
+                    {
+                        if (droneCharges[i].StationId == stations[k].Id)
+                        {
+                            stations[k].AvailableChargeSlots--;   
+                        }                           
+                    }
+                    droneCharges[i].DroneId = -1;
+                    droneCharges[i].StationId = -1;
+                }
+            }
+            for (int i = 0; i < Config.newDroneId; i++)
+            {
+                if (drones[i].Id == DroneId)
+                {
+                    drones[i].Status = DroneStatuses.Available;
+                    break;
+                }                   
+            }
         }
     }
 }

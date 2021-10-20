@@ -67,12 +67,9 @@ namespace ConsoleUI
                             DalObject.DalObject.SendDroneToCharge();
                             break;
                         case 'e':
-
+                            DalObject.DalObject.ReleaseDroneFromCharger();
                             break;
-
-
                     }
-
                     break;
                 case CHOICE.DISPLAY:
                     break;
