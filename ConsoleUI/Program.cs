@@ -1,5 +1,4 @@
 ﻿using System;
-using DalObject;
 using IDAL.DO;
 
 namespace ConsoleUI
@@ -86,6 +85,7 @@ namespace ConsoleUI
                 case CHOICE.VIEW_LISTS:
                     Console.WriteLine("Which List would you like to view? \n" +
                         "s - Sations" + "d - Drones" + "c - Customers" + "p - Parcels" + "f - Parcels that have not yet been affiliated with a drone" + " o - Stations with open charge slots \n");
+                    
 
                     break;
                 case CHOICE.EXIT:
