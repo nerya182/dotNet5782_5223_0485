@@ -39,8 +39,7 @@ namespace ConsoleUI
                         case 'c':DalObject.DalObject.AddCustomer();
                             break;
                         case 'd':
-                            Console.WriteLine("Enter a unique number of the package\n");
-                            Id = int.Parse(Console.ReadLine());
+                            Id = DalObject.DalObject.GetNewParcelId();
                             Console.WriteLine("Enter a sending customer ID number\n");
                             SenderId = int.Parse(Console.ReadLine());
                             Console.WriteLine("Enter a receives Customer  ID number\n");
@@ -49,8 +48,9 @@ namespace ConsoleUI
                             myMaxWeight = (WeightCategories)int.Parse(Console.ReadLine());
                             Console.WriteLine("enter  1-Regular , 2-Express , 3-Urgent\n");
                             myPriority = (Priorities)int.Parse(Console.ReadLine());
+                            DalObject.DalObject.addParcel(Id, SenderId, TargetId, myMaxWeight, myPriority,DateTime.Now);
                             break;
-                        
+
                     }
 
                     break;

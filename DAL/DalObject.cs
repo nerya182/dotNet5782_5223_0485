@@ -57,6 +57,11 @@ namespace DalObject
             return DataSource.parcels[parcelId].Delivered();
         }
 
+        public static int GetNewParcelId()
+        {
+            return DataSource.Config.newParcelId;
+        }
+
         public static void AddStation()
         {
             Station newStation = new Station();
@@ -134,9 +139,9 @@ namespace DalObject
             parcels[ID].PickedUp = DateTime.Now;
         }
 
-        public static void addParcel(int myId, int SenderId,int TargetId, WeightCategories myMaxWeight, Priorities myPriority)
+        public static void addParcel(int myId, int SenderId,int TargetId, WeightCategories myMaxWeight, Priorities myPriority,DateTime CreatePackage)
         {
-            Parcel newParcel = new Parcel() { Id=myId,SenderId=SenderId,TargetId=TargetId,Weight=myMaxWeight,Priority=myPriority};
+            Parcel newParcel = new Parcel() { Id=myId,SenderId=SenderId,TargetId=TargetId,Weight=myMaxWeight,Priority=myPriority,da};
             parcels[myId] = newParcel;
         }
 
