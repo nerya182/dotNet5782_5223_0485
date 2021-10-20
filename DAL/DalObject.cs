@@ -57,31 +57,42 @@ namespace DalObject
             return DataSource.parcels[parcelId].Delivered();
         }
 
-        public static int GetNewParcelId()
-        {
-            return DataSource.Config.newParcelId;
-        }
 
-        public static void AddStation(int myId,string myname,double myLongitude,double myLattitude,int myAvailableChargeSlots)
+
+
+        public static void AddStation()
         {
-            Station newStation = new Station() { Id=myId,Name=myname,Longitude=myLongitude,Lattitude=myLattitude,ChargeSlots=myAvailableChargeSlots};
+            Station newStation = new Station();
+
+            newStation.Id = Config.newStationId;
+
+            Console.WriteLine("enter name a new staion\n");
+            newStation.Name = Console.ReadLine();
+
+            Console.WriteLine("Enter the longitude of the station\n");
+            newStation.Longitude = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter the Lattitude of the station\n");
+            newStation.Lattitude = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter the number of charging points available at the station\n");
+            newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
+
             stations[Config.newStationId++] = newStation;
         }
 
-        public static void addDrone(int myId, string myModel, WeightCategories myMaxWeight, DroneStatuses myStatuses, int myBattery)
+        public static void addDrone()
         {
             Drone newDrone = new Drone() { Id = myId, Model = myModel, MaxWeight = myMaxWeight, Status = myStatuses, Battery = myBattery };
             drones[Config.newDroneId++] = newDrone;
         }
-        
 
-      
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
         public static void Affiliate()
         {
             Console.WriteLine(" What is the Parcel Id? \n");
@@ -107,25 +118,30 @@ namespace DalObject
             parcels[ID].PickedUp = DateTime.Now;
         }
 
-        public static void addParcel(int myId, int SenderId,int TargetId, WeightCategories myMaxWeight, Priorities myPriority,int myDroneId, DateTime CreatePackage)
+        public static void addParcel(int myId, int SenderId, int TargetId, WeightCategories myMaxWeight, Priorities myPriority, DateTime CreatePackage)
         {
-            Parcel newParcel = new Parcel() { Id=myId,SenderId=SenderId,TargetId=TargetId,Weight=myMaxWeight,Priority=myPriority,DroneId=myDroneId};
+            Parcel newParcel = new Parcel() { Id = myId, SenderId = SenderId, TargetId = TargetId, Weight = myMaxWeight, Priority = myPriority, da };
             parcels[myId] = newParcel;
         }
 
 
+        public static int GetStationId()
+        {
+            return DataSource.Config.newStationId;
+        }
 
-
-
-
-
-
-
-
-
-
-
-
+        public static int GetDroneId()
+        {
+            return DataSource.Config.newDroneId;
+        }
+        public static int GetCustomerId()
+        {
+            return DataSource.Config.newCustomerId;
+        }
+        public static int GetParcelId()
+        {
+            return DataSource.Config.newParcelId;
+        }
 
 
 
@@ -143,6 +159,11 @@ namespace DalObject
 
         public static void SendDroneToCharge()
         {
+            Console.WriteLine(" What is the Drone Id? \n");
+            int ID;
+            int.TryParse(Console.ReadLine(), out ID);
+            Console.WriteLine(" Which Sattion would you like to charge your Drone? \n");
+            PrintStationsWithOpenSlots();
 
         }
 
@@ -151,7 +172,16 @@ namespace DalObject
         {
             Customer newCustomer = new Customer() {Id=myId,Name=myName,Phone=myPhone,Longitude=myLongitude,Lattitude=myLattitude };
             customers[Config.newCustomerId++] = newCustomer;
-        }   
+        }
+
+        public static void PrintStationsWithOpenSlots()
+        {
+            for (int i = 0; i < DalObject.GetStationId(); i++)
+            {
+                if (DalObject.GetStation(i).AvailableChargeSlots > 0)
+                    Console.WriteLine(DalObject.GetStation(i).ToString());
+            }
+        }
     }
 }
 

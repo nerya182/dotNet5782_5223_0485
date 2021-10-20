@@ -40,7 +40,7 @@ namespace DalObject
             {
                 Id = Config.newStationId,
                 Name= "Tachana Merkazit",
-                ChargeSlots = 10,
+                AvailableChargeSlots = 10,
                 Lattitude = 31.78907,
                 Longitude = 35.20319
             };
@@ -50,7 +50,7 @@ namespace DalObject
             {
                 Id=Config.newStationId,
                 Name= "Shuk Machane Yehudah",
-                ChargeSlots = 10,
+                AvailableChargeSlots = 10,
                 Lattitude = 31.78489,
                 Longitude = 35.21257
             };

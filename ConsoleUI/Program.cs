@@ -74,7 +74,7 @@ namespace ConsoleUI
                             DalObject.DalObject.AddCustomer(Id,name,phone,Longitude,Lattitude);
                             break;
                         case 'd':
-                            Id = DalObject.DalObject.GetNewParcelId();
+                            Id = DalObject.DalObject.GetParcelId();
                             Console.WriteLine("Enter a sending customer ID number\n");
                             SenderId = int.Parse(Console.ReadLine());
                             Console.WriteLine("Enter a receives Customer  ID number\n");
@@ -219,7 +219,30 @@ namespace ConsoleUI
                     switch (pick)
                     {
                         case 's':
-                            for (int i = 0; i < )
+                            for (int i = 0; i < DalObject.DalObject.GetStationId(); i++ )
+                                Console.WriteLine(DalObject.DalObject.GetStation(i).ToString());
+                            break;
+                        case 'd':
+                            for (int i = 0; i < DalObject.DalObject.GetDroneId(); i++)
+                                Console.WriteLine(DalObject.DalObject.GetDrone(i).ToString());
+                            break;
+                        case 'c':
+                            for (int i = 0; i < DalObject.DalObject.GetCustomerId(); i++)
+                                Console.WriteLine(DalObject.DalObject.GetCustomer(i).ToString());
+                            break;
+                        case 'p':
+                            for (int i = 0; i < DalObject.DalObject.GetParcelId(); i++)
+                                Console.WriteLine(DalObject.DalObject.GetParcel(i).ToString());
+                            break;
+                        case 'f':
+                            for(int i =0; i < DalObject.DalObject.GetParcelId(); i++)
+                            {
+                                if(DalObject.DalObject.GetParcel(i).DroneId == -1)
+                                    Console.WriteLine(DalObject.DalObject.GetParcel(i).ToString());
+                            }
+                            break;
+                        case 'o':
+                            DalObject.DalObject.PrintStationsWithOpenSlots();
                                 break;
                     }
 
