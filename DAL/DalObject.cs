@@ -62,9 +62,8 @@ namespace DalObject
             stations[Config.newStationId++] = newStation;
         }
 
-        public static void addDrone(int myId, string myModel, WeightCategories myMaxWeight, DroneStatuses myStatuses,  double myBattery)
+        public static void addDrone(Drone newDrone)
         {
-            Drone newDrone = new Drone() { Id = myId, Model = myModel, MaxWeight = myMaxWeight, Status = myStatuses, Battery = myBattery };
             drones[Config.newDroneId++] = newDrone;
         }
 
@@ -93,9 +92,9 @@ namespace DalObject
             parcels[ID].PickedUp = DateTime.Now;
         }
 
-        public static void addParcel(int myId, int SenderId, int TargetId, WeightCategories myMaxWeight, Priorities myPriority,int myDroneId, DateTime CreatePackage)
+        public static void addParcel(Parcel newParcel)
         {
-            Parcel newParcel = new Parcel() { Id = myId, SenderId = SenderId, TargetId = TargetId, Weight = myMaxWeight, Priority = myPriority,DroneId=myDroneId};
+            
             parcels[myId] = newParcel;
             Config.newParcelId++;
         }
@@ -145,9 +144,8 @@ namespace DalObject
             }
             // need to add yeshut of DroneCharge but don't know how to save it
         }
-        public static void AddCustomer(int myId, string myName, string myPhone,Double myLongitude, double myLattitude)
+        public static void AddCustomer(Customer newCustomer)
         {
-            Customer newCustomer = new Customer() {Id=myId,Name=myName,Phone=myPhone,Longitude=myLongitude,Lattitude=myLattitude };
             customers[Config.newCustomerId++] = newCustomer;
         }
 

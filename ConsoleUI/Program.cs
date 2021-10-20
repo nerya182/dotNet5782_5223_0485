@@ -35,56 +35,16 @@ namespace ConsoleUI
                     switch (input)
                     {
                         case 'a':
-                            Station newStation = new Station();
-                            Console.WriteLine("Enter a unique ID number of staion\n");
-                            newStation.Id = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Enter the name of the station\n");
-                            newStation.Name =Console.ReadLine();
-                            Console.WriteLine("Enter the longitude of the station\n");
-                            newStation.Longitude = double.Parse(Console.ReadLine());
-                            Console.WriteLine("Enter the Lattitude of the station\n");
-                            newStation.Lattitude = double.Parse(Console.ReadLine());
-                            Console.WriteLine("Enter the number of charging points available at the station\n");
-                            newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
-                            DalObject.DalObject.AddStation(newStation);
+                            AddStation();
                             break;
                         case 'b':
-                            Console.WriteLine("Enter a unique ID number\n");
-                            Id = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Insert the model of the drone\n");
-                            model = Console.ReadLine();
-                            Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy\n");
-                            myMaxWeight = (WeightCategories)int.Parse(Console.ReadLine());
-                            Console.WriteLine("Enter the condition of the drone 1- Available ,2- Delivery ,3-Charging\n");
-                            myStatuses = (DroneStatuses)int.Parse(Console.ReadLine();
-                            Console.WriteLine("Enter the battery status (in number)\n");
-                            Battery= int.Parse(Console.ReadLine());
-                            DalObject.DalObject.addDrone(Id,model,myMaxWeight,myStatuses,Battery);
+                            addDrone();
                             break;
                         case 'c':
-                            Console.WriteLine("Enter a unique ID number\n");
-                            Id = int.Parse(Console.ReadLine());
-                            Console.WriteLine(" Enter the customer name\n");
-                            name = Console.ReadLine();
-                            Console.WriteLine(" Enter a phone number\n");
-                            phone = Console.ReadLine();
-                            Console.WriteLine("enter longitude\n");
-                            Longitude = double.Parse(Console.ReadLine());
-                            Console.WriteLine("enter Lattitude\n");
-                            Lattitude = double.Parse(Console.ReadLine());
-                            DalObject.DalObject.AddCustomer(Id,name,phone,Longitude,Lattitude);
+                            AddCustomer();
                             break;
                         case 'd':
-                            Id = DalObject.DalObject.GetParcelId();
-                            Console.WriteLine("Enter a sending customer ID number\n");
-                            SenderId = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Enter a receives Customer  ID number\n");
-                            TargetId = int.Parse(Console.ReadLine());
-                            Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy\n");
-                            myMaxWeight = (WeightCategories)int.Parse(Console.ReadLine());
-                            Console.WriteLine("enter  1-Regular , 2-Express , 3-Urgent\n");
-                            myPriority = (Priorities)int.Parse(Console.ReadLine());
-                            DalObject.DalObject.addParcel(Id, SenderId, TargetId, myMaxWeight, myPriority,-1, DateTime.Now);
+                            addParcel();
                             break;
                     }
                     break;
@@ -171,10 +131,70 @@ namespace ConsoleUI
         }
         public static void AddStation()
         {
-
+            Station newStation = new Station();
+            Console.WriteLine("Enter a unique ID number of staion\n");
+            newStation.Id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the name of the station\n");
+            newStation.Name = Console.ReadLine();
+            Console.WriteLine("Enter the longitude of the station\n");
+            newStation.Longitude = double.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the Lattitude of the station\n");
+            newStation.Lattitude = double.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the number of charging points available at the station\n");
+            newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
+            DalObject.DalObject.AddStation(newStation);
+        }
+        public static void addDrone()
+        {
+            Drone newDrone = new Drone();
+            Console.WriteLine("Enter a unique ID number\n");
+            newDrone.Id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Insert the model of the drone\n");
+            newDrone.Model = Console.ReadLine();
+            Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy\n");
+            newDrone.MaxWeight = (WeightCategories)int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the condition of the drone 1- Available ,2- Delivery ,3-Charging\n");
+            newDrone.Status = (DroneStatuses)int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the battery status (in number)\n");
+            newDrone.Battery = int.Parse(Console.ReadLine());
+            DalObject.DalObject.addDrone(newDrone);
+        }
+        public static void AddCustomer()
+        {
+            Customer newCustomer = new Customer();
+            Console.WriteLine("Enter a unique ID number\n");
+            newCustomer.Id = int.Parse(Console.ReadLine());
+            Console.WriteLine(" Enter the customer name\n");
+            newCustomer.Name = Console.ReadLine();
+            Console.WriteLine(" Enter a phone number\n");
+            newCustomer.Phone = Console.ReadLine();
+            Console.WriteLine("enter longitude\n");
+            newCustomer.Longitude = double.Parse(Console.ReadLine());
+            Console.WriteLine("enter Lattitude\n");
+            newCustomer.Lattitude = double.Parse(Console.ReadLine());
+            DalObject.DalObject.AddCustomer(newCustomer);
+        }
+        public static void addParcel()
+        {
+            Parcel newParcel = new Parcel();
+            newParcel.Id = DalObject.DalObject.GetParcelId();
+            Console.WriteLine("Enter a sending customer ID number\n");
+            newParcel.SenderId = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter a receives Customer  ID number\n");
+            newParcel.TargetId = int.Parse(Console.ReadLine());
+            Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy\n");
+            newParcel.Weight = (WeightCategories)int.Parse(Console.ReadLine());
+            Console.WriteLine("enter  1-Regular , 2-Express , 3-Urgent\n");
+            newParcel.Priority = (Priorities)int.Parse(Console.ReadLine());
+            newParcel.Creating = DateTime.Now;
+            newParcel.DroneId = -1;
+            DalObject.DalObject.addParcel(newParcel);
         }
     }
-
+       
+        
+    
+   
 }
 
 
