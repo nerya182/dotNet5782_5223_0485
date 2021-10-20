@@ -8,7 +8,7 @@ using IDAL.DO;
 
 namespace DalObject
 {
-    public class DataSource
+    public  class DataSource
     {
         internal class Config 
         {
@@ -33,6 +33,7 @@ namespace DalObject
             CreateDrones();
             CreateCustomers();
             CreateParcels();
+            CreateDroneCharge();
         }
 
         
@@ -40,8 +41,8 @@ namespace DalObject
         {
             stations[Config.newStationId] = new Station()
             {
-                Id = Config.newStationId,
-                Name= "Tachana Merkazit",
+                Id = 56,
+                Name = "Tachana Merkazit",
                 AvailableChargeSlots = 10,
                 Lattitude = 31.78907,
                 Longitude = 35.20319
@@ -50,7 +51,7 @@ namespace DalObject
 
             stations[Config.newStationId]=new Station()
             {
-                Id=Config.newStationId,
+                Id=67,
                 Name= "Shuk Machane Yehudah",
                 AvailableChargeSlots = 10,
                 Lattitude = 31.78489,
@@ -77,7 +78,7 @@ namespace DalObject
             for (int i = 0; i < 10; i++, Config.newCustomerId++)
             {
                 CustomerName customerName = (CustomerName)R.Next(0, 11);
-                Customer customer = new Customer() { Id = Config.newDroneId, Name = customerName.ToString(), Phone = "050" + R.Next(111111, 999999), Lattitude = R.Next(3000000, 3700000), Longitude = R.Next(3000000, 3700000) };
+                Customer customer = new Customer() { Id = R.Next(100000000,1000000000), Name = customerName.ToString(), Phone = "050" + R.Next(111111, 999999), Lattitude = R.Next(3000000, 3700000), Longitude = R.Next(3000000, 3700000) };
                 customers[i] = customer;
             }
         }
@@ -89,7 +90,7 @@ namespace DalObject
             {
                 Priorities priorities = (Priorities)R.Next(1, 3);
                 WeightCategories weightCategories = (WeightCategories)R.Next(1, 3);
-                Parcel parcel = new Parcel() { Id = Config.newParcelId, SenderId = R.Next(), TargetId = R.Next(), DroneId = R.Next(0,Config.newDroneId), Weight = weightCategories, Priority = priorities, Creating = DateTime.Now, Delivered = DateTime.Now
+                Parcel parcel = new Parcel() { Id = Config.newParcelId, SenderId = R.Next(), TargetId = R.Next(), DroneId =R.Next(-1,Config.newDroneId+1), Weight = weightCategories, Priority = priorities, Creating = DateTime.Now, Delivered = DateTime.Now
                     , PickedUp = DateTime.Now, Affiliation = DateTime.Now };
                 parcels[i] = parcel;
             }

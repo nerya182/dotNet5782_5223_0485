@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using IDAL.DO;
 
 namespace ConsoleUI
@@ -76,11 +77,11 @@ namespace ConsoleUI
                         }
                         break;
                     case CHOICE.DISPLAY:
-                        Console.WriteLine(" What would you like to do?" +
-                           "1- Base Station display\n" +
-                           "2- Drone display \n" +
-                           "3- Customer display \n" +
-                           "4- Send Drone display \n" 
+                        Console.WriteLine("What would you like to do?\n" +
+                           "1- Base Stations display\n" +
+                           "2- Drones display \n" +
+                           "3- Customers display \n" +
+                           "4- parcels display \n" 
                            );
                         int.TryParse(Console.ReadLine(), out info);
                         int id;
@@ -89,29 +90,34 @@ namespace ConsoleUI
                             case 1:
                                 Console.WriteLine(" Enter the station ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                DalObject.DalObject.BaseStationDisplay(id);
+                                PrintAll(DalObject.DalObject.BaseStationDisplay(id));
                                 break;
                             case 2:
                                 Console.WriteLine(" Enter the Drone ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                DalObject.DalObject.DroneDisplay(id);
+                                PrintAll(DalObject.DalObject.DroneDisplay(id));
                                 break;
                             case 3:
                                 Console.WriteLine(" Enter the Customer ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                DalObject.DalObject.CustomerDisplay(id);
+                                PrintAll(DalObject.DalObject.CustomerDisplay(id));
                                 break;
                             case 4:
                                 Console.WriteLine("Enter a parcel ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                DalObject.DalObject.ParcelDisplay(id);
+                                PrintAll(DalObject.DalObject.ParcelDisplay(id));
                                 break;
 
                         }
                         break;
                     case CHOICE.VIEW_LISTS:
                         Console.WriteLine("Which List would you like to view? \n" +
-                            "s - Sations" + "d - Drones" + "c - Customers" + "p - Parcels" + "f - Parcels that have not yet been affiliated with a drone" + " o - Stations with open charge slots \n");
+                            "s - Sations\n" + 
+                            "d - Drones\n" + 
+                            "c - Customers\n" + 
+                            "p - Parcels\n" + 
+                            "f - Parcels that have not yet been affiliated with a drone\n" + 
+                            "o - Stations with open charge slots \n");
                         char pick;
                         string st;
                         char.TryParse(Console.ReadLine(), out pick);
@@ -119,37 +125,36 @@ namespace ConsoleUI
                         {
                            
                             case 's':
-                                for (int i = 0; i < DalObject.DalObject.GetStationId(); i++)
-                                {
-                                    st = DalObject.DalObject.GetStation(i).ToString();
-                                    Console.WriteLine(st);
-                                }
-                                    
+                                List<Station> PrintStaion = new List<Station>();
+                                PrintStaion= DalObject.DalObject.PrintBaseStation();
+                                PrintStaion.ForEach(PrintAll<Station>);
                                 break;
                             case 'd':
-                                for (int i = 0; i < DalObject.DalObject.GetDroneId(); i++)
-                                    Console.WriteLine(DalObject.DalObject.GetDrone(i).ToString());
+                                List<Drone> PrintDrone = new List<Drone>();
+                                PrintDrone = DalObject.DalObject.PrintDrone();
+                                PrintDrone.ForEach(PrintAll<Drone>);
                                 break;
                             case 'c':
-                                for (int i = 0; i < DalObject.DalObject.GetCustomerId(); i++)
-                                    Console.WriteLine(DalObject.DalObject.GetCustomer(i).ToString());
+                                List<Customer> PrintCustomer = new List<Customer>();
+                                PrintCustomer = DalObject.DalObject.PrintCustomer();
+                                PrintCustomer.ForEach(PrintAll<Customer>);
                                 break;
                             case 'p':
-                                for (int i = 0; i < DalObject.DalObject.GetParcelId(); i++)
-                                    Console.WriteLine(DalObject.DalObject.GetParcel(i).ToString());
+                                List<Parcel> PrintParcel = new List<Parcel>();
+                                PrintParcel = DalObject.DalObject.PrintParcel();
+                                PrintParcel.ForEach(PrintAll<Parcel>);
                                 break;
                             case 'f':
-                                for (int i = 0; i < DalObject.DalObject.GetParcelId(); i++)
-                                {
-                                    if (DalObject.DalObject.GetParcel(i).DroneId == -1)
-                                        Console.WriteLine(DalObject.DalObject.GetParcel(i).ToString());
-                                }
+                                List<Parcel> PrintParcelOnAir = new List<Parcel>();
+                                PrintParcelOnAir = DalObject.DalObject.PrintParcelOnAir();
+                                PrintParcelOnAir.ForEach(PrintAll<Parcel>);
                                 break;
                             case 'o':
-                                DalObject.DalObject.PrintStationsWithOpenSlots();
+                                List<Station> PrintStationsWithOpenSlots = new List<Station>();
+                                PrintStationsWithOpenSlots = DalObject.DalObject.PrintStationsWithOpenSlots();
+                                PrintStationsWithOpenSlots.ForEach(PrintAll<Station>);
                                 break;
                         }
-
                         break;
                     case CHOICE.EXIT:
                         break;
@@ -167,6 +172,16 @@ namespace ConsoleUI
             }
 
         }
+
+        public static void PrintAll<T>(T t)
+        {
+            Console.WriteLine(t);
+        }
+        public static void Print<T>(T t)
+        {
+
+        }
+
 
         public static void AddStation()
         {

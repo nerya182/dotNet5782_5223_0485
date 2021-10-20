@@ -67,16 +67,17 @@ namespace DalObject
         public static void Affiliate()
         {
             Console.WriteLine(" What is the Parcel Id? \n");
-            int ID;
-            int.TryParse(Console.ReadLine(), out ID);
+            int id;
+            int.TryParse(Console.ReadLine(), out id);
             //Parcel parcel = GetParcel(ID);
             for (int i = 0; i < Config.newDroneId; i++)
             {
                 if (drones[i].Status == DroneStatuses.Available)
                 {
                     drones[i].Status = DroneStatuses.Delivery;
-                    parcels[ID].DroneId = drones[i].Id;
-                    break;
+                    parcels[id].DroneId = drones[i].Id;
+                    parcels[id].Affiliation = DateTime.Now ;
+                    return;
                 }
             }
         }
@@ -150,15 +151,6 @@ namespace DalObject
             customers[Config.newCustomerId++] = newCustomer;
         }
 
-        public static void PrintStationsWithOpenSlots()
-        {
-            for (int i = 0; i < DalObject.GetStationId(); i++)
-            {
-                if (DalObject.GetStation(i).AvailableChargeSlots > 0)
-                    Console.WriteLine(DalObject.GetStation(i).ToString());
-            }
-        }
-
         public static void ReleaseDroneFromCharger()
         {
             Console.WriteLine(" What is the Drone Id? \n");
@@ -189,50 +181,107 @@ namespace DalObject
             }
         }
 
-        public static void ParcelDisplay(int id)
+        public static List<Station> PrintBaseStation()
         {
-            string st;
-            st=parcels[id].ToString()+"\n";
-            Console.WriteLine(st);
+            List<Station> PrintStaion = new List<Station>();
+            for (int i = 0; i < GetStationId(); i++)
+            {
+                PrintStaion.Add(GetStation(i));
+            }
+            return PrintStaion;
+
         }
 
-        public static void BaseStationDisplay(int id)
+        public static List<Drone> PrintDrone()
         {
-            string st;
-            for (int i = 0; i <= Config.newStationId; i++)
+            List<Drone> PrintDrone = new List<Drone>();
+            for (int i = 0; i < GetDroneId(); i++)
             {
-                if (DataSource.stations[i].Id == id)
-                {
-                    st=DataSource.stations[i].ToString()+"\n";
-                    Console.WriteLine(st);
-                    return;
-                }
+                PrintDrone.Add(GetDrone(i));
             }
+            return PrintDrone;
         }
 
-        public static void DroneDisplay(int id)
+        public static List<Customer> PrintCustomer()
         {
-            for (int i = 0; i <= Config.newDroneId; i++)
+            List<Customer> PrintCustomer = new List<Customer>();
+            for (int i = 0; i < GetCustomerId(); i++)
             {
-                if (DataSource.drones[i].Id == id)
-                {
-                    DataSource.drones[i].ToString();
-                    return;
-                }
+                PrintCustomer.Add(GetCustomer(i));
             }
+            return PrintCustomer;
         }
 
-        public static void CustomerDisplay(int id)
+        public static List<Parcel> PrintParcel()
         {
-            for (int i = 0; i <= Config.newCustomerId; i++)
+            List<Parcel> PrintParcel = new List<Parcel>();
+            for (int i = 0; i < GetParcelId(); i++)
             {
-                if (DataSource.customers[i].Id == id)
-                {
-                    DataSource.customers[i].ToString();
-                    return;
-                }
+                PrintParcel.Add(GetParcel(i));
             }
+            return PrintParcel;
         }
+
+        public static List<Parcel> PrintParcelOnAir()
+        {
+            List<Parcel> PrintParcelOnAi = new List<Parcel>();
+            for (int i = 0; i < GetParcelId(); i++)
+            {
+                if (GetParcel(i).DroneId == -1)
+                    PrintParcelOnAi.Add(GetParcel(i));
+            }
+            return PrintParcelOnAi;
+        }
+
+        public static Parcel ParcelDisplay(int id)
+        {
+            return GetParcel(id);
+        }
+
+        public static Station BaseStationDisplay(int id)
+        {
+            int i;
+            for (i = 0; i < Config.newStationId; i++)
+            {
+                if (GetStation(i).Id == id)
+                    break;
+            }
+            return GetStation(i);
+        }
+
+        public static List<Station> PrintStationsWithOpenSlots()
+        {
+            List<Station> PrintCustomer = new List<Station>();
+            for (int i = 0; i < GetStationId(); i++)
+            {
+                if (GetStation(i).AvailableChargeSlots>0)
+                    PrintCustomer.Add(GetStation(i));
+            }
+            return PrintCustomer;
+        }
+
+        public static Drone DroneDisplay(int id)
+        {
+            int i;
+            for ( i = 0; i < Config.newDroneId; i++)
+            {
+                if (GetDrone(i).Id == id)
+                    break;
+            }
+            return GetDrone(i);
+        }
+
+        public static Customer CustomerDisplay(int id)
+        {
+            int i;
+            for ( i = 0; i < Config.newCustomerId; i++)
+            {
+                if (GetCustomer(i).Id == id)
+                    break;
+            }
+            return GetCustomer(i);
+        }
+      
 
 
 
