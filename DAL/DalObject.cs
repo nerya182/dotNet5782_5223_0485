@@ -10,7 +10,7 @@ namespace DalObject
 {
     public class DalObject
     {
-        private static object sataion;
+        
 
         public DalObject()
         {
@@ -57,41 +57,17 @@ namespace DalObject
             return DataSource.parcels[parcelId].Delivered();
         }
 
-
-
-
-        public static void AddStation()
+        public static void AddStation(int myId,string  myName, double myLongitude,double myLattitude,  int myAvailableChargeSlots)
         {
-            Station newStation = new Station();
-
-            newStation.Id = Config.newStationId;
-
-            Console.WriteLine("enter name a new staion\n");
-            newStation.Name = Console.ReadLine();
-
-            Console.WriteLine("Enter the longitude of the station\n");
-            newStation.Longitude = double.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter the Lattitude of the station\n");
-            newStation.Lattitude = double.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter the number of charging points available at the station\n");
-            newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
-
+            Station newStation = new Station() { Id=myId, Name=myName, Longitude=myLongitude, Lattitude=myLattitude, AvailableChargeSlots=myAvailableChargeSlots};
             stations[Config.newStationId++] = newStation;
         }
 
-        public static void addDrone()
+        public static void addDrone(int myId, string myModel, WeightCategories myMaxWeight, DroneStatuses myStatuses,  double myBattery)
         {
             Drone newDrone = new Drone() { Id = myId, Model = myModel, MaxWeight = myMaxWeight, Status = myStatuses, Battery = myBattery };
             drones[Config.newDroneId++] = newDrone;
         }
-
-
-
-
-
-
 
         public static void Affiliate()
         {
@@ -118,12 +94,12 @@ namespace DalObject
             parcels[ID].PickedUp = DateTime.Now;
         }
 
-        public static void addParcel(int myId, int SenderId, int TargetId, WeightCategories myMaxWeight, Priorities myPriority, DateTime CreatePackage)
+        public static void addParcel(int myId, int SenderId, int TargetId, WeightCategories myMaxWeight, Priorities myPriority,int myDroneId, DateTime CreatePackage)
         {
-            Parcel newParcel = new Parcel() { Id = myId, SenderId = SenderId, TargetId = TargetId, Weight = myMaxWeight, Priority = myPriority, da };
+            Parcel newParcel = new Parcel() { Id = myId, SenderId = SenderId, TargetId = TargetId, Weight = myMaxWeight, Priority = myPriority,DroneId=myDroneId};
             parcels[myId] = newParcel;
+            Config.newParcelId++;
         }
-
 
         public static int GetStationId()
         {
@@ -142,12 +118,6 @@ namespace DalObject
         {
             return DataSource.Config.newParcelId;
         }
-
-
-
-
-
-
         public static void SupplyParcel()
         {
             Console.WriteLine(" What is the Parcel Id? \n");
@@ -156,7 +126,6 @@ namespace DalObject
             drones[parcels[ID].DroneId].Status = DroneStatuses.Available;
             parcels[ID].Delivered = DateTime.Now;
         }
-
         public static void SendDroneToCharge()
         {
             Console.WriteLine(" What is the Drone Id? \n");
@@ -166,8 +135,6 @@ namespace DalObject
             PrintStationsWithOpenSlots();
 
         }
-
-
         public static void AddCustomer(int myId, string myName, string myPhone,Double myLongitude, double myLattitude)
         {
             Customer newCustomer = new Customer() {Id=myId,Name=myName,Phone=myPhone,Longitude=myLongitude,Lattitude=myLattitude };
