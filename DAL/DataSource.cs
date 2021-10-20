@@ -40,7 +40,7 @@ namespace DalObject
             {
                 Id = Config.newStationId,
                 Name= "Tachana Merkazit",
-                ChargeSlots = 10,
+                AvailableChargeSlots = 10,
                 Lattitude = 31.78907,
                 Longitude = 35.20319
             };
@@ -50,7 +50,7 @@ namespace DalObject
             {
                 Id=Config.newStationId,
                 Name= "Shuk Machane Yehudah",
-                ChargeSlots = 10,
+                AvailableChargeSlots = 10,
                 Lattitude = 31.78489,
                 Longitude = 35.21257
             };
@@ -87,7 +87,7 @@ namespace DalObject
             {
                 Priorities priorities = (Priorities)R.Next(1, 3);
                 WeightCategories weightCategories = (WeightCategories)R.Next(1, 3);
-                Parcel parcel = new Parcel() { Id = Config.newParcelId, SenderId = R.Next(), TargetId = R.Next(), DroneId = R.Next(0,Config.newDroneId), Weight = weightCategories, Priority = priorities, Requested = DateTime.Now, Delivered = DateTime.Now
+                Parcel parcel = new Parcel() { Id = Config.newParcelId, SenderId = R.Next(), TargetId = R.Next(), DroneId = R.Next(-1,Config.newDroneId), Weight = weightCategories, Priority = priorities, Requested = DateTime.Now, Delivered = DateTime.Now
                     , PickedUp = DateTime.Now, Scheduled = DateTime.Now };
                 parcels[i] = parcel;
             }

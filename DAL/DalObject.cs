@@ -57,10 +57,8 @@ namespace DalObject
             return DataSource.parcels[parcelId].Delivered();
         }
 
-        public static int GetNewParcelId()
-        {
-            return DataSource.Config.newParcelId;
-        }
+
+
 
         public static void AddStation()
         {
@@ -70,19 +68,19 @@ namespace DalObject
 
             Console.WriteLine("enter name a new staion\n");
             newStation.Name = Console.ReadLine();
-           
+
             Console.WriteLine("Enter the longitude of the station\n");
             newStation.Longitude = double.Parse(Console.ReadLine());
-            
+
             Console.WriteLine("Enter the Lattitude of the station\n");
             newStation.Lattitude = double.Parse(Console.ReadLine());
-            
+
             Console.WriteLine("Enter the number of charging points available at the station\n");
-            newStation.ChargeSlots = int.Parse(Console.ReadLine());
+            newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
 
             stations[Config.newStationId++] = newStation;
         }
-         
+
         public static void addDrone()
         {
             Drone newDrone = new Drone();
@@ -107,13 +105,12 @@ namespace DalObject
             drones[Config.newDroneId++] = newDrone;
         }
 
-      
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
         public static void Affiliate()
         {
             Console.WriteLine(" What is the Parcel Id? \n");
@@ -139,25 +136,30 @@ namespace DalObject
             parcels[ID].PickedUp = DateTime.Now;
         }
 
-        public static void addParcel(int myId, int SenderId,int TargetId, WeightCategories myMaxWeight, Priorities myPriority,DateTime CreatePackage)
+        public static void addParcel(int myId, int SenderId, int TargetId, WeightCategories myMaxWeight, Priorities myPriority, DateTime CreatePackage)
         {
-            Parcel newParcel = new Parcel() { Id=myId,SenderId=SenderId,TargetId=TargetId,Weight=myMaxWeight,Priority=myPriority,da};
+            Parcel newParcel = new Parcel() { Id = myId, SenderId = SenderId, TargetId = TargetId, Weight = myMaxWeight, Priority = myPriority, da };
             parcels[myId] = newParcel;
         }
 
 
+        public static int GetStationId()
+        {
+            return DataSource.Config.newStationId;
+        }
 
-
-
-
-
-
-
-
-
-
-
-
+        public static int GetDroneId()
+        {
+            return DataSource.Config.newDroneId;
+        }
+        public static int GetCustomerId()
+        {
+            return DataSource.Config.newCustomerId;
+        }
+        public static int GetParcelId()
+        {
+            return DataSource.Config.newParcelId;
+        }
 
 
 
@@ -175,6 +177,11 @@ namespace DalObject
 
         public static void SendDroneToCharge()
         {
+            Console.WriteLine(" What is the Drone Id? \n");
+            int ID;
+            int.TryParse(Console.ReadLine(), out ID);
+            Console.WriteLine(" Which Sattion would you like to charge your Drone? \n");
+            PrintStationsWithOpenSlots();
 
         }
 
@@ -199,13 +206,16 @@ namespace DalObject
 
             customers[Config.newCustomerId++] = newCustomer;
         }
+
+        public static void PrintStationsWithOpenSlots()
+        {
+            for (int i = 0; i < DalObject.GetStationId(); i++)
+            {
+                if (DalObject.GetStation(i).AvailableChargeSlots > 0)
+                    Console.WriteLine(DalObject.GetStation(i).ToString());
+            }
+        }
     }
-
-
-    
-
-
-
 }
 
 
