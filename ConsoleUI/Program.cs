@@ -25,12 +25,6 @@ namespace ConsoleUI
                                      "c-Add a new Customer.\n" +
                                      "d-Add a new Parcel.\n");
                     char input;
-                    int Id, SenderId, TargetId, Battery, AvailableChargeSlots;
-                    string name, phone,model;
-                    double Lattitude, Longitude;
-                    WeightCategories myMaxWeight;
-                    DroneStatuses myStatuses;
-                    Priorities myPriority;
                     char.TryParse(Console.ReadLine(), out input);
                     switch (input)
                     {

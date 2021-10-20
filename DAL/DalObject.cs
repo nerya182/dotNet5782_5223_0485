@@ -94,9 +94,7 @@ namespace DalObject
 
         public static void addParcel(Parcel newParcel)
         {
-            
-            parcels[myId] = newParcel;
-            Config.newParcelId++;
+            parcels[Config.newParcelId++] = newParcel;  
         }
 
         public static int GetStationId()
