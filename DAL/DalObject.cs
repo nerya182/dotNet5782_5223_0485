@@ -9,7 +9,7 @@ using static DalObject.DataSource;
 namespace DalObject 
 {
     public class DalObject
-    {       
+    {
         public DalObject()
         {
             DataSource.Initialize();
@@ -47,7 +47,7 @@ namespace DalObject
             return DataSource.Parcels[parcelId].Delivered;
         }
         public static void AddStation(Station newStation) /// Adding a station to the next open index
-        { 
+        {
             Stations[Config.NewStationId++] = newStation;
         }
         public static void AddDrone(Drone newDrone)  /// Adding a drone to the next open index
@@ -73,7 +73,7 @@ namespace DalObject
                 {
                     Drones[i].Status = DroneStatuses.Delivery;
                     Parcels[id].DroneId = Drones[i].Id;
-                    Parcels[id].Affiliation = DateTime.Now ;
+                    Parcels[id].Affiliation = DateTime.Now;
                     return;
                 }
             }
@@ -86,7 +86,7 @@ namespace DalObject
             Drones[Parcels[ID].DroneId].Status = DroneStatuses.Delivery;
             Parcels[ID].PickedUp = DateTime.Now;
         }
-        
+
         public static int GetStationId()
         {
             return DataSource.Config.NewStationId;
@@ -111,45 +111,20 @@ namespace DalObject
             Drones[Parcels[ID].DroneId].Status = DroneStatuses.Available;
             Parcels[ID].Delivered = DateTime.Now;
         }
-        public static void SendDroneToCharge()
+
+        public static void ReleaseDroneFromCharger(int DroneId)
         {
-            Console.WriteLine("What is the Drone Id?");
-            int DroneId, StationId;
-            int.TryParse(Console.ReadLine(), out DroneId);
-            for (int i = 0; i < Config.NewDroneId; i++)
+            for (int i = 0; i < Config.NewDroneChargeId; i++)
             {
-                if (Drones[i].Id == DroneId)
-                    Drones[i].Status = DroneStatuses.Charging;
-            }
-            Console.WriteLine("Which Sattion would you like to charge your Drone? \n");
-            int.TryParse(Console.ReadLine(), out StationId);
-            PrintStationsWithOpenSlots();
-            for(int i = 0; i<Config.NewStationId; i++)
-            {
-                if(Stations[i].Id == StationId)
-                    Stations[i].AvailableChargeSlots--;
-            }
-            DroneCharge droneCharge = new DroneCharge();  // adding a DroneCharge
-            droneCharge.StationId = StationId;
-            droneCharge.DroneId = DroneId;
-            DroneCharges[Config.NewDroneChargeId++] = droneCharge;
-        }
-        
-        public static void ReleaseDroneFromCharger()
-        {
-            Console.WriteLine("What is the Drone Id? \n");
-            int DroneId;
-            int.TryParse(Console.ReadLine(), out DroneId);
-            for(int i = 0; i < Config.NewDroneChargeId; i++)
-            {
-                if(DroneCharges[i].DroneId == DroneId)
-                {                   
+                if (DroneCharges[i].DroneId == DroneId)
+                {
                     for (int k = 0; i < Config.NewStationId; k++)
                     {
                         if (DroneCharges[i].StationId == Stations[k].Id)
                         {
-                            Stations[k].AvailableChargeSlots--;   
-                        }                           
+                            Stations[k].AvailableChargeSlots--;
+                            break;
+                        }
                     }
                     DroneCharges[i].DroneId = -1;
                     DroneCharges[i].StationId = -1;
@@ -160,8 +135,9 @@ namespace DalObject
                 if (Drones[i].Id == DroneId)
                 {
                     Drones[i].Status = DroneStatuses.Available;
+                    Drones[i].Battery = 100;
                     break;
-                }                   
+                }
             }
         }
         public static List<Station> PrintBaseStation()
@@ -237,7 +213,7 @@ namespace DalObject
             List<Station> PrintCustomer = new List<Station>();
             for (int i = 0; i < GetStationId(); i++)
             {
-                if (GetStation(i).AvailableChargeSlots>0)
+                if (GetStation(i).AvailableChargeSlots > 0)
                     PrintCustomer.Add(GetStation(i));
             }
             return PrintCustomer;
@@ -246,7 +222,7 @@ namespace DalObject
         public static Drone DroneDisplay(int id)
         {
             int i;
-            for ( i = 0; i < Config.NewDroneId; i++)
+            for (i = 0; i < Config.NewDroneId; i++)
             {
                 if (GetDrone(i).Id == id)
                     break;
@@ -257,12 +233,39 @@ namespace DalObject
         public static Customer CustomerDisplay(int id)
         {
             int i;
-            for ( i = 0; i < Config.NewCustomerId; i++)
+            for (i = 0; i < Config.NewCustomerId; i++)
             {
                 if (GetCustomer(i).Id == id)
                     break;
             }
             return GetCustomer(i);
+        }
+
+        public static int FindDroneToCharge(int DroneId)
+        {
+            int i;
+            for ( i = 0; i<Config.NewDroneId ; i++)
+            {
+                if (Drones[i].Id == DroneId)
+                {
+                    Drones[i].Status = DroneStatuses.Charging;
+                    break;
+                }
+            }
+            return i;
+        }
+
+        public static void AddDroneToCharge(DroneCharge droneCharge,int StationId)
+        {
+            for (int i = 0; i < Config.NewStationId; i++)
+            {
+                if (Stations[i].Id== StationId)
+                {
+                    Stations[i].AvailableChargeSlots--;
+                    break;
+                }
+            }
+            DroneCharges[Config.NewDroneChargeId++] = droneCharge;
         }
     }
 }

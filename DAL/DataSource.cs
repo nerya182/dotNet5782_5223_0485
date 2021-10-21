@@ -64,7 +64,7 @@ namespace DalObject
             {
                 NameDrone nameDrone = (NameDrone)R.Next(0,9);
                 WeightCategories weightCategories = (WeightCategories)R.Next(1, 3);
-                Drone drone = new Drone() { Id = Config.NewDroneId, Model = nameDrone.ToString(), MaxWeight = weightCategories, Status = DroneStatuses.Available, Battery = 100 };
+                Drone drone = new Drone() { Id = R.Next(1000,100001), Model = nameDrone.ToString(), MaxWeight = weightCategories, Status = DroneStatuses.Available, Battery = 100 };
                 Drones[i] = drone;
             }
         }
@@ -87,16 +87,16 @@ namespace DalObject
             {
                 Priorities priorities = (Priorities)R.Next(1, 3);
                 WeightCategories weightCategories = (WeightCategories)R.Next(1, 3);
-                Parcel parcel = new Parcel() { Id = Config.NewParcelId, SenderId = R.Next(), TargetId = R.Next(), DroneId =R.Next(-1,Config.NewDroneId+1), Weight = weightCategories, Priority = priorities, Creating = DateTime.Now, Delivered = DateTime.Now
+                Parcel parcel = new Parcel() { Id = Config.NewParcelId, SenderId = R.Next(), TargetId = R.Next(), DroneId =R.Next(-1,Config.NewDroneId), Weight = weightCategories, Priority = priorities, Creating = DateTime.Now, Delivered = DateTime.Now
                     , PickedUp = DateTime.Now, Affiliation = DateTime.Now };
                 Parcels[i] = parcel;
             }
         }
 
-        private static void CreateDroneCharge()  // Creating 5 DroneCharges Randomly
+        private static void CreateDroneCharge()  // Creating 2 DroneCharges Randomly
         {
             Random R = new Random();
-            for (int i = 0; i < 5; i++, Config.NewDroneChargeId++)
+            for (int i = 0; i < 2; i++, Config.NewDroneChargeId++)
             {
                 DroneCharge droneCharge = new DroneCharge() { DroneId = R.Next(0, Config.NewDroneId), StationId = R.Next(0, Config.NewStationId) };
                 DroneCharges[i] = droneCharge;

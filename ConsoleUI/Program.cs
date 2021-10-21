@@ -47,12 +47,12 @@ namespace ConsoleUI
                         }
                         break;
                     case CHOICE.UPDATE:
-                        Console.WriteLine(" What would you like to do?\n" +
-                            "1-Affiliate Parcel to Drone?\n" +
-                            "2- Pickup Parcel with Drone? \n" +
-                            "3- Deliver Parcel to Customer? \n" +
-                            "4- Send Drone to Charge? \n" +
-                            "5- Release Drone from Charge?");
+                        Console.WriteLine("What would you like to do?\n" +
+                            "1- Affiliate Parcel to Drone\n" +
+                            "2- Pickup Parcel with Drone\n" +
+                            "3- Deliver Parcel to Customer\n" +
+                            "4- Send Drone to Charge\n" +
+                            "5- Release Drone from Charge");
                         int info;
                         int.TryParse(Console.ReadLine(), out info);
                         switch (info)
@@ -67,10 +67,10 @@ namespace ConsoleUI
                                 DalObject.DalObject.SupplyParcel();
                                 break;
                             case 4:
-                                DalObject.DalObject.SendDroneToCharge();
+                                SendDroneToCharge();
                                 break;
                             case 5:
-                                DalObject.DalObject.ReleaseDroneFromCharger();
+                                ReleaseDrone();
                                 break;
                         }
                         break;
@@ -167,6 +167,15 @@ namespace ConsoleUI
                 Enum.TryParse(Console.ReadLine(), out choice);
             }
         }
+
+        private static void ReleaseDrone()
+        {
+            Console.WriteLine("What is the Drone Id? \n");
+            int DroneId;
+            int.TryParse(Console.ReadLine(), out DroneId);
+            DalObject.DalObject.ReleaseDroneFromCharger(DroneId);
+        }
+
         public static void PrintAll<T>(T t)
         {
             Console.WriteLine(t);
@@ -231,6 +240,25 @@ namespace ConsoleUI
             newParcel.Creating = DateTime.Now;
             newParcel.DroneId = -1;
             DalObject.DalObject.AddParcel(newParcel);
+        }
+
+        public static void SendDroneToCharge()
+        {
+            Console.WriteLine("What is the Drone Id?");
+            int DroneId, StationId,index;
+            int.TryParse(Console.ReadLine(), out DroneId);
+            index=DalObject.DalObject.FindDroneToCharge(DroneId);
+
+            List<Station> StationsWithOpenSlots = new List<Station>();
+            StationsWithOpenSlots = DalObject.DalObject.PrintStationsWithOpenSlots();
+            StationsWithOpenSlots.ForEach(PrintAll<Station>);
+            
+            Console.WriteLine("Which Sattion would you like to charge your Drone?");
+            int.TryParse(Console.ReadLine(), out StationId);
+            DroneCharge droneCharge = new DroneCharge();  // adding a DroneCharge
+            droneCharge.StationId = StationId;
+            droneCharge.DroneId = DroneId;
+            DalObject.DalObject.AddDroneToCharge(droneCharge, StationId);
         }
     }   
 }
