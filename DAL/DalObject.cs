@@ -105,7 +105,7 @@ namespace DalObject
         }
         public static void SupplyParcel()
         {
-            Console.WriteLine(" What is the Parcel Id? \n");
+            Console.WriteLine("What is the Parcel Id?");
             int ID;
             int.TryParse(Console.ReadLine(), out ID);
             Drones[Parcels[ID].DroneId].Status = DroneStatuses.Available;
@@ -113,7 +113,7 @@ namespace DalObject
         }
         public static void SendDroneToCharge()
         {
-            Console.WriteLine(" What is the Drone Id? \n");
+            Console.WriteLine("What is the Drone Id?");
             int DroneId, StationId;
             int.TryParse(Console.ReadLine(), out DroneId);
             for (int i = 0; i < Config.NewDroneId; i++)
@@ -121,7 +121,7 @@ namespace DalObject
                 if (Drones[i].Id == DroneId)
                     Drones[i].Status = DroneStatuses.Charging;
             }
-            Console.WriteLine(" Which Sattion would you like to charge your Drone? \n");
+            Console.WriteLine("Which Sattion would you like to charge your Drone? \n");
             int.TryParse(Console.ReadLine(), out StationId);
             PrintStationsWithOpenSlots();
             for(int i = 0; i<Config.NewStationId; i++)
@@ -137,7 +137,7 @@ namespace DalObject
         
         public static void ReleaseDroneFromCharger()
         {
-            Console.WriteLine(" What is the Drone Id? \n");
+            Console.WriteLine("What is the Drone Id? \n");
             int DroneId;
             int.TryParse(Console.ReadLine(), out DroneId);
             for(int i = 0; i < Config.NewDroneChargeId; i++)
