@@ -62,11 +62,9 @@ namespace DalObject
         {
             Parcels[Config.NewParcelId++] = newParcel;
         }
-        public static void Affiliate()
+        public static void Affiliate(int id)
         {
-            Console.WriteLine(" What is the Parcel Id? \n");
-            int id;
-            int.TryParse(Console.ReadLine(), out id);
+
             for (int i = 0; i < Config.NewDroneId; i++)
             {
                 if (Drones[i].Status == DroneStatuses.Available)  // if we've found an available drone, we will affiliate the parcel with it
@@ -78,13 +76,10 @@ namespace DalObject
                 }
             }
         }
-        public static void PickupParcel()  
+        public static void PickupParcelUpdate(int id)  
         {
-            Console.WriteLine(" What is the Parcel Id? \n");
-            int ID;
-            int.TryParse(Console.ReadLine(), out ID);
-            Drones[Parcels[ID].DroneId].Status = DroneStatuses.Delivery;  
-            Parcels[ID].PickedUp = DateTime.Now;
+            Drones[Parcels[id].DroneId].Status = DroneStatuses.Delivery;  
+            Parcels[id].PickedUp = DateTime.Now;
         }
 
         public static int GetStationId()
@@ -103,13 +98,10 @@ namespace DalObject
         {
             return DataSource.Config.NewParcelId;
         }
-        public static void SupplyParcel()   /// Delivering the parcel
+        public static void SupplyParcelUpdate(int id)   /// Delivering the parcel
         {
-            Console.WriteLine("What is the Parcel Id?");
-            int ID;
-            int.TryParse(Console.ReadLine(), out ID);
-            Drones[Parcels[ID].DroneId].Status = DroneStatuses.Available;
-            Parcels[ID].Delivered = DateTime.Now;
+            Drones[Parcels[id].DroneId].Status = DroneStatuses.Available;
+            Parcels[id].Delivered = DateTime.Now;
         }
 
         public static void ReleaseDroneFromCharger(int DroneId)

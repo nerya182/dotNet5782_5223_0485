@@ -27,25 +27,27 @@ namespace ConsoleUI
                 {
                     case CHOICE.ADD:
                         Console.WriteLine("What would you like to add? \n" +
-                                         "a- Add a new base Station.\n" +
-                                         "b- Add a new Drone.\n" +
-                                         "c-Add a new Customer.\n" +
-                                         "d-Add a new Parcel.\n");
-                        char input;
-                        char.TryParse(Console.ReadLine(), out input);
+                                         "1- Add a new base Station.\n" +
+                                         "2- Add a new Drone.\n" +
+                                         "3-Add a new Customer.\n" +
+                                         "4-Add a new Parcel.\n");
+                        int input;
+                        int.TryParse(Console.ReadLine(), out input);
                         switch (input)
                         {
-                            case 'a':
+                            case 1:
                                 AddStation();
                                 break;
-                            case 'b':
+                            case 2:
                                 AddDrone();
                                 break;
-                            case 'c':
+                            case 3:
                                 AddCustomer();
                                 break;
-                            case 'd':
+                            case 4:
                                 AddParcel();
+                                break;
+                            default:
                                 break;
                         }
                         break;
@@ -56,18 +58,17 @@ namespace ConsoleUI
                             "3- Deliver Parcel to Customer\n" +
                             "4- Send Drone to Charge\n" +
                             "5- Release Drone from Charge");
-                        int info;
-                        int.TryParse(Console.ReadLine(), out info);
-                        switch (info)
+                        int.TryParse(Console.ReadLine(), out input);
+                        switch (input)
                         {
                             case 1:
-                                DalObject.DalObject.Affiliate();
+                                AffiliateOfDrone();
                                 break;
                             case 2:
-                                DalObject.DalObject.PickupParcel();
+                                PickupParcel();
                                 break;
                             case 3:
-                                DalObject.DalObject.SupplyParcel();
+                                SupplyParcel();
                                 break;
                             case 4:
                                 SendDroneToCharge();
@@ -83,8 +84,8 @@ namespace ConsoleUI
                            "2- Drones display \n" +
                            "3- Customers display \n" +
                            "4- parcels display \n");
+                        int info,id;
                         int.TryParse(Console.ReadLine(), out info);
-                        int id;
                         switch (info)
                         {
                             case 1:
@@ -107,7 +108,6 @@ namespace ConsoleUI
                                 int.TryParse(Console.ReadLine(), out id);
                                 PrintAll(DalObject.DalObject.ParcelDisplay(id));   /// Sending the Parcel to be printed
                                 break;
-
                         }
                         break;
                     case CHOICE.VIEW_LIST:
@@ -171,7 +171,31 @@ namespace ConsoleUI
             }
         }
 
-        private static void ReleaseDrone()
+        public static void SupplyParcel()
+        {
+            Console.WriteLine("What is the Parcel Id?");
+            int id;
+            int.TryParse(Console.ReadLine(), out id);
+            DalObject.DalObject.SupplyParcelUpdate(id);
+        }
+
+        public static void PickupParcel()
+        {
+            int id;
+            Console.WriteLine(" What is the Parcel Id? \n");
+            int.TryParse(Console.ReadLine(), out id);
+            DalObject.DalObject.PickupParcelUpdate(id);
+        }
+
+        public static void AffiliateOfDrone()
+        {
+            Console.WriteLine(" What is the Parcel Id? \n");
+            int id;
+            int.TryParse(Console.ReadLine(), out id);
+            DalObject.DalObject.Affiliate(id);
+        }
+
+        public static void ReleaseDrone()
         {
             Console.WriteLine("What is the Drone Id? \n");
             int DroneId;
