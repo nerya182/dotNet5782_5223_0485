@@ -1,4 +1,7 @@
-﻿using System;
+﻿/* Binyamin Mor- 317510485,  Nerya Baracassa- 208915223
+ The program created a whole big Drone operating system. we've entered some info ourselves, but we are mainly setting the grounds for a much bigger project! */
+
+using System;
 using System.Collections.Generic;
 using IDAL.DO;
 
@@ -87,22 +90,22 @@ namespace ConsoleUI
                             case 1:
                                 Console.WriteLine(" Enter the station ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(DalObject.DalObject.BaseStationDisplay(id));
+                                PrintAll(DalObject.DalObject.BaseStationDisplay(id));  /// Sending the Station to be printed
                                 break;
                             case 2:
                                 Console.WriteLine(" Enter the Drone ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(DalObject.DalObject.DroneDisplay(id));
+                                PrintAll(DalObject.DalObject.DroneDisplay(id));   /// Sending the Drone to be printed
                                 break;
                             case 3:
                                 Console.WriteLine(" Enter the Customer ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(DalObject.DalObject.CustomerDisplay(id));
+                                PrintAll(DalObject.DalObject.CustomerDisplay(id));   /// Sending the Customer to be printed
                                 break;
                             case 4:
                                 Console.WriteLine("Enter a parcel ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(DalObject.DalObject.ParcelDisplay(id));
+                                PrintAll(DalObject.DalObject.ParcelDisplay(id));   /// Sending the Parcel to be printed
                                 break;
 
                         }
@@ -121,12 +124,12 @@ namespace ConsoleUI
                         {
                            
                             case 's':
-                                List<Station> PrintStaion = new List<Station>();
-                                PrintStaion= DalObject.DalObject.PrintBaseStation();
-                                PrintStaion.ForEach(PrintAll<Station>);
+                                List<Station> PrintStation = new List<Station>();   /// Creating an object that is a list
+                                PrintStation= DalObject.DalObject.PrintBaseStation();  /// and inputing the List into it
+                                PrintStation.ForEach(PrintAll<Station>);     /// And sending each object in the list to be printed
                                 break;
                             case 'd':
-                                List<Drone> PrintDrone = new List<Drone>();
+                                List<Drone> PrintDrone = new List<Drone>();   /// Same idea in all...
                                 PrintDrone = DalObject.DalObject.PrintDrone();
                                 PrintDrone.ForEach(PrintAll<Drone>);
                                 break;
@@ -178,7 +181,7 @@ namespace ConsoleUI
 
         public static void PrintAll<T>(T t)
         {
-            Console.WriteLine(t);
+            Console.WriteLine(t);  /// Receiving an object and the Console.Writeline func goes to the object's PrintToString func and prints the object to the console
         }
         public static void AddStation() /// Adding a Station with all its fields
         {
