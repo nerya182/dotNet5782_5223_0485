@@ -9,74 +9,71 @@ using static DalObject.DataSource;
 namespace DalObject 
 {
     public class DalObject
-    {
-        
+    {       
         public DalObject()
         {
             DataSource.Initialize();
         }
-
-        public static Station GetStation(int StationId)
+        public static Station GetStation(int StationId)  /// Returns the station in the certain index
         {
-            return DataSource.stations[StationId];
+            return DataSource.Stations[StationId];
         }
-
-        public static Drone GetDrone(int droneId)
+        public static Drone GetDrone(int droneId)  /// Returns the drone in the certain index
         {
-            return DataSource.drones[droneId];
+            return DataSource.Drones[droneId];
         }
-
-        public static Customer GetCustomer(int customerId)
+        public static Customer GetCustomer(int customerId)  /// Returns the customer in the certain index
         {
-            return DataSource.customers[customerId];
+            return DataSource.Customers[customerId];
         }
-
-        public static Parcel GetParcel(int parcelId)
+        public static Parcel GetParcel(int parcelId)  /// Returns the parcel in the certain index
         {
-            return DataSource.parcels[parcelId];
+            return DataSource.Parcels[parcelId];
         }
         public static DateTime GetParcelCreating(int parcelId)
         {
-            return DataSource.parcels[parcelId].Creating;
+            return DataSource.Parcels[parcelId].Creating;
         }
         public static DateTime GetParcelAffiliation(int parcelId)
         {
-            return DataSource.parcels[parcelId].Affiliation;
+            return DataSource.Parcels[parcelId].Affiliation;
         }
-
         public static DateTime GetParcelPickedUp(int parcelId)
         {
-            return DataSource.parcels[parcelId].PickedUp;
+            return DataSource.Parcels[parcelId].PickedUp;
         }
-
         public static DateTime GetParcelDelivered(int parcelId)
         {
-            return DataSource.parcels[parcelId].Delivered;
+            return DataSource.Parcels[parcelId].Delivered;
         }
-
-        public static void AddStation(Station newStation)
+        public static void AddStation(Station newStation) /// Adding a station to the next open index
         { 
-            stations[Config.newStationId++] = newStation;
+            Stations[Config.NewStationId++] = newStation;
         }
-
-        public static void addDrone(Drone newDrone)
+        public static void AddDrone(Drone newDrone)  /// Adding a drone to the next open index
         {
-            drones[Config.newDroneId++] = newDrone;
+            Drones[Config.NewDroneId++] = newDrone;
         }
-
+        public static void AddCustomer(Customer newCustomer)   /// Adding a customer to the next open index
+        {
+            Customers[Config.NewCustomerId++] = newCustomer;
+        }
+        public static void AddParcel(Parcel newParcel)    /// Adding a parcel to the next open index
+        {
+            Parcels[Config.NewParcelId++] = newParcel;
+        }
         public static void Affiliate()
         {
             Console.WriteLine(" What is the Parcel Id? \n");
             int id;
             int.TryParse(Console.ReadLine(), out id);
-            //Parcel parcel = GetParcel(ID);
-            for (int i = 0; i < Config.newDroneId; i++)
+            for (int i = 0; i < Config.NewDroneId; i++)
             {
-                if (drones[i].Status == DroneStatuses.Available)
+                if (Drones[i].Status == DroneStatuses.Available)
                 {
-                    drones[i].Status = DroneStatuses.Delivery;
-                    parcels[id].DroneId = drones[i].Id;
-                    parcels[id].Affiliation = DateTime.Now ;
+                    Drones[i].Status = DroneStatuses.Delivery;
+                    Parcels[id].DroneId = Drones[i].Id;
+                    Parcels[id].Affiliation = DateTime.Now ;
                     return;
                 }
             }
@@ -86,101 +83,87 @@ namespace DalObject
             Console.WriteLine(" What is the Parcel Id? \n");
             int ID;
             int.TryParse(Console.ReadLine(), out ID);
-            drones[parcels[ID].DroneId].Status = DroneStatuses.Delivery;
-            parcels[ID].PickedUp = DateTime.Now;
+            Drones[Parcels[ID].DroneId].Status = DroneStatuses.Delivery;
+            Parcels[ID].PickedUp = DateTime.Now;
         }
-
-        public static void addParcel(Parcel newParcel)
-        {
-            parcels[Config.newParcelId++] = newParcel;  
-        }
-
+        
         public static int GetStationId()
         {
-            return DataSource.Config.newStationId;
+            return DataSource.Config.NewStationId;
         }
-
         public static int GetDroneId()
         {
-            return DataSource.Config.newDroneId;
+            return DataSource.Config.NewDroneId;
         }
         public static int GetCustomerId()
         {
-            return DataSource.Config.newCustomerId;
+            return DataSource.Config.NewCustomerId;
         }
         public static int GetParcelId()
         {
-            return DataSource.Config.newParcelId;
+            return DataSource.Config.NewParcelId;
         }
         public static void SupplyParcel()
         {
             Console.WriteLine(" What is the Parcel Id? \n");
             int ID;
             int.TryParse(Console.ReadLine(), out ID);
-            drones[parcels[ID].DroneId].Status = DroneStatuses.Available;
-            parcels[ID].Delivered = DateTime.Now;
+            Drones[Parcels[ID].DroneId].Status = DroneStatuses.Available;
+            Parcels[ID].Delivered = DateTime.Now;
         }
         public static void SendDroneToCharge()
         {
             Console.WriteLine(" What is the Drone Id? \n");
             int DroneId, StationId;
             int.TryParse(Console.ReadLine(), out DroneId);
-            for (int i = 0; i < Config.newDroneId; i++)
+            for (int i = 0; i < Config.NewDroneId; i++)
             {
-                if (drones[i].Id == DroneId)
-                    drones[i].Status = DroneStatuses.Charging;
+                if (Drones[i].Id == DroneId)
+                    Drones[i].Status = DroneStatuses.Charging;
             }
-            
             Console.WriteLine(" Which Sattion would you like to charge your Drone? \n");
             int.TryParse(Console.ReadLine(), out StationId);
             PrintStationsWithOpenSlots();
-            for(int i = 0; i<Config.newStationId; i++)
+            for(int i = 0; i<Config.NewStationId; i++)
             {
-                if(stations[i].Id == StationId)
-                    stations[i].AvailableChargeSlots--;
+                if(Stations[i].Id == StationId)
+                    Stations[i].AvailableChargeSlots--;
             }
-
             DroneCharge droneCharge = new DroneCharge();  // adding a DroneCharge
             droneCharge.StationId = StationId;
             droneCharge.DroneId = DroneId;
-            droneCharges[Config.newDroneChargeId++] = droneCharge;
-
+            DroneCharges[Config.NewDroneChargeId++] = droneCharge;
         }
-        public static void AddCustomer(Customer newCustomer)
-        {
-            customers[Config.newCustomerId++] = newCustomer;
-        }
-
+        
         public static void ReleaseDroneFromCharger()
         {
             Console.WriteLine(" What is the Drone Id? \n");
             int DroneId;
             int.TryParse(Console.ReadLine(), out DroneId);
-            for(int i = 0; i < Config.newDroneChargeId; i++)
+            for(int i = 0; i < Config.NewDroneChargeId; i++)
             {
-                if(droneCharges[i].DroneId == DroneId)
+                if(DroneCharges[i].DroneId == DroneId)
                 {                   
-                    for (int k = 0; i < Config.newStationId; k++)
+                    for (int k = 0; i < Config.NewStationId; k++)
                     {
-                        if (droneCharges[i].StationId == stations[k].Id)
+                        if (DroneCharges[i].StationId == Stations[k].Id)
                         {
-                            stations[k].AvailableChargeSlots--;   
+                            Stations[k].AvailableChargeSlots--;   
                         }                           
                     }
-                    droneCharges[i].DroneId = -1;
-                    droneCharges[i].StationId = -1;
+                    DroneCharges[i].DroneId = -1;
+                    DroneCharges[i].StationId = -1;
                 }
             }
-            for (int i = 0; i < Config.newDroneId; i++)
+            for (int i = 0; i < Config.NewDroneId; i++)
             {
-                if (drones[i].Id == DroneId)
+                if (Drones[i].Id == DroneId)
                 {
-                    drones[i].Status = DroneStatuses.Available;
+                    Drones[i].Status = DroneStatuses.Available;
                     break;
                 }                   
             }
         }
-
         public static List<Station> PrintBaseStation()
         {
             List<Station> PrintStaion = new List<Station>();
@@ -241,7 +224,7 @@ namespace DalObject
         public static Station BaseStationDisplay(int id)
         {
             int i;
-            for (i = 0; i < Config.newStationId; i++)
+            for (i = 0; i < Config.NewStationId; i++)
             {
                 if (GetStation(i).Id == id)
                     break;
@@ -263,7 +246,7 @@ namespace DalObject
         public static Drone DroneDisplay(int id)
         {
             int i;
-            for ( i = 0; i < Config.newDroneId; i++)
+            for ( i = 0; i < Config.NewDroneId; i++)
             {
                 if (GetDrone(i).Id == id)
                     break;
@@ -274,18 +257,13 @@ namespace DalObject
         public static Customer CustomerDisplay(int id)
         {
             int i;
-            for ( i = 0; i < Config.newCustomerId; i++)
+            for ( i = 0; i < Config.NewCustomerId; i++)
             {
                 if (GetCustomer(i).Id == id)
                     break;
             }
             return GetCustomer(i);
         }
-      
-
-
-
-
     }
 }
 
