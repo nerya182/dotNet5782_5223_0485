@@ -67,7 +67,7 @@ namespace DalObject
             {
                 NameDrone nameDrone = (NameDrone)R.Next(0,9);
                 WeightCategories weightCategories = (WeightCategories)R.Next(1, 3);
-                Drone drone = new Drone() { Id = Config.newDroneId, Model = nameDrone.ToString(), MaxWeight = weightCategories, Status = DroneStatuses.Available, Battery = 100 };
+                Drone drone = new Drone() { Id =R.Next(1,101), Model = nameDrone.ToString(), MaxWeight = weightCategories, Status = DroneStatuses.Available, Battery =R.Next(50,101) };
                 drones[i] = drone;
             }
         }
@@ -78,7 +78,7 @@ namespace DalObject
             for (int i = 0; i < 10; i++, Config.newCustomerId++)
             {
                 CustomerName customerName = (CustomerName)R.Next(0, 11);
-                Customer customer = new Customer() { Id = R.Next(100000000,1000000000), Name = customerName.ToString(), Phone = "050" + R.Next(111111, 999999), Lattitude = R.Next(3000000, 3700000), Longitude = R.Next(3000000, 3700000) };
+                Customer customer = new Customer() { Id = R.Next(100000000,1000000000), Name = customerName.ToString(), Phone = "05"+R.Next(0,10) + R.Next(111111, 999999), Lattitude = R.Next(3000000, 3700000), Longitude = R.Next(3000000, 3700000) };
                 customers[i] = customer;
             }
         }
@@ -101,7 +101,7 @@ namespace DalObject
             Random R = new Random();
             for (int i = 0; i < 5; i++, Config.newDroneChargeId++)
             {
-                DroneCharge droneCharge = new DroneCharge() { DroneId = R.Next(0, Config.newDroneId), StationId = R.Next(0, Config.newStationId) };
+                DroneCharge droneCharge = new DroneCharge() { DroneId = R.Next(-1, Config.newDroneId), StationId = R.Next(0, Config.newStationId) };
                 droneCharges[i] = droneCharge;
             }
         }

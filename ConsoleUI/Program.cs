@@ -119,7 +119,6 @@ namespace ConsoleUI
                             "f - Parcels that have not yet been affiliated with a drone\n" + 
                             "o - Stations with open charge slots \n");
                         char pick;
-                        string st;
                         char.TryParse(Console.ReadLine(), out pick);
                         switch (pick)
                         {
