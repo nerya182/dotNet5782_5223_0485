@@ -1,15 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-
-
-
-namespace IDAL
+﻿namespace IDAL
 {
     namespace DO
     {
         public enum CHOICE
         {
-			ADD,UPDATE, DISPLAY, VIEW_LISTS, EXIT
+			ADD,UPDATE, DISPLAY, VIEW_LIST, EXIT
         }
         public enum WeightCategories
         {

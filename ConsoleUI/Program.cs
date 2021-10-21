@@ -110,7 +110,7 @@ namespace ConsoleUI
 
                         }
                         break;
-                    case CHOICE.VIEW_LISTS:
+                    case CHOICE.VIEW_LIST:
                         Console.WriteLine("Which List would you like to view? \n" +
                             "s - Sations\n" + 
                             "d - Drones\n" + 
@@ -176,12 +176,6 @@ namespace ConsoleUI
         {
             Console.WriteLine(t);
         }
-        public static void Print<T>(T t)
-        {
-
-        }
-
-
         public static void AddStation()
         {
             Station newStation = new Station();
