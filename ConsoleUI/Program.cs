@@ -6,7 +6,6 @@ namespace ConsoleUI
 {
     class Program
     {
-        
         static void Main(string[] args)
         {
             DalObject.DataSource.Initialize();
@@ -14,13 +13,13 @@ namespace ConsoleUI
                        "ADD- Add a new base Station/Drone/Customer/Parcel.\n" +
                        "UPDATE- Update assignment/Collection /Delivery /Charging /Release.\n" +
                        "DISPLAY- Display of base stations/Drone/Customer/ Parcel\n" +
-                       "VIEW_LIST- Print all bbase stations/Drone/Customer/Parcel/Packages not yet associated/Base stations with available charging stations.\n" +
+                       "VIEW_LIST- Print all base stations/Drone/Customer/Parcel/\n" + 
+                       "          Packages not yet associated/Base stations with available charging stations.\n" +
                        "EXIT- Exit\n");
             CHOICE choice;
             Enum.TryParse(Console.ReadLine(), out choice);
             while (choice != CHOICE.EXIT)
-            {
-              
+            {              
                 switch (choice)
                 {
                     case CHOICE.ADD:
@@ -37,24 +36,23 @@ namespace ConsoleUI
                                 AddStation();
                                 break;
                             case 'b':
-                                addDrone();
+                                AddDrone();
                                 break;
                             case 'c':
                                 AddCustomer();
                                 break;
                             case 'd':
-                                addParcel();
+                                AddParcel();
                                 break;
                         }
                         break;
-
                     case CHOICE.UPDATE:
-                        Console.WriteLine(" What would you like to do?" +
+                        Console.WriteLine(" What would you like to do?\n" +
                             "1-Affiliate Parcel to Drone?\n" +
                             "2- Pickup Parcel with Drone? \n" +
                             "3- Deliver Parcel to Customer? \n" +
                             "4- Send Drone to Charge? \n" +
-                            "5- Release Drone from Charge? \n");
+                            "5- Release Drone from Charge?");
                         int info;
                         int.TryParse(Console.ReadLine(), out info);
                         switch (info)
@@ -81,8 +79,7 @@ namespace ConsoleUI
                            "1- Base Stations display\n" +
                            "2- Drones display \n" +
                            "3- Customers display \n" +
-                           "4- parcels display \n" 
-                           );
+                           "4- parcels display \n");
                         int.TryParse(Console.ReadLine(), out info);
                         int id;
                         switch (info)
@@ -118,7 +115,7 @@ namespace ConsoleUI
                             "p - Parcels\n" + 
                             "f - Parcels that have not yet been affiliated with a drone\n" + 
                             "o - Stations with open charge slots \n");
-                        char pick;
+                        char pick;                       
                         char.TryParse(Console.ReadLine(), out pick);
                         switch (pick)
                         {
@@ -159,89 +156,83 @@ namespace ConsoleUI
                         break;
                     default:
                         break;
-
                 }
                 Console.WriteLine("\nMenu:\n" +
                       "ADD- Add a new base Station/Drone/Customer/Parcel.\n" +
                       "UPDATE- Update assignment/Collection /Delivery /Charging /Release.\n" +
                       "DISPLAY- Display of base stations/Drone/Customer/ Parcel\n" +
-                      "VIEW_LIST- Print all bbase stations/Drone/Customer/Parcel/Packages not yet associated/Base stations with available charging stations.\n" +
+                      "VIEW_LIST- Print all base stations/Drone/Customer/Parcel/\n" + 
+                                "Packages not yet associated/Base stations with available charging stations.\n" +
                       "EXIT- Exit\n");
                 Enum.TryParse(Console.ReadLine(), out choice);
             }
-
         }
-
         public static void PrintAll<T>(T t)
         {
             Console.WriteLine(t);
         }
-        public static void AddStation()
+        public static void AddStation() /// Adding a Station with all its fields
         {
             Station newStation = new Station();
-            Console.WriteLine("Enter a unique ID number of staion\n");
+            Console.WriteLine("Enter a unique ID number of staion");
             newStation.Id = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter the name of the station\n");
+            Console.WriteLine("Enter the name of the station");
             newStation.Name = Console.ReadLine();
-            Console.WriteLine("Enter the longitude of the station\n");
+            Console.WriteLine("Enter the longitude of the station");
             newStation.Longitude = double.Parse(Console.ReadLine());
-            Console.WriteLine("Enter the Lattitude of the station\n");
+            Console.WriteLine("Enter the Lattitude of the station");
             newStation.Lattitude = double.Parse(Console.ReadLine());
-            Console.WriteLine("Enter the number of charging points available at the station\n");
+            Console.WriteLine("Enter the number of charging points available at the station");
             newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
             DalObject.DalObject.AddStation(newStation);
         }
-        public static void addDrone()
+        public static void AddDrone()  /// Adding a Drone with all its fields
         {
             Drone newDrone = new Drone();
-            Console.WriteLine("Enter a unique ID number\n");
+            Console.WriteLine("Enter a unique ID number");
             newDrone.Id = int.Parse(Console.ReadLine());
-            Console.WriteLine("Insert the model of the drone\n");
+            Console.WriteLine("Insert the model of the drone");
             newDrone.Model = Console.ReadLine();
-            Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy\n");
+            Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy");
             newDrone.MaxWeight = (WeightCategories)int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter the condition of the drone 1- Available ,2- Delivery ,3-Charging\n");
+            Console.WriteLine("Enter the condition of the drone 1- Available ,2- Delivery ,3-Charging");
             newDrone.Status = (DroneStatuses)int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter the battery status (in number)\n");
+            Console.WriteLine("Enter the battery status (in number)");
             newDrone.Battery = int.Parse(Console.ReadLine());
-            DalObject.DalObject.addDrone(newDrone);
+            DalObject.DalObject.AddDrone(newDrone);
         }
-        public static void AddCustomer()
+        public static void AddCustomer()  /// Adding a Customer with all its fields
         {
             Customer newCustomer = new Customer();
-            Console.WriteLine("Enter a unique ID number\n");
+            Console.WriteLine("Enter a unique ID number");
             newCustomer.Id = int.Parse(Console.ReadLine());
-            Console.WriteLine(" Enter the customer name\n");
+            Console.WriteLine(" Enter the customer name");
             newCustomer.Name = Console.ReadLine();
-            Console.WriteLine(" Enter a phone number\n");
+            Console.WriteLine(" Enter a phone number");
             newCustomer.Phone = Console.ReadLine();
-            Console.WriteLine("enter longitude\n");
+            Console.WriteLine("enter longitude");
             newCustomer.Longitude = double.Parse(Console.ReadLine());
-            Console.WriteLine("enter Lattitude\n");
+            Console.WriteLine("enter Lattitude");
             newCustomer.Lattitude = double.Parse(Console.ReadLine());
             DalObject.DalObject.AddCustomer(newCustomer);
         }
-        public static void addParcel()
+        public static void AddParcel()  /// Adding a Parcel with all its fields
         {
             Parcel newParcel = new Parcel();
             newParcel.Id = DalObject.DalObject.GetParcelId();
-            Console.WriteLine("Enter a sending customer ID number\n");
+            Console.WriteLine("Enter a sending customer ID number");
             newParcel.SenderId = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter a receives Customer  ID number\n");
+            Console.WriteLine("Enter a receives Customer  ID number");
             newParcel.TargetId = int.Parse(Console.ReadLine());
-            Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy\n");
+            Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy");
             newParcel.Weight = (WeightCategories)int.Parse(Console.ReadLine());
-            Console.WriteLine("enter  1-Regular , 2-Express , 3-Urgent\n");
+            Console.WriteLine("enter  1-Regular , 2-Express , 3-Urgent");
             newParcel.Priority = (Priorities)int.Parse(Console.ReadLine());
             newParcel.Creating = DateTime.Now;
             newParcel.DroneId = -1;
-            DalObject.DalObject.addParcel(newParcel);
+            DalObject.DalObject.AddParcel(newParcel);
         }
-    }
-       
-        
-    
-   
+    }   
 }
 
 
