@@ -105,7 +105,7 @@ namespace ConsoleUI
                                 break;
                             case 4:
                                 Console.WriteLine("Enter a parcel ID number");
-                                int.TryParse(Console.ReadLine(), out id);
+                                  int.TryParse(Console.ReadLine(), out id);
                                 PrintAll(DalObject.DalObject.ParcelDisplay(id));   /// Sending the Parcel to be printed
                                 break;
                         }
@@ -189,18 +189,20 @@ namespace ConsoleUI
 
         public static void AffiliateOfDrone()
         {
+            int idParcel, idDrone;
             Console.WriteLine(" What is the Parcel Id? \n");
-            int id;
-            int.TryParse(Console.ReadLine(), out id);
-            DalObject.DalObject.Affiliate(id);
+            int.TryParse(Console.ReadLine(), out idParcel);
+            Console.WriteLine(" What is the drone Id? \n");
+            int.TryParse(Console.ReadLine(), out idDrone);
+            DalObject.DalObject.Affiliate(idParcel, idDrone);
         }
 
         public static void ReleaseDrone()
         {
             Console.WriteLine("What is the Drone Id? \n");
-            int DroneId;
-            int.TryParse(Console.ReadLine(), out DroneId);
-            DalObject.DalObject.ReleaseDroneFromCharger(DroneId);
+            int droneId;
+            int.TryParse(Console.ReadLine(), out droneId);
+            DalObject.DalObject.ReleaseDroneFromCharger(droneId);
         }
 
         public static void PrintAll<T>(T t)
@@ -272,9 +274,9 @@ namespace ConsoleUI
         public static void SendDroneToCharge()
         {
             Console.WriteLine("What is the Drone Id?");
-            int DroneId, StationId,index;
+            int DroneId, StationId;
             int.TryParse(Console.ReadLine(), out DroneId);
-            index=DalObject.DalObject.FindDroneToCharge(DroneId);
+            DalObject.DalObject.FindDroneToCharge(DroneId);
 
             List<Station> StationsWithOpenSlots = new List<Station>();
             StationsWithOpenSlots = DalObject.DalObject.PrintStationsWithOpenSlots();

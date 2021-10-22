@@ -41,8 +41,8 @@ namespace DalObject
                 Id = 56,
                 Name = "Tachana Merkazit",
                 AvailableChargeSlots = 10,
-                Lattitude = 31.78907,
-                Longitude = 35.20319
+                Lattitude = -36.123456,
+                Longitude = 29.654321
             };
             Config.NewStationId++;
 
