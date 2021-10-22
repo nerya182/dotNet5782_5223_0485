@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class convert
+
+public class Convert
 {
-    public static string ConvertLattitude(double coord)
+    public static string ConvertLattitude(double coord)   /// Funcs to Convert lattitudes and longtitudes from decimal to Degrees
     {
         char direction;
         double sec = (double)Math.Round(coord * 3600);
