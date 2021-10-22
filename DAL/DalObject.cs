@@ -78,15 +78,15 @@ namespace DalObject
         }
         public static void PickupParcelUpdate(int id)  
         {
-            Drones[Parcels[id].DroneId].Status = DroneStatuses.Delivery;  
-            Parcels[id].PickedUp = DateTime.Now;
+            Drones[Parcels[id].DroneId].Status = DroneStatuses.Delivery;  /// Drone is making a delivery so change status
+            Parcels[id].PickedUp = DateTime.Now;  /// Parcel has been picked now
         }
 
-        public static int GetStationId()
+        public static int GetStationId()   /// Retrieve the "running number" of the array
         {
             return DataSource.Config.NewStationId;
         }
-        public static int GetDroneId()
+        public static int GetDroneId()  /// Same idea...
         {
             return DataSource.Config.NewDroneId;
         }
@@ -108,7 +108,7 @@ namespace DalObject
         {
             for (int i = 0; i < Config.NewDroneChargeId; i++)
             {
-                if (DroneCharges[i].DroneId == DroneId)
+                if (DroneCharges[i].DroneId == DroneId)   /// If we've found the charger that the drone is being charged in
                 { 
                     for (int k = 0; k < Config.NewStationId; k++)
                     {
@@ -206,9 +206,9 @@ namespace DalObject
             for (int i = 0; i < GetStationId(); i++)
             {
                 if (GetStation(i).AvailableChargeSlots > 0)
-                    PrintCustomer.Add(GetStation(i));
+                    PrintCustomer.Add(GetStation(i));  /// Adding the stations that have open slot to the list
             }
-            return PrintCustomer;
+            return PrintCustomer;  /// Returning the list
         }
 
         public static Drone DroneDisplay(int id)  /// Returning the correct Drone in oreder to be displayed to the console
@@ -252,7 +252,7 @@ namespace DalObject
             {
                 if (Stations[i].Id== StationId)
                 {
-                    Stations[i].AvailableChargeSlots--;
+                    Stations[i].AvailableChargeSlots--;  /// Lowering the available slots by 1 because we've added a drone to charge there
                     break;
                 }
             }
