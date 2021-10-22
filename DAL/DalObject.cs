@@ -62,16 +62,16 @@ namespace DalObject
         {
             Parcels[Config.NewParcelId++] = newParcel;
         }
-        public static void Affiliate(int id)
+        public static void Affiliate(int idParcel,int droneId)
         {
 
             for (int i = 0; i < Config.NewDroneId; i++)
             {
-                if (Drones[i].Status == DroneStatuses.Available)  // if we've found an available drone, we will affiliate the parcel with it
+                if (Drones[i].Id == droneId)  // if we've found an available drone, we will affiliate the parcel with it
                 {
                     Drones[i].Status = DroneStatuses.Delivery;
-                    Parcels[id].DroneId = Drones[i].Id;
-                    Parcels[id].Affiliation = DateTime.Now;
+                    Parcels[idParcel].DroneId = Drones[i].Id;
+                    Parcels[idParcel].Affiliation = DateTime.Now;
                     return;
                 }
             }
@@ -109,12 +109,12 @@ namespace DalObject
             for (int i = 0; i < Config.NewDroneChargeId; i++)
             {
                 if (DroneCharges[i].DroneId == DroneId)
-                {
-                    for (int k = 0; i < Config.NewStationId; k++)
+                { 
+                    for (int k = 0; k < Config.NewStationId; k++)
                     {
                         if (DroneCharges[i].StationId == Stations[k].Id)  /// And found the station the charger is in
                         {
-                            Stations[k].AvailableChargeSlots--;
+                            Stations[k].AvailableChargeSlots++;
                             break;
                         }
                     }
@@ -233,7 +233,7 @@ namespace DalObject
             return GetCustomer(i);
         }
 
-        public static int FindDroneToCharge(int DroneId)
+        public static void FindDroneToCharge(int DroneId)
         {
             int i;
             for ( i = 0; i<Config.NewDroneId ; i++)
@@ -244,7 +244,6 @@ namespace DalObject
                     break;
                 }
             }
-            return i;
         }
 
         public static void AddDroneToCharge(DroneCharge droneCharge,int StationId)
