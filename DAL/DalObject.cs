@@ -110,11 +110,11 @@ namespace DalObject
             {
                 if (DroneCharges[i].DroneId == DroneId)
                 {
-                    for (int k = 0; i < Config.NewStationId; k++)
+                    for (int k = 0; k < Config.NewStationId; k++)
                     {
                         if (DroneCharges[i].StationId == Stations[k].Id)  /// And found the station the charger is in
                         {
-                            Stations[k].AvailableChargeSlots--;
+                            Stations[k].AvailableChargeSlots++;
                             break;
                         }
                     }
