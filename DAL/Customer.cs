@@ -13,12 +13,8 @@ namespace IDAL
             public double Lattitude { get; set; }
             public override string ToString()
             {
-                return $"Customer #{Id}, Name:{Name}, Phone #:{Phone}, {convert.ConvertLongitude(Longitude)}, {convert.ConvertLongitude(Lattitude)}";
+                return $"Customer #{Id}, Name:{Name}, Phone #:{Phone}, {Convert.ConvertLongitude(Longitude)}, {Convert.ConvertLongitude(Lattitude)}";
             }
         }
-
-
-
     }  
-
 }
