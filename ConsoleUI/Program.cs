@@ -155,6 +155,14 @@ namespace ConsoleUI
                                 break;
                         }
                         break;
+                    case CHOICE.DISTANCE:
+                        Double Lattitude, Longitude;
+                        Console.WriteLine(" Enter the Lattitude1");
+                        double.TryParse(Console.ReadLine(), out Lattitude);
+                        Console.WriteLine(" Enter the Longitude");
+                        double.TryParse(Console.ReadLine(), out Longitude);
+                        distance(Lattitude,Longitude);
+                        break;
                     case CHOICE.EXIT:
                         break;
                     default:
@@ -169,6 +177,14 @@ namespace ConsoleUI
                       "EXIT- Exit\n");
                 Enum.TryParse(Console.ReadLine(), out choice);
             }
+        }
+
+        public static void distance(double lattitude, double longitude)
+        {
+            int id;
+            Console.WriteLine("What is the Parcel Id?");
+            int.TryParse(Console.ReadLine(), out id);
+           
         }
 
         public static void SupplyParcel()
