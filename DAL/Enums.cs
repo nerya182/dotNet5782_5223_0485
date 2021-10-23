@@ -1,10 +1,13 @@
-﻿namespace IDAL
+﻿using System;
+
+
+namespace IDAL
 {
     namespace DO
     {
         public enum CHOICE
         {
-			ADD,UPDATE, DISPLAY, VIEW_LIST, DISTANCE, EXIT
+            EXIT, ADD, UPDATE, DISPLAY, VIEW_LIST
         }
         public enum WeightCategories
         {
