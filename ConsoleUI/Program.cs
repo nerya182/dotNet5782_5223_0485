@@ -185,7 +185,6 @@ namespace ConsoleUI
             int.TryParse(Console.ReadLine(), out id);
             DalObject.DalObject.PickupParcelUpdate(id);
         }
-
         public static void AffiliateOfDrone()
         {
             int idParcel, idDrone;

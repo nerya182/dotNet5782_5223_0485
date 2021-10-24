@@ -33,7 +33,7 @@ public class Convert
             direction = 'E';
         else
             direction = 'W';
-        return $"{(int)deg}°{(int)min}' {sec}''{ direction}";
+        return $"{(int)deg}°{(int)min}'{sec}''{ direction}";
     }
 }
 
