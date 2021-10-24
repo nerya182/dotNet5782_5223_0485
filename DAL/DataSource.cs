@@ -33,7 +33,9 @@ namespace DalObject
             CreateParcels();
             CreateDroneCharge();
         }
-        
+        /// <summary>
+        /// Creating 2 stations
+        /// </summary>
         private static void CreateStations()
         {
             Stations[Config.NewStationId] = new Station()
@@ -56,11 +58,13 @@ namespace DalObject
             };
             Config.NewStationId++;      
         }
-
+        /// <summary>
+        /// Creating 5 Drones Randomly
+        /// </summary>
         private static void  CreateDrones()
         {
             Random R = new Random();
-            for (int i=0;i<5;i++, Config.NewDroneId++) // Creating 5 Drones Randomly
+            for (int i=0;i<5;i++, Config.NewDroneId++) 
             {
                 NameDrone nameDrone = (NameDrone)R.Next(0,9);
                 WeightCategories weightCategories = (WeightCategories)R.Next(1, 3);
@@ -68,8 +72,10 @@ namespace DalObject
                 Drones[i] = drone;
             }
         }
-
-        private static void CreateCustomers()  // Creating 10 Customers Randomly
+        /// <summary>
+        /// Creating 10 Customers Randomly
+        /// </summary>
+        private static void CreateCustomers()  
         {
             Random R = new Random();
             for (int i = 0; i < 10; i++, Config.NewCustomerId++)
@@ -79,8 +85,10 @@ namespace DalObject
                 Customers[i] = customer;
             }
         }
-
-        private static void CreateParcels()  // Creating 10 Parcels Randomly
+        /// <summary>
+        /// Creating 10 Parcels Randomly
+        /// </summary>
+        private static void CreateParcels()  
         {
             Random R = new Random();
             for (int i = 0; i < 10; i++, Config.NewParcelId++)
@@ -92,8 +100,10 @@ namespace DalObject
                 Parcels[i] = parcel;
             }
         }
-
-        private static void CreateDroneCharge()  // Creating 2 DroneCharges Randomly
+        /// <summary>
+        /// Creating 2 DroneCharges Randomly
+        /// </summary>
+        private static void CreateDroneCharge()  
         {
             Random R = new Random();
             for (int i = 0; i < 2; i++, Config.NewDroneChargeId++)
