@@ -11,7 +11,8 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            DalObject.DataSource.Initialize();
+
+            DalObject.DalObject DO = new DalObject.DalObject();      
             Console.WriteLine("\nMenu:\n" +
                        "ADD- Add a new base Station/Drone/Customer/Parcel.\n" +
                        "UPDATE- Update assignment/Collection /Delivery /Charging /Release.\n" +
