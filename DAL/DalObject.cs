@@ -275,6 +275,57 @@ namespace DalObject
             }
             return PrintParcel;
         }
+        /// <summary>
+        /// distance calculation
+        /// </summary>
+        /// <param name="lat1"></param>
+        /// <param name="lon1"></param>
+        /// <param name="id"></param>
+        /// <param name="temp"></param>
+        /// <returns></returns>
+        public static double distanceCalculation(double lat1, double lon1,int id,char temp)
+        {
+            double[] arr = new double[2];
+            double lat2, lon2;
+            if (temp=='s')
+            {
+                for (int i = 0; i < GetStationId(); i++)
+                {
+                    if (GetStation(i).Id == id)
+                    {
+                        arr[0] = GetStation(i).Lattitude;
+                        arr[1] = GetStation(i).Longitude;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < GetCustomerId(); i++)
+                {
+                    if (GetCustomer(i).Id == id)
+                    {
+                        arr[0] = GetCustomer(i).Lattitude;
+                        arr[1] = GetCustomer(i).Longitude;
+                        break;
+                    }
+                }
+            }
+            lat2 = arr[0];
+            lon2 = arr[1];
+            int R = 6371; 
+            double φ1 = lat1 * Math.PI / 180; 
+            double φ2 = lat2 * Math.PI / 180;
+            double Δφ = (lat2 - lat1) * Math.PI / 180;
+            double Δλ = (lon2 - lon1) * Math.PI / 180;
+
+           double a = Math.Sin(Δφ / 2) * Math.Sin(Δφ / 2) +
+                      Math.Cos(φ1) * Math.Cos(φ2) *
+                      Math.Sin(Δλ / 2) * Math.Sin(Δλ / 2);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+            return  R * c; 
+        }
 
         /// <summary>
         /// Returning a list of all the Parcels that have not been affiliated witha Drone

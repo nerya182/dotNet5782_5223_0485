@@ -43,11 +43,11 @@ namespace DalObject
                 Id = 56,
                 Name = "Tachana Merkazit",
                 AvailableChargeSlots = 10,
-                Lattitude = -36.123456,
-                Longitude = 29.654321
+                Lattitude = 31.78945,
+                Longitude = 35.20301
             };
             Config.NewStationId++;
-
+           
             Stations[Config.NewStationId]=new Station()
             {
                 Id=67,
@@ -81,7 +81,7 @@ namespace DalObject
             for (int i = 0; i < 10; i++, Config.NewCustomerId++)
             {
                 CustomerName customerName = (CustomerName)R.Next(0, 11);
-                Customer customer = new Customer() { Id = R.Next(100000000,1000000000), Name = customerName.ToString(), Phone = "050" + R.Next(111111, 999999), Lattitude = R.Next(3000000, 3700000), Longitude = R.Next(3000000, 3700000) };
+                Customer customer = new Customer() { Id = R.Next(100000000, 1000000000), Name = customerName.ToString(), Phone = "050" + R.Next(111111, 999999), Lattitude = R.Next(3180424, 3276699) / 100000.0, Longitude = R.Next(3502056, 3520499) / 100000.0 };
                 Customers[i] = customer;
             }
         }
@@ -95,7 +95,7 @@ namespace DalObject
             {
                 Priorities priorities = (Priorities)R.Next(1, 3);
                 WeightCategories weightCategories = (WeightCategories)R.Next(1, 3);
-                Parcel parcel = new Parcel() { Id = Config.NewParcelId, SenderId = R.Next(), TargetId = R.Next(), DroneId =R.Next(-1,Config.NewDroneId), Weight = weightCategories, Priority = priorities, Creating = DateTime.Now, Delivered = DateTime.Now
+                Parcel parcel = new Parcel() { Id = Config.NewParcelId, SenderId = R.Next(100000000, 1000000000), TargetId = R.Next(100000000, 1000000000), DroneId =R.Next(-1,Config.NewDroneId), Weight = weightCategories, Priority = priorities, Creating = DateTime.Now, Delivered = DateTime.Now
                     , PickedUp = DateTime.Now, Affiliation = DateTime.Now };
                 Parcels[i] = parcel;
             }

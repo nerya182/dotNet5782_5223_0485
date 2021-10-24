@@ -11,7 +11,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            DalObject.DataSource.Initialize();
+            DalObject.DalObject DO = new DalObject.DalObject();
             
             CHOICE choice;
             do {
@@ -21,6 +21,7 @@ namespace ConsoleUI
                        "DISPLAY- Display of base stations/Drone/Customer/ Parcel\n" +
                        "VIEW_LIST- Print all base stations/Drone/Customer/Parcel/\n" +
                        "          Packages not yet associated/Base stations with available charging stations.\n" +
+                       "DISTANCE- Prints distance between point and Station or from customer\n"+
                        "EXIT- Exit\n");
 
                 while(!Enum.TryParse(Console.ReadLine(), out choice))
@@ -160,6 +161,9 @@ namespace ConsoleUI
                                 break;
                         }
                         break;
+                    case CHOICE.DISTANCE:
+                        distance();
+                        break;
                     case CHOICE.EXIT:
                         break;
                     default:
@@ -167,6 +171,25 @@ namespace ConsoleUI
                 }
             }
             while(choice != CHOICE.EXIT);          
+        }
+        /// <summary>
+        /// distance calculation
+        /// </summary>
+        public static void distance()
+        {
+            double latitude, longitude,distance;
+            char temp;
+            int id;
+            Console.WriteLine("What is your Latitude?");
+            double.TryParse(Console.ReadLine(), out latitude);
+            Console.WriteLine("What is your longitude?");
+            double.TryParse(Console.ReadLine(), out longitude);
+            Console.WriteLine("Enter 's'-distance from station or 'c'-distance from customer");
+            char.TryParse(Console.ReadLine(), out temp);
+            Console.WriteLine("What is the station or customer of Id?");
+            int.TryParse(Console.ReadLine(), out id);
+            distance =DalObject.DalObject.distanceCalculation(latitude, longitude,id,temp);
+            Console.WriteLine( $"The distance is: {distance} km");
         }
         /// <summary>
         /// Delivering Parcel
