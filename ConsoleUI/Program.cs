@@ -12,17 +12,22 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             DalObject.DataSource.Initialize();
-            Console.WriteLine("\nMenu:\n" +
+            
+            CHOICE choice;
+            do {
+                Console.WriteLine("\nMenu:\n" +
                        "ADD- Add a new base Station/Drone/Customer/Parcel.\n" +
                        "UPDATE- Update assignment/Collection /Delivery /Charging /Release.\n" +
                        "DISPLAY- Display of base stations/Drone/Customer/ Parcel\n" +
-                       "VIEW_LIST- Print all base stations/Drone/Customer/Parcel/\n" + 
+                       "VIEW_LIST- Print all base stations/Drone/Customer/Parcel/\n" +
                        "          Packages not yet associated/Base stations with available charging stations.\n" +
                        "EXIT- Exit\n");
-            CHOICE choice;
-            Enum.TryParse(Console.ReadLine(), out choice);
-            while (choice != CHOICE.EXIT)
-            {              
+
+                while(!Enum.TryParse(Console.ReadLine(), out choice))
+                {
+                    Console.WriteLine("Wrong Input!");
+                }
+
                 switch (choice)
                 {
                     case CHOICE.ADD:
@@ -84,7 +89,7 @@ namespace ConsoleUI
                            "2- Drones display \n" +
                            "3- Customers display \n" +
                            "4- parcels display \n");
-                        int info,id;
+                        int info, id;
                         int.TryParse(Console.ReadLine(), out info);
                         switch (info)
                         {
@@ -105,27 +110,27 @@ namespace ConsoleUI
                                 break;
                             case 4:
                                 Console.WriteLine("Enter a parcel ID number");
-                                  int.TryParse(Console.ReadLine(), out id);
+                                int.TryParse(Console.ReadLine(), out id);
                                 PrintAll(DalObject.DalObject.ParcelDisplay(id));   /// Sending the Parcel to be printed
                                 break;
                         }
                         break;
                     case CHOICE.VIEW_LIST:
                         Console.WriteLine("Which List would you like to view? \n" +
-                            "s - Sations\n" + 
-                            "d - Drones\n" + 
-                            "c - Customers\n" + 
-                            "p - Parcels\n" + 
-                            "f - Parcels that have not yet been affiliated with a drone\n" + 
+                            "s - Sations\n" +
+                            "d - Drones\n" +
+                            "c - Customers\n" +
+                            "p - Parcels\n" +
+                            "f - Parcels that have not yet been affiliated with a drone\n" +
                             "o - Stations with open charge slots \n");
-                        char pick;                       
+                        char pick;
                         char.TryParse(Console.ReadLine(), out pick);
                         switch (pick)
                         {
-                           
+
                             case 's':
                                 List<Station> PrintStation = new List<Station>();   /// Creating an object that is a list
-                                PrintStation= DalObject.DalObject.PrintBaseStation();  /// and inputing the List into it
+                                PrintStation = DalObject.DalObject.PrintBaseStation();  /// and inputing the List into it
                                 PrintStation.ForEach(PrintAll<Station>);     /// And sending each object in the list to be printed
                                 break;
                             case 'd':
@@ -160,15 +165,9 @@ namespace ConsoleUI
                     default:
                         break;
                 }
-                Console.WriteLine("\nMenu:\n" +
-                      "ADD- Add a new base Station/Drone/Customer/Parcel.\n" +
-                      "UPDATE- Update assignment/Collection /Delivery /Charging /Release.\n" +
-                      "DISPLAY- Display of base stations/Drone/Customer/ Parcel\n" +
-                      "VIEW_LIST- Print all base stations/Drone/Customer/Parcel/\n" + 
-                                "Packages not yet associated/Base stations with available charging stations.\n" +
-                      "EXIT- Exit\n");
-                Enum.TryParse(Console.ReadLine(), out choice);
+                //Enum.TryParse(Console.ReadLine(), out choice);
             }
+            while(choice != CHOICE.EXIT);          
         }
 
         public static void SupplyParcel()
