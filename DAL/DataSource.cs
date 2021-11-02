@@ -18,7 +18,7 @@ namespace DalObject
             internal static int NewParcelId=0;
             internal static int NewDroneChargeId = 0;
         }
-       
+
         public static Customer[] Customers = new Customer[100];
         public static Station[] Stations = new Station[5];
         public static Drone[] Drones = new Drone[10];
