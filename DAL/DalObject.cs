@@ -9,7 +9,7 @@ using static DalObject.DataSource;
 
 namespace DalObject 
 {
-    public class DalObject : IDal
+    public class DalObject: IDal
     {
         public DalObject()
         {
@@ -191,6 +191,13 @@ namespace DalObject
         /// <param name="newStation"></param>
         public void AddStation(Station newStation)  
         {
+            foreach (Station objStation in DataSource.Stations)
+            {
+                if (objStation.Id == newStation.Id)
+                {
+                    throw new ItemAlreadyExistsExcepton(newStation.Id, "ERROR: id of Station already exists\n");
+                }
+            }
             Stations.Add(newStation);
         }
         /// <summary>
@@ -199,6 +206,13 @@ namespace DalObject
         /// <param name="newDrone"></param>
         public  void AddDrone(Drone newDrone)  
         {
+            foreach (Drone objStation in DataSource.Drones)
+            {
+                if (objStation.Id == newDrone.Id)
+                {
+                    throw new ItemAlreadyExistsExcepton(newDrone.Id, "ERROR: id of Drone already exists\n");
+                }
+            }
             Drones[Drones.Count] = newDrone;
         }
         /// <summary>
@@ -207,6 +221,13 @@ namespace DalObject
         /// <param name="newCustomer"></param>
         public  void AddCustomer(Customer newCustomer)   
         {
+            foreach (Customer objStation in DataSource.Customers)
+            {
+                if (objStation.Id == newCustomer.Id)
+                {
+                    throw new ItemAlreadyExistsExcepton(newCustomer.Id, "ERROR: id of Customer already exists\n");
+                }
+            }
             Customers[Customers.Count] = newCustomer;
         }
         /// <summary>
@@ -305,7 +326,7 @@ namespace DalObject
         /// Returning a list of all the Stations
         /// </summary>
         /// <returns> List </returns>
-        public IEnumerable<Station> PrintBaseStation()  
+        public IEnumerable<Station> ListBaseStation()  
         {
             List<Station> PrintStation = new List<Station>();
             for (int i = 0; i < Stations.Count; i++)
@@ -318,7 +339,7 @@ namespace DalObject
         /// Returning a list of all the Drones
         /// </summary>
         /// <returns> List </returns>
-        public IEnumerable <Drone> PrintDrone()   
+        public IEnumerable <Drone> ListDrone()   
         {
             List<Drone> PrintDrone = new List<Drone>();
             for (int i = 0; i < Drones.Count; i++)
@@ -332,7 +353,7 @@ namespace DalObject
         /// Returning a list of all the Customers
         /// </summary>
         /// <returns> List </returns>
-        public IEnumerable<Customer> PrintCustomer()   
+        public IEnumerable<Customer> ListCustomer()   
         {
             List<Customer> PrintCustomer = new List<Customer>();
             for (int i = 0; i <Customers.Count; i++)
@@ -346,7 +367,7 @@ namespace DalObject
         /// Returning a list of all the Parcels
         /// </summary>
         /// <returns> List </returns>
-        public IEnumerable<Parcel> PrintParcel()  
+        public IEnumerable<Parcel> ListParcel()  
         {
             List<Parcel> PrintParcel = new List<Parcel>();
             for (int i = 0; i <Parcels.Count; i++)
@@ -411,7 +432,7 @@ namespace DalObject
         /// Returning a list of all the Parcels that have not been affiliated witha Drone
         /// </summary>
         /// <returns> List </returns>
-        public IEnumerable<Parcel> PrintParcelOnAir()  
+        public IEnumerable<Parcel> ListParcelOnAir()  
         {
             List<Parcel> PrintParcelOnAir = new List<Parcel>();
             for (int i = 0; i <Parcels.Count; i++)
@@ -461,7 +482,7 @@ namespace DalObject
         /// Adding the stations that have open slot to the list
         /// </summary>
         /// <returns> List </returns>
-        public  List<Station> PrintStationsWithOpenSlots()
+        public IEnumerable<Station> ListStationsWithOpenSlots()
         {
             List<Station> PrintCustomer = new List<Station>();
             for (int i = 0; i <Stations.Count; i++)

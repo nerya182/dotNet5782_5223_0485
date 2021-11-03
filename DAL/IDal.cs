@@ -8,7 +8,7 @@ using DalObject;
 
 namespace IDAL
 {
-    public interface IDal 
+    public interface IDal
     {
         public  Station GetStation(int id);
         public Drone GetDrone(int droneId);
@@ -26,16 +26,16 @@ namespace IDAL
         public void PickupParcelUpdate(int ParcelId);
         public void SupplyParcelUpdate(int ParcelId);
         public void ReleaseDroneFromCharger(int DroneId);
-        public List<Station> PrintBaseStation();
-        public List<Drone> PrintDrone();
-        public List<Customer> PrintCustomer();
-        public List<Parcel> PrintParcel();
+        public IEnumerable<Station> ListBaseStation();
+        public IEnumerable<Drone> ListDrone();
+        public IEnumerable<Customer> ListCustomer();
+        public IEnumerable<Parcel> ListParcel();
         public double distanceCalculation(double lat1, double lon1, int id, char temp);
-        public List<Parcel> PrintParcelOnAir();
+        public IEnumerable<Parcel> ListParcelOnAir();
         public int GetParcelId();
         public Parcel ParcelDisplay(int id);
         public Station BaseStationDisplay(int id);
-        public List<Station> PrintStationsWithOpenSlots();
+        public IEnumerable<Station> ListStationsWithOpenSlots();
         public Drone DroneDisplay(int id);
         public Customer CustomerDisplay(int id);
         public void AddDroneToCharge(DroneCharge droneCharge, int StationId);
