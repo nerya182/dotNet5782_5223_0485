@@ -11,6 +11,7 @@ namespace IBL
 {
     public partial class BL : IBL
     {
+        public BL() { IDal dAL = new DalObject.DalObject();}
         BL bL;
         public BL() 
         { 

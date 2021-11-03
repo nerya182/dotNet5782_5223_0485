@@ -133,8 +133,7 @@ namespace ConsoleUI
 
                             case 's':
                                 IEnumerable<Station> PrintStation = new List<Station>();   
-                                PrintStation = DO.PrintBaseStation();
-                                //PrintStation.ForEach(PrintAll<Station>);
+                                PrintStation = DO.ListBaseStation();
                                 foreach (Station objStation in PrintStation)
                                 {
                                     PrintAll(objStation);
@@ -142,7 +141,7 @@ namespace ConsoleUI
                                 break;
                             case 'd':
                                 IEnumerable <Drone> PrintDrone = new List<Drone>();   
-                                PrintDrone = DO.PrintDrone();
+                                PrintDrone = DO.ListDrone();
                                 foreach (Drone objStation in PrintDrone)
                                 {
                                     PrintAll(objStation);
@@ -150,7 +149,7 @@ namespace ConsoleUI
                                 break;
                             case 'c':
                                 IEnumerable<Customer> PrintCustomer = new List<Customer>();
-                                PrintCustomer = DO.PrintCustomer();
+                                PrintCustomer = DO.ListCustomer();
                                 foreach (Customer objStation in PrintCustomer)
                                 {
                                     PrintAll(objStation);
@@ -158,7 +157,7 @@ namespace ConsoleUI
                                 break;
                             case 'p':
                                 IEnumerable<Parcel> PrintParcel = new List<Parcel>();
-                                PrintParcel = DO.PrintParcel();
+                                PrintParcel = DO.ListParcel();
                                 foreach (Parcel objStation in PrintParcel)
                                 {
                                     PrintAll(objStation);
@@ -166,15 +165,15 @@ namespace ConsoleUI
                                 break;
                             case 'f':
                                 IEnumerable<Parcel> PrintParcelOnAir = new List<Parcel>();
-                                PrintParcelOnAir = DO.PrintParcelOnAir();
+                                PrintParcelOnAir = DO.ListParcelOnAir();
                                 foreach (Parcel objStation in PrintParcelOnAir)
                                 {
                                     PrintAll(objStation);
                                 }
                                 break;
                             case 'o':
-                                List<Station> PrintStationsWithOpenSlots = new List<Station>();
-                                PrintStationsWithOpenSlots = DO.PrintStationsWithOpenSlots();
+                                IEnumerable<Station> PrintStationsWithOpenSlots = new List<Station>();
+                                PrintStationsWithOpenSlots = DO.ListStationsWithOpenSlots();
                                 PrintStationsWithOpenSlots.ForEach(PrintAll<Station>);
                                 break;
                         }

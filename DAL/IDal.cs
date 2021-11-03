@@ -8,7 +8,7 @@ using DalObject;
 
 namespace IDAL
 {
-    public interface IDal 
+    public interface IDal
     {
         public  Station GetStation(int id);
         public Drone GetDrone(int droneId);
