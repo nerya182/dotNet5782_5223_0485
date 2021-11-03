@@ -130,9 +130,14 @@ namespace ConsoleUI
                         {
 
                             case 's':
-                                List<Station> PrintStation = new List<Station>();   
-                                PrintStation = DO.PrintBaseStation();  
-                                PrintStation.ForEach(PrintAll<Station>);     
+                                IEnumerable<Station> PrintStation = new List<Station>();   
+                                PrintStation = DO.PrintBaseStation();
+                                //PrintStation.ForEach(PrintAll<Station>);
+                                foreach (Station objStation in PrintStation)
+                                {
+                                    //PrintAll(objStation);
+                                    Console.WriteLine(objStation);
+                                }
                                 break;
                             case 'd':
                                 List<Drone> PrintDrone = new List<Drone>();   

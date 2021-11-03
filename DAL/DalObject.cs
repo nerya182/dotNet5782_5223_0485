@@ -305,7 +305,7 @@ namespace DalObject
         /// Returning a list of all the Stations
         /// </summary>
         /// <returns> List </returns>
-        public  List<Station> PrintBaseStation()  
+        public  IEnumerable<Station> PrintBaseStation()  
         {
             List<Station> PrintStation = new List<Station>();
             for (int i = 0; i <Stations.Count; i++)
@@ -538,6 +538,17 @@ namespace DalObject
                 }
             }
             DroneCharges.Add(droneCharge);
+        }
+
+        public  double[] ElectricUsage()
+        {
+            double[] array = new double[5];
+            array[0] = DataSource.Config.available;
+            array[1] = DataSource.Config.lightWeight;
+            array[2] = DataSource.Config.mediumWeight;
+            array[3] = DataSource.Config.heavyWeight;
+            array[4] = DataSource.Config.chargeSpeed;
+            return array;
         }
     }
 }
