@@ -39,7 +39,8 @@ namespace IDAL
         public Drone DroneDisplay(int id);
         public Customer CustomerDisplay(int id);
         public void AddDroneToCharge(DroneCharge droneCharge, int StationId);
-        public double[] ElectricUsage();
+        public double[] GetElectricUsage();
+        public double GetChargeSpeed();
 
 
 

@@ -593,7 +593,7 @@ namespace DalObject
             DroneCharges.Add(droneCharge);
         }
 
-        public  double[] ElectricUsage()
+        public  double[] GetElectricUsage()
         {
             double[] array = new double[5];
             array[0] = DataSource.Config.available;
@@ -602,6 +602,11 @@ namespace DalObject
             array[3] = DataSource.Config.heavyWeight;
             array[4] = DataSource.Config.chargeSpeed;
             return array;
+        }
+
+        public double GetChargeSpeed()
+        {
+            return DataSource.Config.chargeSpeed;
         }
     }
 }
