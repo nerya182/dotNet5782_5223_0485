@@ -12,9 +12,7 @@ namespace DalObject
     {
         internal class Config
         {
-           
             internal static int NewParcelId = 0;
- 
         }
     
         public static List<Customer> Customers = new List<Customer>();
