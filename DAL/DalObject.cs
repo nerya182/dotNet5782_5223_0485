@@ -19,121 +19,220 @@ namespace DalObject
         /// </summary>
         /// <param name="StationId"></param>
         /// <returns>Station</returns>
-        public static Station GetStation(int StationId)  
+        public  Station GetStation(int StationId)  
         {
-            return DataSource.Stations[StationId];
+            Station ?newStation = null;
+            foreach (Station objStation in DataSource.Stations)
+            {
+                if (objStation.Id==StationId)
+                {
+                    newStation = objStation;
+                }
+            }
+            //if (newStation==null)
+            {
+               // throw new StationExeption("ERROR :id of Station not found\n");
+            }
+            return (Station)newStation;
+       
         }
         /// <summary>
         /// Returns the drone in the certain index
         /// </summary>
         /// <param name="droneId"></param>
         /// <returns> Drone </returns>
-        public static Drone GetDrone(int droneId)  
+        public  Drone GetDrone(int droneId)  
         {
-            return DataSource.Drones[droneId];
+            Drone? newDrone = null;
+            foreach (Drone objDrone in DataSource.Drones)
+            {
+                if (objDrone.Id == droneId)
+                {
+                    newDrone = objDrone;
+                }
+            }
+            //if (newStation==null)
+            {
+                // throw new StationExeption("ERROR :id of Station not found\n");
+            }
+            return (Drone)newDrone;
         }
         /// <summary>
         /// Returns the customer in the certain index
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns> Customer</returns>
-        public static Customer GetCustomer(int customerId)  
+        public  Customer GetCustomer(int customerId)  
         {
-            return DataSource.Customers[customerId];
+            Customer? newCustomer = null;
+            foreach (Customer objCustomer in DataSource.Customers)
+            {
+                if (objCustomer.Id == customerId)
+                {
+                    newCustomer = objCustomer;
+                }
+            }
+            //if (newStation==null)
+            {
+                // throw new StationExeption("ERROR :id of Station not found\n");
+            }
+            return (Customer)newCustomer;
         }
         /// <summary>
         /// Returns the parcel in the certain index
         /// </summary>
         /// <param name="parcelId"></param>
         /// <returns> Parcel </returns>
-        public static Parcel GetParcel(int parcelId)  
+        public  Parcel GetParcel(int parcelId)  
         {
-            return DataSource.Parcels[parcelId];
+            Parcel? newParcel = null;
+            foreach (Parcel objParcel in DataSource.Parcels)
+            {
+                if (objParcel.Id == parcelId)
+                {
+                    newParcel = objParcel;
+                }
+            }
+            //if (newStation==null)
+            {
+                // throw new StationExeption("ERROR :id of Station not found\n");
+            }
+            return (Parcel)newParcel;
         }
         /// <summary>
         /// Returns the time the parcel was created
         /// </summary>
         /// <param name="parcelId"></param>
         /// <returns> DateTime </returns>
-        public static DateTime GetParcelCreating(int parcelId) 
+        public  DateTime GetParcelCreating(int parcelId) 
         {
-            return DataSource.Parcels[parcelId].Creating;
+            DateTime time = DateTime.MinValue;
+            foreach (Parcel objParcel in DataSource.Parcels)
+            {
+                if (objParcel.Id == parcelId)
+                {
+                    time = objParcel.Creating;
+                }
+            }
+            //if (time==DateTime.MinValue)
+            {
+                // throw new StationExeption("ERROR :id of Station not found\n");
+            }
+            return time; 
+
         }
         /// <summary>
         /// Returns the time the parcel was affiliated with a drone
         /// </summary>
         /// <param name="parcelId"></param>
         /// <returns> DateTime</returns>
-        public static DateTime GetParcelAffiliation(int parcelId) 
+        public  DateTime GetParcelAffiliation(int parcelId) 
         {
-            return DataSource.Parcels[parcelId].Affiliation;
+            DateTime time = DateTime.MinValue;
+            foreach (Parcel objParcel in DataSource.Parcels)
+            {
+                if (objParcel.Id == parcelId)
+                {
+                    time = objParcel.Affiliation;
+                }
+            }
+            //if (time==DateTime.MinValue)
+            {
+                // throw new StationExeption("ERROR :id of Station not found\n");
+            }
+            return time;
         }
         /// <summary>
         /// Returns the time the parcel was picked up
         /// </summary>
         /// <param name="parcelId"></param>
         /// <returns> DateTime </returns>
-        public static DateTime GetParcelPickedUp(int parcelId)   
+        public  DateTime GetParcelPickedUp(int parcelId)   
         {
-            return DataSource.Parcels[parcelId].PickedUp;
+            DateTime time = DateTime.MinValue;
+            foreach (Parcel objParcel in DataSource.Parcels)
+            {
+                if (objParcel.Id == parcelId)
+                {
+                    time = objParcel.PickedUp;
+                }
+            }
+            //if (time==DateTime.MinValue)
+            {
+                // throw new StationExeption("ERROR :id of Station not found\n");
+            }
+            return time;
         }
         /// <summary>
         /// Returns the time the parcel was delivered
         /// </summary>
         /// <param name="parcelId"></param>
         /// <returns> DateTime </returns>
-        public static DateTime GetParcelDelivered(int parcelId)  
+        public  DateTime GetParcelDelivered(int parcelId)  
         {
-            return DataSource.Parcels[parcelId].Delivered;
+            DateTime time = DateTime.MinValue;
+            foreach (Parcel objParcel in DataSource.Parcels)
+            {
+                if (objParcel.Id == parcelId)
+                {
+                    time = objParcel.Delivered;
+                }
+            }
+            //if (time==DateTime.MinValue)
+            {
+                // throw new StationExeption("ERROR :id of Station not found\n");
+            }
+            return time;
         }
         /// <summary>
         /// Adding a station to the next open index
         /// </summary>
         /// <param name="newStation"></param>
-        public static void AddStation(Station newStation)  
+        public void AddStation(Station newStation)  
         {
-            Stations[Config.NewStationId++] = newStation;
+            Stations[Stations.Count] = newStation;
         }
         /// <summary>
         /// Adding a drone to the next open index
         /// </summary>
         /// <param name="newDrone"></param>
-        public static void AddDrone(Drone newDrone)  
+        public  void AddDrone(Drone newDrone)  
         {
-            Drones[Config.NewDroneId++] = newDrone;
+            Drones[Drones.Count] = newDrone;
         }
         /// <summary>
         /// Adding a customer to the next open index
         /// </summary>
         /// <param name="newCustomer"></param>
-        public static void AddCustomer(Customer newCustomer)   
+        public  void AddCustomer(Customer newCustomer)   
         {
-            Customers[Config.NewCustomerId++] = newCustomer;
+            Customers[Customers.Count] = newCustomer;
         }
         /// <summary>
         /// Adding a parcel to the next open index
         /// </summary>
         /// <param name="newParcel"></param>
-        public static void AddParcel(Parcel newParcel)    
+        public  void AddParcel(Parcel newParcel)    
         {
-            Parcels[Config.NewParcelId++] = newParcel;
+            Parcels[Parcels.Count] = newParcel;
         }
         /// <summary>
         /// if we've found an available drone, we will affiliate the parcel with it
         /// </summary>
         /// <param name="idParcel"></param>
         /// <param name="droneId"></param>
-        public static void Affiliate(int idParcel,int droneId)
+        public  void Affiliate(int idParcel,int droneId)
         {
 
-            for (int i = 0; i < Config.NewDroneId; i++)
+            for (int i = 0; i < Drones.Count; i++)
             {
-                if (Drones[i].Id == droneId)  
+                if (Drones[i].Id == droneId)
                 {
-                    Drones[i].Status = DroneStatuses.Delivery;
-                    Parcels[idParcel].DroneId = Drones[i].Id;
-                    Parcels[idParcel].Affiliation = DateTime.Now;
-                    return;
+                    Parcel p = Parcels[i];
+                    p.DroneId = Drones[i].Id;
+                    p.Affiliation = DateTime.Now;
+                    Parcels[i] = p;
+                    break;
                 }
             }
         }
@@ -141,81 +240,62 @@ namespace DalObject
         /// Changing drone status, and time of pickup
         /// </summary>
         /// <param name="id"></param>
-        public static void PickupParcelUpdate(int id)  
+        public  void PickupParcelUpdate(int ParcelId)  
         {
-            Drones[Parcels[id].DroneId].Status = DroneStatuses.Delivery;  
-            Parcels[id].PickedUp = DateTime.Now;  
-        }
-        /// <summary>
-        /// Retrieve the "running number" of the array
-        /// </summary>
-        /// <returns> Running Number </returns>
-        public static int GetStationId()   
-        {
-            return DataSource.Config.NewStationId;
-        }
-        /// <summary>
-        /// Retrieve the "running number" of the array
-        /// </summary>
-        /// <returns> Running Number </returns>
-        public static int GetDroneId()  
-        {
-            return DataSource.Config.NewDroneId;
-        }
-        /// <summary>
-        /// Retrieve the "running number" of the array
-        /// </summary>
-        /// <returns> Running Number </returns>
-        public static int GetCustomerId()
-        {
-            return DataSource.Config.NewCustomerId;
-        }
-        /// <summary>
-        /// Retrieve the "running number" of the array
-        /// </summary>
-        /// <returns> Running Number </returns>
-        public static int GetParcelId()
-        {
-            return DataSource.Config.NewParcelId;
+            for (int i = 0; i < Parcels.Count; i++)
+            {
+                if (Parcels[i].Id == ParcelId)
+                {
+                    Parcel p = Parcels[i];
+                    p.PickedUp = DateTime.Now;
+                    Parcels[i] = p;
+                    break;
+                }
+            } 
         }
         /// <summary>
         /// Delivering the parcel
         /// </summary>
         /// <param name="id"></param>
-        public static void SupplyParcelUpdate(int id)   
+        public  void SupplyParcelUpdate(int ParcelId)   
         {
-            Drones[Parcels[id].DroneId].Status = DroneStatuses.Available;
-            Parcels[id].Delivered = DateTime.Now;
+            for (int i = 0; i < Parcels.Count; i++)
+            {
+                if (Parcels[i].Id == ParcelId)
+                {
+                    Parcel p = Parcels[i];
+                    p.Delivered = DateTime.Now;
+                    Parcels[i] = p;
+                    break;
+                }
+            }
         }
 
         /// <summary>
         /// We find the charger and the station the drone is  charging again
         /// </summary>
         /// <param name="DroneId"></param>
-        public static void ReleaseDroneFromCharger(int DroneId)
+        public  void ReleaseDroneFromCharger(int DroneId)
         {
-            for (int i = 0; i < Config.NewDroneChargeId; i++)
+            for (int i = 0; i < DroneCharges.Count; i++)
             {
                 if (DroneCharges[i].DroneId == DroneId)   
                 { 
-                    for (int k = 0; k < Config.NewStationId; k++)
+                    for (int k = 0; k < Stations.Count; k++)
                     {
                         if (DroneCharges[i].StationId == Stations[k].Id)  
                         {
-                            Stations[k].AvailableChargeSlots++;
+
+                            Station s = Stations[k];
+                            s.AvailableChargeSlots++;
+                            Stations[k] = s;
                             break;
                         }
                     }
-                    DroneCharges[i].DroneId = -1;  
-                    DroneCharges[i].StationId = -1;
-                }
-            }
-            for (int i = 0; i < Config.NewDroneId; i++)
-            {
-                if (Drones[i].Id == DroneId)
-                {
-                    Drones[i].Status = DroneStatuses.Available;
-                    Drones[i].Battery = 100;
+                    DroneCharge dc = DroneCharges[i];
+                    dc.DroneId = -1;
+                    dc.StationId = -1;
+                    DroneCharges[i] = dc;
                     break;
                 }
             }
@@ -224,12 +304,12 @@ namespace DalObject
         /// Returning a list of all the Stations
         /// </summary>
         /// <returns> List </returns>
-        public static List<Station> PrintBaseStation()  
+        public  List<Station> PrintBaseStation()  
         {
             List<Station> PrintStation = new List<Station>();
-            for (int i = 0; i < GetStationId(); i++)
+            for (int i = 0; i <Stations.Count; i++)
             {
-                PrintStation.Add(GetStation(i));  
+                PrintStation.Add(GetStation(Stations[i].Id));  
             }
             return PrintStation;
 
@@ -238,12 +318,12 @@ namespace DalObject
         /// Returning a list of all the Drones
         /// </summary>
         /// <returns> List </returns>
-        public static List<Drone> PrintDrone()   
+        public  List<Drone> PrintDrone()   
         {
             List<Drone> PrintDrone = new List<Drone>();
-            for (int i = 0; i < GetDroneId(); i++)
+            for (int i = 0; i < Drones.Count; i++)
             {
-                PrintDrone.Add(GetDrone(i));
+                PrintDrone.Add(GetDrone(Drones[i].Id));
             }
             return PrintDrone;
         }
@@ -252,12 +332,12 @@ namespace DalObject
         /// Returning a list of all the Customers
         /// </summary>
         /// <returns> List </returns>
-        public static List<Customer> PrintCustomer()   
+        public  List<Customer> PrintCustomer()   
         {
             List<Customer> PrintCustomer = new List<Customer>();
-            for (int i = 0; i < GetCustomerId(); i++)
+            for (int i = 0; i <Customers.Count; i++)
             {
-                PrintCustomer.Add(GetCustomer(i));
+                PrintCustomer.Add(GetCustomer(Customers[i].Id));
             }
             return PrintCustomer;
         }
@@ -266,12 +346,12 @@ namespace DalObject
         /// Returning a list of all the Parcels
         /// </summary>
         /// <returns> List </returns>
-        public static List<Parcel> PrintParcel()  
+        public  List<Parcel> PrintParcel()  
         {
             List<Parcel> PrintParcel = new List<Parcel>();
-            for (int i = 0; i < GetParcelId(); i++)
+            for (int i = 0; i <Parcels.Count; i++)
             {
-                PrintParcel.Add(GetParcel(i));
+                PrintParcel.Add(GetParcel(Parcels[i].Id));
             }
             return PrintParcel;
         }
@@ -283,13 +363,13 @@ namespace DalObject
         /// <param name="id"></param>
         /// <param name="temp"></param>
         /// <returns></returns>
-        public static double distanceCalculation(double lat1, double lon1,int id,char temp)
+        public  double distanceCalculation(double lat1, double lon1,int id,char temp)
         {
             double[] arr = new double[2];
             double lat2, lon2;
             if (temp=='s')
             {
-                for (int i = 0; i < GetStationId(); i++)
+                for (int i = 0; i <Stations.Count; i++)
                 {
                     if (GetStation(i).Id == id)
                     {
@@ -301,7 +381,7 @@ namespace DalObject
             }
             else
             {
-                for (int i = 0; i < GetCustomerId(); i++)
+                for (int i = 0; i <Customers.Count; i++)
                 {
                     if (GetCustomer(i).Id == id)
                     {
@@ -331,10 +411,10 @@ namespace DalObject
         /// Returning a list of all the Parcels that have not been affiliated witha Drone
         /// </summary>
         /// <returns> List </returns>
-        public static List<Parcel> PrintParcelOnAir()  
+        public  List<Parcel> PrintParcelOnAir()  
         {
             List<Parcel> PrintParcelOnAir = new List<Parcel>();
-            for (int i = 0; i < GetParcelId(); i++)
+            for (int i = 0; i <Parcels.Count; i++)
             {
                 if (GetParcel(i).DroneId == -1)
                     PrintParcelOnAir.Add(GetParcel(i));
@@ -342,14 +422,24 @@ namespace DalObject
             return PrintParcelOnAir;
         }
 
+        public  int GetParcelId()
+        {
+            return DataSource.Config.NewParcelId;
+        }
+
         /// <summary>
         /// Returning the correct Parcel in oreder to be displayed to the console
         /// </summary>
         /// <param name="id"></param>
         /// <returns> Parcel </returns>
-        public static Parcel ParcelDisplay(int id)  
+        public  Parcel ParcelDisplay(int id)  
         {
-            return GetParcel(id);
+            int i;
+            for (i = 0; i < Parcels.Count; i++)
+            {
+                if (GetParcel(Parcels[i].Id).Id == id) { break; }
+            }
+            return GetParcel(Parcels[i].Id);
         }
 
         /// <summary>
@@ -357,25 +447,24 @@ namespace DalObject
         /// </summary>
         /// <param name="id"></param>
         /// <returns> Station </returns>
-        public static Station BaseStationDisplay(int id)  
+        public Station BaseStationDisplay(int id)  
         {
             int i;
-            for (i = 0; i < Config.NewStationId; i++)
+            for (i = 0; i < Stations.Count; i++)
             {
-                if (GetStation(i).Id == id)
-                    break;
+                if (GetStation(Stations[i].Id).Id == id) { break; }
             }
-            return GetStation(i);
+            return GetStation(Stations[i].Id);
         }
 
         /// <summary>
         /// Adding the stations that have open slot to the list
         /// </summary>
         /// <returns> List </returns>
-        public static List<Station> PrintStationsWithOpenSlots()
+        public  List<Station> PrintStationsWithOpenSlots()
         {
             List<Station> PrintCustomer = new List<Station>();
-            for (int i = 0; i < GetStationId(); i++)
+            for (int i = 0; i <Stations.Count; i++)
             {
                 if (GetStation(i).AvailableChargeSlots > 0)
                     PrintCustomer.Add(GetStation(i));  
@@ -388,15 +477,14 @@ namespace DalObject
         /// </summary>
         /// <param name="id"></param>
         /// <returns> Drone </returns>
-        public static Drone DroneDisplay(int id)  
+        public  Drone DroneDisplay(int id)  
         {
             int i;
-            for (i = 0; i < Config.NewDroneId; i++)
+            for (i = 0; i < Drones.Count; i++)
             {
-                if (GetDrone(i).Id == id)
-                    break;
+                if (GetDrone(Drones[i].Id).Id == id) { break; }
             }
-            return GetDrone(i);
+            return GetDrone(Drones[i].Id);
         }
 
         /// <summary>
@@ -404,25 +492,24 @@ namespace DalObject
         /// </summary>
         /// <param name="id"></param>
         /// <returns> Customer </returns>
-        public static Customer CustomerDisplay(int id)  
+        public  Customer CustomerDisplay(int id)  
         {
             int i;
-            for (i = 0; i < Config.NewCustomerId; i++)
+            for (i = 0; i < Customers.Count; i++)
             {
-                if (GetCustomer(i).Id == id)
-                    break;
+                if (GetCustomer(Customers[i].Id).Id == id) { break; }
             }
-            return GetCustomer(i);
+            return GetCustomer(Customers[i].Id);
         }
 
         /// <summary>
         /// Charging Drone
         /// </summary>
         /// <param name="DroneId"></param>
-        public static void FindDroneToCharge(int DroneId)
+       /* public  void FindDroneToCharge(int DroneId)
         {
             int i;
-            for ( i = 0; i<Config.NewDroneId ; i++)
+            for ( i = 0; i<Drones.Count; i++)
             {
                 if (Drones[i].Id == DroneId)
                 {
@@ -431,23 +518,25 @@ namespace DalObject
                 }
             }
         }
-
+        */
         /// <summary>
         /// Lowering the available slots by 1 because we've added a drone to charge there
         /// </summary>
         /// <param name="droneCharge"></param>
         /// <param name="StationId"></param>
-        public static void AddDroneToCharge(DroneCharge droneCharge,int StationId)
+        public  void AddDroneToCharge(DroneCharge droneCharge,int StationId)
         {
-            for (int i = 0; i < Config.NewStationId; i++)
+            for (int i = 0; i < Stations.Count; i++)
             {
                 if (Stations[i].Id== StationId)
                 {
-                    Stations[i].AvailableChargeSlots--;  
+                    Station s = Stations[i];
+                    s.AvailableChargeSlots--;
+                    Stations[i] = s;
                     break;
                 }
             }
-            DroneCharges[Config.NewDroneChargeId++] = droneCharge;
+            DroneCharges.Add(droneCharge);
         }
     }
 }
