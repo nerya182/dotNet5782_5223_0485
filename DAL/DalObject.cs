@@ -40,7 +40,7 @@ namespace DalObject
         /// <summary>
         /// Returns the drone in the certain index
         /// </summary>
-        /// <param name="droneId"></param>
+         /// <param name="droneId"></param>
         /// <returns> Drone </returns>
         public  Drone GetDrone(int droneId)  
         {
@@ -233,9 +233,16 @@ namespace DalObject
         /// <summary>
         /// Adding a parcel to the next open index
         /// </summary>
-        /// <param name="newParcel"></param>
+        /// <param name="newParcel"></param> 
         public  void AddParcel(Parcel newParcel)    
         {
+            foreach (Parcel objStation in DataSource.Parcels)
+            {
+                if (objStation.Id == newParcel.Id)
+                {
+                    throw new ItemAlreadyExistsExcepton(newParcel.Id, "ERROR: id of Parcel already exists\n");
+                }
+            }
             Parcels[Parcels.Count] = newParcel;
         }
         /// <summary>
@@ -245,6 +252,19 @@ namespace DalObject
         /// <param name="droneId"></param>
         public  void Affiliate(int idParcel,int droneId)
         {
+            bool flag = false;
+            foreach (Drone objStation in DataSource.Drones)
+            {
+                if (objStation.Id == droneId)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag)
+            {
+                throw new ItemNotFoundExcepton(droneId, "ERROR: id of Drone not found\n");
+            }
 
             for (int i = 0; i < Drones.Count; i++)
             {
@@ -547,6 +567,19 @@ namespace DalObject
         /// <param name="StationId"></param>
         public  void AddDroneToCharge(DroneCharge droneCharge,int StationId)
         {
+            bool flag = false;
+            foreach (Drone objStation in DataSource.Drones)
+            {
+                if (objStation.Id == StationId)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag)
+            {
+                throw new ItemAlreadyExistsExcepton(StationId, "ERROR: id of Drone not found\n");
+            }
             for (int i = 0; i < Stations.Count; i++)
             {
                 if (Stations[i].Id== StationId)

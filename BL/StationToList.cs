@@ -8,18 +8,17 @@ namespace IBL
 {
     namespace BO
     {
-        public class Station
+         public class StationToList
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            //ךהכניס מיקום
             public int UsedChargeSlots { get; set; }
             public int AvailableChargeSlots { get; set; }
-            public 
             public override string ToString()
             {
-                return $"Station #{Id}, Name:{Name},UsedChargeSlots:{UsedChargeSlots},AvailableChargeSlots:{AvailableChargeSlots}\n";
+                return $"StationToList #{Id}, Name:{Name},UsedChargeSlots:{UsedChargeSlots},AvailableChargeSlots:{AvailableChargeSlots}\n";
             }
         }
     }
+    
 }

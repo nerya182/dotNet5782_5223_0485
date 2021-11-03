@@ -174,7 +174,10 @@ namespace ConsoleUI
                             case 'o':
                                 IEnumerable<Station> PrintStationsWithOpenSlots = new List<Station>();
                                 PrintStationsWithOpenSlots = DO.ListStationsWithOpenSlots();
-                                PrintStationsWithOpenSlots.ForEach(PrintAll<Station>);
+                                foreach (Station objStation in PrintStationsWithOpenSlots)
+                                {
+                                    PrintAll(objStation);
+                                }
                                 break;
                         }
                         break;
