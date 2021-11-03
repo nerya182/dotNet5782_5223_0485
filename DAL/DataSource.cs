@@ -12,7 +12,6 @@ namespace DalObject
     {
         internal class Config
         {
-           
             internal static int NewParcelId = 0;
             internal static double available;
             internal static double lightWeight;

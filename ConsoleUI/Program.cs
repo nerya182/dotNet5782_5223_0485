@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using IDAL.DO;
+using IDAL;
 
 namespace ConsoleUI
 {
@@ -12,7 +13,8 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             DalObject.DalObject DO = new DalObject.DalObject();
-            
+            IDal dal = new DalObject.DalObject();
+
             CHOICE choice;
             do {
                 Console.WriteLine("\nMenu:\n" +
@@ -135,29 +137,40 @@ namespace ConsoleUI
                                 //PrintStation.ForEach(PrintAll<Station>);
                                 foreach (Station objStation in PrintStation)
                                 {
-                                    //PrintAll(objStation);
-                                    Console.WriteLine(objStation);
+                                    PrintAll(objStation);
                                 }
                                 break;
                             case 'd':
-                                List<Drone> PrintDrone = new List<Drone>();   
+                                IEnumerable <Drone> PrintDrone = new List<Drone>();   
                                 PrintDrone = DO.PrintDrone();
-                                PrintDrone.ForEach(PrintAll<Drone>);
+                                foreach (Drone objStation in PrintDrone)
+                                {
+                                    PrintAll(objStation);
+                                }
                                 break;
                             case 'c':
-                                List<Customer> PrintCustomer = new List<Customer>();
+                                IEnumerable<Customer> PrintCustomer = new List<Customer>();
                                 PrintCustomer = DO.PrintCustomer();
-                                PrintCustomer.ForEach(PrintAll<Customer>);
+                                foreach (Customer objStation in PrintCustomer)
+                                {
+                                    PrintAll(objStation);
+                                }
                                 break;
                             case 'p':
-                                List<Parcel> PrintParcel = new List<Parcel>();
+                                IEnumerable<Parcel> PrintParcel = new List<Parcel>();
                                 PrintParcel = DO.PrintParcel();
-                                PrintParcel.ForEach(PrintAll<Parcel>);
+                                foreach (Parcel objStation in PrintParcel)
+                                {
+                                    PrintAll(objStation);
+                                }
                                 break;
                             case 'f':
-                                List<Parcel> PrintParcelOnAir = new List<Parcel>();
+                                IEnumerable<Parcel> PrintParcelOnAir = new List<Parcel>();
                                 PrintParcelOnAir = DO.PrintParcelOnAir();
-                                PrintParcelOnAir.ForEach(PrintAll<Parcel>);
+                                foreach (Parcel objStation in PrintParcelOnAir)
+                                {
+                                    PrintAll(objStation);
+                                }
                                 break;
                             case 'o':
                                 List<Station> PrintStationsWithOpenSlots = new List<Station>();

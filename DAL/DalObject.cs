@@ -9,7 +9,7 @@ using static DalObject.DataSource;
 
 namespace DalObject 
 {
-    public class DalObject
+    public class DalObject : IDal
     {
         public DalObject()
         {
@@ -30,9 +30,9 @@ namespace DalObject
                     newStation = objStation;
                 }
             }
-            //if (newStation==null)
+            if (newStation==null)
             {
-               // throw new StationExeption("ERROR :id of Station not found\n");
+               throw new ItemNotFoundExcepton(StationId,"ERROR :id of Station not found\n");
             }
             return (Station)newStation;
        
@@ -52,9 +52,9 @@ namespace DalObject
                     newDrone = objDrone;
                 }
             }
-            //if (newStation==null)
+            if (newDrone== null)
             {
-                // throw new StationExeption("ERROR :id of Station not found\n");
+                throw new ItemNotFoundExcepton(droneId, "ERROR :id of drone not found\n");
             }
             return (Drone)newDrone;
         }
@@ -73,9 +73,9 @@ namespace DalObject
                     newCustomer = objCustomer;
                 }
             }
-            //if (newStation==null)
+            if (newCustomer== null)
             {
-                // throw new StationExeption("ERROR :id of Station not found\n");
+                throw new ItemNotFoundExcepton(customerId, "ERROR :id of customer not found\n");
             }
             return (Customer)newCustomer;
         }
@@ -94,9 +94,9 @@ namespace DalObject
                     newParcel = objParcel;
                 }
             }
-            //if (newStation==null)
+            if (newParcel == null)
             {
-                // throw new StationExeption("ERROR :id of Station not found\n");
+                throw new ItemNotFoundExcepton(parcelId, "ERROR :id of parcel not found\n");
             }
             return (Parcel)newParcel;
         }
@@ -115,9 +115,9 @@ namespace DalObject
                     time = objParcel.Creating;
                 }
             }
-            //if (time==DateTime.MinValue)
+            if (time==DateTime.MinValue)
             {
-                // throw new StationExeption("ERROR :id of Station not found\n");
+                throw new ItemNotFoundExcepton(parcelId, "ERROR :id of parcel not found\n");
             }
             return time; 
 
@@ -137,9 +137,9 @@ namespace DalObject
                     time = objParcel.Affiliation;
                 }
             }
-            //if (time==DateTime.MinValue)
+            if (time==DateTime.MinValue)
             {
-                // throw new StationExeption("ERROR :id of Station not found\n");
+                throw new ItemNotFoundExcepton(parcelId, "ERROR :id of parcel not found\n");
             }
             return time;
         }
@@ -158,9 +158,9 @@ namespace DalObject
                     time = objParcel.PickedUp;
                 }
             }
-            //if (time==DateTime.MinValue)
+            if (time==DateTime.MinValue)
             {
-                // throw new StationExeption("ERROR :id of Station not found\n");
+                throw new ItemNotFoundExcepton(parcelId,"ERROR :id of parcel not found\n");
             }
             return time;
         }
@@ -179,9 +179,9 @@ namespace DalObject
                     time = objParcel.Delivered;
                 }
             }
-            //if (time==DateTime.MinValue)
+            if (time==DateTime.MinValue)
             {
-                // throw new StationExeption("ERROR :id of Station not found\n");
+                throw new ItemNotFoundExcepton(parcelId,"ERROR :id of parcel not found\n");
             }
             return time;
         }
@@ -191,7 +191,7 @@ namespace DalObject
         /// <param name="newStation"></param>
         public void AddStation(Station newStation)  
         {
-            Stations[Stations.Count] = newStation;
+            Stations.Add(newStation);
         }
         /// <summary>
         /// Adding a drone to the next open index
@@ -305,21 +305,20 @@ namespace DalObject
         /// Returning a list of all the Stations
         /// </summary>
         /// <returns> List </returns>
-        public  IEnumerable<Station> PrintBaseStation()  
+        public IEnumerable<Station> PrintBaseStation()  
         {
             List<Station> PrintStation = new List<Station>();
-            for (int i = 0; i <Stations.Count; i++)
+            for (int i = 0; i < Stations.Count; i++)
             {
-                PrintStation.Add(GetStation(Stations[i].Id));  
+                PrintStation.Add(GetStation(Stations[i].Id));
             }
             return PrintStation;
-
         }
         /// <summary>
         /// Returning a list of all the Drones
         /// </summary>
         /// <returns> List </returns>
-        public  List<Drone> PrintDrone()   
+        public IEnumerable <Drone> PrintDrone()   
         {
             List<Drone> PrintDrone = new List<Drone>();
             for (int i = 0; i < Drones.Count; i++)
@@ -333,7 +332,7 @@ namespace DalObject
         /// Returning a list of all the Customers
         /// </summary>
         /// <returns> List </returns>
-        public  List<Customer> PrintCustomer()   
+        public IEnumerable<Customer> PrintCustomer()   
         {
             List<Customer> PrintCustomer = new List<Customer>();
             for (int i = 0; i <Customers.Count; i++)
@@ -347,7 +346,7 @@ namespace DalObject
         /// Returning a list of all the Parcels
         /// </summary>
         /// <returns> List </returns>
-        public  List<Parcel> PrintParcel()  
+        public IEnumerable<Parcel> PrintParcel()  
         {
             List<Parcel> PrintParcel = new List<Parcel>();
             for (int i = 0; i <Parcels.Count; i++)
@@ -412,7 +411,7 @@ namespace DalObject
         /// Returning a list of all the Parcels that have not been affiliated witha Drone
         /// </summary>
         /// <returns> List </returns>
-        public  List<Parcel> PrintParcelOnAir()  
+        public IEnumerable<Parcel> PrintParcelOnAir()  
         {
             List<Parcel> PrintParcelOnAir = new List<Parcel>();
             for (int i = 0; i <Parcels.Count; i++)
