@@ -12,7 +12,13 @@ namespace IBL
     public partial class BL : IBL
     {
         BL bL;
-        public BL() { IDal dAL = new DalObject.DalObject(); }
+        public BL() 
+        { 
+            IDal dAL = new DalObject.DalObject(); 
+            double[] elecUsage = dAL.GetElectricUsage();
+            double chargeSpeed = dAL.GetChargeSpeed();
+            dAL.
+        }
 
         
         

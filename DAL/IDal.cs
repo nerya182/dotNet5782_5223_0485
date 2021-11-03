@@ -26,20 +26,21 @@ namespace IDAL
         public void PickupParcelUpdate(int ParcelId);
         public void SupplyParcelUpdate(int ParcelId);
         public void ReleaseDroneFromCharger(int DroneId);
-        public List<Station> PrintBaseStation();
-        public List<Drone> PrintDrone();
-        public List<Customer> PrintCustomer();
-        public List<Parcel> PrintParcel();
+        public IEnumerable<Station> PrintBaseStation();
+        public IEnumerable<Drone> PrintDrone();
+        public IEnumerable<Customer> PrintCustomer();
+        public IEnumerable<Parcel> PrintParcel();
         public double distanceCalculation(double lat1, double lon1, int id, char temp);
-        public List<Parcel> PrintParcelOnAir();
+        public IEnumerable<Parcel> PrintParcelOnAir();
         public int GetParcelId();
         public Parcel ParcelDisplay(int id);
         public Station BaseStationDisplay(int id);
-        public List<Station> PrintStationsWithOpenSlots();
+        public IEnumerable<Station> PrintStationsWithOpenSlots();
         public Drone DroneDisplay(int id);
         public Customer CustomerDisplay(int id);
         public void AddDroneToCharge(DroneCharge droneCharge, int StationId);
-        public double[] ElectricUsage();
+        public double[] GetElectricUsage();
+        public double GetChargeSpeed();
 
 
 

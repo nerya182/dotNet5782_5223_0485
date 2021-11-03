@@ -461,7 +461,7 @@ namespace DalObject
         /// Adding the stations that have open slot to the list
         /// </summary>
         /// <returns> List </returns>
-        public  List<Station> PrintStationsWithOpenSlots()
+        public  IEnumerable<Station> PrintStationsWithOpenSlots()
         {
             List<Station> PrintCustomer = new List<Station>();
             for (int i = 0; i <Stations.Count; i++)
@@ -539,7 +539,7 @@ namespace DalObject
             DroneCharges.Add(droneCharge);
         }
 
-        public  double[] ElectricUsage()
+        public  double[] GetElectricUsage()
         {
             double[] array = new double[5];
             array[0] = DataSource.Config.available;
@@ -548,6 +548,11 @@ namespace DalObject
             array[3] = DataSource.Config.heavyWeight;
             array[4] = DataSource.Config.chargeSpeed;
             return array;
+        }
+
+        public double GetChargeSpeed()
+        {
+            return DataSource.Config.chargeSpeed;
         }
     }
 }

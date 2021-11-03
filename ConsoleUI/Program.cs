@@ -13,7 +13,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             DalObject.DalObject DO = new DalObject.DalObject();
-            IDal dal = new DalObject.DalObject();
+            //IDal dal = new DalObject.DalObject();
 
             CHOICE choice;
             do {
