@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DalObject;
 using IBL.BO;
 using IDAL;
-using DalObject;
+
 
 
 namespace IBL
