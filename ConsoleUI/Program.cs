@@ -13,8 +13,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             DalObject.DalObject DO = new DalObject.DalObject();
-            //IDal dal = new DalObject.DalObject();
-
+           
             CHOICE choice;
             do {
                 Console.WriteLine("\nMenu:\n" +
@@ -328,6 +327,9 @@ namespace ConsoleUI
             Console.WriteLine("enter  1-Regular , 2-Express , 3-Urgent");
             newParcel.Priority = (Priorities)int.Parse(Console.ReadLine());
             newParcel.Creating = DateTime.Now;
+            newParcel.Affiliation = default(DateTime);
+            newParcel.Delivered = default(DateTime);
+            newParcel.PickedUp= default(DateTime);
             newParcel.DroneId = -1;
             DO.AddParcel(newParcel);
         }

@@ -1,8 +1,12 @@
-﻿using System;
+﻿using BL.BO;
+using IBL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+
 
 namespace IBL
 {
@@ -15,12 +19,13 @@ namespace IBL
             public WeightCategories MaxWeight { get; set; }
             public DroneStatuses Status { get; set; }
             public double Battery { get; set; }
-            public double Longitude { get; set; }
-            public double Lattitude { get; set; }
+            public Location location { get; set; }
+
+            public int ParcelBeingPassedId { get; set; }
             public override string ToString()
             {
                 return $"DroneToList #{Id}, Model :{Model },MaxWeight:{MaxWeight}," +
-                    $"Status :{Status}Battery:{Battery},{Convert.ConvertLongitude(Longitude)},{Convert.ConvertLattitude(Lattitude)}\n";
+                    $"Status :{Status}Battery:{Battery}, location:{location},parcel number passes:{ParcelBeingPassedId}\n";
             }
         }
     }

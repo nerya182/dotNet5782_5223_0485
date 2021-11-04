@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,9 @@ namespace IBL
         public class Parcel
         {
             public int Id { get; set; }
-            public int SenderId { get; set; }
-            public int TargetId { get; set; }
-            public int DroneId { get; set; }
+            public Customer Sender { get; set; }
+            public Customer Target { get; set; }
+            public Drone drone { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
             public DateTime Creating { get; set; }
@@ -21,10 +22,9 @@ namespace IBL
             public DateTime PickedUp { get; set; }
             public DateTime Delivered { get; set; }
 
-
             public override string ToString()
             {
-                return $"Parcel #{Id}, SenderId: #{SenderId}, TargetId: #{TargetId}, DroneId: #{DroneId}, {Weight}, {Priority},{Creating},{ Affiliation},{PickedUp},{Delivered}\n";
+                return $"Parcel #{Id}, SenderId:, {Weight}, {Priority},{Creating},{ Affiliation},{PickedUp},{Delivered}\n";
             }
         }
     }

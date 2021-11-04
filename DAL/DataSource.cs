@@ -91,8 +91,7 @@ namespace DalObject
                     Weight = weightCategories,
                     Priority = priorities,
                     Creating = DateTime.Now,
-                    Delivered = DateTime.Now
-                    ,
+                    Delivered = DateTime.Now,
                     PickedUp = DateTime.Now,
                     Affiliation = DateTime.Now
                 };

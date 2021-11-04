@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IBL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +16,12 @@ namespace IBL
             public WeightCategories MaxWeight { get; set; }
             public DroneStatuses Status { get; set; }
             public double Battery { get; set; }
-            public int parcelId { get; set; }
+            public ShipmentTransfer shipmentTransfer { get; set; }
+            public Location location { get; set; }
             public override string ToString()
             {
-                return $"Drone #{Id}: Model={Model}, { Status} , { MaxWeight}, battery={(int)Battery}\n";
+                return $"Drone #{Id}: Model={Model}, { Status} , { MaxWeight}, battery:{(int)Battery}" +
+                    $",Location:{location},shipment Transfer:{shipmentTransfer}\n";
             }
         }
     }

@@ -25,7 +25,8 @@ namespace IDAL
 
             public override string ToString()
             {
-                return $"Parcel #{Id}, SenderId: #{SenderId}, TargetId: #{TargetId}, DroneId: #{DroneId}, {Weight}, {Priority},{Creating},{ Affiliation},{PickedUp},{Delivered}\n";
+                return $"Parcel #{Id}, SenderId: #{SenderId}, TargetId: #{TargetId}, " +
+                    $"DroneId: #{DroneId}, {Weight}, {Priority},{Creating},{ Affiliation},{PickedUp},{Delivered}\n";
             }
         }
     }
