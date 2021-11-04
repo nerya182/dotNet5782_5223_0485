@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,10 +14,10 @@ namespace IBL
             public int DroneId { get; set; }
             public double Battery { get; set; }
 
-
+            public Location location { get; set; }
             public override string ToString()
             {
-                return $"DroneId: #{DroneId}, Battery: {Battery}%\n";
+                return $"DroneId: #{DroneId}, Battery: {Battery}%,location :{location}\n";
             }
 
         }

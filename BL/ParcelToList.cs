@@ -15,16 +15,12 @@ namespace IBL
             public string TargetName { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
-            public DateTime Creating { get; set; }
-            public DateTime Affiliation { get; set; }
-            public DateTime PickedUp { get; set; }
-            public DateTime Delivered { get; set; }
-            public int parcelId { get; set; }
-
+            
+            public ShipmentStatus ShipmentStatus { get; set; }
             public override string ToString()
             {
                 return $"Parcel #{Id}, Sender name: #{SenderName}, Target  name: #{TargetName}," +
-                    $"parcelId: #{parcelId}, {Weight}, {Priority},{Creating},{ Affiliation},{PickedUp},{Delivered}\n";
+                    $"{Weight}, {Priority},ShipmentStatus:{ShipmentStatus}\n";
             }
         }
     }

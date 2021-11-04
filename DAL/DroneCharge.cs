@@ -12,7 +12,7 @@ namespace IDAL
             public override string ToString()
             {
                 return $"DroneId: #{DroneId}, StatonId: #{StationId}";
-            }
+            } 
 
         }
     }

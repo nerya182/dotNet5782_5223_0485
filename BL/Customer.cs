@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BL.BO;
+using System;
+using System.Collections.Generic;
 
 namespace IBL
 {
@@ -9,14 +11,15 @@ namespace IBL
             public int Id { get; set; }
             public string Name { get; set; }
             public string Phone { get; set; }
-            public int Delivered_Supplied_Parcels { get; set; }
-            public int Delivered_NotSupplied_Parcels { get; set; }
-            public int Received_Parcels { get; set; }
-            public int OnTheWay_Parcels { get; set; }
+            public Location location { get; set; }
+
+            public List<ShipmentAtCustomer> fromCustomer { get; set; }
+            public List<ShipmentAtCustomer> toCustomer { get; set; }
             public override string ToString()
             {
-                return $"Customer #{Id}, Name:{Name}, Phone #:{Phone},Delivered_Supplied_Parcels:{Delivered_Supplied_Parcels}" +
-                    $",Delivered_NotSupplied_Parcels:{Delivered_NotSupplied_Parcels},Received_Parcels:{Received_Parcels},OnTheWay_Parcels :{OnTheWay_Parcels }\n";
+                return $"Customer #{Id}, Name:{Name}, Phone #:{Phone} $\n"; 
+
+
 
             }
         }
