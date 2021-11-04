@@ -7,8 +7,6 @@ namespace ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            IBL.BL bL;
-            //BL iBL = bL;
         }
     }
 }

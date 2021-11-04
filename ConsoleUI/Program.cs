@@ -342,8 +342,8 @@ namespace ConsoleUI
             int.TryParse(Console.ReadLine(), out DroneId);
             //DalObject.DalObject.FindDroneToCharge(DroneId);
 
-            List<Station> StationsWithOpenSlots = new List<Station>();
-            StationsWithOpenSlots = DO.PrintStationsWithOpenSlots();
+            IEnumerable<Station> StationsWithOpenSlots = new List<Station>();
+            StationsWithOpenSlots = DO.ListStationsWithOpenSlots();
             StationsWithOpenSlots.ForEach(PrintAll<Station>);
             
             Console.WriteLine("Which Sattion would you like to charge your Drone?");
