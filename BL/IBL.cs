@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace IBL
 {
-    interface IBL
+    interface  IBL
     {
-        
+
     }
 }

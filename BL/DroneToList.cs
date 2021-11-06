@@ -19,13 +19,13 @@ namespace IBL
             public WeightCategories MaxWeight { get; set; }
             public DroneStatuses Status { get; set; }
             public double Battery { get; set; }
-            public Location location { get; set; }
+            public Location Location { get; set; }
 
             public int ParcelBeingPassedId { get; set; }
             public override string ToString()
             {
                 return $"DroneToList #{Id}, Model :{Model },MaxWeight:{MaxWeight}," +
-                    $"Status :{Status}Battery:{Battery}, location:{location},parcel number passes:{ParcelBeingPassedId}\n";
+                    $"Status :{Status}Battery:{Battery}, location:{Location},parcel number passes:{ParcelBeingPassedId}\n";
             }
         }
     }

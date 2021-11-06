@@ -10,7 +10,7 @@ namespace ConsoleUI_BL
         static void Main(string[] args)
         {
 
-            IBL.BL bl =new IBL.BL();
+            BL.BL bl =new BL.BL();
             CHOICE choice;
             do
             {
@@ -58,16 +58,20 @@ namespace ConsoleUI_BL
                         break;
                     case CHOICE.UPDATE:
                         Console.WriteLine("What would you like to bl?\n" +
-                            "1- Affiliate Parcel to Drone\n" +
-                            "2- Pickup Parcel with Drone\n" +
-                            "3- Deliver Parcel to Customer\n" +
-                            "4- Send Drone to Charge\n" +
-                            "5- Release Drone from Charge");
+                            "1- Update drone data\n" +
+                            "2- Update station data\n" +
+                            "3- Update customer data\n" +
+                            "4- Sending a drone for charging\n" +
+                            "5- Release drone from charging"+
+                            "6- Sending a drone for charging\n"+
+                            "7- Affiliate Parcel to Drone\n"+
+                            "8- Parcel collection by drone\n" +
+                            "9- Delivery of a parcel by drone\n");
                         int.TryParse(Console.ReadLine(), out input);
                         switch (input)
                         {
                             case 1:
-                                AffiliateOfDrone(bl);
+                                UpdateDron(bl);
                                 break;
                             case 2:
                                 PickupParcel(bl);
@@ -79,6 +83,18 @@ namespace ConsoleUI_BL
                                 SendDroneToCharge(bl);
                                 break;
                             case 5:
+                                ReleaseDrone(bl);
+                                break;
+                            case 6:
+                                ReleaseDrone(bl);
+                                break;
+                            case 7:
+                                ReleaseDrone(bl);
+                                break;
+                            case 8:
+                                ReleaseDrone(bl);
+                                break;
+                            case 9:
                                 ReleaseDrone(bl);
                                 break;
                         }
@@ -117,7 +133,7 @@ namespace ConsoleUI_BL
                         break;
                     case CHOICE.VIEW_LIST:
                         Console.WriteLine("Which List would you like to view? \n" +
-                            "s - Sations\n" +
+                            "s - Stations\n" +
                             "d - Drones\n" +
                             "c - Customers\n" +
                             "p - Parcels\n" +
@@ -190,16 +206,89 @@ namespace ConsoleUI_BL
             while (choice != CHOICE.EXIT);
         }
 
-        private static void AddStation(IBL.BL bl)
+        private static void UpdateDron(BL.BL bl)
+        {
+            try
+            {
+                DroneToList newDrone = new DroneToList();
+                Console.WriteLine("Enter a unique ID number of drone");
+                newDrone.Id = int.Parse(Console.ReadLine());
+                Console.WriteLine("Insert the  new model of the drone");
+                newDrone.Model = Console.ReadLine();
+                bl.UpdateDron(newDrone);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            } 
+        }
+
+        private static void AddCustomer(BL.BL bl)
+        {
+
+            Customer newCustomer = new Customer();
+            Console.WriteLine("Enter a unique ID number");
+            newCustomer.Id = int.Parse(Console.ReadLine());
+            Console.WriteLine(" Enter the customer name");
+            newCustomer.Name = Console.ReadLine();
+            Console.WriteLine(" Enter a phone number");
+            newCustomer.Phone = Console.ReadLine();
+            bl.AddCustomer(newCustomer);
+        }
+
+        private static void AddParcel(BL.BL bl)
+        {
+            Parcel newParcel = new Parcel();
+
+            Console.WriteLine("Enter a sending customer ID number");
+            newParcel.Sender.Id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter a receives Customer  ID number");
+            newParcel.Target.Id = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy");
+            newParcel.Weight = (WeightCategories)int.Parse(Console.ReadLine());
+
+            Console.WriteLine("enter  1-Regular , 2-Express , 3-Urgent");
+            newParcel.Priority = (Priorities)int.Parse(Console.ReadLine());
+
+            newParcel.Creating = DateTime.Now;
+            newParcel.Affiliation = default(DateTime);
+            newParcel.Delivered = default(DateTime);
+            newParcel.PickedUp= default(DateTime);
+            newParcel.drone.DroneId = -1;
+            bl.AddParcel(newParcel);
+        }
+        
+
+      
+        private static void AddDrone(BL.BL bl)
+        {
+            int chargingStationId;
+            DroneToList newDrone = new DroneToList();
+            Console.WriteLine("Enter a unique ID number");
+            newDrone.Id = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Insert the model of the drone");
+            newDrone.Model = Console.ReadLine();
+
+            Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy");
+            newDrone.MaxWeight = (WeightCategories)int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter a unique ID number station to put the drone initial charge ");
+            chargingStationId = int.Parse(Console.ReadLine());
+            bl.AddDrone(newDrone, chargingStationId);
+        }
+
+        private static void AddStation(BL.BL bl)
         {
             Station newStation = new Station();
-            Console.WriteLine("Enter a unique ID number of staion");
+            Console.WriteLine("Enter a unique ID number of station");
             newStation.Id = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter the name of the station");
+            Console.WriteLine("Enter the name of the station"); 
             newStation.Name = Console.ReadLine();
             Console.WriteLine("Enter the longitude of the station");
             newStation.location.Longitude = double.Parse(Console.ReadLine());
-            Console.WriteLine("Enter the Lattitude of the station");
+            Console.WriteLine("Enter the lattitude of the station");
             newStation.location.Lattitude = double.Parse(Console.ReadLine());
             Console.WriteLine("Enter the number of charging points available at the station");
             newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
@@ -207,5 +296,5 @@ namespace ConsoleUI_BL
             bl.AddStation(newStation);
         }
     }
-    }
+    
 }

@@ -28,18 +28,18 @@ namespace IDAL
             }
         }
 
-        public class ItemNotFoundExcepton : Exception
+        public class ItemNotFoundException : Exception
         {
             public int Id;
-            public ItemNotFoundExcepton(int obj_Id) : base()
+            public ItemNotFoundException(int obj_Id) : base()
             {
                 Id = obj_Id;
             }
-            public ItemNotFoundExcepton(int obj_Id, String message) : base(message)
+            public ItemNotFoundException(int obj_Id, String message) : base(message)
             {
                 Id = obj_Id;
             }
-            public ItemNotFoundExcepton(int obj_Id, String message, Exception inner) : base(message, inner)
+            public ItemNotFoundException(int obj_Id, String message, Exception inner) : base(message, inner)
             {
                 Id = obj_Id;
             }

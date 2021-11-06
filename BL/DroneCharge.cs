@@ -15,9 +15,8 @@ namespace IBL
 
             public override string ToString()
             {
-                return $"DroneId: #{DroneId}, StatonId: #{StationId}\n";
+                return $"DroneId: #{DroneId}, StationId: #{StationId}\n";
             }
-
         }
     }
 }

@@ -32,7 +32,7 @@ namespace DalObject
             }
             if (newStation==null)
             {
-               throw new ItemNotFoundExcepton(StationId,"ERROR :id of Station not found\n");
+               throw new ItemNotFoundException(StationId,"ERROR :id of Station not found\n");
             }
             return (Station)newStation;
        
@@ -54,7 +54,7 @@ namespace DalObject
             }
             if (newDrone== null)
             {
-                throw new ItemNotFoundExcepton(droneId, "ERROR :id of drone not found\n");
+                throw new ItemNotFoundException(droneId, "ERROR :id of drone not found\n");
             }
             return (Drone)newDrone;
         }
@@ -75,7 +75,7 @@ namespace DalObject
             }
             if (newCustomer== null)
             {
-                throw new ItemNotFoundExcepton(customerId, "ERROR :id of customer not found\n");
+                throw new ItemNotFoundException(customerId, "ERROR :id of customer not found\n");
             }
             return (Customer)newCustomer;
         }
@@ -96,7 +96,7 @@ namespace DalObject
             }
             if (newParcel == null)
             {
-                throw new ItemNotFoundExcepton(parcelId, "ERROR :id of parcel not found\n");
+                throw new ItemNotFoundException(parcelId, "ERROR :id of parcel not found\n");
             }
             return (Parcel)newParcel;
         }
@@ -117,7 +117,7 @@ namespace DalObject
             }
             if (time==DateTime.MinValue)
             {
-                throw new ItemNotFoundExcepton(parcelId, "ERROR :id of parcel not found\n");
+                throw new ItemNotFoundException(parcelId, "ERROR :id of parcel not found\n");
             }
             return time; 
 
@@ -139,7 +139,7 @@ namespace DalObject
             }
             if (time==DateTime.MinValue)
             {
-                throw new ItemNotFoundExcepton(parcelId, "ERROR :id of parcel not found\n");
+                throw new ItemNotFoundException(parcelId, "ERROR :id of parcel not found\n");
             }
             return time;
         }
@@ -160,7 +160,7 @@ namespace DalObject
             }
             if (time==DateTime.MinValue)
             {
-                throw new ItemNotFoundExcepton(parcelId,"ERROR :id of parcel not found\n");
+                throw new ItemNotFoundException(parcelId,"ERROR :id of parcel not found\n");
             }
             return time;
         }
@@ -181,7 +181,7 @@ namespace DalObject
             }
             if (time==DateTime.MinValue)
             {
-                throw new ItemNotFoundExcepton(parcelId,"ERROR :id of parcel not found\n");
+                throw new ItemNotFoundException(parcelId,"ERROR :id of parcel not found\n");
             }
             return time;
         }
@@ -263,7 +263,7 @@ namespace DalObject
             }
             if (!flag)
             {
-                throw new ItemNotFoundExcepton(droneId, "ERROR: id of Drone not found\n");
+                throw new ItemNotFoundException(droneId, "ERROR: id of Drone not found\n");
             }
 
             for (int i = 0; i < Drones.Count; i++)

@@ -1,5 +1,4 @@
-﻿using BL.BO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,10 +10,10 @@ namespace IBL
     {
         public class Parcel
         {
-            public int Id { get; set; }
+            public int Id { get; set; } 
             public Customer Sender { get; set; }
             public Customer Target { get; set; }
-            public Drone drone { get; set; }
+            public DroneInParcel drone { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
             public DateTime Creating { get; set; }
