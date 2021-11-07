@@ -8,15 +8,16 @@ namespace IBL
 {
     namespace BO
     {
-        public class DroneCharge
+        public class CustomerInParcel
         {
-            public int DroneId { get; set; }
-            public int StationId { get; set; }
+            public int Id { get; set; }
+            public string Name { get; set; }
 
             public override string ToString()
             {
-                return $"DroneId: #{DroneId}, StationId: #{StationId}\n";
+                return $"Customer #{Id}, Name:{Name}";
             }
         }
     }
+    
 }

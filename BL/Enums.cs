@@ -16,7 +16,7 @@ namespace IBL
         {
             Light = 1, Medium, Heavy
         }
-        public enum ShipmentStatus { Created, Assigned, PickedUp, Supplied}
+        public enum ParcelStatus { Created, Assigned, PickedUp, Supplied}
         public enum Priorities { Regular = 1, Express, Urgent }
         public enum DroneStatuses { Available = 1, Delivery, Charging }
         

@@ -13,7 +13,6 @@ namespace IBL
        {
             public int DroneId { get; set; }
             public double Battery { get; set; }
-
             public Location location { get; set; }
             public override string ToString()
             {

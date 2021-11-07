@@ -20,7 +20,6 @@ namespace IBL
             public DroneStatuses Status { get; set; }
             public double Battery { get; set; }
             public Location Location { get; set; }
-
             public int ParcelBeingPassedId { get; set; }
             public override string ToString()
             {
