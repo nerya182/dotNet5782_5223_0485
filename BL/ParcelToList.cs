@@ -15,8 +15,7 @@ namespace IBL
             public string TargetName { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
-            
-            public ShipmentStatus ShipmentStatus { get; set; }
+            public ParcelStatus ShipmentStatus { get; set; }
             public override string ToString()
             {
                 return $"Parcel #{Id}, Sender name: #{SenderName}, Target  name: #{TargetName}," +
