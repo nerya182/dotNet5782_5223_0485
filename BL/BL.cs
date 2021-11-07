@@ -14,7 +14,7 @@ namespace BL
     public partial class BL : IBL.IBL
     {
         public List<DroneToList> lstDrone = new List<DroneToList>();
-
+        public List<DroneInCharging> lstDroneInCharge = new List<DroneInCharging>();
         public IDal dal;
         public BL()
         {
@@ -176,6 +176,60 @@ namespace BL
 
 
 
+        }
+
+        public object DroneDisplay(int id)
+        {
+            
+        }
+
+        public object BaseStationDisplay(int id)
+        {
+            IEnumerable<IDAL.DO.Station> stations = dal.ListBaseStation();
+            
+            Station temp = new Station();
+            bool flag = false;
+            foreach(var statn in stations)
+            {
+                if(statn.Id == id)
+                {
+                    temp.Id = statn.Id;
+                    temp.Name = statn.Name;
+                    temp.location.Longitude = statn.Longitude;
+                    temp.location.Lattitude = statn.Lattitude;
+
+                   // temp.droneInCharging = new List<DroneInCharging>(0); // להבין מה עושים פה
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag)
+            {
+                throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
+            }
+            IEnumerable<IDAL.DO.DroneCharge> droneCharge = dal.ListDroneCharge();
+            IEnumerable<IDAL.DO.Drone> drone = dal.ListDrone();
+           // Drone newTemp = new Drone();
+            DroneInCharging newTemp = new DroneInCharging();
+            foreach (var drnchrg in droneCharge)
+            {
+                if(drnchrg.StationId == id)
+                {
+                    foreach(var drn in drone)
+                    {
+                        if(drn.Id == drnchrg.DroneId)
+                        {
+                            newTemp.DroneId = drn.Id;
+                            newTemp.Battery = drn.; // battery
+                            lstDroneInCharge.Add(newTemp);
+                        }
+
+                    }
+                    
+                }
+            }
+            temp.droneInCharging = lstDroneInCharge;
+            return temp;
         }
     }
 }

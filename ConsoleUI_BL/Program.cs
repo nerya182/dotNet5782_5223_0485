@@ -110,9 +110,16 @@ namespace ConsoleUI_BL
                         switch (info)
                         {
                             case 1:
-                                Console.WriteLine(" Enter the station ID number");
-                                int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(bl.BaseStationDisplay(id));
+                                try {
+                                    Console.WriteLine(" Enter the station ID number");
+                                    int.TryParse(Console.ReadLine(), out id);
+                                    PrintAll(bl.BaseStationDisplay(id));
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e);
+                                }
+
                                 break;
                             case 2:
                                 Console.WriteLine(" Enter the Drone ID number");
@@ -294,6 +301,11 @@ namespace ConsoleUI_BL
             newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
             newStation.droneInCharging = new List<DroneInCharging>(0);
             bl.AddStation(newStation);
+        }
+
+        public static void PrintAll<T>(T t)
+        {
+            Console.WriteLine(t);
         }
     }
     

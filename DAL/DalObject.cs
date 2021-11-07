@@ -15,6 +15,11 @@ namespace DalObject
         {
             DataSource.Initialize();
         }
+        public DroneCharge GetDroneCharge(int index)
+        {
+            return DroneCharges[index];
+        }
+
         /// <summary>
         /// Returns the station in the certain index
         /// </summary>
@@ -355,6 +360,16 @@ namespace DalObject
             }
             return PrintStation;
         }
+
+        public IEnumerable<DroneCharge> ListDroneCharge()
+        {
+            List<DroneCharge> PrintDroneCharge = new List<DroneCharge>();
+            for(int i = 0; i< DroneCharges.Count;i++)
+            {
+                PrintDroneCharge.Add(GetDroneCharge(i));
+            }
+            return PrintDroneCharge;
+        }
         /// <summary>
         /// Returning a list of all the Drones
         /// </summary>
@@ -497,6 +512,8 @@ namespace DalObject
             }
             return GetStation(Stations[i].Id);
         }
+
+        
 
         /// <summary>
         /// Adding the stations that have open slot to the list
