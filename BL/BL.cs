@@ -191,13 +191,13 @@ namespace BL
                     temp.Id = drn.Id;
                     temp.Model = drn.Model;
                     temp.MaxWeight = (WeightCategories)drn.MaxWeight;
-                    temp.Status = DroneStatuses.Charging;
+                    //temp.Status = DroneStatuses.Charging;
                     foreach(var drone in lstDrone)
                     {
                         if(drone.Id == id)
                         {
-                            temp.location = drone.Location;
-                            temp.shipmentTransfer = drone.
+                            temp.Location = drone.Location;
+                            temp.ParcelTransfer = drone.
                         }
                     }
                     foreach(var station in stations)

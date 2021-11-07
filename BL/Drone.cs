@@ -21,7 +21,7 @@ namespace IBL
             public override string ToString()
             {
                 return $"Drone #{Id}: Model={Model}, { Status} , { MaxWeight}, battery:{(int)Battery}" +
-                    $",Location:{location},shipment Transfer:{shipmentTransfer}\n";
+                    $",Location:{Location},shipment Transfer:{ParcelTransfer}\n";
             }
         }
     }
