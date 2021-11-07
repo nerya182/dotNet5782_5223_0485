@@ -180,7 +180,34 @@ namespace BL
 
         public object DroneDisplay(int id)
         {
-            
+            IEnumerable<IDAL.DO.Drone> drones = dal.ListDrone();
+            IEnumerable<IDAL.DO.Station> stations = dal.ListBaseStation();
+            Drone temp = new Drone();
+            bool flag = false;
+            foreach (var drn in drones)
+            {
+                if(drn.Id == id)
+                {
+                    temp.Id = drn.Id;
+                    temp.Model = drn.Model;
+                    temp.MaxWeight = (WeightCategories)drn.MaxWeight;
+                    temp.Status = DroneStatuses.Charging;
+                    foreach(var drone in lstDrone)
+                    {
+                        if(drone.Id == id)
+                        {
+                            temp.location = drone.Location;
+                            temp.shipmentTransfer = drone.
+                        }
+                    }
+                    foreach(var station in stations)
+                    {
+                        if()
+                    }
+                    temp.location = 
+
+                }
+            }
         }
 
         public object BaseStationDisplay(int id)
