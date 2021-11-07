@@ -27,6 +27,7 @@ namespace IDAL
         public void SupplyParcelUpdate(int ParcelId);
         public void ReleaseDroneFromCharger(int DroneId);
         public IEnumerable<Station> ListBaseStation();
+        public IEnumerable<DroneCharge> ListDroneCharge();
         public IEnumerable<Drone> ListDrone();
         public IEnumerable<Customer> ListCustomer();
         public IEnumerable<Parcel> ListParcel();
