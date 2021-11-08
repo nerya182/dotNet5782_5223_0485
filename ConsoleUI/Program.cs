@@ -98,7 +98,7 @@ namespace ConsoleUI
                         {
                             case 1:
                                 Console.WriteLine(" Enter the station ID number");
-                                int.TryParse(Console.ReadLine(), out id);
+                                int.TryParse(Console.ReadLine( ), out id);
                                 PrintAll(DO.BaseStationDisplay(id)); 
                                 break;
                             case 2:
