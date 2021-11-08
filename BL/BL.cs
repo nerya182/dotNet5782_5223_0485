@@ -201,7 +201,12 @@ namespace BL
                         {
                             prclTrnsfr.Id = parcel.Id;
                             prclTrnsfr.Weight = (WeightCategories)parcel.Weight;
-                            //prclTrnsfr.ParcelSituation = parcel.
+
+                            if (parcel.PickedUp != DateTime.MinValue)
+                                prclTrnsfr.ParcelSituation = true;
+                            else
+                                prclTrnsfr.ParcelSituation = false;
+
                             prclTrnsfr.Priority = (Priorities)parcel.Priority;
                             foreach(var customer in customers)
                             {
@@ -220,10 +225,30 @@ namespace BL
                                 if (flag2 && flag3)
                                     break;
                             }
+                            flag2 = false;
+                            flag3 = false;
                             prclTrnsfr.SupplyPoint = tempLocationSupply;
                             prclTrnsfr.collection = tempLocationCollect;
                             prclTrnsfr.distanceTransportation = dal.GetDistanceFromLatLonInKm(tempLocationSupply.Lattitude, tempLocationSupply.Longitude, tempLocationCollect.Lattitude, tempLocationCollect.Longitude);
-                            //prclTrnsfr.Sender = parcel.
+                            foreach(var cstmr in customers)
+                            {
+                                if((cstmr.Id == prclTrnsfr.Sender.Id) && (!flag2))
+                                {
+                                    sender.Id = cstmr.Id;
+                                    sender.Name = cstmr.Name;
+                                    flag2 = true;
+                                }
+                                else if((cstmr.Id == prclTrnsfr.Receiver.Id) && (!flag3))
+                                {
+                                    receiver.Id = cstmr.Id;
+                                    receiver.Name = cstmr.Name;
+                                    flag3 = true;
+                                }
+                                if (flag2 && flag3)
+                                    break;
+                            }
+                            prclTrnsfr.Sender = sender;
+                            prclTrnsfr.Receiver = receiver;
                         }
                     }
                     flag1 = true;

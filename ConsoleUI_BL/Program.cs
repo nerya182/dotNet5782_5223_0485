@@ -119,12 +119,18 @@ namespace ConsoleUI_BL
                                 {
                                     Console.WriteLine(e);
                                 }
-
                                 break;
                             case 2:
-                                Console.WriteLine(" Enter the Drone ID number");
-                                int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(bl.DroneDisplay(id));
+                                try
+                                {
+                                    Console.WriteLine(" Enter the Drone ID number");
+                                    int.TryParse(Console.ReadLine(), out id);
+                                    PrintAll(bl.DroneDisplay(id));
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e);
+                                }
                                 break;
                             case 3:
                                 Console.WriteLine(" Enter the Customer ID number");
