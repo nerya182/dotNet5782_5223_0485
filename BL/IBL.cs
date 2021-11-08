@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IBL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace IBL
 {
     interface  IBL
     {
-
+        void AddStation(Station newStation);
     }
 }

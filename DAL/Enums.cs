@@ -15,6 +15,6 @@ namespace IDAL
         }
         public enum Priorities {Regular=1, Express, Urgent }
         public enum CustomerName {Avi, Benny, Gadi, Danny, Freddy, Alex, Nati, Oren, channan, Yair, Tal, Noam}
-        public enum NameDrone {mavic, tello, syma, flybird, lion, cobra, cheetah, beck, worm, bean}   
+        public enum NameDrone {mavic, tello, syma, flybird, lion, cobra, cheetah, beck, worm, bean,Hawk, shadow, Sentinel,Snowgoose, Pioneer, Hunter,Stalker, GNAT ,}   
     }
 }

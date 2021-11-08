@@ -69,19 +69,15 @@ namespace BL
             }
 
         }
-
         public void AddDrone(DroneToList newDrone, int chargingStationId)
         {
             try
             {
-
                 IDAL.DO.Drone temp = new IDAL.DO.Drone();
                 temp.Id = newDrone.Id;
                 temp.Model = newDrone.Model;
                 temp.MaxWeight = (IDAL.DO.WeightCategories)newDrone.MaxWeight;
                 dal.AddDrone(temp);
-
-
                 Random r = new Random();
                 newDrone.Battery = r.Next(20, 41);
                 newDrone.Status = DroneStatuses.Charging;
@@ -91,7 +87,7 @@ namespace BL
                     if (objStation.Id == chargingStationId)
                     {
                         newDrone.Location.Lattitude = objStation.Lattitude;
-                        newDrone.Location.Longitude = objStation.Longitude;
+                         newDrone.Location.Longitude = objStation.Longitude;
                         break;
                     }
                 }
@@ -116,7 +112,7 @@ namespace BL
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                throw new ItemAlreadyExistsExcepton(newCustomer.Id, "ERROR: id of Customer already exists\n");
             }
         }
 
@@ -144,7 +140,7 @@ namespace BL
             }
         }
 
-        public void UpdateDron(DroneToList newDrone)
+        public void UpdateDrone(DroneToList newDrone)
         {
             bool flag = false;
 
@@ -162,20 +158,15 @@ namespace BL
             {
                 throw new ItemNotFoundException(newDrone.Id, "ERROR :id of drone not found\n");
             }
-
             for (int i = 0; i < dal.ListDrone().Count(); i++)
             {
                 if (dal.ListDrone().ElementAt(i).Id == newDrone.Id)
                 {
                     var elementAt = dal.ListDrone().ElementAt(i);
-                    elementAt.Model = newDrone.Model;
+                    elementAt.Model = newDrone.Model; 
                     break;
-                }
+                } 
             }
-
-
-
-
         }
 
         public object DroneDisplay(int id)

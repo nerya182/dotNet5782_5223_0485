@@ -51,11 +51,25 @@ namespace DalObject
         private static void CreateDrones()
         {
             Random R = new Random();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)//רחפנים מסוג קל
             {
-                NameDrone nameDrone = (NameDrone)R.Next(0, 9);
-                WeightCategories weightCategories = (WeightCategories)R.Next(1, 3);
+                NameDrone nameDrone = (NameDrone)R.Next(0, 18);
+                WeightCategories weightCategories = (WeightCategories)(1);
                 Drone newDrone = new Drone() { Id = R.Next(1000, 100001), Model = nameDrone.ToString(), MaxWeight = weightCategories};
+                Drones.Add(newDrone);
+            }
+            for (int i = 0; i < 3; i++)//רחפנים מסוג בינוני
+            {
+                NameDrone nameDrone = (NameDrone)R.Next(0, 18);
+                WeightCategories weightCategories = (WeightCategories)(2);
+                Drone newDrone = new Drone() { Id = R.Next(1000, 100001), Model = nameDrone.ToString(), MaxWeight = weightCategories };
+                Drones.Add(newDrone);
+            }
+            for (int i = 0; i < 4; i++)//רחפנים מסוג כבד
+            {
+                NameDrone nameDrone = (NameDrone)R.Next(0, 18);
+                WeightCategories weightCategories = (WeightCategories)(3);
+                Drone newDrone = new Drone() { Id = R.Next(1000, 100001), Model = nameDrone.ToString(), MaxWeight = weightCategories };
                 Drones.Add(newDrone);
             }
         }
@@ -78,22 +92,83 @@ namespace DalObject
         private static void CreateParcels()
         {
             Random R = new Random();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 3; i++)//חבילות קלות לרחפנים קלים,שנוצרו אך לא שויכו
             {
                 Priorities priorities = (Priorities)R.Next(1, 3);
-                WeightCategories weightCategories = (WeightCategories)R.Next(1, 3);
+                WeightCategories weightCategories = (WeightCategories)(1) ;
                 Parcel newParcel = new Parcel()
                 {
                     Id = Config.NewParcelId,
                     SenderId = R.Next(100000000, 1000000000),
                     TargetId = R.Next(100000000, 1000000000),
-                    DroneId = R.Next(-1, Drones.Count),
+                    DroneId = Drones[i].Id,
                     Weight = weightCategories,
                     Priority = priorities,
                     Creating = DateTime.Now,
-                    Delivered = DateTime.Now,
-                    PickedUp = DateTime.Now,
-                    Affiliation = DateTime.Now
+                    Delivered = DateTime.MinValue,
+                    PickedUp = DateTime.MinValue,
+                    Affiliation = DateTime.MinValue
+                };
+                Parcels.Add(newParcel);
+                Config.NewParcelId++;
+            }
+            for (int i = 0; i < 3; i++)//חבילות שנוצרו ושויכו 
+            {
+                Priorities priorities = (Priorities)R.Next(1, 3);
+                WeightCategories weightCategories = (WeightCategories)(2);
+                Parcel newParcel = new Parcel()
+                {
+                    Id = Config.NewParcelId,
+                    SenderId = R.Next(100000000, 1000000000),
+                    TargetId = R.Next(100000000, 1000000000),
+                    DroneId = Drones[i+3].Id,
+                    Weight = weightCategories,
+                    Priority = priorities,
+                    Creating = DateTime.Now.AddMinutes(-60),
+                    Affiliation = DateTime.Now.AddMinutes(-30),
+                    Delivered = DateTime.MinValue,
+                    PickedUp = DateTime.MinValue,
+                   
+                };
+                Parcels.Add(newParcel);
+                Config.NewParcelId++;
+            }
+            for (int i = 0; i < 2; i++)// חבילות שנוצרו ושויכו ונאספו אך לא סופקו  
+            {
+                Priorities priorities = (Priorities)R.Next(1, 3);
+                WeightCategories weightCategories = (WeightCategories)(3);
+                Parcel newParcel = new Parcel()
+                {
+                    Id = Config.NewParcelId,
+                    SenderId = R.Next(100000000, 1000000000),
+                    TargetId = R.Next(100000000, 1000000000),
+                    DroneId = Drones[i+6].Id,
+                    Weight = weightCategories,
+                    Priority = priorities,
+                    Creating = DateTime.Now.AddMinutes(-120),
+                    Affiliation = DateTime.Now.AddMinutes(-90),
+                    PickedUp = DateTime.Now.AddMinutes(-60),
+                    Delivered = DateTime.MinValue
+                };
+                Parcels.Add(newParcel);
+                Config.NewParcelId++;
+            }
+            for (int i = 0; i < 2; i++)//חבילות שנוצרו,שויכו, נאספו,סופקו 
+            {
+                Priorities priorities = (Priorities)R.Next(1, 3);
+                WeightCategories weightCategories = (WeightCategories)(3);
+                Parcel newParcel = new Parcel()
+                {
+                    Id = Config.NewParcelId,
+                    SenderId = R.Next(100000000, 1000000000),
+                    TargetId = R.Next(100000000, 1000000000),
+                    DroneId = Drones[i + 8].Id,
+                    Weight = weightCategories,
+                    Priority = priorities,
+                    Creating = DateTime.Now.AddMinutes(-180),
+                    Delivered = DateTime.Now.AddMinutes(-30),
+                    PickedUp = DateTime.Now.AddMinutes(-90),
+                    Affiliation = DateTime.Now.AddMinutes(-120)
                 };
                 Parcels.Add(newParcel);
                 Config.NewParcelId++;
@@ -107,7 +182,7 @@ namespace DalObject
             Random R = new Random();
             for (int i = 0; i < 2; i++)
             {
-                DroneCharge newDroneCharge = new DroneCharge() { DroneId = R.Next(0, Drones.Count), StationId = R.Next(0, Stations.Count) };
+                DroneCharge newDroneCharge = new DroneCharge() { DroneId = Drones[i+8].Id, StationId = Stations[i].Id };
                 DroneCharges.Add(newDroneCharge);
             }
         }

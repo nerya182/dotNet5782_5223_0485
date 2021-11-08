@@ -10,41 +10,37 @@ namespace IDAL
 {
     public interface IDal
     {
-        public  Station GetStation(int id);
-        public Drone GetDrone(int droneId);
-        public  Customer GetCustomer(int customerId);
-        public  Parcel GetParcel(int parcelId);
-        public  DateTime GetParcelCreating(int parcelId);
-        public DateTime GetParcelAffiliation(int parcelId);
-        public DateTime GetParcelPickedUp(int parcelId);
-        public DateTime GetParcelDelivered(int parcelId);
-        public void AddStation(Station newStation);
-        public void AddDrone(Drone newDrone);
-        public void AddCustomer(Customer newCustomer);
-        public void AddParcel(Parcel newParcel);
-        public void Affiliate(int idParcel, int droneId);
-        public void PickupParcelUpdate(int ParcelId);
-        public void SupplyParcelUpdate(int ParcelId);
-        public void ReleaseDroneFromCharger(int DroneId);
-        public IEnumerable<Station> ListBaseStation();
-        public IEnumerable<DroneCharge> ListDroneCharge();
-        public IEnumerable<Drone> ListDrone();
-        public IEnumerable<Customer> ListCustomer();
-        public IEnumerable<Parcel> ListParcel();
-        public double distanceCalculation(double lat1, double lon1, int id, char temp);
-        public IEnumerable<Parcel> ListParcelOnAir();
-        public int GetParcelId();
-        public Parcel ParcelDisplay(int id);
-        public Station BaseStationDisplay(int id);
-        public IEnumerable<Station> ListStationsWithOpenSlots();
-        public Drone DroneDisplay(int id);
-        public Customer CustomerDisplay(int id);
-        public void AddDroneToCharge(DroneCharge droneCharge, int StationId);
-        public double[] GetElectricUsage();
-        public double GetChargeSpeed();
-
-
-
-
+       Station GetStation(int id);
+        Drone GetDrone(int droneId);
+        Customer GetCustomer(int customerId);
+        Parcel GetParcel(int parcelId);
+        DateTime GetParcelCreating(int parcelId);
+        DateTime GetParcelAffiliation(int parcelId);
+        DateTime GetParcelPickedUp(int parcelId);
+        DateTime GetParcelDelivered(int parcelId);
+        void AddStation(Station newStation);
+        void AddDrone(Drone newDrone);
+        void AddCustomer(Customer newCustomer);
+        void AddParcel(Parcel newParcel);
+        void Affiliate(int idParcel, int droneId);
+        void PickupParcelUpdate(int ParcelId);
+        void SupplyParcelUpdate(int ParcelId);
+        void ReleaseDroneFromCharger(int DroneId);
+        IEnumerable<Station> ListBaseStation();
+        IEnumerable<DroneCharge> ListDroneCharge();
+        IEnumerable<Drone> ListDrone();
+        IEnumerable<Customer> ListCustomer();
+        IEnumerable<Parcel> ListParcel();
+        double distanceCalculation(double lat1, double lon1, int id, char temp);
+        IEnumerable<Parcel> ListParcelOnAir();
+        int GetParcelId(); 
+        Parcel ParcelDisplay(int id);
+        Station BaseStationDisplay(int id);
+        IEnumerable<Station> ListStationsWithOpenSlots();
+        Drone DroneDisplay(int id);
+        Customer CustomerDisplay(int id);
+        void AddDroneToCharge(DroneCharge droneCharge, int StationId);
+        double[] GetElectricUsage();
+        double GetChargeSpeed();
     }
 }

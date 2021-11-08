@@ -9,7 +9,7 @@ using static DalObject.DataSource;
 
 namespace DalObject 
 {
-    public class DalObject: IDal
+    public class DalObject: IDAL.IDal
     {
         public DalObject()
         {
@@ -560,23 +560,6 @@ namespace DalObject
             return GetCustomer(Customers[i].Id);
         }
 
-        /// <summary>
-        /// Charging Drone
-        /// </summary>
-        /// <param name="DroneId"></param>
-       /* public  void FindDroneToCharge(int DroneId)
-        {
-            int i;
-            for ( i = 0; i<Drones.Count; i++)
-            {
-                if (Drones[i].Id == DroneId)
-                {
-                    Drones[i].Status = DroneStatuses.Charging;
-                    break;
-                }
-            }
-        }
-        */
         /// <summary>
         /// Lowering the available slots by 1 because we've added a drone to charge there
         /// </summary>
