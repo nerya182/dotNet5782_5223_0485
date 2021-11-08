@@ -42,5 +42,8 @@ namespace IDAL
         void AddDroneToCharge(DroneCharge droneCharge, int StationId);
         double[] GetElectricUsage();
         double GetChargeSpeed();
+
+        public double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2);
+        public double Deg2rad(double deg);
     }
 }

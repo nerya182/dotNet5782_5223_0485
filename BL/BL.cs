@@ -177,6 +177,8 @@ namespace BL
             ParcelTransfer prclTrnsfr = new ParcelTransfer();
             Location tempLocationSupply = new Location();
             Location tempLocationCollect = new Location();
+            CustomerInParcel sender = new CustomerInParcel();
+            CustomerInParcel receiver = new CustomerInParcel();
             Drone temp = new Drone();
             bool flag1 = false;
             bool flag2 = false;
@@ -220,7 +222,8 @@ namespace BL
                             }
                             prclTrnsfr.SupplyPoint = tempLocationSupply;
                             prclTrnsfr.collection = tempLocationCollect;
-                            //prclTrnsfr.distanceTransportation =  הגעתי לפה
+                            prclTrnsfr.distanceTransportation = dal.GetDistanceFromLatLonInKm(tempLocationSupply.Lattitude, tempLocationSupply.Longitude, tempLocationCollect.Lattitude, tempLocationCollect.Longitude);
+                            //prclTrnsfr.Sender = parcel.
                         }
                     }
                     flag1 = true;

@@ -17,8 +17,8 @@ namespace IBL
             public bool ParcelSituation { get; set; }
             public Location collection { get; set; }
             public Location SupplyPoint { get; set; }
-            public CustomerInParcel SenInShipment { get; set; }
-            public CustomerInParcel GetInShipment { get; set; }
+            public CustomerInParcel Sender { get; set; }
+            public CustomerInParcel Receiver { get; set; }
             public double distanceTransportation { get; set; }
 
             public override string ToString()
