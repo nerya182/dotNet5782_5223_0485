@@ -14,7 +14,6 @@ namespace BL
     public partial class BL : IBL.IBL
     {
         public List<DroneToList> lstDrone = new List<DroneToList>();
-        public List<DroneInCharging> lstDroneInCharge = new List<DroneInCharging>();
         public IDal dal;
         public BL()
         {
@@ -182,38 +181,73 @@ namespace BL
         {
             IEnumerable<IDAL.DO.Drone> drones = dal.ListDrone();
             IEnumerable<IDAL.DO.Station> stations = dal.ListBaseStation();
+            IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
+            IEnumerable<IDAL.DO.Customer> customers = dal.ListCustomer();
+            ParcelTransfer prclTrnsfr = new ParcelTransfer();
+            Location tempLocationSupply = new Location();
+            Location tempLocationCollect = new Location();
             Drone temp = new Drone();
-            bool flag = false;
-            foreach (var drn in drones)
+            bool flag1 = false;
+            bool flag2 = false;
+            bool flag3 = false;
+
+            foreach (var drone in lstDrone)
             {
-                if(drn.Id == id)
+                if (drone.Id == id)
                 {
-                    temp.Id = drn.Id;
-                    temp.Model = drn.Model;
-                    temp.MaxWeight = (WeightCategories)drn.MaxWeight;
-                    //temp.Status = DroneStatuses.Charging;
-                    foreach(var drone in lstDrone)
+                    temp.Id = drone.Id;
+                    temp.Model = drone.Model;
+                    temp.MaxWeight = drone.MaxWeight;
+                    temp.Battery = drone.Battery;
+                    temp.Status = drone.Status;
+                    temp.Location = drone.Location;
+                    //temp.ParcelTransfer = drone.
+                    foreach(var parcel in parcels)
                     {
-                        if(drone.Id == id)
+                        if(parcel.DroneId == id)
                         {
-                            temp.Location = drone.Location;
-                            temp.ParcelTransfer = drone.
+                            prclTrnsfr.Id = parcel.Id;
+                            prclTrnsfr.Weight = (WeightCategories)parcel.Weight;
+                            //prclTrnsfr.ParcelSituation = parcel.
+                            prclTrnsfr.Priority = (Priorities)parcel.Priority;
+                            foreach(var customer in customers)
+                            {
+                                if((customer.Id == parcel.TargetId) && (!flag2))
+                                {
+                                    tempLocationSupply.Lattitude = customer.Lattitude;
+                                    tempLocationSupply.Longitude = customer.Longitude;
+                                    flag2 = true;
+                                }   
+                                if((customer.Id == parcel.SenderId) && (!flag3))
+                                {
+                                    tempLocationCollect.Lattitude = customer.Lattitude;
+                                    tempLocationCollect.Longitude = customer.Longitude;
+                                    flag3 = true;
+                                }
+                                if (flag2 && flag3)
+                                    break;
+                            }
+                            prclTrnsfr.SupplyPoint = tempLocationSupply;
+                            prclTrnsfr.collection = tempLocationCollect;
+                            //prclTrnsfr.distanceTransportation =  הגעתי לפה
                         }
                     }
-                    foreach(var station in stations)
-                    {
-                        if()
-                    }
-                    temp.location = 
-
+                    flag1 = true;
+                    break;
                 }
             }
+            if (!flag1)
+            {
+                throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
+            }
+            return temp;
         }
 
         public object BaseStationDisplay(int id)
         {
             IEnumerable<IDAL.DO.Station> stations = dal.ListBaseStation();
-            
+            List<DroneInCharging> lstDrnInChrg = new List<DroneInCharging>();
+            DroneInCharging DrnInChrg = new DroneInCharging();
             Station temp = new Station();
             bool flag = false;
             foreach(var statn in stations)
@@ -224,8 +258,17 @@ namespace BL
                     temp.Name = statn.Name;
                     temp.location.Longitude = statn.Longitude;
                     temp.location.Lattitude = statn.Lattitude;
-
-                   // temp.droneInCharging = new List<DroneInCharging>(0); // להבין מה עושים פה
+                    temp.AvailableChargeSlots = statn.AvailableChargeSlots;
+                    foreach (var drn in lstDrone)
+                    {
+                        if ((drn.Status == DroneStatuses.Charging) && (drn.Location.Longitude == statn.Longitude) && (drn.Location.Lattitude == statn.Lattitude))
+                        {
+                            DrnInChrg.DroneId = drn.Id;
+                            DrnInChrg.Battery = drn.Battery;
+                            lstDrnInChrg.Add(DrnInChrg);
+                        }                           
+                    }
+                    temp.droneInCharging = lstDrnInChrg;
                     flag = true;
                     break;
                 }
@@ -234,28 +277,6 @@ namespace BL
             {
                 throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
             }
-            IEnumerable<IDAL.DO.DroneCharge> droneCharge = dal.ListDroneCharge();
-            IEnumerable<IDAL.DO.Drone> drone = dal.ListDrone();
-           // Drone newTemp = new Drone();
-            DroneInCharging newTemp = new DroneInCharging();
-            foreach (var drnchrg in droneCharge)
-            {
-                if(drnchrg.StationId == id)
-                {
-                    foreach(var drn in drone)
-                    {
-                        if(drn.Id == drnchrg.DroneId)
-                        {
-                            newTemp.DroneId = drn.Id;
-                            newTemp.Battery = drn.; // battery
-                            lstDroneInCharge.Add(newTemp);
-                        }
-
-                    }
-                    
-                }
-            }
-            temp.droneInCharging = lstDroneInCharge;
             return temp;
         }
     }
