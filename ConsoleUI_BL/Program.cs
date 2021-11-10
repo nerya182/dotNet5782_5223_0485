@@ -312,9 +312,9 @@ namespace ConsoleUI_BL
                 Console.WriteLine("enter  1-Regular , 2-Express , 3-Urgent");
                 newParcel.Priority = (Priorities) int.Parse(Console.ReadLine());
                 newParcel.Creating = DateTime.Now;
-                newParcel.Affiliation = default(DateTime);
-                newParcel.Delivered = default(DateTime);
-                newParcel.PickedUp = default(DateTime);
+                newParcel.Affiliation = DateTime.MinValue;
+                newParcel.Delivered = DateTime.MinValue;
+                newParcel.PickedUp = DateTime.MinValue;
                 newParcel.drone.DroneId = -1;
                 bl.AddParcel(newParcel);
             }
