@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 using DalObject;
 using IBL.BO;
 using IDAL;
@@ -107,6 +109,8 @@ namespace BL
                 temp.Id = newCustomer.Id;
                 temp.Name = newCustomer.Name;
                 temp.Phone = newCustomer.Phone;
+                temp.Lattitude = newCustomer.Location.Lattitude;
+                temp.Longitude = newCustomer.Location.Longitude;
                 dal.AddCustomer(temp);
             }
             catch (Exception e)
@@ -141,35 +145,39 @@ namespace BL
 
         public void UpdateDrone(DroneToList newDrone)
         {
+            //update in dataSource
             bool flag = false;
-
-            foreach (var objDrone in lstDrone)
+            List <IDAL.DO.Drone>drones = dal.ListDrone().ToList();
+            for (int i = 0; i < drones.Count(); i++)
             {
-                if (objDrone.Id == newDrone.Id)
+                if (drones[i].Id ==newDrone.Id)
                 {
-                    objDrone.Model = newDrone.Model;
+                    IDAL.DO.Drone d = drones[i];
+                    d.Model= newDrone.Model;
+                    drones[i] = d;
                     flag = true;
                     break;
                 }
             }
-
             if (!flag)
             {
                 throw new ItemNotFoundException(newDrone.Id, "ERROR :id of drone not found\n");
             }
-            for (int i = 0; i < dal.ListDrone().Count(); i++)
+            //update list drone in BL
+            foreach (var drone in lstDrone)
             {
-                if (dal.ListDrone().ElementAt(i).Id == newDrone.Id)
+                if (drone.Id==newDrone.Id)
                 {
-                    var elementAt = dal.ListDrone().ElementAt(i);
-                    elementAt.Model = newDrone.Model; 
+                    drone.Model = newDrone.Model;
                     break;
-                } 
+                }
             }
         }
 
+
         public object DroneDisplay(int id)
         {
+
             IEnumerable<IDAL.DO.Drone> drones = dal.ListDrone();
             IEnumerable<IDAL.DO.Station> stations = dal.ListBaseStation();
             IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
@@ -195,69 +203,81 @@ namespace BL
                     temp.Status = drone.Status;
                     temp.Location = drone.Location;
                     //temp.ParcelTransfer = drone.
-                    foreach(var parcel in parcels)
+                    foreach (var parcel in parcels)
                     {
-                        if(parcel.DroneId == id)
+                        if (parcel.DroneId == id)
                         {
                             prclTrnsfr.Id = parcel.Id;
-                            prclTrnsfr.Weight = (WeightCategories)parcel.Weight;
+                            prclTrnsfr.Weight = (WeightCategories) parcel.Weight;
 
                             if (parcel.PickedUp != DateTime.MinValue)
                                 prclTrnsfr.ParcelSituation = true;
                             else
                                 prclTrnsfr.ParcelSituation = false;
 
-                            prclTrnsfr.Priority = (Priorities)parcel.Priority;
-                            foreach(var customer in customers)
+                            prclTrnsfr.Priority = (Priorities) parcel.Priority;
+                            foreach (var customer in customers)
                             {
-                                if((customer.Id == parcel.TargetId) && (!flag2))
+                                if ((customer.Id == parcel.TargetId) && (!flag2))
                                 {
                                     tempLocationSupply.Lattitude = customer.Lattitude;
                                     tempLocationSupply.Longitude = customer.Longitude;
                                     flag2 = true;
-                                }   
-                                if((customer.Id == parcel.SenderId) && (!flag3))
+                                }
+
+                                if ((customer.Id == parcel.SenderId) && (!flag3))
                                 {
                                     tempLocationCollect.Lattitude = customer.Lattitude;
                                     tempLocationCollect.Longitude = customer.Longitude;
                                     flag3 = true;
                                 }
+
                                 if (flag2 && flag3)
                                     break;
                             }
+
                             flag2 = false;
                             flag3 = false;
                             prclTrnsfr.SupplyPoint = tempLocationSupply;
                             prclTrnsfr.collection = tempLocationCollect;
-                            prclTrnsfr.distanceTransportation = dal.GetDistanceFromLatLonInKm(tempLocationSupply.Lattitude, tempLocationSupply.Longitude, tempLocationCollect.Lattitude, tempLocationCollect.Longitude);
-                            foreach(var cstmr in customers)
+                            prclTrnsfr.distanceTransportation = dal.GetDistanceFromLatLonInKm(
+                                tempLocationSupply.Lattitude,
+                                tempLocationSupply.Longitude, tempLocationCollect.Lattitude,
+                                tempLocationCollect.Longitude);
+                            foreach (var cstmr in customers)
                             {
-                                if((cstmr.Id == prclTrnsfr.Sender.Id) && (!flag2))
+                                if ((cstmr.Id == prclTrnsfr.Sender.Id) && (!flag2))
                                 {
                                     sender.Id = cstmr.Id;
                                     sender.Name = cstmr.Name;
                                     flag2 = true;
                                 }
-                                else if((cstmr.Id == prclTrnsfr.Receiver.Id) && (!flag3))
+                                else if ((cstmr.Id == prclTrnsfr.Receiver.Id) && (!flag3))
                                 {
                                     receiver.Id = cstmr.Id;
                                     receiver.Name = cstmr.Name;
                                     flag3 = true;
                                 }
+
                                 if (flag2 && flag3)
                                     break;
                             }
+
                             prclTrnsfr.Sender = sender;
                             prclTrnsfr.Receiver = receiver;
                         }
                     }
+
                     flag1 = true;
                     break;
                 }
-            }
-            if (!flag1)
-            {
-                throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
+
+                if (!flag1)
+                {
+                    throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
+                }
+
+                
             }
             return temp;
         }
@@ -297,6 +317,72 @@ namespace BL
                 throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
             }
             return temp;
+        }
+
+        public void UpdateCustomer(Customer updateCustomer)
+        {
+            List<IDAL.DO.Customer> Customers = dal.ListCustomer().ToList();
+            bool flag = false;
+            for (int i = 0; i < Customers.Count(); i++)
+            {
+                if (Customers[i].Id == updateCustomer.Id)
+                {
+                    IDAL.DO.Customer c = Customers[i];
+                    if (updateCustomer.Name != "no")
+                    {
+                        c.Name = updateCustomer.Name;
+                    }
+
+                    if (updateCustomer.Phone!="no")
+                    {
+                        c.Phone = updateCustomer.Phone;
+                    }
+                    Customers[i] = c;
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag)
+            {
+                throw new ItemNotFoundException(updateCustomer.Id, "ERROR :id of station not found\n");
+            }
+        }
+
+        public void UpdateStation(Station updateStation,int chargingPositions)
+        {
+            List<IDAL.DO.Station> Stations = dal.ListBaseStation().ToList();
+            bool flag = false;
+            for (int i = 0; i < Stations.Count(); i++)
+            {
+                if (Stations[i].Id == updateStation.Id)
+                {
+                    IDAL.DO.Station s = Stations[i];
+                    if (updateStation.Name !="no")
+                    {
+                        s.Name = updateStation.Name;
+                    }
+
+                    if (updateStation.AvailableChargeSlots!=-1)
+                    {
+                        if (chargingPositions - dal.AvailableChargeSlotsInStation(updateStation.Id)<0)
+                        {
+                            throw new IllegalActionException("The total amount of charging stations is invalid\n");
+                        }
+                        else
+                        {
+                            s.AvailableChargeSlots =
+                                chargingPositions - dal.AvailableChargeSlotsInStation(updateStation.Id);
+                        }
+                    }
+                    Stations[i] = s;
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag)
+            {
+                throw new ItemNotFoundException(updateStation.Id, "ERROR :id of station not found\n");
+            }
         }
     }
 }

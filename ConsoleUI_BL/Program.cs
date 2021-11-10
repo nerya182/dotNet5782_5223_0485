@@ -2,6 +2,7 @@
 using IBL.BO;
 using System;
 using System.Collections.Generic;
+using System.Threading.Channels;
 
 namespace ConsoleUI_BL
 {
@@ -74,10 +75,10 @@ namespace ConsoleUI_BL
                                 UpdateDrone(bl);
                                 break;
                             case 2:
-                                PickupParcel(bl);
+                                UpdateStation(bl);
                                 break;
                             case 3:
-                                SupplyParcel(bl);
+                                UpdateCustomer(bl);
                                 break;
                             case 4:
                                 SendDroneToCharge(bl);
@@ -219,16 +220,54 @@ namespace ConsoleUI_BL
             while (choice != CHOICE.EXIT);
         }
 
+        private static void UpdateCustomer(BL.BL bl)
+        {
+            try
+            {
+                Customer updateCustomer = new Customer();
+                Console.WriteLine("Enter a unique ID number of Customer");
+                updateCustomer.Id = int.Parse(Console.ReadLine());
+                Console.WriteLine("Insert the new name of the customer or click no");
+                updateCustomer.Name = Console.ReadLine();
+                Console.WriteLine("Insert the new phone of the customer or click no");
+                updateCustomer.Phone = Console.ReadLine();
+                bl.UpdateCustomer(updateCustomer);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+        private static void UpdateStation(BL.BL bl)
+        {
+            try
+            {
+                int chargingPositions;
+                Station updateStation = new Station();
+                Console.WriteLine("Enter a unique ID number of drone");
+                updateStation.Id = int.Parse(Console.ReadLine());
+                Console.WriteLine("Insert the new name of the station or click no");
+                updateStation.Name = Console.ReadLine();
+                Console.WriteLine("Insert the total amount of charging of the station or click -1");
+                chargingPositions = int.Parse(Console.ReadLine());
+                bl.UpdateStation(updateStation, chargingPositions);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
         private static void UpdateDrone(BL.BL bl)
         {
             try
             {
-                DroneToList newDrone = new DroneToList();
+                DroneToList updateDrone = new DroneToList();
                 Console.WriteLine("Enter a unique ID number of drone");
-                newDrone.Id = int.Parse(Console.ReadLine());
+                updateDrone.Id= int.Parse(Console.ReadLine());
                 Console.WriteLine("Insert the  new model of the drone");
-                newDrone.Model = Console.ReadLine();
-                bl.UpdateDrone(newDrone);
+                updateDrone.Model = Console.ReadLine();
+                bl.UpdateDrone(updateDrone);
             }
             catch (Exception e)
             {
@@ -247,6 +286,10 @@ namespace ConsoleUI_BL
                 newCustomer.Name = Console.ReadLine();
                 Console.WriteLine(" Enter a phone number");
                 newCustomer.Phone = Console.ReadLine();
+                Console.WriteLine("What is your Latitude?");
+                newCustomer.Location.Lattitude=double.Parse(Console.ReadLine());
+                Console.WriteLine("What is your longitude?");
+                newCustomer.Location.Longitude=double.Parse(Console.ReadLine());
                 bl.AddCustomer(newCustomer);
             }
             catch (Exception e)

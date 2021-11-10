@@ -120,7 +120,7 @@ namespace ConsoleUI
                         break;
                     case CHOICE.VIEW_LIST:
                         Console.WriteLine("Which List would you like to view? \n" +
-                            "s - Sations\n" +
+                            "s - Stations\n" +
                             "d - Drones\n" +
                             "c - Customers\n" +
                             "p - Parcels\n" +

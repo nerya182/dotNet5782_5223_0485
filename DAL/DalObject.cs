@@ -374,7 +374,7 @@ namespace DalObject
         /// Returning a list of all the Drones
         /// </summary>
         /// <returns> List </returns>
-        public IEnumerable <Drone> ListDrone()   
+        public List ListDrone()   
         {
             List<Drone> PrintDrone = new List<Drone>();
             for (int i = 0; i < Drones.Count; i++)
@@ -627,6 +627,19 @@ namespace DalObject
         public double Deg2rad(double deg)
         {
             return deg * (Math.PI / 180);
+        }
+
+        public int AvailableChargeSlotsInStation(int id)
+        {
+            int count = 0;
+            foreach (DroneCharge objCharge in DataSource.DroneCharges)
+            {
+                if (objCharge.StationId==id)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
     }
 }
