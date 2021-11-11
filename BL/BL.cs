@@ -29,27 +29,49 @@ namespace BL
 
             foreach (var objDrone in drones)
             {
+                
                 temp.Id = objDrone.Id;
                 temp.Model = objDrone.Model;
                 temp.MaxWeight = (WeightCategories)objDrone.MaxWeight;
                 lstDrone.Add(temp);
             }
-
+            
             foreach (IDAL.DO.Parcel objParcel in parcels)
             {
-                if (objParcel.Delivered == DateTime.MinValue)
+                if (objParcel.PickedUp == DateTime.MinValue)
                 {
                     foreach (var drn in lstDrone)
                     {
                         if (drn.Id == objParcel.DroneId)
                         {
+                            
                             drn.Status = DroneStatuses.Delivery;
-                            drn.Battery = R.Next(0, 100);  // צריך לשנות את ה0
+                            drn.Battery = R.Next((int)GetMinCharge(drn), 100);  // צריך לשנות את ה0
+                            if(objParcel.Delivered == DateTime.MinValue)
+                            {
+                                drn.Location = GetClosestStation(drn);
+                            }
+                            if(objParcel.PickedUp != DateTime.MinValue && objParcel.Delivered == DateTime.MinValue)
+                            {
+                               // drn.Location.Lattitude = objParcel.SenderId. getLocation of customer of sender ID
+                            }
+
+
+                            
                         }
                     }
                 }
             }
+        }
 
+        private Location GetClosestStation(DroneToList drn)
+        {
+            throw new NotImplementedException();
+        }
+
+        private double GetMinCharge(DroneToList drone)
+        {
+            return 2.5;
         }
 
         public void AddStation(Station newStation)
