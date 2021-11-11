@@ -299,112 +299,93 @@ namespace BL
             }
             return temp;
         }
-
-        public object BaseStationDisplay(int id)
+        public DroneToList GetDroneFromLstDrone(int id)
         {
-            IEnumerable<IDAL.DO.Station> stations = dal.ListBaseStation();
+            bool flag = false;
+            foreach(DroneToList drone in lstDrone)
+            {
+                if (drone.Id == id)
+                {
+                    return drone;
+                    flag = true;
+                    break;
+                }        
+            }
+            if (!flag)
+                throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
+            return null;
+        }
+
+        public Station BaseStationDisplay(int id)
+        {
+            IDAL.DO.Station station = dal.GetStation(id);
+            IEnumerable<IDAL.DO.DroneCharge> droneCharge = dal.ListDroneCharge();
             List<DroneInCharging> lstDrnInChrg = new List<DroneInCharging>();
             DroneInCharging DrnInChrg = new DroneInCharging();
             Station temp = new Station();
-            bool flag = false;
-            foreach(var statn in stations)
+            temp.Id = station.Id;
+            temp.Name = station.Name;
+            temp.location.Longitude = station.Longitude;
+            temp.location.Lattitude = station.Lattitude;
+            temp.AvailableChargeSlots = station.AvailableChargeSlots;
+            foreach(var drnChrg in droneCharge)
             {
-                if(statn.Id == id)
+                if(drnChrg.StationId == id)
                 {
-                    temp.Id = statn.Id;
-                    temp.Name = statn.Name;
-                    temp.location.Longitude = statn.Longitude;
-                    temp.location.Lattitude = statn.Lattitude;
-                    temp.AvailableChargeSlots = statn.AvailableChargeSlots;
-                    foreach (var drn in lstDrone)
-                    {
-                        if ((drn.Status == DroneStatuses.Charging) && (drn.Location.Longitude == statn.Longitude) && (drn.Location.Lattitude == statn.Lattitude))
-                        {
-                            DrnInChrg.DroneId = drn.Id;
-                            DrnInChrg.Battery = drn.Battery;
-                            lstDrnInChrg.Add(DrnInChrg);
-                        }                           
-                    }
-                    temp.droneInCharging = lstDrnInChrg;
-                    flag = true;
-                    break;
+                    DrnInChrg.DroneId = drnChrg.DroneId;            
+                    DrnInChrg.Battery = GetDroneFromLstDrone(drnChrg.DroneId).Battery;
+                    lstDrnInChrg.Add(DrnInChrg);
                 }
             }
-            if (!flag)
-            {
-                throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
-            }
+            temp.droneInCharging = lstDrnInChrg;
             return temp;
         }
 
-        public object CustomerDisplay(int id)
+        public Customer CustomerDisplay(int id)
         {
-            IEnumerable<IDAL.DO.Customer> customers = dal.ListCustomer();
+            IDAL.DO.Customer customer = dal.GetCustomer(id);
             IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
             List<ParceltAtCustomer> lstSending = new List<ParceltAtCustomer>();
             List<ParceltAtCustomer> lstReceived = new List<ParceltAtCustomer>();
             ParceltAtCustomer parcelAtCstmr = new ParceltAtCustomer();
-            bool flag = false;
+            //bool flag = false;
             Customer temp = new Customer();
             CustomerInParcel cstmrInPrcl = new CustomerInParcel();
-            foreach(var customer in customers)
+            temp.Id = customer.Id;
+            temp.Name = customer.Name;
+            temp.Phone = customer.Phone;
+            temp.Location.Longitude = customer.Longitude;
+            temp.Location.Lattitude = customer.Lattitude;
+
+            foreach (var parcel in parcels)
             {
-                if(customer.Id == id)
+                if ((parcel.SenderId == customer.Id) && (parcel.Delivered == DateTime.MinValue))
                 {
-                    temp.Id = customer.Id;
-                    temp.Name = customer.Name;
-                    temp.Phone = customer.Phone;
-                    temp.Location.Longitude = customer.Longitude;
-                    temp.Location.Lattitude = customer.Lattitude;
-                    foreach (var parcel in parcels)
-                    {
-                        if((parcel.SenderId == customer.Id) && (parcel.Delivered == DateTime.MinValue))
-                        {
-                            parcelAtCstmr.Id = parcel.Id;
-                            parcelAtCstmr.status = ParcelStatus.Created;
-                            parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
-                            parcelAtCstmr.Priority = (Priorities)parcel.Priority;
-                            foreach(var cstmr in customers)
-                            {
-                                if(cstmr.Id == parcel.TargetId)
-                                {
-                                    cstmrInPrcl.Id = cstmr.Id;
-                                    cstmrInPrcl.Name = cstmr.Name;
-                                    break;
-                                }
-                            }
-                            parcelAtCstmr.OpposingSide = cstmrInPrcl;
-                            lstSending.Add(parcelAtCstmr);
-                        }
-                        else if ((parcel.TargetId == customer.Id) && (parcel.Delivered != DateTime.MinValue))
-                        {
-                            parcelAtCstmr.Id = parcel.Id;
-                            parcelAtCstmr.status = ParcelStatus.Supplied;
-                            parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
-                            parcelAtCstmr.Priority = (Priorities)parcel.Priority;
-                            foreach (var cstmr in customers)
-                            {
-                                if (cstmr.Id == parcel.SenderId)
-                                {
-                                    cstmrInPrcl.Id = cstmr.Id;
-                                    cstmrInPrcl.Name = cstmr.Name;
-                                    break;
-                                }
-                            }
-                            parcelAtCstmr.OpposingSide = cstmrInPrcl;
-                            lstReceived.Add(parcelAtCstmr);
-                        }
-                    }
-                    temp.FromCustomer = lstSending;
-                    temp.ToCustomer = lstReceived;
-                    flag = true;
-                    break;
+                    parcelAtCstmr.Id = parcel.Id;
+                    parcelAtCstmr.status = ParcelStatus.Created;
+                    parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
+                    parcelAtCstmr.Priority = (Priorities)parcel.Priority;
+                    IDAL.DO.Customer cstmr = dal.GetCustomer(parcel.TargetId);
+                    cstmrInPrcl.Id = cstmr.Id;
+                    cstmrInPrcl.Name = cstmr.Name;
+                    parcelAtCstmr.OpposingSide = cstmrInPrcl;
+                    lstSending.Add(parcelAtCstmr);
+                }
+                else if ((parcel.TargetId == customer.Id) && (parcel.Delivered != DateTime.MinValue))
+                {
+                    parcelAtCstmr.Id = parcel.Id;
+                    parcelAtCstmr.status = ParcelStatus.Supplied;
+                    parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
+                    parcelAtCstmr.Priority = (Priorities)parcel.Priority;
+                    IDAL.DO.Customer cstmr = dal.GetCustomer(parcel.SenderId);
+                    cstmrInPrcl.Id = cstmr.Id;
+                    cstmrInPrcl.Name = cstmr.Name;
+                    parcelAtCstmr.OpposingSide = cstmrInPrcl;
+                    lstReceived.Add(parcelAtCstmr);
                 }
             }
-            if (!flag)
-            {
-                throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
-            }
+            temp.FromCustomer = lstSending;
+            temp.ToCustomer = lstReceived;
             return temp;
         }
 
