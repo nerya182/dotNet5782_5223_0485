@@ -367,7 +367,6 @@ namespace ConsoleUI_BL
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
             }
         }
 

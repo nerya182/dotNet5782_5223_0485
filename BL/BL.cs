@@ -34,7 +34,7 @@ namespace BL
                 temp.MaxWeight = (WeightCategories)objDrone.MaxWeight;
                 lstDrone.Add(temp);
             }
-
+            
             foreach (IDAL.DO.Parcel objParcel in parcels)
             {
                 if (objParcel.Delivered == DateTime.MinValue)
