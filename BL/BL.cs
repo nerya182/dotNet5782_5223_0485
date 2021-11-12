@@ -348,9 +348,9 @@ namespace BL
             List<ParceltAtCustomer> lstSending = new List<ParceltAtCustomer>();
             List<ParceltAtCustomer> lstReceived = new List<ParceltAtCustomer>();
             ParceltAtCustomer parcelAtCstmr = new ParceltAtCustomer();
-            //bool flag = false;
-            Customer temp = new Customer();
             CustomerInParcel cstmrInPrcl = new CustomerInParcel();
+           
+            Customer temp = new Customer();           
             temp.Id = customer.Id;
             temp.Name = customer.Name;
             temp.Phone = customer.Phone;
@@ -391,57 +391,35 @@ namespace BL
 
         public object ParcelDisplay(int id)
         {
-            IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
-            IEnumerable<IDAL.DO.Customer> customers = dal.ListCustomer();
+            IDAL.DO.Parcel parcel = dal.GetParcel(id);
             DroneInParcel droneInParcel = new DroneInParcel();
             CustomerInParcel customerInParcel = new CustomerInParcel();
-            bool flag = false;
             Parcel temp = new Parcel();
-            foreach (var parcel in parcels)
-            {
-                if(parcel.Id == id)
-                {
-                    temp.Id = parcel.Id;
-                    temp.Weight = (WeightCategories)parcel.Weight;
-                    temp.Priority = (Priorities)parcel.Priority;
-                    temp.Affiliation = parcel.Affiliation;
-                    temp.Creating = parcel.Creating;
-                    temp.Delivered = parcel.Delivered;
-                    temp.PickedUp = parcel.PickedUp;
-                    foreach(var drone in lstDrone)
-                    {
-                        if(drone.Id == parcel.DroneId)
-                        {
-                            droneInParcel.DroneId = drone.Id;
-                            droneInParcel.location = drone.Location;
-                            droneInParcel.Battery = drone.Battery;
-                            break;
-                        }
-                    }
-                    temp.drone = droneInParcel;
-                    foreach(var customer in customers)
-                    {
-                        if(customer.Id == parcel.SenderId)
-                        {
-                            customerInParcel.Id = customer.Id;
-                            customerInParcel.Name = customer.Name;
-                            temp.Sender = customerInParcel;
-                        }
-                        else if (customer.Id == parcel.TargetId)
-                        {
-                            customerInParcel.Id = customer.Id;
-                            customerInParcel.Name = customer.Name;
-                            temp.Target = customerInParcel;
-                        }
-                    }
-                    flag = true;
-                    break;
-                }
-            }
-            if (!flag)
-            {
-                throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
-            }
+
+            temp.Id = parcel.Id;
+            temp.Weight = (WeightCategories)parcel.Weight;
+            temp.Priority = (Priorities)parcel.Priority;
+            temp.Affiliation = parcel.Affiliation;
+            temp.Creating = parcel.Creating;
+            temp.Delivered = parcel.Delivered;
+            temp.PickedUp = parcel.PickedUp;
+
+            DroneToList droneToList = GetDroneFromLstDrone(parcel.DroneId);
+            droneInParcel.DroneId = droneToList.Id;
+            droneInParcel.location = droneToList.Location;
+            droneInParcel.Battery = droneToList.Battery;
+            temp.drone = droneInParcel;
+
+            IDAL.DO.Customer sender = dal.GetCustomer(parcel.SenderId);
+            customerInParcel.Id = sender.Id;
+            customerInParcel.Name = sender.Name;
+            temp.Sender = customerInParcel;
+
+            IDAL.DO.Customer target = dal.GetCustomer(parcel.TargetId);
+            customerInParcel.Id = target.Id;
+            customerInParcel.Name = target.Name;
+            temp.Target = customerInParcel;
+
             return temp;
         }
 
