@@ -42,12 +42,13 @@ namespace DalObject
             return (Station)newStation;
        
         }
+
         /// <summary>
         /// Returns the drone in the certain index
         /// </summary>
-         /// <param name="droneId"></param>
+        /// <param name="droneId"></param>
         /// <returns> Drone </returns>
-        public  Drone GetDrone(int droneId)  
+        public Drone GetDrone(int droneId)  
         {
             Drone? newDrone = null;
             foreach (Drone objDrone in DataSource.Drones)
@@ -339,10 +340,7 @@ namespace DalObject
                             break;
                         }
                     }
-                    DroneCharge dc = DroneCharges[i];
-                    dc.DroneId = -1;
-                    dc.StationId = -1;
-                    DroneCharges[i] = dc;
+                    DroneCharges.Remove(DroneCharges[i]);
                     break;
                 }
             }
@@ -374,14 +372,14 @@ namespace DalObject
         /// Returning a list of all the Drones
         /// </summary>
         /// <returns> List </returns>
-        public List ListDrone()   
+        public IEnumerable<Drone> ListDrone()   
         {
-            List<Drone> PrintDrone = new List<Drone>();
+            List<Drone> printDrone = new List<Drone>();
             for (int i = 0; i < Drones.Count; i++)
             {
-                PrintDrone.Add(GetDrone(Drones[i].Id));
+                printDrone.Add(GetDrone(Drones[i].Id));
             }
-            return PrintDrone;
+            return printDrone;
         }
 
         /// <summary>
@@ -565,12 +563,12 @@ namespace DalObject
         /// </summary>
         /// <param name="droneCharge"></param>
         /// <param name="StationId"></param>
-        public  void AddDroneToCharge(DroneCharge droneCharge,int StationId)
+        public  void AddDroneToCharge(DroneCharge droneCharge)
         {
             bool flag = false;
-            foreach (Drone objStation in DataSource.Drones)
+            foreach (Station objStation in DataSource.Stations)
             {
-                if (objStation.Id == StationId)
+                if (objStation.Id == droneCharge.StationId)
                 {
                     flag = true;
                     break;
@@ -578,11 +576,11 @@ namespace DalObject
             }
             if (!flag)
             {
-                throw new ItemAlreadyExistsExcepton(StationId, "ERROR: id of Drone not found\n");
+                throw new ItemAlreadyExistsExcepton(droneCharge.StationId, "ERROR: id of station not found\n");
             }
             for (int i = 0; i < Stations.Count; i++)
             {
-                if (Stations[i].Id== StationId)
+                if (Stations[i].Id== droneCharge.StationId)
                 {
                     Station s = Stations[i];
                     s.AvailableChargeSlots--;
@@ -600,7 +598,6 @@ namespace DalObject
             array[1] = DataSource.Config.lightWeight;
             array[2] = DataSource.Config.mediumWeight;
             array[3] = DataSource.Config.heavyWeight;
-            array[4] = DataSource.Config.chargeSpeed;
             return array;
         }
 
@@ -640,6 +637,14 @@ namespace DalObject
                 }
             }
             return count;
+        }
+
+        public double GetElectricUsageNumber(WeightCategories weight)
+        {
+            if (weight== WeightCategories.Light){return 2;}
+            if (weight == WeightCategories.Medium) { return 3; }
+            if (weight == WeightCategories.Heavy) { return 4; }
+            return 0;
         }
     }
 }

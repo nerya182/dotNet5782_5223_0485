@@ -23,19 +23,20 @@ namespace BL
             dal = new DalObject.DalObject();
             double[] elecUsage = dal.GetElectricUsage();
             double chargeSpeed = dal.GetChargeSpeed();
+
             IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
             IEnumerable<IDAL.DO.Drone> drones = dal.ListDrone();
             DroneToList temp = new DroneToList();
 
             foreach (var objDrone in drones)
             {
-                
+
                 temp.Id = objDrone.Id;
                 temp.Model = objDrone.Model;
                 temp.MaxWeight = (WeightCategories)objDrone.MaxWeight;
                 lstDrone.Add(temp);
             }
-            
+
             foreach (IDAL.DO.Parcel objParcel in parcels)
             {
                 if (objParcel.PickedUp == DateTime.MinValue)
@@ -44,29 +45,45 @@ namespace BL
                     {
                         if (drn.Id == objParcel.DroneId)
                         {
-                            
+
                             drn.Status = DroneStatuses.Delivery;
                             drn.Battery = R.Next((int)GetMinCharge(drn), 100);  // צריך לשנות את ה0
-                            if(objParcel.Delivered == DateTime.MinValue)
+                            if (objParcel.Delivered == DateTime.MinValue)
                             {
                                 drn.Location = GetClosestStation(drn);
                             }
-                            if(objParcel.PickedUp != DateTime.MinValue && objParcel.Delivered == DateTime.MinValue)
+                            if (objParcel.PickedUp != DateTime.MinValue && objParcel.Delivered == DateTime.MinValue)
                             {
-                               // drn.Location.Lattitude = objParcel.SenderId. getLocation of customer of sender ID
+                                // drn.Location.Lattitude = objParcel.SenderId. getLocation of customer of sender ID
                             }
 
 
-                            
+
                         }
                     }
                 }
             }
         }
 
-        private Location GetClosestStation(DroneToList drn)
+        private IDAL.DO.Station GetClosestStation(DroneToList drone)
         {
-            throw new NotImplementedException();
+            List<IDAL.DO.Station> stations = dal.ListBaseStation().ToList();
+            Location closestStation = new Location();
+            closestStation.Lattitude = stations[0].Lattitude;
+            closestStation.Longitude = stations[0].Longitude;
+            int i = 0, index = -1;
+            foreach (var station in stations)
+            {
+                if (dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude, station.Lattitude, station.Longitude) <
+                    dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude, closestStation.Lattitude, closestStation.Longitude))
+                {
+                    index = i;
+                    closestStation.Lattitude = drone.Location.Lattitude;
+                    closestStation.Longitude = drone.Location.Longitude;
+                }
+                i++;
+            }
+            return stations[index];
         }
 
         private double GetMinCharge(DroneToList drone)
@@ -110,7 +127,7 @@ namespace BL
                     if (objStation.Id == chargingStationId)
                     {
                         newDrone.Location.Lattitude = objStation.Lattitude;
-                         newDrone.Location.Longitude = objStation.Longitude;
+                        newDrone.Location.Longitude = objStation.Longitude;
                         break;
                     }
                 }
@@ -169,13 +186,13 @@ namespace BL
         {
             //update in dataSource
             bool flag = false;
-            List <IDAL.DO.Drone>drones = dal.ListDrone().ToList();
+            List<IDAL.DO.Drone> drones = dal.ListDrone().ToList();
             for (int i = 0; i < drones.Count(); i++)
             {
-                if (drones[i].Id ==newDrone.Id)
+                if (drones[i].Id == newDrone.Id)
                 {
                     IDAL.DO.Drone d = drones[i];
-                    d.Model= newDrone.Model;
+                    d.Model = newDrone.Model;
                     drones[i] = d;
                     flag = true;
                     break;
@@ -188,7 +205,7 @@ namespace BL
             //update list drone in BL
             foreach (var drone in lstDrone)
             {
-                if (drone.Id==newDrone.Id)
+                if (drone.Id == newDrone.Id)
                 {
                     drone.Model = newDrone.Model;
                     break;
@@ -229,14 +246,14 @@ namespace BL
                         if (parcel.DroneId == id)
                         {
                             prclTrnsfr.Id = parcel.Id;
-                            prclTrnsfr.Weight = (WeightCategories) parcel.Weight;
+                            prclTrnsfr.Weight = (WeightCategories)parcel.Weight;
 
                             if (parcel.PickedUp != DateTime.MinValue)
                                 prclTrnsfr.ParcelSituation = true;
                             else
                                 prclTrnsfr.ParcelSituation = false;
 
-                            prclTrnsfr.Priority = (Priorities) parcel.Priority;
+                            prclTrnsfr.Priority = (Priorities)parcel.Priority;
                             foreach (var customer in customers)
                             {
                                 if ((customer.Id == parcel.TargetId) && (!flag2))
@@ -291,7 +308,7 @@ namespace BL
                     temp.ParcelTransfer = prclTrnsfr;
                     flag1 = true;
                     break;
-                }             
+                }
             }
             if (!flag1)
             {
@@ -299,17 +316,127 @@ namespace BL
             }
             return temp;
         }
+
+        public void AffiliateParcelToDrone(int droneId)
+        {
+            DroneToList drone = lstDrone.Find(i => i.Id == droneId);
+            if (drone==null)
+            {
+                throw new ItemAlreadyExistsExcepton(droneId);
+            }
+            List<IDAL.DO.Parcel> parcels = dal.ListParcel().ToList();
+            parcels = parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Urgent);
+            parcels = parcels.FindAll(i => i.Weight == (IDAL.DO.WeightCategories)drone.MaxWeight);
+            IDAL.DO.Parcel parcel = GetClosestParcel(parcels, drone);
+            IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
+            IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
+            double distance1 = dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,//distance to send
+                customerSender.Lattitude, customerSender.Longitude);
+            double distance2 = dal.GetDistanceFromLatLonInKm(customerSender.Lattitude, customerSender.Longitude,//distance to target
+                                  customerTarget.Lattitude, customerTarget.Longitude);
+            DroneToList droneInSender = new();
+            droneInSender.Location.Lattitude = customerTarget.Lattitude;
+            droneInSender.Location.Longitude = customerTarget.Longitude;
+            double distance3 = dal.GetDistanceFromLatLonInKm(GetClosestStation(droneInSender).Lattitude,
+                GetClosestStation(droneInSender).Longitude, customerTarget.Lattitude, customerTarget.Longitude);
+
+
+            if (drone.Status==DroneStatuses.Available&&drone.Battery>distance2*dal.GetElectricUsageNumber(parcel.Weight)+distance1*dal.GetElectricUsage()[0]+distance3*dal.GetElectricUsage()[0])
+            {
+                drone.Status = DroneStatuses.Delivery;
+                dal.Affiliate(parcel.Id,drone.Id);
+            }
+        }
+
+        private IDAL.DO.Parcel GetClosestParcel(List<IDAL.DO.Parcel> parcels, DroneToList drone)
+        {
+            int i = 0, index = 0;
+
+            Location closestParcel = new Location();
+            IDAL.DO.Customer customer = dal.GetCustomer(parcels[0].SenderId);
+            closestParcel.Lattitude = customer.Lattitude;
+            closestParcel.Longitude = customer.Longitude;
+            foreach (var parcel in parcels)
+            {
+                customer = dal.GetCustomer(parcel.SenderId);
+                if (dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,
+                    customer.Lattitude, customer.Longitude) < dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude, closestParcel.Lattitude, closestParcel.Longitude))
+                {
+                    index = i;
+                    closestParcel.Lattitude = customer.Lattitude;
+                    closestParcel.Longitude = customer.Longitude;
+                }
+
+                i++;
+            }
+            return parcels[index];
+        }
+
+        public void ReleaseDroneFromCharging(int droneId, double time)
+        {
+            var drone = lstDrone.Find(i => i.Id == droneId);
+            if (drone == null)
+            {
+                throw new ItemNotFoundException(droneId);
+            }
+            if (drone.Status != DroneStatuses.Charging)
+            {
+                throw new IllegalActionException("The drone is not charging");
+            }
+            dal.ReleaseDroneFromCharger(droneId);
+            drone.Status = DroneStatuses.Available;
+            drone.Battery = +(int)dal.GetChargeSpeed() * time;
+            if (drone.Battery > 100)
+            {
+                drone.Battery = 100;
+            }
+
+        }
+
+        public void SendingDroneForCharging(int droneId)
+        {
+            var drone = lstDrone.Find(i => i.Id == droneId);
+            if (drone == null)
+            {
+                throw new ItemNotFoundException(droneId);
+            }
+            if (drone.Status != DroneStatuses.Available)
+            {
+                throw new IllegalActionException("The drone is not available");
+            }
+            IDAL.DO.Station closestStation = GetClosestStation(drone);
+            double distance = dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,
+                closestStation.Lattitude, closestStation.Longitude);
+
+            if (closestStation.AvailableChargeSlots > 0 && drone.Battery > distance * dal.GetElectricUsage()[0])
+            {
+                IDAL.DO.DroneCharge droneCharge = new()
+                { DroneId = drone.Id, StationId = closestStation.Id, EntryTime = DateTime.Now };
+                dal.AddDroneToCharge(droneCharge);
+                drone.Battery = distance * dal.GetElectricUsage()[0];
+                drone.Location.Lattitude = closestStation.Lattitude;
+                drone.Location.Longitude = closestStation.Longitude;
+                drone.Status = DroneStatuses.Charging;
+            }
+            else
+            {
+                throw new IllegalActionException(
+                    "There are no free charging stations at this station or there is not enough battery\n");
+            }
+
+        }
+
         public DroneToList GetDroneFromLstDrone(int id)
         {
             bool flag = false;
-            foreach(DroneToList drone in lstDrone)
+            foreach (DroneToList drone in lstDrone)
             {
                 if (drone.Id == id)
                 {
                     return drone;
                     flag = true;
                     break;
-                }        
+                }
             }
             if (!flag)
                 throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
@@ -328,11 +455,11 @@ namespace BL
             temp.location.Longitude = station.Longitude;
             temp.location.Lattitude = station.Lattitude;
             temp.AvailableChargeSlots = station.AvailableChargeSlots;
-            foreach(var drnChrg in droneCharge)
+            foreach (var drnChrg in droneCharge)
             {
-                if(drnChrg.StationId == id)
+                if (drnChrg.StationId == id)
                 {
-                    DrnInChrg.DroneId = drnChrg.DroneId;            
+                    DrnInChrg.DroneId = drnChrg.DroneId;
                     DrnInChrg.Battery = GetDroneFromLstDrone(drnChrg.DroneId).Battery;
                     lstDrnInChrg.Add(DrnInChrg);
                 }
@@ -349,8 +476,8 @@ namespace BL
             List<ParceltAtCustomer> lstReceived = new List<ParceltAtCustomer>();
             ParceltAtCustomer parcelAtCstmr = new ParceltAtCustomer();
             CustomerInParcel cstmrInPrcl = new CustomerInParcel();
-           
-            Customer temp = new Customer();           
+
+            Customer temp = new Customer();
             temp.Id = customer.Id;
             temp.Name = customer.Name;
             temp.Phone = customer.Phone;
@@ -437,7 +564,7 @@ namespace BL
                         c.Name = updateCustomer.Name;
                     }
 
-                    if (updateCustomer.Phone!="no")
+                    if (updateCustomer.Phone != "no")
                     {
                         c.Phone = updateCustomer.Phone;
                     }
@@ -452,7 +579,7 @@ namespace BL
             }
         }
 
-        public void UpdateStation(Station updateStation,int chargingPositions)
+        public void UpdateStation(Station updateStation, int chargingPositions)
         {
             List<IDAL.DO.Station> Stations = dal.ListBaseStation().ToList();
             bool flag = false;
@@ -461,14 +588,14 @@ namespace BL
                 if (Stations[i].Id == updateStation.Id)
                 {
                     IDAL.DO.Station s = Stations[i];
-                    if (updateStation.Name !="no")
+                    if (updateStation.Name != "no")
                     {
                         s.Name = updateStation.Name;
                     }
 
-                    if (updateStation.AvailableChargeSlots!=-1)
+                    if (updateStation.AvailableChargeSlots != -1)
                     {
-                        if (chargingPositions - dal.AvailableChargeSlotsInStation(updateStation.Id)<0)
+                        if (chargingPositions - dal.AvailableChargeSlotsInStation(updateStation.Id) < 0)
                         {
                             throw new IllegalActionException("The total amount of charging stations is invalid\n");
                         }

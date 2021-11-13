@@ -12,12 +12,14 @@ namespace DalObject
     {
         internal class Config
         {
-            internal static int NewParcelId = 0;
-            internal static double available;
-            internal static double lightWeight;
-            internal static double mediumWeight;
-            internal static double heavyWeight;
-            internal static double chargeSpeed;
+            internal static int NewParcelId = 1;
+
+            internal static double available=1;
+            internal static double lightWeight=2;
+            internal static double mediumWeight=3;
+            internal static double heavyWeight=4;
+
+            internal static double chargeSpeed=100;
         }
     
         public static List<Customer> Customers = new List<Customer>();
