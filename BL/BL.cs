@@ -568,7 +568,7 @@ namespace BL
                     parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
                     parcelAtCstmr.Priority = (Priorities)parcel.Priority;
                     IDAL.DO.Customer cstmr = dal.GetCustomer(parcel.TargetId);
-                    cstmrInPrcl.Id = cstmr.Id;
+                    cstmrInPrcl.Id = cstmr.Id;   
                     cstmrInPrcl.Name = cstmr.Name;
                     parcelAtCstmr.OpposingSide = cstmrInPrcl;
                     lstSending.Add(parcelAtCstmr);
