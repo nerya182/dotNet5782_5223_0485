@@ -356,7 +356,8 @@ namespace ConsoleUI
             DroneCharge droneCharge = new DroneCharge();  
             droneCharge.StationId = StationId;
             droneCharge.DroneId = DroneId;
-            DO.AddDroneToCharge(droneCharge, StationId);
+            droneCharge.EntryTime=DateTime.Now;
+            DO.AddDroneToCharge(droneCharge);
         }
     }   
 }

@@ -64,10 +64,9 @@ namespace ConsoleUI_BL
                             "3- Update customer data\n" +
                             "4- Sending a drone for charging\n"+
                             "5- Release drone from charging" +
-                            "6- Sending a drone for charging\n" +
-                            "7- Affiliate Parcel to Drone\n" +
-                            "8- Parcel collection by drone\n" +
-                            "9- Delivery of a parcel by drone\n");
+                            "6- Affiliate Parcel to Drone\n" +
+                            "7- Parcel collection by drone\n" +
+                            "8- Delivery of a parcel by drone\n");
                         int.TryParse(Console.ReadLine(), out input);
                         switch (input)
                         {
@@ -81,22 +80,19 @@ namespace ConsoleUI_BL
                                 UpdateCustomer(bl);
                                 break;
                             case 4:
-                                SendDroneToCharge(bl);
+                                SendingDroneForCharging(bl);
                                 break;
                             case 5:
-                                ReleaseDrone(bl);
+                                ReleaseDroneFromCharging(bl);
                                 break;
                             case 6:
-                                ReleaseDrone(bl);
+                                AffiliateParcelToDrone(bl);
                                 break;
                             case 7:
-                                ReleaseDrone(bl);
+                                ParcelCollectionByDrone(bl);
                                 break;
                             case 8:
-                                ReleaseDrone(bl);
-                                break;
-                            case 9:
-                                ReleaseDrone(bl);
+                                DeliveryOfParcelByDrone(bl);
                                 break;
                         }
                         break;
@@ -208,9 +204,6 @@ namespace ConsoleUI_BL
                                 break;
                         }
                         break;
-                    case CHOICE.DISTANCE:
-                        distance(bl);
-                        break;
                     case CHOICE.EXIT:
                         break;
                     default:
@@ -218,6 +211,84 @@ namespace ConsoleUI_BL
                 }
             }
             while (choice != CHOICE.EXIT);
+        }
+
+        private static void DeliveryOfParcelByDrone(BL.BL bl)
+        {
+            try
+            {
+                int droneId;
+                Console.WriteLine("Enter a unique ID number of drone");
+                droneId = int.Parse(Console.ReadLine());
+                bl.DeliveryOfParcelByDrone(droneId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private static void ParcelCollectionByDrone(BL.BL bl)
+        {
+            try
+            {
+                int droneId;
+                Console.WriteLine("Enter a unique ID number of drone");
+                droneId = int.Parse(Console.ReadLine());
+                bl.ParcelCollectionByDrone(droneId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private static void AffiliateParcelToDrone(BL.BL bl)
+        {
+            try
+            {
+                int droneId;
+                Console.WriteLine("Enter a unique ID number of drone");
+                droneId = int.Parse(Console.ReadLine());
+                bl.AffiliateParcelToDrone(droneId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private static void ReleaseDroneFromCharging(BL.BL bl)
+        {
+            try
+            {
+                int droneId;
+                double time = 0;
+                Console.WriteLine("Enter a unique ID number of drone");
+                droneId = int.Parse(Console.ReadLine());
+                Console.WriteLine("Enter the charging time");
+                time = double.Parse(Console.ReadLine());
+                bl.ReleaseDroneFromCharging(droneId, time);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private static void SendingDroneForCharging(BL.BL bl)
+        {
+            try
+            {
+                int droneId;
+                Console.WriteLine("Enter a unique ID number of drone");
+                droneId = int.Parse(Console.ReadLine());
+                bl.SendingDroneForCharging(droneId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         private static void UpdateCustomer(BL.BL bl)
@@ -367,7 +438,6 @@ namespace ConsoleUI_BL
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
             }
         }
 
