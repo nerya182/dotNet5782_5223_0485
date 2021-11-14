@@ -317,6 +317,48 @@ namespace BL
             return temp;
         }
 
+        public void DeliveryOfParcelByDrone(int droneId)
+        {
+            DroneToList drone = lstDrone.Find(i => i.Id == droneId);
+            IDAL.DO.Parcel parcel = dal.GetParcel(drone.ParcelBeingPassedId);
+            IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
+            if (parcel.DroneId==droneId&&parcel.PickedUp!=DateTime.MinValue&&parcel.Delivered==DateTime.MinValue)
+            {
+                double distance = dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,
+                    customerTarget.Lattitude, customerTarget.Longitude);
+                drone.Battery-= distance * dal.GetElectricUsageNumber(parcel.Weight);
+                drone.Location.Lattitude = customerTarget.Lattitude;
+                drone.Location.Longitude = customerTarget.Longitude;
+                drone.Status = DroneStatuses.Available;
+                dal.SupplyParcelUpdate(parcel.Id);
+            }
+            else
+            {
+                throw new IllegalActionException("The parcel was not collected by the drone\n");
+            }
+        }
+
+        public void ParcelCollectionByDrone(int droneId)
+        {
+            DroneToList drone = lstDrone.Find(i => i.Id == droneId);
+            IDAL.DO.Parcel parcel = dal.GetParcel(drone.ParcelBeingPassedId);
+            IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
+            if (parcel.Affiliation!=DateTime.MinValue&&parcel.PickedUp==DateTime.MinValue&&parcel.DroneId==drone.Id&&drone.Status==DroneStatuses.Delivery)
+            {
+                double distance = dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,
+                    customerSender.Lattitude, customerSender.Longitude);
+
+                drone.Battery -= distance * dal.GetElectricUsage()[0];
+                drone.Location.Lattitude = customerSender.Lattitude;
+                drone.Location.Longitude = customerSender.Longitude;
+                dal.PickupParcelUpdate(parcel.Id);
+            }
+            else
+            {
+                throw new IllegalActionException("The drone is not in delivery mode / not associated with this parcel\n");
+            }
+        }
+
         public void AffiliateParcelToDrone(int droneId)
         {
             DroneToList drone = lstDrone.Find(i => i.Id == droneId);
@@ -325,29 +367,40 @@ namespace BL
                 throw new ItemAlreadyExistsExcepton(droneId);
             }
             List<IDAL.DO.Parcel> parcels = dal.ListParcel().ToList();
-            parcels = parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Urgent);
-            parcels = parcels.FindAll(i => i.Weight == (IDAL.DO.WeightCategories)drone.MaxWeight);
-            IDAL.DO.Parcel parcel = GetClosestParcel(parcels, drone);
+            List<IDAL.DO.Parcel> parcelsfiltered = new List<IDAL.DO.Parcel>();
+            parcelsfiltered = parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Urgent);
+            if (parcelsfiltered.Count==0) { parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Express); }
+            if (parcelsfiltered.Count == 0) { parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Regular); }
+
+            parcels = parcelsfiltered;
+
+            parcelsfiltered = parcels.FindAll(i => i.Weight == (IDAL.DO.WeightCategories)drone.MaxWeight);
+            if (parcelsfiltered.Count == 0)
+                parcelsfiltered = parcels.FindAll(i => i.Weight == (IDAL.DO.WeightCategories) drone.MaxWeight - 1&& (drone.MaxWeight - 1)>0);
+            if (parcelsfiltered.Count == 0) 
+                parcelsfiltered= parcels.FindAll(i => i.Weight == (IDAL.DO.WeightCategories)drone.MaxWeight - 2 && (drone.MaxWeight - 2) > 0);
+
+            IDAL.DO.Parcel parcel = GetClosestParcel(parcelsfiltered, drone);
             IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
             IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
             double distance1 = dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,//distance to send
                 customerSender.Lattitude, customerSender.Longitude);
             double distance2 = dal.GetDistanceFromLatLonInKm(customerSender.Lattitude, customerSender.Longitude,//distance to target
                                   customerTarget.Lattitude, customerTarget.Longitude);
-            DroneToList droneInSender = new();
+            DroneToList droneInSender = new DroneToList();
             droneInSender.Location.Lattitude = customerTarget.Lattitude;
             droneInSender.Location.Longitude = customerTarget.Longitude;
             double distance3 = dal.GetDistanceFromLatLonInKm(GetClosestStation(droneInSender).Lattitude,
                 GetClosestStation(droneInSender).Longitude, customerTarget.Lattitude, customerTarget.Longitude);
 
 
-            if (drone.Status==DroneStatuses.Available&&drone.Battery>distance2*dal.GetElectricUsageNumber(parcel.Weight)+distance1*dal.GetElectricUsage()[0]+distance3*dal.GetElectricUsage()[0])
+            if (drone.Status==DroneStatuses.Available&&drone.Battery>(distance2*dal.GetElectricUsageNumber(parcel.Weight)+distance1*dal.GetElectricUsage()[0]+distance3*dal.GetElectricUsage()[0]))
             {
                 drone.Status = DroneStatuses.Delivery;
                 dal.Affiliate(parcel.Id,drone.Id);
             }
+            drone.ParcelBeingPassedId = parcel.Id;
         }
-
         private IDAL.DO.Parcel GetClosestParcel(List<IDAL.DO.Parcel> parcels, DroneToList drone)
         {
             int i = 0, index = 0;
@@ -366,7 +419,6 @@ namespace BL
                     closestParcel.Lattitude = customer.Lattitude;
                     closestParcel.Longitude = customer.Longitude;
                 }
-
                 i++;
             }
             return parcels[index];

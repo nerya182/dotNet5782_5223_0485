@@ -64,10 +64,9 @@ namespace ConsoleUI_BL
                             "3- Update customer data\n" +
                             "4- Sending a drone for charging\n"+
                             "5- Release drone from charging" +
-                            "6- Sending a drone for charging\n" +
-                            "7- Affiliate Parcel to Drone\n" +
-                            "8- Parcel collection by drone\n" +
-                            "9- Delivery of a parcel by drone\n");
+                            "6- Affiliate Parcel to Drone\n" +
+                            "7- Parcel collection by drone\n" +
+                            "8- Delivery of a parcel by drone\n");
                         int.TryParse(Console.ReadLine(), out input);
                         switch (input)
                         {
@@ -90,13 +89,10 @@ namespace ConsoleUI_BL
                                 AffiliateParcelToDrone(bl);
                                 break;
                             case 7:
-                                ReleaseDrone(bl);
+                                ParcelCollectionByDrone(bl);
                                 break;
                             case 8:
-                                ReleaseDrone(bl);
-                                break;
-                            case 9:
-                                ReleaseDrone(bl);
+                                DeliveryOfParcelByDrone(bl);
                                 break;
                         }
                         break;
@@ -215,6 +211,36 @@ namespace ConsoleUI_BL
                 }
             }
             while (choice != CHOICE.EXIT);
+        }
+
+        private static void DeliveryOfParcelByDrone(BL.BL bl)
+        {
+            try
+            {
+                int droneId;
+                Console.WriteLine("Enter a unique ID number of drone");
+                droneId = int.Parse(Console.ReadLine());
+                bl.DeliveryOfParcelByDrone(droneId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private static void ParcelCollectionByDrone(BL.BL bl)
+        {
+            try
+            {
+                int droneId;
+                Console.WriteLine("Enter a unique ID number of drone");
+                droneId = int.Parse(Console.ReadLine());
+                bl.ParcelCollectionByDrone(droneId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         private static void AffiliateParcelToDrone(BL.BL bl)
