@@ -273,6 +273,73 @@ namespace BL
             return temp;
         }
 
+        public ParcelToList MakeParcelToList(Parcel objParcel)
+        {
+            ParcelToList parcelToList = new ParcelToList();
+            parcelToList.Id = objParcel.Id;
+            parcelToList.Weight = objParcel.Weight;
+            parcelToList.Priority = objParcel.Priority;
+            parcelToList.SenderName = objParcel.Sender.Name;
+            parcelToList.TargetName = objParcel.Target.Name;
+            if (objParcel.Delivered != DateTime.MinValue)
+                parcelToList.ShipmentStatus = ParcelStatus.Supplied;
+            else if (objParcel.PickedUp != DateTime.MinValue)
+                parcelToList.ShipmentStatus = ParcelStatus.PickedUp;
+            else if (objParcel.Affiliation != DateTime.MinValue)
+                parcelToList.ShipmentStatus = ParcelStatus.Assigned;
+            else
+                parcelToList.ShipmentStatus = ParcelStatus.Created;
+            return parcelToList;
+        }
+
+        public CustomerToList MakeCustomerToList(Customer objCustomer)
+        {
+            CustomerToList customerToList = new CustomerToList();
+            customerToList.Id = objCustomer.Id;
+            customerToList.Name = objCustomer.Name;
+            customerToList.Phone = objCustomer.Phone;
+            int count1 = 0;
+            foreach(ParceltAtCustomer parceltAtCustomer in objCustomer.ToCustomer)
+            {
+                if (parceltAtCustomer.status == ParcelStatus.Supplied)
+                    count1++;
+            }
+            customerToList.Received_Parcels = count1;
+            customerToList.OnTheWay_Parcels = objCustomer.ToCustomer.Count - count1;
+            int count2 = 0;
+            foreach(ParceltAtCustomer parceltAtCustomer1 in objCustomer.FromCustomer)
+            {
+                if (parceltAtCustomer1.status == ParcelStatus.Supplied)
+                    count2++;
+            }
+            customerToList.Delivered_Supplied_Parcels = count2;
+            customerToList.Delivered_NotSupplied_Parcels = objCustomer.FromCustomer.Count - count2;
+            return customerToList;          
+        }
+
+        public DroneToList MakeDroneToList(Drone objDrone)
+        {
+            DroneToList droneToList = new DroneToList();
+            droneToList.Id = objDrone.Id;
+            droneToList.Location = objDrone.Location;
+            droneToList.Battery = objDrone.Battery;
+            droneToList.Model = objDrone.Model;
+            droneToList.MaxWeight = objDrone.MaxWeight;
+            droneToList.Status = objDrone.Status;
+            droneToList.ParcelBeingPassedId = objDrone.ParcelTransfer.Id;
+            return droneToList;
+        }
+
+        public StationToList MakeStationToList(Station objStation)
+        {
+            StationToList stationToList = new StationToList();
+            stationToList.Id = objStation.Id;
+            stationToList.Name = objStation.Name;
+            stationToList.AvailableChargeSlots = objStation.AvailableChargeSlots;
+            stationToList.UsedChargeSlots = objStation.droneInCharging.Count;
+            return stationToList;
+        }
+
         public void DeliveryOfParcelByDrone(int droneId)
         {
             DroneToList drone = lstDrone.Find(i => i.Id == droneId);

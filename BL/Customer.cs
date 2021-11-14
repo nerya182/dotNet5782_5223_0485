@@ -16,9 +16,6 @@ namespace IBL
             public override string ToString()
             {
                 return $"Customer #{Id}, Name:{Name}, Phone #:{Phone} $\n"; 
-
-
-
             }
         }
     }
