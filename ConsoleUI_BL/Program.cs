@@ -159,8 +159,8 @@ namespace ConsoleUI_BL
                         {
 
                             case 's':
-                                IEnumerable<Station> PrintStation = new List<Station>();
-                                PrintStation = bl.ListBaseStation();
+                                IEnumerable<StationToList> PrintStation = new List<StationToList>();
+                                PrintStation = ;
                                 foreach (Station objStation in PrintStation)
                                 {
                                     PrintAll(objStation);
