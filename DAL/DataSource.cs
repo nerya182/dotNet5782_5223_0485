@@ -182,11 +182,11 @@ namespace DalObject
         private static void CreateDroneCharge()
         {
             Random R = new Random();
-            for (int i = 0; i < 2; i++)
+           /* for (int i = 0; i < 2; i++)
             {
                 DroneCharge newDroneCharge = new DroneCharge() { DroneId = Drones[i+8].Id, StationId = Stations[i].Id };
                 DroneCharges.Add(newDroneCharge);
-            }
+            }*/
         }
     }
 }

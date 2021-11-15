@@ -10,7 +10,7 @@ namespace ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            IDAL.IDal DO = new DalObject.DalObject();
+            //IDAL.IDal DO = new DalObject.DalObject();
             BL.BL bl =new BL.BL();
             CHOICE choice;
             do
@@ -156,7 +156,7 @@ namespace ConsoleUI_BL
 
                             case 's':
                                 IEnumerable<Station> PrintStation = new List<Station>();
-                                PrintStation = (IEnumerable<Station>)DO.ListBaseStation();
+                                PrintStation = bl.GetListStation(); 
                                 foreach (Station objStation in PrintStation)
                                 {
                                     StationToList stationToList =  bl.MakeStationToList(objStation);
@@ -165,7 +165,7 @@ namespace ConsoleUI_BL
                                 break;
                             case 'd':
                                 IEnumerable<Drone> PrintDrone = new List<Drone>();
-                                PrintDrone = (IEnumerable<Drone>)DO.ListDrone();
+                                PrintDrone = bl.GetListDrone(); 
                                 foreach (Drone objDrone in PrintDrone)
                                 {
                                     DroneToList droneToList = bl.MakeDroneToList(objDrone);
@@ -174,7 +174,7 @@ namespace ConsoleUI_BL
                                 break;
                             case 'c':
                                 IEnumerable<Customer> PrintCustomer = new List<Customer>();
-                                PrintCustomer = (IEnumerable<Customer>)DO.ListCustomer();
+                                PrintCustomer = bl.GetListCustomer();  
                                 foreach (Customer objCustomer in PrintCustomer)
                                 {
                                     CustomerToList customerToList = bl.MakeCustomerToList(objCustomer);
@@ -183,7 +183,7 @@ namespace ConsoleUI_BL
                                 break;
                             case 'p':
                                 IEnumerable<Parcel> PrintParcel = new List<Parcel>();
-                                PrintParcel = (IEnumerable<Parcel>)DO.ListParcel();
+                                PrintParcel = bl.GetListParcel(); 
                                 foreach (Parcel objParcel in PrintParcel)
                                 {
                                     ParcelToList parcelToList = bl.MakeParcelToList(objParcel);
@@ -192,7 +192,7 @@ namespace ConsoleUI_BL
                                 break;
                             case 'f':
                                 IEnumerable<Parcel> PrintParcelOnAir = new List<Parcel>();
-                                PrintParcelOnAir = (IEnumerable<Parcel>)DO.ListParcelOnAir();
+                                PrintParcelOnAir = bl.GetListParcelOnAir(); 
                                 foreach (Parcel objStation in PrintParcelOnAir)
                                 {
                                     PrintAll(objStation);
@@ -200,7 +200,7 @@ namespace ConsoleUI_BL
                                 break;
                             case 'o':
                                 IEnumerable<Station> PrintStationsWithOpenSlots = new List<Station>();
-                                PrintStationsWithOpenSlots = (IEnumerable<Station>)DO.ListStationsWithOpenSlots();
+                                PrintStationsWithOpenSlots = bl.GetListStationsWithOpenSlots();  
                                 foreach (Station objStation in PrintStationsWithOpenSlots)
                                 {
                                     PrintAll(objStation);
