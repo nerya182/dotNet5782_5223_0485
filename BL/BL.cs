@@ -359,7 +359,7 @@ namespace BL
             temp.ParcelTransfer = prclTrnsfr;
             return temp;
         }
-
+        
         public IEnumerable<Station> GetListStationsWithOpenSlots()
         {
             IEnumerable<IDAL.DO.Station> stations = dal.ListStationsWithOpenSlots();
