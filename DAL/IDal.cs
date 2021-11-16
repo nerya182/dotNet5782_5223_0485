@@ -36,7 +36,6 @@ namespace IDAL
         int GetParcelId(); 
         Parcel ParcelDisplay(int id);
         Station BaseStationDisplay(int id);
-
         IEnumerable<Station> ListStationsWithOpenSlots();
         Drone DroneDisplay(int id);
         Customer CustomerDisplay(int id);

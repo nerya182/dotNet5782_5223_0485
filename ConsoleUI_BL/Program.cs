@@ -21,8 +21,7 @@ namespace ConsoleUI_BL
                        "3-DISPLAY- Display of base stations/Drone/Customer/ Parcel\n" +
                        "4-VIEW_LIST- Print all base stations/Drone/Customer/Parcel/\n" +
                        "          Packages not yet associated/Base stations with available charging stations.\n" +
-                       "5-DISTANCE- Prints distance between point and Station or from customer\n" +
-                       "6-EXIT- Exit\n");
+                       "5-EXIT- Exit\n");
 
                 while (!Enum.TryParse(Console.ReadLine(), out choice))
                 {
@@ -146,9 +145,7 @@ namespace ConsoleUI_BL
                             "s - Stations\n" +
                             "d - Drones\n" +
                             "c - Customers\n" +
-                            "p - Parcels\n" +
-                            "f - Parcels that have not yet been affiliated with a drone\n" +
-                            "o - Stations with open charge slots \n");
+                            "p - Parcels\n");
                         char pick;
                         char.TryParse(Console.ReadLine(), out pick);
                         switch (pick)

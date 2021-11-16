@@ -7,7 +7,7 @@ namespace IDAL
     {
         public enum CHOICE
         {
-            ADD, UPDATE, DISPLAY, VIEW_LIST, DISTANCE, EXIT
+            ADD, UPDATE, DISPLAY, VIEW_LIST, EXIT
         }
         public enum WeightCategories
         {

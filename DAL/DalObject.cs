@@ -519,11 +519,11 @@ namespace DalObject
         /// <returns> List </returns>
         public IEnumerable<Station> ListStationsWithOpenSlots()
         {
-            List<Station> PrintCustomer = new List<Station>();
+            List<Station> ?PrintCustomer = new List<Station>();
             for (int i = 0; i <Stations.Count; i++)
             {
-                if (GetStation(i).AvailableChargeSlots > 0)
-                    PrintCustomer.Add(GetStation(i));  
+                if (GetStation(Stations[i].Id).AvailableChargeSlots > 0)
+                    PrintCustomer.Add(GetStation(Stations[i].Id));  
             }
             return PrintCustomer;  
         }

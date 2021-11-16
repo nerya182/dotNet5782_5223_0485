@@ -91,7 +91,8 @@ namespace BL
                     if (drone.Status==DroneStatuses.Charging)
                     {
                         IDAL.DO.DroneCharge droneCharge = new IDAL.DO.DroneCharge();
-                        IDAL.DO.Station station= dal.ListStationsWithOpenSlots().ElementAt(R.Next(0, dal.ListBaseStation().Count()));
+                        List<IDAL.DO.Station> stations = dal.ListStationsWithOpenSlots().ToList();
+                        IDAL.DO.Station station = stations[R.Next(0, stations.Count)];
                         Location locationDrone = new Location
                             {Lattitude = station.Lattitude, Longitude = station.Longitude};
                         drone.Location = locationDrone;
