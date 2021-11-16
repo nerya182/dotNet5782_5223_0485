@@ -34,7 +34,6 @@ namespace DalObject
             CreateDrones();
             CreateCustomers();
             CreateParcels();
-            CreateDroneCharge();
         }
         /// <summary>
         /// Creating 2 stations
@@ -103,7 +102,7 @@ namespace DalObject
                     Id = Config.NewParcelId,
                     SenderId = R.Next(100000000, 1000000000),
                     TargetId = R.Next(100000000, 1000000000),
-                    DroneId = Drones[i].Id,
+                    DroneId = 0,
                     Weight = weightCategories,
                     Priority = priorities,
                     Creating = DateTime.Now,
@@ -175,18 +174,6 @@ namespace DalObject
                 Parcels.Add(newParcel);
                 Config.NewParcelId++;
             }
-        }
-        /// <summary>
-        /// Creating 2 DroneCharges Randomly
-        /// </summary>
-        private static void CreateDroneCharge()
-        {
-            Random R = new Random();
-           /* for (int i = 0; i < 2; i++)
-            {
-                DroneCharge newDroneCharge = new DroneCharge() { DroneId = Drones[i+8].Id, StationId = Stations[i].Id };
-                DroneCharges.Add(newDroneCharge);
-            }*/
         }
     }
 }

@@ -16,13 +16,13 @@ namespace ConsoleUI_BL
             do
             {
                 Console.WriteLine("\nMenu:\n" +
-                       "ADD- Add a new base Station/Drone/Customer/Parcel.\n" +
-                       "UPDATE- Update assignment/Collection /Delivery /Charging /Release.\n" +
-                       "DISPLAY- Display of base stations/Drone/Customer/ Parcel\n" +
-                       "VIEW_LIST- Print all base stations/Drone/Customer/Parcel/\n" +
+                       "1-ADD- Add a new base Station/Drone/Customer/Parcel.\n" +
+                       "2-UPDATE- Update assignment/Collection /Delivery /Charging /Release.\n" +
+                       "3-DISPLAY- Display of base stations/Drone/Customer/ Parcel\n" +
+                       "4-VIEW_LIST- Print all base stations/Drone/Customer/Parcel/\n" +
                        "          Packages not yet associated/Base stations with available charging stations.\n" +
-                       "DISTANCE- Prints distance between point and Station or from customer\n" +
-                       "EXIT- Exit\n");
+                       "5-DISTANCE- Prints distance between point and Station or from customer\n" +
+                       "6-EXIT- Exit\n");
 
                 while (!Enum.TryParse(Console.ReadLine(), out choice))
                 {
@@ -33,8 +33,8 @@ namespace ConsoleUI_BL
                 {
                     case CHOICE.ADD:
                         Console.WriteLine("What would you like to add? \n" +
-                                         "1- Add a new base Station.\n" +
-                                         "2- Add a new Drone.\n" +
+                                         "1-Add a new base Station.\n" +
+                                         "2-Add a new Drone.\n" +
                                          "3-Add a new Customer.\n" +
                                          "4-Add a new Parcel.\n");
                         int input;
@@ -355,6 +355,7 @@ namespace ConsoleUI_BL
             try
             {
                 Customer newCustomer = new Customer();
+                Location locationOfnewCustomer = new Location();
                 Console.WriteLine("Enter a unique ID number");
                 newCustomer.Id = int.Parse(Console.ReadLine());
                 Console.WriteLine(" Enter the customer name");
@@ -362,9 +363,10 @@ namespace ConsoleUI_BL
                 Console.WriteLine(" Enter a phone number");
                 newCustomer.Phone = Console.ReadLine();
                 Console.WriteLine("What is your Latitude?");
-                newCustomer.Location.Lattitude=double.Parse(Console.ReadLine());
+                locationOfnewCustomer.Lattitude=double.Parse(Console.ReadLine());
                 Console.WriteLine("What is your longitude?");
-                newCustomer.Location.Longitude=double.Parse(Console.ReadLine());
+                locationOfnewCustomer.Longitude = double.Parse(Console.ReadLine());
+                newCustomer.Location = locationOfnewCustomer;
                 bl.AddCustomer(newCustomer);
             }
             catch (Exception e)
@@ -378,10 +380,15 @@ namespace ConsoleUI_BL
             try
             {
                 Parcel newParcel = new Parcel();
+                CustomerInParcel sender = new CustomerInParcel();
+                CustomerInParcel target = new CustomerInParcel();
+                DroneInParcel droneInParcel = new DroneInParcel();
                 Console.WriteLine("Enter a sending customer ID number");
-                newParcel.Sender.Id = int.Parse(Console.ReadLine());
+                sender.Id = int.Parse(Console.ReadLine());
+                newParcel.Sender = sender;
                 Console.WriteLine("Enter a receives Customer  ID number");
-                newParcel.Target.Id = int.Parse(Console.ReadLine());
+                target.Id = int.Parse(Console.ReadLine());
+                newParcel.Target = target;
                 Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy");
                 newParcel.Weight = (WeightCategories) int.Parse(Console.ReadLine());
                 Console.WriteLine("enter  1-Regular , 2-Express , 3-Urgent");
@@ -390,7 +397,8 @@ namespace ConsoleUI_BL
                 newParcel.Affiliation = DateTime.MinValue;
                 newParcel.Delivered = DateTime.MinValue;
                 newParcel.PickedUp = DateTime.MinValue;
-                newParcel.drone.DroneId = -1;
+                droneInParcel.DroneId = -1;
+                newParcel.drone = droneInParcel;
                 bl.AddParcel(newParcel);
             }
             catch (Exception e)
@@ -426,16 +434,16 @@ namespace ConsoleUI_BL
             try
             {
                 Station newStation = new Station();
-                Location locationOfnewStation = new Location();
+                Location locationOfNewStation = new Location();
                 Console.WriteLine("Enter a unique ID number of station");
                 newStation.Id = int.Parse(Console.ReadLine());
                 Console.WriteLine("Enter the name of the station");
                 newStation.Name = Console.ReadLine();
                 Console.WriteLine("Enter the longitude of the station");
-                locationOfnewStation.Longitude= double.Parse(Console.ReadLine());
+                locationOfNewStation.Longitude= double.Parse(Console.ReadLine());
                 Console.WriteLine("Enter the latitude of the station");
-                locationOfnewStation.Lattitude = double.Parse(Console.ReadLine());
-                newStation.location = locationOfnewStation;
+                locationOfNewStation.Lattitude = double.Parse(Console.ReadLine());
+                newStation.location = locationOfNewStation;
                 Console.WriteLine("Enter the number of charging points available at the station");
                 newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
                 newStation.droneInCharging = new List<DroneInCharging>(0);

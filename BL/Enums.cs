@@ -10,7 +10,7 @@ namespace IBL
     {
         public enum CHOICE
         {
-            ADD, UPDATE, DISPLAY, VIEW_LIST, DISTANCE, EXIT
+            ADD=1, UPDATE, DISPLAY, VIEW_LIST, DISTANCE, EXIT
         }
         public enum WeightCategories
         {
@@ -18,7 +18,7 @@ namespace IBL
         }
         public enum ParcelStatus { Created, Assigned, PickedUp, Supplied}
         public enum Priorities { Regular = 1, Express, Urgent }
-        public enum DroneStatuses { Available = 1, Delivery, Charging }
+        public enum DroneStatuses { Available = 1,Charging, Delivery }
         
     }
 }

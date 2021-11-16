@@ -201,7 +201,7 @@ namespace DalObject
             {
                 if (objStation.Id == newStation.Id)
                 {
-                    throw new ItemAlreadyExistsExcepton(newStation.Id, "ERROR: id of Station already exists\n");
+                    throw new ItemAlreadyExistsException(newStation.Id, "ERROR: id of Station already exists\n");
                 }
             }
             Stations.Add(newStation);
@@ -212,14 +212,14 @@ namespace DalObject
         /// <param name="newDrone"></param>
         public  void AddDrone(Drone newDrone)  
         {
-            foreach (Drone objStation in DataSource.Drones)
+            foreach (Drone objDrone in DataSource.Drones)
             {
-                if (objStation.Id == newDrone.Id)
+                if (objDrone.Id == newDrone.Id)
                 {
-                    throw new ItemAlreadyExistsExcepton(newDrone.Id, "ERROR: id of Drone already exists\n");
+                    throw new ItemAlreadyExistsException(newDrone.Id, "ERROR: id of Drone already exists\n");
                 }
             }
-            Drones[Drones.Count] = newDrone;
+            Drones.Add(newDrone);
         }
         /// <summary>
         /// Adding a customer to the next open index
@@ -227,14 +227,14 @@ namespace DalObject
         /// <param name="newCustomer"></param>
         public  void AddCustomer(Customer newCustomer)   
         {
-            foreach (Customer objStation in DataSource.Customers)
+            foreach (Customer objCustomer in DataSource.Customers)
             {
-                if (objStation.Id == newCustomer.Id)
+                if (objCustomer.Id == newCustomer.Id)
                 {
-                    throw new ItemAlreadyExistsExcepton(newCustomer.Id, "ERROR: id of Customer already exists\n");
+                    throw new ItemAlreadyExistsException(newCustomer.Id, "ERROR: id of Customer already exists\n");
                 }
             }
-            Customers[Customers.Count] = newCustomer;
+            Customers.Add(newCustomer);
         }
         /// <summary>
         /// Adding a parcel to the next open index
@@ -242,14 +242,14 @@ namespace DalObject
         /// <param name="newParcel"></param> 
         public  void AddParcel(Parcel newParcel)    
         {
-            foreach (Parcel objStation in DataSource.Parcels)
+            foreach (Parcel objParcel in DataSource.Parcels)
             {
-                if (objStation.Id == newParcel.Id)
+                if (objParcel.Id == newParcel.Id)
                 {
-                    throw new ItemAlreadyExistsExcepton(newParcel.Id, "ERROR: id of Parcel already exists\n");
+                    throw new ItemAlreadyExistsException(newParcel.Id, "ERROR: id of Parcel already exists\n");
                 }
             }
-            Parcels[Parcels.Count] = newParcel;
+            Parcels.Add(newParcel);
         }
         /// <summary>
         /// if we've found an available drone, we will affiliate the parcel with it
@@ -576,7 +576,7 @@ namespace DalObject
             }
             if (!flag)
             {
-                throw new ItemAlreadyExistsExcepton(droneCharge.StationId, "Enter another station number\n");
+                throw new ItemAlreadyExistsException(droneCharge.StationId);
             }
             for (int i = 0; i < Stations.Count; i++)
             {
@@ -642,10 +642,7 @@ namespace DalObject
 
         public double GetElectricUsageNumber(WeightCategories weight)
         {
-            if (weight== WeightCategories.Light){return 2;}
-            if (weight == WeightCategories.Medium) { return 3; }
-            if (weight == WeightCategories.Heavy) { return 4; }
-            return 0;
+            throw new NotImplementedException();
         }
     }
 }

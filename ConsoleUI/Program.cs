@@ -344,7 +344,6 @@ namespace ConsoleUI
             int DroneId, StationId;
             int.TryParse(Console.ReadLine(), out DroneId);
             
-
             IEnumerable<Station> StationsWithOpenSlots = new List<Station>();
             StationsWithOpenSlots = DO.ListStationsWithOpenSlots();
             foreach (Station objStation in StationsWithOpenSlots)
