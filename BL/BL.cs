@@ -246,8 +246,19 @@ namespace BL
             }
         }
 
+        public IEnumerable<Station> GetListStation()
+        {
+            IEnumerable<IDAL.DO.Station> stations = dal.ListBaseStation();
+            List<Station> temp = new List<Station>();
+            foreach(var station in stations)
+            {
+                Station obj = BaseStationDisplay(station.Id);
+                temp.Add(obj);
+            }
+            return temp;
+        }
 
-        public object DroneDisplay(int id)
+        public Drone DroneDisplay(int id)
         {
             IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
             ParcelTransfer prclTrnsfr = new ParcelTransfer();
@@ -303,6 +314,54 @@ namespace BL
                 }              
             }
             temp.ParcelTransfer = prclTrnsfr;
+            return temp;
+        }
+
+        public IEnumerable<Station> GetListStationsWithOpenSlots()
+        {
+            IEnumerable<IDAL.DO.Station> stations = dal.ListStationsWithOpenSlots();
+            return (IEnumerable<Station>)stations;
+        }
+
+        public IEnumerable<Parcel> GetListParcelOnAir()
+        {
+            IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcelOnAir();
+            return (IEnumerable<Parcel>)parcels;
+        }
+
+        public IEnumerable<Parcel> GetListParcel()
+        {
+            IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
+            List<Parcel> temp = new List<Parcel>();
+            foreach (var parcel in parcels)
+            {
+                Parcel obj = ParcelDisplay(parcel.Id);
+                temp.Add(obj);
+            }
+            return temp;
+        }
+
+        public IEnumerable<Customer> GetListCustomer()
+        {
+            IEnumerable<IDAL.DO.Customer> customers = dal.ListCustomer();
+            List<Customer> temp = new List<Customer>();
+            foreach(var customer in customers)
+            {
+                Customer obj = CustomerDisplay(customer.Id);
+                temp.Add(obj);
+            }
+            return temp;
+        }
+
+        public IEnumerable<Drone> GetListDrone()
+        {
+            IEnumerable<IDAL.DO.Drone> drones = dal.ListDrone();
+            List<Drone> temp = new List<Drone>();
+            foreach(var drone in drones)
+            {
+                Drone obj = DroneDisplay(drone.Id);
+                temp.Add(obj);
+            }
             return temp;
         }
 
@@ -557,10 +616,12 @@ namespace BL
             List<DroneInCharging> lstDrnInChrg = new List<DroneInCharging>();
             DroneInCharging DrnInChrg = new DroneInCharging();
             Station temp = new Station();
+            Location location = new Location();
+            location.Longitude = station.Longitude;
+            location.Lattitude = station.Lattitude;
             temp.Id = station.Id;
             temp.Name = station.Name;
-            temp.location.Longitude = station.Longitude;
-            temp.location.Lattitude = station.Lattitude;
+            temp.location = location;
             temp.AvailableChargeSlots = station.AvailableChargeSlots;
             foreach (var drnChrg in droneCharge)
             {
@@ -571,6 +632,7 @@ namespace BL
                     lstDrnInChrg.Add(DrnInChrg);
                 }
             }
+
             temp.droneInCharging = lstDrnInChrg;
             return temp;
         }
@@ -623,7 +685,7 @@ namespace BL
             return temp;
         }
 
-        public object ParcelDisplay(int id)
+        public Parcel ParcelDisplay(int id)
         {
             IDAL.DO.Parcel parcel = dal.GetParcel(id);
             DroneInParcel droneInParcel = new DroneInParcel();
