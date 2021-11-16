@@ -79,7 +79,7 @@ namespace BL
                                         parcel.Weight), 100);
                         }
                     }
-                }
+                 }
             }
 
             foreach (DroneToList drone in lstDrone)//נעדכן את הרחפן במקרה שהוא לא עושה משלוח
@@ -124,7 +124,7 @@ namespace BL
             Location closestStation = new Location();
             closestStation.Lattitude = stations[0].Lattitude;
             closestStation.Longitude = stations[0].Longitude;
-            int i = 0, index = -1;
+            int i = 0, index = 0;
             foreach (var station in stations)
             {
                 if (dal.GetDistanceFromLatLonInKm(customerSender.Lattitude, customerSender.Longitude, station.Lattitude, station.Longitude) <
@@ -145,7 +145,7 @@ namespace BL
             Location closestStation = new Location();
             closestStation.Lattitude = stations[0].Lattitude;
             closestStation.Longitude = stations[0].Longitude;
-            int i = 0, index = -1;
+            int i = 0, index = 0;
             foreach (var station in stations)
             {
                 if (dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude, station.Lattitude, station.Longitude) <
@@ -559,8 +559,8 @@ namespace BL
             double distance2 = dal.GetDistanceFromLatLonInKm(customerSender.Lattitude, customerSender.Longitude,//distance to target
                 customerTarget.Lattitude, customerTarget.Longitude);
             DroneToList droneInSender = new DroneToList();
-            droneInSender.Location.Lattitude = customerTarget.Lattitude;
-            droneInSender.Location.Longitude = customerTarget.Longitude;
+            Location locationDroneInSender = new Location { Lattitude = customerSender.Lattitude,Longitude = customerSender.Longitude};
+            droneInSender.Location = locationDroneInSender;
             double distance3 = dal.GetDistanceFromLatLonInKm(GetClosestStation(droneInSender).Lattitude,// distance target to closest station
                 GetClosestStation(droneInSender).Longitude, customerTarget.Lattitude, customerTarget.Longitude);
             return (distance2 * GetElectricUsageNumber(weight) + distance1 * AvailbleElec +

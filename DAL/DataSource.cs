@@ -14,10 +14,10 @@ namespace DalObject
         {
             internal static int NewParcelId = 1;
 
-            internal static double available=1;
-            internal static double lightWeight=2;
-            internal static double mediumWeight=3;
-            internal static double heavyWeight=4;
+            internal static double available=0.2;
+            internal static double lightWeight=0.5;
+            internal static double mediumWeight=0.7;
+            internal static double heavyWeight=1;
 
             internal static double chargeSpeed=100;
         }
@@ -100,8 +100,8 @@ namespace DalObject
                 Parcel newParcel = new Parcel()
                 {
                     Id = Config.NewParcelId,
-                    SenderId = R.Next(100000000, 1000000000),
-                    TargetId = R.Next(100000000, 1000000000),
+                    SenderId = Customers[R.Next(0,Customers.Count)].Id,
+                    TargetId = Customers[R.Next(0, Customers.Count)].Id,
                     DroneId = 0,
                     Weight = weightCategories,
                     Priority = priorities,
@@ -120,8 +120,8 @@ namespace DalObject
                 Parcel newParcel = new Parcel()
                 {
                     Id = Config.NewParcelId,
-                    SenderId = R.Next(100000000, 1000000000),
-                    TargetId = R.Next(100000000, 1000000000),
+                    SenderId = Customers[R.Next(0, Customers.Count)].Id,
+                    TargetId = Customers[R.Next(0, Customers.Count)].Id,
                     DroneId = Drones[i+3].Id,
                     Weight = weightCategories,
                     Priority = priorities,
@@ -141,8 +141,8 @@ namespace DalObject
                 Parcel newParcel = new Parcel()
                 {
                     Id = Config.NewParcelId,
-                    SenderId = R.Next(100000000, 1000000000),
-                    TargetId = R.Next(100000000, 1000000000),
+                    SenderId = Customers[R.Next(0, Customers.Count)].Id,
+                    TargetId = Customers[R.Next(0, Customers.Count)].Id,
                     DroneId = Drones[i+6].Id,
                     Weight = weightCategories,
                     Priority = priorities,
@@ -161,8 +161,8 @@ namespace DalObject
                 Parcel newParcel = new Parcel()
                 {
                     Id = Config.NewParcelId,
-                    SenderId = R.Next(100000000, 1000000000),
-                    TargetId = R.Next(100000000, 1000000000),
+                    SenderId = Customers[R.Next(0, Customers.Count)].Id,
+                    TargetId = Customers[R.Next(0, Customers.Count)].Id,
                     DroneId = Drones[i + 8].Id,
                     Weight = weightCategories,
                     Priority = priorities,
