@@ -576,7 +576,7 @@ namespace DalObject
             }
             if (!flag)
             {
-                throw new ItemAlreadyExistsExcepton(droneCharge.StationId, "ERROR: id of station not found\n");
+                throw new ItemAlreadyExistsExcepton(droneCharge.StationId, "Enter another station number\n");
             }
             for (int i = 0; i < Stations.Count; i++)
             {
@@ -598,6 +598,7 @@ namespace DalObject
             array[1] = DataSource.Config.lightWeight;
             array[2] = DataSource.Config.mediumWeight;
             array[3] = DataSource.Config.heavyWeight;
+            array[4] = DataSource.Config.chargeSpeed;
             return array;
         }
 

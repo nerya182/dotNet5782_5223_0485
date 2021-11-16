@@ -10,5 +10,6 @@ namespace IBL
     interface  IBL
     {
         void AddStation(Station newStation);
+
     }
 }

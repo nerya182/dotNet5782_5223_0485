@@ -8,18 +8,18 @@ namespace IBL
 {
     namespace BO
     {
-        public class ItemAlreadyExistsExcepton : Exception
+        public class ItemAlreadyExistsException : Exception
         {
             public int Id;
-            public ItemAlreadyExistsExcepton(int obj_Id) : base()
+            public ItemAlreadyExistsException(int obj_Id) : base()
             {
                 Id = obj_Id;
             }
-            public ItemAlreadyExistsExcepton(int obj_Id, String message) : base(message)
+            public ItemAlreadyExistsException(int obj_Id, String message) : base(message)
             {
                 Id = obj_Id;
             }
-            public ItemAlreadyExistsExcepton(int obj_Id, String message, Exception inner) : base(message, inner)
+            public ItemAlreadyExistsException(int obj_Id, String message, Exception inner) : base(message, inner)
             {
                 Id = obj_Id;
             }

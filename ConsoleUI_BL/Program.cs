@@ -426,14 +426,16 @@ namespace ConsoleUI_BL
             try
             {
                 Station newStation = new Station();
+                Location locationOfnewStation = new Location();
                 Console.WriteLine("Enter a unique ID number of station");
                 newStation.Id = int.Parse(Console.ReadLine());
                 Console.WriteLine("Enter the name of the station");
                 newStation.Name = Console.ReadLine();
                 Console.WriteLine("Enter the longitude of the station");
-                newStation.location.Longitude = double.Parse(Console.ReadLine());
-                Console.WriteLine("Enter the lattitude of the station");
-                newStation.location.Lattitude = double.Parse(Console.ReadLine());
+                locationOfnewStation.Longitude= double.Parse(Console.ReadLine());
+                Console.WriteLine("Enter the latitude of the station");
+                locationOfnewStation.Lattitude = double.Parse(Console.ReadLine());
+                newStation.location = locationOfnewStation;
                 Console.WriteLine("Enter the number of charging points available at the station");
                 newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
                 newStation.droneInCharging = new List<DroneInCharging>(0);
