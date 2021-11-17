@@ -9,6 +9,16 @@ using System.Xml.Schema;
 using DalObject;
 using IBL.BO;
 using IDAL;
+using IDAL.DO;
+using Customer = IBL.BO.Customer;
+using Drone = IBL.BO.Drone;
+using IllegalActionException = IBL.BO.IllegalActionException;
+using ItemAlreadyExistsException = IBL.BO.ItemAlreadyExistsException;
+using ItemNotFoundException = IBL.BO.ItemNotFoundException;
+using Parcel = IBL.BO.Parcel;
+using Priorities = IBL.BO.Priorities;
+using Station = IBL.BO.Station;
+using WeightCategories = IBL.BO.WeightCategories;
 
 
 namespace BL
@@ -196,10 +206,11 @@ namespace BL
                 if (objStation.Id == chargingStationId)
                 {
                     Location laLocationOfNewDrone = new Location();
-
                     laLocationOfNewDrone.Lattitude = objStation.Lattitude;
                     laLocationOfNewDrone.Longitude = objStation.Longitude;
                     newDrone.Location = laLocationOfNewDrone;
+                    IDAL.DO.DroneCharge droneToCharge = new DroneCharge { StationId = objStation.Id, DroneId = newDrone.Id,EntryTime = DateTime.Now};
+                    dal.AddDroneToCharge(droneToCharge);
                     flag = true;
                     break;
                 }
