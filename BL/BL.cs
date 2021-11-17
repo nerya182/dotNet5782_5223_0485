@@ -357,14 +357,12 @@ namespace BL
                         tempLocationSupply.Longitude, tempLocationCollect.Lattitude,
                         tempLocationCollect.Longitude);
 
-                    IDAL.DO.Customer sender2 = dal.GetCustomer(prclTrnsfr.Sender.Id);
-                    sender.Id = sender2.Id;
-                    sender.Name = sender2.Name;
+                    sender.Id = sender1.Id;
+                    sender.Name = sender1.Name;
                     prclTrnsfr.Sender = sender;
 
-                    IDAL.DO.Customer target2 = dal.GetCustomer(prclTrnsfr.Receiver.Id);
-                    receiver.Id = target2.Id;
-                    receiver.Name = target2.Name;
+                    receiver.Id = target1.Id;
+                    receiver.Name = target1.Name;
                     prclTrnsfr.Receiver = receiver;
                 }
             }
@@ -719,11 +717,13 @@ namespace BL
             CustomerInParcel cstmrInPrcl = new CustomerInParcel();
 
             Customer temp = new Customer();
+            Location location = new Location();
+            location.Longitude = customer.Longitude;
+            location.Lattitude = customer.Lattitude;
             temp.Id = customer.Id;
             temp.Name = customer.Name;
             temp.Phone = customer.Phone;
-            temp.Location.Longitude = customer.Longitude;
-            temp.Location.Lattitude = customer.Lattitude;
+            temp.Location = location;
 
             foreach (var parcel in parcels)
             {
