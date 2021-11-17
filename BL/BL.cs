@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using System.Xml.Schema;
-using DalObject;
 using IBL.BO;
 using IDAL;
-
 
 namespace BL
 {
     public partial class BL : IBL.IBL
     {
-        public List<DroneToList> lstDrone = new List<DroneToList>();
+        public List<DroneToList> listDrone = new List<DroneToList>();
         public IDal dal;
         public double AvailbleElec { get; set; }
         public double LightElec { get; set; }
@@ -41,19 +34,19 @@ namespace BL
             for (int i = 0; i < dalDrones.Count; i++)
             {
                 DroneToList droneToList = new DroneToList {Id=dalDrones[i].Id,Model = dalDrones[i].Model,MaxWeight = (WeightCategories) dalDrones[i].MaxWeight};
-                lstDrone.Add(droneToList);
+                listDrone.Add(droneToList);
             }
 
             foreach (IDAL.DO.Parcel parcel in dal.ListParcel())
             {
-                if (parcel.Delivered == DateTime.MinValue && parcel.DroneId != -1)
+                if (parcel.Delivered == DateTime.MinValue && parcel.DroneId != 0)
                 {
-                    for (int i = 0; i < lstDrone.Count; i++)
+                    for (int i = 0; i < listDrone.Count; i++)
                     {
-                        if (lstDrone[i].Id == parcel.DroneId)
+                        if (listDrone[i].Id == parcel.DroneId)
                         {
-                            lstDrone[i].ParcelBeingPassedId = parcel.Id;
-                            lstDrone[i].Status = DroneStatuses.Delivery;
+                            listDrone[i].ParcelBeingPassedId = parcel.Id;
+                            listDrone[i].Status = DroneStatuses.Delivery;
                             IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
                             IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
                             if (parcel.PickedUp == DateTime.MinValue)//שוייך אבל לא נאסף
@@ -62,31 +55,32 @@ namespace BL
                                 Location locationUpdate = new Location();
                                 locationUpdate.Lattitude = stationCloset.Lattitude;
                                 locationUpdate.Longitude = stationCloset.Longitude;
-                                lstDrone[i].Location = locationUpdate;
+                                listDrone[i].Location = locationUpdate;
                             }
-
-                            if (parcel.PickedUp != DateTime.MinValue)//נאספה אך לא סופקה
+                            else
                             {
-                                Location locationUpdate = new Location();
-                                locationUpdate.Lattitude = customerSender.Lattitude;
-                                locationUpdate.Longitude = customerSender.Longitude;
-                                lstDrone[i].Location = locationUpdate;
+                                if (parcel.Delivered == DateTime.MinValue)//נאספה אך לא סופקה
+                                {
+                                    Location locationUpdate = new Location();
+                                    locationUpdate.Lattitude = customerSender.Lattitude;
+                                    locationUpdate.Longitude = customerSender.Longitude;
+                                    listDrone[i].Location = locationUpdate;
+                                }
                             }
-
-                            lstDrone[i].Battery =
+                            listDrone[i].Battery =
                                 R.Next(
-                                    (int)GetMinimumBatteryToShip(lstDrone[i], customerSender, customerTarget,
+                                    (int)GetMinimumBatteryToShip(listDrone[i], customerSender, customerTarget,
                                         parcel.Weight), 100);
                         }
                     }
                  }
             }
 
-            foreach (DroneToList drone in lstDrone)//נעדכן את הרחפן במקרה שהוא לא עושה משלוח
+            foreach (DroneToList drone in listDrone)//נעדכן את הרחפן במקרה שהוא לא עושה משלוח
             {
                 if (drone.Status != DroneStatuses.Delivery)
                 {
-                    drone.Status = (DroneStatuses)R.Next(1, 3);
+                    drone.Status = (DroneStatuses)R.Next(1,3);
                     drone.ParcelBeingPassedId = 0;
                     if (drone.Status==DroneStatuses.Charging)
                     {
@@ -196,10 +190,11 @@ namespace BL
                 if (objStation.Id == chargingStationId)
                 {
                     Location laLocationOfNewDrone = new Location();
-
                     laLocationOfNewDrone.Lattitude = objStation.Lattitude;
                     laLocationOfNewDrone.Longitude = objStation.Longitude;
                     newDrone.Location = laLocationOfNewDrone;
+                    IDAL.DO.DroneCharge droneToCharge = new IDAL.DO.DroneCharge() { StationId = objStation.Id, DroneId = newDrone.Id, EntryTime = DateTime.Now };
+                    dal.AddDroneToCharge(droneToCharge);
                     flag = true;
                     break;
                 }
@@ -211,7 +206,7 @@ namespace BL
             try
             {
                 dal.AddDrone(temp);
-                lstDrone.Add(newDrone);
+                listDrone.Add(newDrone);
             }
             catch (Exception e)
             {
@@ -280,7 +275,7 @@ namespace BL
                 throw new ItemNotFoundException(newDrone.Id, "ERROR :id of drone not found\n");
             }
             //update list drone in BL
-            foreach (var drone in lstDrone)
+            foreach (var drone in listDrone)
             {
                 if (drone.Id == newDrone.Id)
                 {
@@ -476,7 +471,7 @@ namespace BL
 
         public void DeliveryOfParcelByDrone(int droneId)
         {
-            DroneToList drone = lstDrone.Find(i => i.Id == droneId);
+            DroneToList drone = listDrone.Find(i => i.Id == droneId);
             IDAL.DO.Parcel parcel = dal.GetParcel(drone.ParcelBeingPassedId);
             IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
             if (parcel.DroneId == droneId && parcel.PickedUp != DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
@@ -497,7 +492,7 @@ namespace BL
 
         public void ParcelCollectionByDrone(int droneId)
         {
-            DroneToList drone = lstDrone.Find(i => i.Id == droneId);
+            DroneToList drone = listDrone.Find(i => i.Id == droneId);
             IDAL.DO.Parcel parcel = dal.GetParcel(drone.ParcelBeingPassedId);
             IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
             if (parcel.Affiliation != DateTime.MinValue && parcel.PickedUp == DateTime.MinValue && parcel.DroneId == drone.Id && drone.Status == DroneStatuses.Delivery)
@@ -518,7 +513,7 @@ namespace BL
 
         public void AffiliateParcelToDrone(int droneId)
         {
-            DroneToList drone = lstDrone.Find(i => i.Id == droneId);
+            DroneToList drone = listDrone.Find(i => i.Id == droneId);
             if (drone == null)
             {
                 throw new ItemAlreadyExistsException(droneId);
@@ -600,10 +595,10 @@ namespace BL
 
         public void ReleaseDroneFromCharging(int droneId, double time)
         {
-            var drone = lstDrone.Find(i => i.Id == droneId);
+            var drone = listDrone.Find(i => i.Id == droneId);
             if (drone == null)
             {
-                throw new ItemNotFoundException(droneId);
+                throw new ItemNotFoundException(droneId, "Enter an existing drone number in the system");
             }
             if (drone.Status != DroneStatuses.Charging)
             {
@@ -618,10 +613,9 @@ namespace BL
             }
 
         }
-
         public void SendingDroneForCharging(int droneId)
         {
-            var drone = lstDrone.Find(i => i.Id == droneId);
+            var drone = listDrone.Find(i => i.Id == droneId);
             if (drone == null)
             {
                 throw new ItemNotFoundException(droneId);
@@ -655,7 +649,7 @@ namespace BL
         public DroneToList GetDroneFromLstDrone(int id)
         {
             bool flag = false;
-            foreach (DroneToList drone in lstDrone)
+            foreach (DroneToList drone in listDrone)
             {
                 if (drone.Id == id)
                 {

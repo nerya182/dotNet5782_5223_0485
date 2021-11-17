@@ -10,8 +10,7 @@ namespace ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            //IDAL.IDal DO = new DalObject.DalObject();
-            BL.BL bl =new BL.BL();
+            IBL.IBL bl =new BL.BL();
             CHOICE choice;
             do
             {
@@ -62,7 +61,7 @@ namespace ConsoleUI_BL
                             "2- Update station data\n" +
                             "3- Update customer data\n" +
                             "4- Sending a drone for charging\n"+
-                            "5- Release drone from charging" +
+                            "5- Release drone from charging\n" +
                             "6- Affiliate Parcel to Drone\n" +
                             "7- Parcel collection by drone\n" +
                             "8- Delivery of a parcel by drone\n");
@@ -216,7 +215,7 @@ namespace ConsoleUI_BL
             while (choice != CHOICE.EXIT);
         }
 
-        private static void DeliveryOfParcelByDrone(BL.BL bl)
+        private static void DeliveryOfParcelByDrone(IBL.IBL bl)
         {
             try
             {
@@ -231,7 +230,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void ParcelCollectionByDrone(BL.BL bl)
+        private static void ParcelCollectionByDrone(IBL.IBL bl)
         {
             try
             {
@@ -246,7 +245,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void AffiliateParcelToDrone(BL.BL bl)
+        private static void AffiliateParcelToDrone(IBL.IBL bl)
         {
             try
             {
@@ -261,7 +260,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void ReleaseDroneFromCharging(BL.BL bl)
+        private static void ReleaseDroneFromCharging(IBL.IBL bl)
         {
             try
             {
@@ -269,7 +268,7 @@ namespace ConsoleUI_BL
                 double time = 0;
                 Console.WriteLine("Enter a unique ID number of drone");
                 droneId = int.Parse(Console.ReadLine());
-                Console.WriteLine("Enter the charging time");
+                Console.WriteLine("Enter the charging time(in hour)");
                 time = double.Parse(Console.ReadLine());
                 bl.ReleaseDroneFromCharging(droneId, time);
             }
@@ -279,7 +278,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void SendingDroneForCharging(BL.BL bl)
+        private static void SendingDroneForCharging(IBL.IBL bl)
         {
             try
             {
@@ -294,7 +293,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void UpdateCustomer(BL.BL bl)
+        private static void UpdateCustomer(IBL.IBL bl)
         {
             try
             {
@@ -312,7 +311,7 @@ namespace ConsoleUI_BL
                 Console.WriteLine(e);
             }
         }
-        private static void UpdateStation(BL.BL bl)
+        private static void UpdateStation(IBL.IBL bl)
         {
             try
             {
@@ -332,7 +331,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void UpdateDrone(BL.BL bl)
+        private static void UpdateDrone(IBL.IBL bl)
         {
             try
             {
@@ -349,7 +348,7 @@ namespace ConsoleUI_BL
             } 
         }
 
-        private static void AddCustomer(BL.BL bl)
+        private static void AddCustomer(IBL.IBL bl)
         {
             try
             {
@@ -374,7 +373,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void AddParcel(BL.BL bl)
+        private static void AddParcel(IBL.IBL bl)
         {
             try
             {
@@ -396,7 +395,7 @@ namespace ConsoleUI_BL
                 newParcel.Affiliation = DateTime.MinValue;
                 newParcel.Delivered = DateTime.MinValue;
                 newParcel.PickedUp = DateTime.MinValue;
-                droneInParcel.DroneId = -1;
+                droneInParcel.DroneId = 0;
                 newParcel.drone = droneInParcel;
                 bl.AddParcel(newParcel);
             }
@@ -406,7 +405,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void AddDrone(BL.BL bl)
+        private static void AddDrone(IBL.IBL bl)
         {
             try
             {
@@ -428,7 +427,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void AddStation(BL.BL bl)
+        private static void AddStation(IBL.IBL bl)
         {
             try
             {
