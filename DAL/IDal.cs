@@ -10,7 +10,7 @@ namespace IDAL
 {
     public interface IDal
     {
-       Station GetStation(int id);
+        Station GetStation(int id);
         Drone GetDrone(int droneId);
         Customer GetCustomer(int customerId);
         Parcel GetParcel(int parcelId);
@@ -42,7 +42,6 @@ namespace IDAL
         void AddDroneToCharge(DroneCharge droneCharge);
         double[] GetElectricUsage();
         double GetChargeSpeed();
-
         public double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2);
         public double Deg2rad(double deg);
         int AvailableChargeSlotsInStation(int id);

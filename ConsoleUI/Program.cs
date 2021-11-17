@@ -99,22 +99,22 @@ namespace ConsoleUI
                             case 1:
                                 Console.WriteLine(" Enter the station ID number");
                                 int.TryParse(Console.ReadLine( ), out id);
-                                PrintAll(DO.BaseStationDisplay(id)); 
+                                Console.WriteLine(DO.BaseStationDisplay(id)); 
                                 break;
                             case 2:
                                 Console.WriteLine(" Enter the Drone ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(DO.DroneDisplay(id));   
+                                Console.WriteLine(DO.DroneDisplay(id));
                                 break;
                             case 3:
                                 Console.WriteLine(" Enter the Customer ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(DO.CustomerDisplay(id));   
+                                Console.WriteLine(DO.CustomerDisplay(id));   
                                 break;
                             case 4:
                                 Console.WriteLine("Enter a parcel ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(DO.ParcelDisplay(id));   
+                                Console.WriteLine(DO.ParcelDisplay(id));   
                                 break;
                         }
                         break;
@@ -136,39 +136,39 @@ namespace ConsoleUI
                                 PrintStation = DO.ListBaseStation();
                                 foreach (Station objStation in PrintStation)
                                 {
-                                    PrintAll(objStation);
+                                    Console.WriteLine(objStation);
                                 }
                                 break;
                             case 'd':
                                 IEnumerable <Drone> PrintDrone = new List<Drone>();   
                                 PrintDrone = DO.ListDrone();
-                                foreach (Drone objStation in PrintDrone)
+                                foreach (Drone objDrone in PrintDrone)
                                 {
-                                    PrintAll(objStation);
+                                    Console.WriteLine(objDrone);
                                 }
                                 break;
                             case 'c':
                                 IEnumerable<Customer> PrintCustomer = new List<Customer>();
                                 PrintCustomer = DO.ListCustomer();
-                                foreach (Customer objStation in PrintCustomer)
+                                foreach (Customer objCustomer in PrintCustomer)
                                 {
-                                    PrintAll(objStation);
+                                    Console.WriteLine(objCustomer);
                                 }
                                 break;
                             case 'p':
                                 IEnumerable<Parcel> PrintParcel = new List<Parcel>();
                                 PrintParcel = DO.ListParcel();
-                                foreach (Parcel objStation in PrintParcel)
+                                foreach (Parcel objParcel in PrintParcel)
                                 {
-                                    PrintAll(objStation);
+                                    Console.WriteLine(objParcel);
                                 }
                                 break;
                             case 'f':
                                 IEnumerable<Parcel> PrintParcelOnAir = new List<Parcel>();
                                 PrintParcelOnAir = DO.ListParcelOnAir();
-                                foreach (Parcel objStation in PrintParcelOnAir)
+                                foreach (Parcel objParcel in PrintParcelOnAir)
                                 {
-                                    PrintAll(objStation);
+                                    Console.WriteLine(objParcel);
                                 }
                                 break;
                             case 'o':
@@ -176,7 +176,7 @@ namespace ConsoleUI
                                 PrintStationsWithOpenSlots = DO.ListStationsWithOpenSlots();
                                 foreach (Station objStation in PrintStationsWithOpenSlots)
                                 {
-                                    PrintAll(objStation);
+                                    Console.WriteLine(objStation);
                                 }
                                 break;
                         }

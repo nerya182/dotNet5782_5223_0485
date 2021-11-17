@@ -109,7 +109,7 @@ namespace ConsoleUI_BL
                                 try {
                                     Console.WriteLine(" Enter the station ID number");
                                     int.TryParse(Console.ReadLine(), out id);
-                                    PrintAll(bl.BaseStationDisplay(id));
+                                    Console.WriteLine(bl.BaseStationDisplay(id));
                                 }
                                 catch (Exception e)
                                 {
@@ -121,7 +121,7 @@ namespace ConsoleUI_BL
                                 {
                                     Console.WriteLine(" Enter the Drone ID number");
                                     int.TryParse(Console.ReadLine(), out id);
-                                    PrintAll(bl.DroneDisplay(id));
+                                    Console.WriteLine(bl.DroneDisplay(id));
                                 }
                                 catch (Exception e)
                                 {
@@ -131,12 +131,12 @@ namespace ConsoleUI_BL
                             case 3:
                                 Console.WriteLine(" Enter the Customer ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(bl.CustomerDisplay(id));
+                                Console.WriteLine(bl.CustomerDisplay(id));
                                 break;
                             case 4:
                                 Console.WriteLine("Enter a parcel ID number");
                                 int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(bl.ParcelDisplay(id));
+                                Console.WriteLine(bl.ParcelDisplay(id));
                                 break;
                         }
                         break;
@@ -145,7 +145,9 @@ namespace ConsoleUI_BL
                             "s - Stations\n" +
                             "d - Drones\n" +
                             "c - Customers\n" +
-                            "p - Parcels\n");
+                            "p - Parcels\n" +
+                            "f - Parcels that have not yet been affiliated with a drone\n" +
+                            "o - Stations with open charge slots \n");
                         char pick;
                         char.TryParse(Console.ReadLine(), out pick);
                         switch (pick)
@@ -157,7 +159,7 @@ namespace ConsoleUI_BL
                                 foreach (Station objStation in PrintStation)
                                 {
                                     StationToList stationToList =  bl.MakeStationToList(objStation);
-                                    PrintAll(stationToList);
+                                    Console.WriteLine(stationToList);
                                 }
                                 break;
                             case 'd':
@@ -166,7 +168,7 @@ namespace ConsoleUI_BL
                                 foreach (Drone objDrone in PrintDrone)
                                 {
                                     DroneToList droneToList = bl.MakeDroneToList(objDrone);
-                                    PrintAll(droneToList);
+                                    Console.WriteLine(droneToList);
                                 }
                                 break;
                             case 'c':
@@ -175,7 +177,7 @@ namespace ConsoleUI_BL
                                 foreach (Customer objCustomer in PrintCustomer)
                                 {
                                     CustomerToList customerToList = bl.MakeCustomerToList(objCustomer);
-                                    PrintAll(customerToList);
+                                    Console.WriteLine(customerToList);
                                 }
                                 break;
                             case 'p':
@@ -184,7 +186,7 @@ namespace ConsoleUI_BL
                                 foreach (Parcel objParcel in PrintParcel)
                                 {
                                     ParcelToList parcelToList = bl.MakeParcelToList(objParcel);
-                                    PrintAll(parcelToList);
+                                    Console.WriteLine(parcelToList);
                                 }
                                 break;
                             case 'f':
@@ -192,7 +194,7 @@ namespace ConsoleUI_BL
                                 PrintParcelOnAir = bl.GetListParcelOnAir(); 
                                 foreach (Parcel objStation in PrintParcelOnAir)
                                 {
-                                    PrintAll(objStation);
+                                    Console.WriteLine(objStation);
                                 }
                                 break;
                             case 'o':
@@ -200,7 +202,7 @@ namespace ConsoleUI_BL
                                 PrintStationsWithOpenSlots = bl.GetListStationsWithOpenSlots();  
                                 foreach (Station objStation in PrintStationsWithOpenSlots)
                                 {
-                                    PrintAll(objStation);
+                                    Console.WriteLine(objStation);
                                 }
                                 break;
                         }

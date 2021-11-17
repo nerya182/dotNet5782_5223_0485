@@ -119,7 +119,7 @@ namespace BL
             }
         }
 
-        private IDAL.DO.Station GetClosestCustomer(IDAL.DO.Customer customerSender)
+        public IDAL.DO.Station GetClosestCustomer(IDAL.DO.Customer customerSender)
         {
             List<IDAL.DO.Station> stations = dal.ListBaseStation().ToList();
             Location closestStation = new Location();
@@ -140,7 +140,7 @@ namespace BL
             return stations[index];
         }
 
-        private IDAL.DO.Station GetClosestStation(DroneToList drone)
+        public IDAL.DO.Station GetClosestStation(DroneToList drone)
         {
             List<IDAL.DO.Station> stations = dal.ListBaseStation().ToList();
             Location closestStation = new Location();

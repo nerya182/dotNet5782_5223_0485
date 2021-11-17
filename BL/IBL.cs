@@ -10,6 +10,8 @@ namespace IBL
     interface  IBL
     {
         void AddStation(Station newStation);
+        public IDAL.DO.Station GetClosestCustomer(IDAL.DO.Customer customerSender);
+        public IDAL.DO.Station GetClosestStation(DroneToList drone);
 
     }
 }
