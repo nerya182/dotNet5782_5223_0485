@@ -18,7 +18,11 @@ namespace IBL
             public List<DroneInCharging> droneInCharging { get; set; }
             public override string ToString()
             {
-                return $"Station #{Id}, Name:{Name},AvailableChargeSlots:{AvailableChargeSlots},location :{location}, List of Drones that are charging: {droneInCharging}";
+                string output = $"Station #{Id}, Name:{Name},AvailableChargeSlots:{AvailableChargeSlots},location :{location}";
+                if (droneInCharging.Count != 0)
+                  output += $", List of Drones that are charging: { droneInCharging}";
+                   
+                return output;   
             }
         }
     }
