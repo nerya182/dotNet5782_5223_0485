@@ -10,7 +10,7 @@ namespace IDAL
 {
     public interface IDal
     {
-       Station GetStation(int id);
+        Station GetStation(int id);
         Drone GetDrone(int droneId);
         Customer GetCustomer(int customerId);
         Parcel GetParcel(int parcelId);

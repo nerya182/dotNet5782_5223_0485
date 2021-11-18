@@ -11,6 +11,7 @@ namespace ConsoleUI_BL
         static void Main(string[] args)
         {
             IBL.IBL bl =new BL.BL();
+            int input = new int();
             CHOICE choice;
             do
             {
@@ -30,179 +31,16 @@ namespace ConsoleUI_BL
                 switch (choice)
                 {
                     case CHOICE.ADD:
-                        Console.WriteLine("What would you like to add? \n" +
-                                         "1-Add a new base Station.\n" +
-                                         "2-Add a new Drone.\n" +
-                                         "3-Add a new Customer.\n" +
-                                         "4-Add a new Parcel.\n");
-                        int input;
-                        int.TryParse(Console.ReadLine(), out input);
-                        switch (input)
-                        {
-                            case 1:
-                                AddStation(bl);
-                                break;
-                            case 2:
-                                AddDrone(bl);
-                                break;
-                            case 3:
-                                AddCustomer(bl);
-                                break;
-                            case 4:
-                                AddParcel(bl);
-                                break;
-                            default:
-                                break;
-                        }
+                        AddOptions(bl, input);
                         break;
                     case CHOICE.UPDATE:
-                        Console.WriteLine("What would you like to bl?\n"+
-                            "1- Update drone data\n" +
-                            "2- Update station data\n" +
-                            "3- Update customer data\n" +
-                            "4- Sending a drone for charging\n"+
-                            "5- Release drone from charging\n" +
-                            "6- Affiliate Parcel to Drone\n" +
-                            "7- Parcel collection by drone\n" +
-                            "8- Delivery of a parcel by drone\n");
-                        int.TryParse(Console.ReadLine(), out input);
-                        switch (input)
-                        {
-                            case 1:
-                                UpdateDrone(bl);
-                                break;
-                            case 2:
-                                UpdateStation(bl);
-                                break;
-                            case 3:
-                                UpdateCustomer(bl);
-                                break;
-                            case 4:
-                                SendingDroneForCharging(bl);
-                                break;
-                            case 5:
-                                ReleaseDroneFromCharging(bl);
-                                break;
-                            case 6:
-                                AffiliateParcelToDrone(bl);
-                                break;
-                            case 7:
-                                ParcelCollectionByDrone(bl);
-                                break;
-                            case 8:
-                                DeliveryOfParcelByDrone(bl);
-                                break;
-                        }
+                        UpdateOptions(bl, input);                      
                         break;
                     case CHOICE.DISPLAY:
-                        Console.WriteLine("What would you like to bl?\n" +
-                           "1- Base Stations display\n" +
-                           "2- Drones display \n" +
-                           "3- Customers display \n" +
-                           "4- parcels display \n");
-                        int info, id;
-                        int.TryParse(Console.ReadLine(), out info);
-                        switch (info)
-                        {
-                            case 1:
-                                try {
-                                    Console.WriteLine(" Enter the station ID number");
-                                    int.TryParse(Console.ReadLine(), out id);
-                                    PrintAll(bl.BaseStationDisplay(id));
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine(e);
-                                }
-                                break;
-                            case 2:
-                                try
-                                {
-                                    Console.WriteLine(" Enter the Drone ID number");
-                                    int.TryParse(Console.ReadLine(), out id);
-                                    PrintAll(bl.DroneDisplay(id));
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine(e);
-                                }
-                                break;
-                            case 3:
-                                Console.WriteLine(" Enter the Customer ID number");
-                                int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(bl.CustomerDisplay(id));
-                                break;
-                            case 4:
-                                Console.WriteLine("Enter a parcel ID number");
-                                int.TryParse(Console.ReadLine(), out id);
-                                PrintAll(bl.ParcelDisplay(id));
-                                break;
-                        }
+                        DisplayOptions(bl, input);                      
                         break;
                     case CHOICE.VIEW_LIST:
-                        Console.WriteLine("Which List would you like to view? \n" +
-                            "s - Stations\n" +
-                            "d - Drones\n" +
-                            "c - Customers\n" +
-                            "p - Parcels\n");
-                        char pick;
-                        char.TryParse(Console.ReadLine(), out pick);
-                        switch (pick)
-                        {
-
-                            case 's':
-                                IEnumerable<Station> PrintStation = new List<Station>();
-                                PrintStation = bl.GetListStation(); 
-                                foreach (Station objStation in PrintStation)
-                                {
-                                    StationToList stationToList =  bl.MakeStationToList(objStation);
-                                    PrintAll(stationToList);
-                                }
-                                break;
-                            case 'd':
-                                IEnumerable<Drone> PrintDrone = new List<Drone>();
-                                PrintDrone = bl.GetListDrone(); 
-                                foreach (Drone objDrone in PrintDrone)
-                                {
-                                    DroneToList droneToList = bl.MakeDroneToList(objDrone);
-                                    PrintAll(droneToList);
-                                }
-                                break;
-                            case 'c':
-                                IEnumerable<Customer> PrintCustomer = new List<Customer>();
-                                PrintCustomer = bl.GetListCustomer();  
-                                foreach (Customer objCustomer in PrintCustomer)
-                                {
-                                    CustomerToList customerToList = bl.MakeCustomerToList(objCustomer);
-                                    PrintAll(customerToList);
-                                }
-                                break;
-                            case 'p':
-                                IEnumerable<Parcel> PrintParcel = new List<Parcel>();
-                                PrintParcel = bl.GetListParcel(); 
-                                foreach (Parcel objParcel in PrintParcel)
-                                {
-                                    ParcelToList parcelToList = bl.MakeParcelToList(objParcel);
-                                    PrintAll(parcelToList);
-                                }
-                                break;
-                            case 'f':
-                                IEnumerable<Parcel> PrintParcelOnAir = new List<Parcel>();
-                                PrintParcelOnAir = bl.GetListParcelOnAir(); 
-                                foreach (Parcel objStation in PrintParcelOnAir)
-                                {
-                                    PrintAll(objStation);
-                                }
-                                break;
-                            case 'o':
-                                IEnumerable<Station> PrintStationsWithOpenSlots = new List<Station>();
-                                PrintStationsWithOpenSlots = bl.GetListStationsWithOpenSlots();  
-                                foreach (Station objStation in PrintStationsWithOpenSlots)
-                                {
-                                    PrintAll(objStation);
-                                }
-                                break;
-                        }
+                        ViewListOptions(bl);
                         break;
                     case CHOICE.EXIT:
                         break;
@@ -211,6 +49,227 @@ namespace ConsoleUI_BL
                 }
             }
             while (choice != CHOICE.EXIT);
+        }
+
+        private static void AddOptions(IBL.IBL bl, int input)
+        {
+            Console.WriteLine("What would you like to add? \n" +
+                              "1-Add a new base Station.\n" +
+                              "2-Add a new Drone.\n" +
+                              "3-Add a new Customer.\n" +
+                              "4-Add a new Parcel.\n");
+            int.TryParse(Console.ReadLine(), out input);
+            switch (input)
+            {
+                case 1:
+                    AddStation(bl);
+                    break;
+                case 2:
+                    AddDrone(bl);
+                    break;
+                case 3:
+                    AddCustomer(bl);
+                    break;
+                case 4:
+                    AddParcel(bl);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private static void UpdateOptions(IBL.IBL bl, int input)
+        {
+            Console.WriteLine("What would you like to bl?\n" +
+                            "1- Update drone data\n" +
+                            "2- Update station data\n" +
+                            "3- Update customer data\n" +
+                            "4- Sending a drone for charging\n" +
+                            "5- Release drone from charging\n" +
+                            "6- Affiliate Parcel to Drone\n" +
+                            "7- Parcel collection by drone\n" +
+                            "8- Delivery of a parcel by drone\n");
+            int.TryParse(Console.ReadLine(), out input);
+            switch (input)
+            {
+                case 1:
+                    UpdateDrone(bl);
+                    break;
+                case 2:
+                    UpdateStation(bl);
+                    break;
+                case 3:
+                    UpdateCustomer(bl);
+                    break;
+                case 4:
+                    SendingDroneForCharging(bl);
+                    break;
+                case 5:
+                    ReleaseDroneFromCharging(bl);
+                    break;
+                case 6:
+                    AffiliateParcelToDrone(bl);
+                    break;
+                case 7:
+                    ParcelCollectionByDrone(bl);
+                    break;
+                case 8:
+                    DeliveryOfParcelByDrone(bl);
+                    break;
+            }
+        }
+
+        public static void DisplayOptions(IBL.IBL bl, int input)
+        {
+            Console.WriteLine("What would you like to bl?\n" +
+                           "1- Base Stations display\n" +
+                           "2- Drones display \n" +
+                           "3- Customers display \n" +
+                           "4- parcels display \n");
+            int id = new int();
+            int.TryParse(Console.ReadLine(), out input);
+            switch (input)
+            {
+                case 1:
+                    DisplayStation(bl, id);
+                    break;
+                case 2:
+                    DisplayDrone(bl, id);
+                    break;
+                case 3:
+                    DisplayCustomer(bl, id);   
+                    break;
+                case 4:
+                    DisplayParcel(bl, id);              
+                    break;
+            }
+        }
+
+        private static void ViewListOptions(IBL.IBL bl)
+        {
+            Console.WriteLine("Which List would you like to view? \n" +
+                            "s - Stations\n" +
+                            "d - Drones\n" +
+                            "c - Customers\n" +
+                            "p - Parcels\n" +
+                            "f - Parcels that have not yet been affiliated with a drone\n" +
+                            "o - Stations with open charge slots \n");
+            char pick;
+            char.TryParse(Console.ReadLine(), out pick);
+            switch (pick)
+            {
+
+                case 's':
+                    ViewStationList(bl);  
+                    break;
+                case 'd':
+                    ViewDroneList(bl);
+                    break;
+                case 'c':
+                    ViewCustomerList(bl); 
+                    break;
+                case 'p':
+                    ViewParcelList(bl);        
+                    break;
+                case 'f':
+                    ViewParcelOnAirList(bl);               
+                    break;
+                case 'o':
+                    ViewStationsWithOpenSlotsList(bl);    
+                    break;
+            }
+        }
+
+        private static void ViewStationList(IBL.IBL bl)
+        {
+            IEnumerable<Station> PrintStation = new List<Station>();
+            PrintStation = bl.GetListStation();
+            foreach (Station objStation in PrintStation)
+            {
+                StationToList stationToList = bl.MakeStationToList(objStation);
+                Console.WriteLine(stationToList);
+            }
+        }
+
+        private static void ViewDroneList(IBL.IBL bl)
+        {
+            IEnumerable<Drone> PrintDrone = new List<Drone>();
+            PrintDrone = bl.GetListDrone();
+            foreach (Drone objDrone in PrintDrone)
+            {
+                DroneToList droneToList = bl.MakeDroneToList(objDrone);
+                Console.WriteLine(droneToList);
+            }
+        }
+
+        private static void ViewCustomerList(IBL.IBL bl)
+        {
+            IEnumerable<Customer> PrintCustomer = new List<Customer>();
+            PrintCustomer = bl.GetListCustomer();
+            foreach (Customer objCustomer in PrintCustomer)
+            {
+                CustomerToList customerToList = bl.MakeCustomerToList(objCustomer);
+                Console.WriteLine(customerToList);
+            }
+        }
+
+        private static void ViewParcelList(IBL.IBL bl)
+        {
+            IEnumerable<Parcel> PrintParcel = new List<Parcel>();
+            PrintParcel = bl.GetListParcel();
+            foreach (Parcel objParcel in PrintParcel)
+            {
+                ParcelToList parcelToList = bl.MakeParcelToList(objParcel);
+                Console.WriteLine(parcelToList);
+            }
+        }
+
+        private static void ViewParcelOnAirList(IBL.IBL bl)
+        {
+            IEnumerable<Parcel> PrintParcelOnAir = new List<Parcel>();
+            PrintParcelOnAir = bl.GetListParcelOnAir();
+            foreach (Parcel objStation in PrintParcelOnAir)
+            {
+                Console.WriteLine(objStation);
+            }
+        }
+
+        private static void ViewStationsWithOpenSlotsList(IBL.IBL bl)
+        {
+            IEnumerable<Station> PrintStationsWithOpenSlots = new List<Station>();
+            PrintStationsWithOpenSlots = bl.GetListStationsWithOpenSlots();
+            foreach (Station objStation in PrintStationsWithOpenSlots)
+            {
+                Console.WriteLine(objStation);
+            }
+        }
+
+        private static void DisplayStation(IBL.IBL bl, int id)
+        {
+            Console.WriteLine(" Enter the station ID number");
+            int.TryParse(Console.ReadLine(), out id);
+            Console.WriteLine(bl.BaseStationDisplay(id));
+        }
+
+        private static void DisplayDrone(IBL.IBL bl, int id)
+        {
+            Console.WriteLine(" Enter the Drone ID number");
+            int.TryParse(Console.ReadLine(), out id);
+            Console.WriteLine(bl.DroneDisplay(id));
+        }
+
+        private static void DisplayCustomer(IBL.IBL bl, int id)
+        {
+            Console.WriteLine(" Enter the Customer ID number");
+            int.TryParse(Console.ReadLine(), out id);
+            Console.WriteLine(bl.CustomerDisplay(id));
+        }
+
+        private static void DisplayParcel(IBL.IBL bl, int id)
+        {
+            Console.WriteLine("Enter a parcel ID number");
+            int.TryParse(Console.ReadLine(), out id);
+            Console.WriteLine(bl.ParcelDisplay(id));
         }
 
         private static void DeliveryOfParcelByDrone(IBL.IBL bl)
@@ -425,7 +484,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void AddStation(IBL.IBL bl)
+        public static void AddStation(IBL.IBL bl)
         {
             try
             {
@@ -455,6 +514,7 @@ namespace ConsoleUI_BL
         {
             Console.WriteLine(t);
         }
-    }
-    
+
+        
+    }  
 }
