@@ -148,38 +148,37 @@ namespace ConsoleUI_BL
         private static void ViewListOptions(IBL.IBL bl)
         {
             Console.WriteLine("Which List would you like to view? \n" +
-                            "s - Stations\n" +
-                            "d - Drones\n" +
-                            "c - Customers\n" +
-                            "p - Parcels\n" +
-                            "f - Parcels that have not yet been affiliated with a drone\n" +
-                            "o - Stations with open charge slots \n");
+                            "1 - Stations\n" +
+                            "2 - Drones\n" +
+                            "3 - Customers\n" +
+                            "4 - Parcels\n" +
+                            "5 - Parcels that have not yet been affiliated with a drone\n" +
+                            "6 - Stations with open charge slots \n");
             char pick;
             char.TryParse(Console.ReadLine(), out pick);
             switch (pick)
             {
 
-                case 's':
+                case '1':
                     ViewStationList(bl);  
                     break;
-                case 'd':
+                case '2':
                     ViewDroneList(bl);
                     break;
-                case 'c':
+                case '3':
                     ViewCustomerList(bl); 
                     break;
-                case 'p':
+                case '4':
                     ViewParcelList(bl);        
                     break;
-                case 'f':
+                case '5':
                     ViewParcelOnAirList(bl);               
                     break;
-                case 'o':
+                case '6':
                     ViewStationsWithOpenSlotsList(bl);    
                     break;
             }
         }
-
         private static void ViewStationList(IBL.IBL bl)
         {
             IEnumerable<Station> PrintStation = new List<Station>();
@@ -372,14 +371,13 @@ namespace ConsoleUI_BL
         {
             try
             {
-                int chargingPositions;
                 Station updateStation = new Station();
-                Console.WriteLine("Enter a unique ID number of drone");
+                Console.WriteLine("Enter a unique ID number of station");
                 updateStation.Id = int.Parse(Console.ReadLine());
-                Console.WriteLine("Insert the new name of the station or click no");
+                Console.WriteLine("Insert the new name of the station or click enter");
                 updateStation.Name = Console.ReadLine();
-                Console.WriteLine("Insert the total amount of charging of the station or click -1");
-                chargingPositions = int.Parse(Console.ReadLine());
+                Console.WriteLine("Insert the total amount of charging of the station or click ");
+                int.TryParse(Console.ReadLine(), out int chargingPositions);
                 bl.UpdateStation(updateStation, chargingPositions);
             }
             catch (Exception e)
@@ -387,7 +385,6 @@ namespace ConsoleUI_BL
                 Console.WriteLine(e);
             }
         }
-
         private static void UpdateDrone(IBL.IBL bl)
         {
             try

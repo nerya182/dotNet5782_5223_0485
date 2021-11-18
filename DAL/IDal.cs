@@ -47,5 +47,8 @@ namespace IDAL
         int AvailableChargeSlotsInStation(int id);
         double GetElectricUsageNumber(WeightCategories weight);
         void UpdateCustomer(Customer updateCustomer);
+        void UpdateStation(Station station, int chargingPositions);
+        void UpdateDrone(Drone updateDrone);
+
     }
 }

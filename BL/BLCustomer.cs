@@ -155,7 +155,7 @@ namespace BL
                     change = true;
                 }
                 if (updateCustomer.Phone != "")
-                {
+                { 
                     customer.Phone = updateCustomer.Phone;
                     change = true;
                 }
@@ -166,7 +166,7 @@ namespace BL
             }
             catch (Exception e)
             {
-                throw new ItemNotFoundException(updateCustomer.Id, "ERROR :id of customer not found\n");
+                throw new ItemNotFoundException(updateCustomer.Id, "Enter an existing customer in the system\n");
             }
            
         }

@@ -100,38 +100,15 @@ namespace BL
         }
         public void UpdateStation(Station updateStation, int chargingPositions)
         {
-            List<IDAL.DO.Station> Stations = dal.ListBaseStation().ToList();
-            bool flag = false;
-            for (int i = 0; i < Stations.Count(); i++)
+            try
             {
-                if (Stations[i].Id == updateStation.Id)
-                {
-                    IDAL.DO.Station s = Stations[i];
-                    if (updateStation.Name != "no")
-                    {
-                        s.Name = updateStation.Name;
-                    }
-
-                    if (updateStation.AvailableChargeSlots != -1)
-                    {
-                        if (chargingPositions - dal.AvailableChargeSlotsInStation(updateStation.Id) < 0)
-                        {
-                            throw new IllegalActionException("The total amount of charging stations is invalid\n");
-                        }
-                        else
-                        {
-                            s.AvailableChargeSlots =
-                                chargingPositions - dal.AvailableChargeSlotsInStation(updateStation.Id);
-                        }
-                    }
-                    Stations[i] = s;
-                    flag = true;
-                    break;
-                }
+                List<IDAL.DO.Station> Stations = dal.ListBaseStation().ToList();
+                IDAL.DO.Station station = new IDAL.DO.Station { Id = updateStation.Id, Name = updateStation.Name };
+                dal.UpdateStation(station, chargingPositions);
             }
-            if (!flag)
+            catch (Exception e)
             {
-                throw new ItemNotFoundException(updateStation.Id, "ERROR :id of station not found\n");
+                Console.WriteLine(e);
             }
         }
     }

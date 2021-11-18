@@ -153,32 +153,22 @@ namespace BL
         }
         public void UpdateDrone(DroneToList newDrone)
         {
-            //update in dataSource
-            bool flag = false;
-            List<IDAL.DO.Drone> drones = dal.ListDrone().ToList();
-            for (int i = 0; i < drones.Count(); i++)
+            try
             {
-                if (drones[i].Id == newDrone.Id)
+                IDAL.DO.Drone updateDrone = new IDAL.DO.Drone { Id = newDrone.Id, Model = newDrone.Model };
+                dal.UpdateDrone(updateDrone);
+                foreach (var drone in listDrone)
                 {
-                    IDAL.DO.Drone d = drones[i];
-                    d.Model = newDrone.Model;
-                    drones[i] = d;
-                    flag = true;
-                    break;
+                    if (drone.Id == newDrone.Id)
+                    {
+                        drone.Model = newDrone.Model;
+                        break;
+                    }
                 }
             }
-            if (!flag)
+            catch (Exception e)
             {
-                throw new ItemNotFoundException(newDrone.Id, "ERROR :id of drone not found\n");
-            }
-            //update list drone in BL
-            foreach (var drone in listDrone)
-            {
-                if (drone.Id == newDrone.Id)
-                {
-                    drone.Model = newDrone.Model;
-                    break;
-                }
+                Console.WriteLine(e);
             }
         }
         public Drone DroneDisplay(int id)
@@ -305,15 +295,15 @@ namespace BL
         public void AffiliateParcelToDrone(int droneId)
         {
             DroneToList drone = listDrone.Find(i => i.Id == droneId);
-            if (drone == null)
+             if (drone == null)
             {
                 throw new ItemAlreadyExistsException(droneId);
             }
             List<IDAL.DO.Parcel> parcels = dal.ListParcel().ToList();
             List<IDAL.DO.Parcel> parcelsFiltered = new List<IDAL.DO.Parcel>();
             parcelsFiltered = parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Urgent);
-            if (parcelsFiltered.Count == 0) { parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Express); }
-            if (parcelsFiltered.Count == 0) { parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Regular); }
+            if (parcelsFiltered.Count == 0) { parcelsFiltered= parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Express); }
+            if (parcelsFiltered.Count == 0) { parcelsFiltered= parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Regular); }
 
             parcels = parcelsFiltered;
 

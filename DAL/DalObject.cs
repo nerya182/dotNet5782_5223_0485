@@ -665,6 +665,61 @@ namespace DalObject
                 }
             }
         }
+
+        public void UpdateStation(Station updateStation, int chargingPositions)
+        {
+            bool flag = false;
+            for (int i = 0; i < Stations.Count(); i++)
+            {
+                if (Stations[i].Id == updateStation.Id)
+                {
+                    IDAL.DO.Station s = Stations[i];
+                    if (updateStation.Name != "")
+                    {
+                        s.Name = updateStation.Name;
+                    }
+                    if (chargingPositions != 0)
+                    {
+                        if (chargingPositions -AvailableChargeSlotsInStation(updateStation.Id) < 0)
+                        {
+                            throw new IllegalActionException("The total amount of charging stations is invalid\n");
+                        }
+                        else
+                        {
+                            s.AvailableChargeSlots =
+                                chargingPositions -AvailableChargeSlotsInStation(updateStation.Id);
+                        }
+                    }
+                    Stations[i] = s;
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag)
+            {
+                throw new ItemNotFoundException(updateStation.Id, "Enter an existing station number in the system\n");
+            }
+        }
+
+        public void UpdateDrone(Drone updateDrone)
+        {
+            bool flag = false;
+            for (int i = 0; i < Drones.Count(); i++)
+            {
+                if (Drones[i].Id == updateDrone.Id)
+                {
+                    IDAL.DO.Drone d = Drones[i];
+                    d.Model = updateDrone.Model;
+                   Drones[i] = d;
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag)
+            {
+                throw new ItemNotFoundException(updateDrone.Id, "Enter an existing drone number in the system\n");
+            }
+        }
     }
 }
 

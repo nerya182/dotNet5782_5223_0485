@@ -15,7 +15,7 @@ namespace IBL
             public List<ParceltAtCustomer> ToCustomer { get; set; }
             public override string ToString()
             {
-                return $"Customer #{Id}, Name:{Name}, Phone #:{Phone}, Location {Location}\n"; 
+                return $"Customer id: #{Id} , Name:{Name} , Phone #:{Phone} , Location {Location}\n"; 
             }
         }
     }

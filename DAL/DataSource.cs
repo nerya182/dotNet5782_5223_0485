@@ -15,9 +15,9 @@ namespace DalObject
             internal static int NewParcelId = 1;
 
             internal static double available=0.2;
-            internal static double lightWeight=0.5;
-            internal static double mediumWeight=0.7;
-            internal static double heavyWeight=1;
+            internal static double lightWeight=0.4;
+            internal static double mediumWeight=0.5;
+            internal static double heavyWeight=0.6;
 
             internal static double chargeSpeed=100;
         }
