@@ -644,6 +644,27 @@ namespace DalObject
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateCustomer(Customer updateCustomer)
+        {
+            for (int i = 0; i < Customers.Count; i++)
+            {
+                if (Customers[i].Id == updateCustomer.Id)
+                {
+                    Customer customer = Customers[i];
+                    if (updateCustomer.Name != "")
+                    {
+                        customer.Name = updateCustomer.Name;
+                    }
+                    if (updateCustomer.Phone != "")
+                    {
+                        customer.Phone = updateCustomer.Phone;
+                    }
+                    Customers[i] = customer;
+                    break;
+                }
+            }
+        }
     }
 }
 

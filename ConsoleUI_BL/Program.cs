@@ -298,9 +298,9 @@ namespace ConsoleUI_BL
                 Customer updateCustomer = new Customer();
                 Console.WriteLine("Enter a unique ID number of Customer");
                 updateCustomer.Id = int.Parse(Console.ReadLine());
-                Console.WriteLine("Insert the new name of the customer or click no");
+                Console.WriteLine("Insert the new name of the customer or click enter");
                 updateCustomer.Name = Console.ReadLine();
-                Console.WriteLine("Insert the new phone of the customer or click no");
+                Console.WriteLine("Insert the new phone of the customer or click enter");
                 updateCustomer.Phone = Console.ReadLine();
                 bl.UpdateCustomer(updateCustomer);
             }

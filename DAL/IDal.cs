@@ -46,5 +46,6 @@ namespace IDAL
         double Deg2rad(double deg);
         int AvailableChargeSlotsInStation(int id);
         double GetElectricUsageNumber(WeightCategories weight);
+        void UpdateCustomer(Customer updateCustomer);
     }
 }
