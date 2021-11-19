@@ -18,8 +18,8 @@ namespace IBL
             public ParcelStatus ShipmentStatus { get; set; }
             public override string ToString()
             {
-                return $"Parcel #{Id}, Sender name: #{SenderName}, Target  name: #{TargetName}," +
-                    $"{Weight}, {Priority},ShipmentStatus:{ShipmentStatus}\n";
+                return $"Parcel #{Id}, Sender name: {SenderName}, Target  name: {TargetName}," +
+                    $"Weight: {Weight}, Priority: {Priority}, ShipmentStatus: {ShipmentStatus}\n";
             }
         }
     }

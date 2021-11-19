@@ -18,10 +18,15 @@ namespace IBL
             public List<DroneInCharging> droneInCharging { get; set; }
             public override string ToString()
             {
-                string output = $"Station #{Id}, Name:{Name},AvailableChargeSlots:{AvailableChargeSlots},location :{location}";
+                string output = $"Station #{Id}, Name: {Name}, AvailableChargeSlots: {AvailableChargeSlots}, Location: {location}\n";
                 if (droneInCharging.Count != 0)
-                  output += $", List of Drones that are charging: { droneInCharging}";
-                   
+                {
+                    output += $", List of Drones that are charging:\n";
+                    for(int i = 0; i< droneInCharging.Count; i++)
+                    {
+                        output += droneInCharging[i];
+                    }
+                }           
                 return output;   
             }
         }

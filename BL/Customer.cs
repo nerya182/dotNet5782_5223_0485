@@ -15,7 +15,24 @@ namespace IBL
             public List<ParceltAtCustomer> ToCustomer { get; set; }
             public override string ToString()
             {
-                return $"Customer id: #{Id} , Name:{Name} , Phone #:{Phone} , Location {Location}\n"; 
+                string output = $"Customer id: #{Id} , Name:{Name} , Phone #:{Phone} , Location {Location}\n";
+                if (FromCustomer.Count != 0)
+                {
+                    output += $"List of Parcel At Customer: {FromCustomer}\n";
+                    for(int i =0;i<FromCustomer.Count; i++)
+                    {
+                        output += FromCustomer[i];
+                    }
+                }                 
+                if (ToCustomer.Count != 0)
+                {
+                    output += $"List of Parcel At Customer: {ToCustomer}\n";
+                    for (int i = 0; i < ToCustomer.Count; i++)
+                    {
+                        output += ToCustomer[i];
+                    }
+                }                 
+                return output;
             }
         }
     }

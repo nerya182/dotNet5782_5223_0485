@@ -20,8 +20,11 @@ namespace IBL
             public Location Location { get; set; }
             public override string ToString()
             {
-                return $"Drone id: {Id} , Model={Model} , Status: { Status} , MaxWeight:{ MaxWeight} , battery:{(int)Battery}" +
-                    $"\n";
+                string output = $"Drone id: {Id} , Model={Model} , Status: { Status} , MaxWeight:{ MaxWeight} , battery:{(int)Battery}, Location {Location}\n";
+                if (ParcelTransfer != null)
+                    output += $"Parcel Transfer {ParcelTransfer}\n";
+                return output;
+                   
             }
         }
     }

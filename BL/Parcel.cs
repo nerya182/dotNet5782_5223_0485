@@ -23,7 +23,9 @@ namespace IBL
 
             public override string ToString()
             {
-                return $"Parcel #{Id}, SenderId:, {Weight}, {Priority},{Creating},{ Affiliation},{PickedUp},{Delivered}\n";
+                string output = $"Parcel #{Id}, Weight: {Weight}, Priority: {Priority}, Created: {Creating}, Affiliated: {Affiliation}, Picked-Up: {PickedUp}, Delivered: {Delivered}\n";
+                output += $"Sender of Parcel: {Sender}, Target of Parcel: {Target}, Drone In Parcel: {drone}\n";
+                return output;
             }
         }
     }

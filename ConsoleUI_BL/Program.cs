@@ -21,7 +21,7 @@ namespace ConsoleUI_BL
                        "3-DISPLAY- Display of base stations/Drone/Customer/ Parcel\n" +
                        "4-VIEW_LIST- Print all base stations/Drone/Customer/Parcel/\n" +
                        "          Packages not yet associated/Base stations with available charging stations.\n" +
-                       "5-EXIT- Exit\n");
+                       "EXIT- Exit\n");
 
                 while (!Enum.TryParse(Console.ReadLine(), out choice))
                 {
@@ -245,21 +245,21 @@ namespace ConsoleUI_BL
 
         private static void DisplayStation(IBL.IBL bl, int id)
         {
-            Console.WriteLine(" Enter the station ID number");
+            Console.WriteLine("Enter the station ID number");
             int.TryParse(Console.ReadLine(), out id);
             Console.WriteLine(bl.BaseStationDisplay(id));
         }
 
         private static void DisplayDrone(IBL.IBL bl, int id)
         {
-            Console.WriteLine(" Enter the Drone ID number");
+            Console.WriteLine("Enter the Drone ID number");
             int.TryParse(Console.ReadLine(), out id);
             Console.WriteLine(bl.DroneDisplay(id));
         }
 
         private static void DisplayCustomer(IBL.IBL bl, int id)
         {
-            Console.WriteLine(" Enter the Customer ID number");
+            Console.WriteLine("Enter the Customer ID number");
             int.TryParse(Console.ReadLine(), out id);
             Console.WriteLine(bl.CustomerDisplay(id));
         }
