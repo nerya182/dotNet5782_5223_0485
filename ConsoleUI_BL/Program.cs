@@ -284,6 +284,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
 
         private static void ParcelCollectionByDrone(IBL.IBL bl)
@@ -299,6 +300,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
 
         private static void AffiliateParcelToDrone(IBL.IBL bl)
@@ -314,6 +316,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
 
         private static void ReleaseDroneFromCharging(IBL.IBL bl)
@@ -329,6 +332,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
 
         private static void SendingDroneForCharging(IBL.IBL bl)
@@ -344,6 +348,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
 
         private static void UpdateCustomer(IBL.IBL bl)
@@ -363,6 +368,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
         private static void UpdateStation(IBL.IBL bl)
         {
@@ -381,6 +387,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
         private static void UpdateDrone(IBL.IBL bl)
         {
@@ -396,7 +403,8 @@ namespace ConsoleUI_BL
             catch (Exception e)
             {
                 Console.WriteLine(e);
-            } 
+            }
+            Console.WriteLine("The update was successful");
         }
 
         private static void AddCustomer(IBL.IBL bl)
@@ -422,6 +430,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("Added successfully");
         }
 
         private static void AddParcel(IBL.IBL bl)
@@ -454,6 +463,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("Added successfully");
         }
 
         private static void AddDrone(IBL.IBL bl)
@@ -476,6 +486,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("Added successfully");
         }
 
         public static void AddStation(IBL.IBL bl)
@@ -502,13 +513,12 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("Added successfully");
         }
 
         public static void PrintAll<T>(T t)
         {
             Console.WriteLine(t);
         }
-
-        
     }  
 }

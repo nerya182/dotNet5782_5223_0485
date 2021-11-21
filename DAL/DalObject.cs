@@ -318,7 +318,6 @@ namespace DalObject
                 }
             }
         }
-
         /// <summary>
         /// We find the charger and the station the drone is  charging again
         /// </summary>

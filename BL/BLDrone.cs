@@ -267,6 +267,7 @@ namespace BL
                 drone.Location.Lattitude = customerTarget.Lattitude;
                 drone.Location.Longitude = customerTarget.Longitude;
                 drone.Status = DroneStatuses.Available;
+                drone.ParcelBeingPassedId = 0;
                 dal.SupplyParcelUpdate(parcel.Id);
             }
             else
