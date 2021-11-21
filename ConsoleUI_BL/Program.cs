@@ -321,12 +321,9 @@ namespace ConsoleUI_BL
             try
             {
                 int droneId;
-                double time = 0;
                 Console.WriteLine("Enter a unique ID number of drone");
                 droneId = int.Parse(Console.ReadLine());
-                Console.WriteLine("Enter the charging time(in hour)");
-                time = double.Parse(Console.ReadLine());
-                bl.ReleaseDroneFromCharging(droneId, time);
+                bl.ReleaseDroneFromCharging(droneId);
             }
             catch (Exception e)
             {

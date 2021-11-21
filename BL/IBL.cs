@@ -28,7 +28,7 @@ namespace IBL
         void DeliveryOfParcelByDrone(int droneId);
         void ParcelCollectionByDrone(int droneId);
         void AffiliateParcelToDrone(int droneId);
-        void ReleaseDroneFromCharging(int droneId, double time);
+        void ReleaseDroneFromCharging(int droneId);
         void SendingDroneForCharging(int droneId);
         DroneToList GetDroneFromLstDrone(int id);
         Station BaseStationDisplay(int id);
