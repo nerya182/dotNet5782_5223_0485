@@ -284,6 +284,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
 
         private static void ParcelCollectionByDrone(IBL.IBL bl)
@@ -299,6 +300,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
 
         private static void AffiliateParcelToDrone(IBL.IBL bl)
@@ -314,6 +316,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
 
         private static void ReleaseDroneFromCharging(IBL.IBL bl)
@@ -321,17 +324,15 @@ namespace ConsoleUI_BL
             try
             {
                 int droneId;
-                double time = 0;
                 Console.WriteLine("Enter a unique ID number of drone");
                 droneId = int.Parse(Console.ReadLine());
-                Console.WriteLine("Enter the charging time(in hour)");
-                time = double.Parse(Console.ReadLine());
-                bl.ReleaseDroneFromCharging(droneId, time);
+                bl.ReleaseDroneFromCharging(droneId);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
 
         private static void SendingDroneForCharging(IBL.IBL bl)
@@ -347,6 +348,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
 
         private static void UpdateCustomer(IBL.IBL bl)
@@ -366,6 +368,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
         private static void UpdateStation(IBL.IBL bl)
         {
@@ -384,6 +387,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The update was successful");
         }
         private static void UpdateDrone(IBL.IBL bl)
         {
@@ -399,7 +403,8 @@ namespace ConsoleUI_BL
             catch (Exception e)
             {
                 Console.WriteLine(e);
-            } 
+            }
+            Console.WriteLine("The update was successful");
         }
 
         private static void AddCustomer(IBL.IBL bl)
@@ -425,6 +430,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("Added successfully");
         }
 
         private static void AddParcel(IBL.IBL bl)
@@ -457,6 +463,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("Added successfully");
             Console.WriteLine("Parcel #: " + bl.GetParcelId() );
         }
 
@@ -480,6 +487,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("Added successfully");
         }
 
         public static void AddStation(IBL.IBL bl)
@@ -506,13 +514,12 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("Added successfully");
         }
 
         public static void PrintAll<T>(T t)
         {
             Console.WriteLine(t);
         }
-
-        
     }  
 }

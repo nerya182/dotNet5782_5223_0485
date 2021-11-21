@@ -21,6 +21,7 @@ namespace IBL
                     output += $"List of Parcel From Customer:\n";
                     for(int i =0;i<FromCustomer.Count; i++)
                     {
+
                         output += FromCustomer[i];
                         output += "\n";
                     }

@@ -240,7 +240,7 @@ namespace BL
         }
         public DroneToList MakeDroneToList(Drone objDrone)
         {
-            DroneToList droneToList = new DroneToList();
+            DroneToList droneToList = new DroneToList(); 
             droneToList.Id = objDrone.Id;
             droneToList.Location = objDrone.Location;
             droneToList.Battery = objDrone.Battery;
@@ -267,6 +267,7 @@ namespace BL
                 drone.Location.Lattitude = customerTarget.Lattitude;
                 drone.Location.Longitude = customerTarget.Longitude;
                 drone.Status = DroneStatuses.Available;
+                drone.ParcelBeingPassedId = 0;
                 dal.SupplyParcelUpdate(parcel.Id);
             }
             else
@@ -344,8 +345,9 @@ namespace BL
             return (distance2 * GetElectricUsageNumber(weight) + distance1 * AvailbleElec +
                     distance3 * AvailbleElec);
         }
-        public void ReleaseDroneFromCharging(int droneId, double time)
+        public void ReleaseDroneFromCharging(int droneId)
         {
+            DateTime timeOfCharging = DateTime.MinValue;
             var drone = listDrone.Find(i => i.Id == droneId);
             if (drone == null)
             {
@@ -355,9 +357,11 @@ namespace BL
             {
                 throw new IllegalActionException("The drone is not charging");
             }
+            timeOfCharging = dal.ListDroneCharge().ToList().Find(i => i.DroneId == droneId).EntryTime;
             dal.ReleaseDroneFromCharger(droneId);
+            TimeSpan time = DateTime.Now- timeOfCharging;
+            drone.Battery +=(int)dal.GetChargeSpeed()*((int)time.TotalHours);
             drone.Status = DroneStatuses.Available;
-            drone.Battery = +(int)dal.GetChargeSpeed() * time;
             if (drone.Battery > 100)
             {
                 drone.Battery = 100;

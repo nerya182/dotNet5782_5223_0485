@@ -106,7 +106,6 @@ namespace BL
                     lstDrnInChrg.Add(DrnInChrg);
                 }
             }
-
             temp.droneInCharging = lstDrnInChrg;
             return temp;
         }
