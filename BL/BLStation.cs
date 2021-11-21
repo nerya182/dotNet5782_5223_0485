@@ -76,7 +76,7 @@ namespace BL
             IDAL.DO.Station station = dal.GetStation(id);
             IEnumerable<IDAL.DO.DroneCharge> droneCharge = dal.ListDroneCharge();
             List<DroneInCharging> lstDrnInChrg = new List<DroneInCharging>();
-           
+            
             Station temp = new Station();
             Location location = new Location();
             location.Longitude = station.Longitude;
@@ -85,6 +85,17 @@ namespace BL
             temp.Name = station.Name;
             temp.location = location;
             temp.AvailableChargeSlots = station.AvailableChargeSlots;
+            List<IDAL.DO.DroneCharge> asList = droneCharge.ToList();
+            /*for (int i = 0; i < asList.Count(); i++)
+            {
+                if(asList[i].StationId == id)
+                {
+                    
+                    DrnInChrg.DroneId = asList[i].DroneId;
+                    DrnInChrg.Battery = GetDroneFromLstDrone(asList[i].DroneId).Battery;
+                    lstDrnInChrg.Add(DrnInChrg);
+                }
+            }*/
             foreach (var drnChrg in droneCharge)
             {
                 if (drnChrg.StationId == id)

@@ -247,7 +247,10 @@ namespace BL
             droneToList.Model = objDrone.Model;
             droneToList.MaxWeight = objDrone.MaxWeight;
             droneToList.Status = objDrone.Status;
-            droneToList.ParcelBeingPassedId = objDrone.ParcelTransfer.Id;
+            if (objDrone.Status != DroneStatuses.Delivery)
+                droneToList.ParcelBeingPassedId = 0;
+            else
+                droneToList.ParcelBeingPassedId = objDrone.ParcelTransfer.Id;
             return droneToList;
         }
 
