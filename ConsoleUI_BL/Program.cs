@@ -225,9 +225,9 @@ namespace ConsoleUI_BL
 
         private static void ViewParcelOnAirList(IBL.IBL bl)
         {
-            IEnumerable<Parcel> PrintParcelOnAir = new List<Parcel>();
+            IEnumerable<IDAL.DO.Parcel> PrintParcelOnAir = new List<IDAL.DO.Parcel>();
             PrintParcelOnAir = bl.GetListParcelOnAir();
-            foreach (Parcel objStation in PrintParcelOnAir)
+            foreach (IDAL.DO.Parcel objStation in PrintParcelOnAir)
             {
                 Console.WriteLine(objStation);
             }

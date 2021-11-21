@@ -469,10 +469,14 @@ namespace DalObject
         public IEnumerable<Parcel> ListParcelOnAir()  
         {
             List<Parcel> PrintParcelOnAir = new List<Parcel>();
-            for (int i = 0; i <Parcels.Count; i++)
+            for (int i = 1; i <Parcels.Count; i++)
             {
-                if (GetParcel(i).DroneId == -1)
+                
+                if(GetParcel(i).Affiliation == DateTime.MinValue)
                     PrintParcelOnAir.Add(GetParcel(i));
+
+               // if (GetParcel(i).DroneId == -1)
+                 //   PrintParcelOnAir.Add(GetParcel(i));
             }
             return PrintParcelOnAir;
         }

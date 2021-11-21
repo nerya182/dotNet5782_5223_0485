@@ -35,10 +35,11 @@ namespace BL
             return dal.GetParcelId() - 1;
         }
 
-        public IEnumerable<Parcel> GetListParcelOnAir()
+        public IEnumerable<IDAL.DO.Parcel> GetListParcelOnAir()
         {
             IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcelOnAir();
-            return (IEnumerable<Parcel>)parcels;
+            //return (IEnumerable<Parcel>)parcels;
+            return parcels;
         }
 
         public IEnumerable<Parcel> GetListParcel()
