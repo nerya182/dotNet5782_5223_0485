@@ -23,12 +23,18 @@ namespace BL
                 temp.Delivered = DateTime.MinValue;
                 temp.DroneId = 0;
                 dal.AddParcel(temp);
+
             }
             catch (Exception e)
             {
                 throw new ItemAlreadyExistsException(temp.Id, "Enter a new customer number\n", e);
             }
         }
+        public int GetParcelId()
+        {
+            return dal.GetParcelId() - 1;
+        }
+
         public IEnumerable<Parcel> GetListParcelOnAir()
         {
             IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcelOnAir();

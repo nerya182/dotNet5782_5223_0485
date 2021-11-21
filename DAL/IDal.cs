@@ -49,6 +49,7 @@ namespace IDAL
         void UpdateCustomer(Customer updateCustomer);
         void UpdateStation(Station station, int chargingPositions);
         void UpdateDrone(Drone updateDrone);
+       // int GetParcelId();
 
     }
 }

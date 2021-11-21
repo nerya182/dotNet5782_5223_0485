@@ -36,6 +36,7 @@ namespace IBL
         Parcel ParcelDisplay(int id);
         void UpdateCustomer(Customer updateCustomer);
         void UpdateStation(Station updateStation, int chargingPositions);
+        public int GetParcelId();
 
 
 

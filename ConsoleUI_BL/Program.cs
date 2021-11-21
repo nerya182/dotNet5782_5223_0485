@@ -457,6 +457,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("Parcel #: " + bl.GetParcelId() );
         }
 
         private static void AddDrone(IBL.IBL bl)

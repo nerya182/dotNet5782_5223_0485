@@ -18,7 +18,11 @@ namespace IBL
             public CustomerInParcel OpposingSide { get; set; }
             public override string ToString()
             {
-                return $"Id: {Id}, weight: {Weight}, priority: {Priority}, status: {status}, Opposing Customer: {OpposingSide}";
+                return $"Id: {Id}" +
+                    $", weight: {Weight}" +
+                    $", priority: {Priority}" +
+                    $", status: {status}," +
+                    $" Opposing Customer: {OpposingSide}";
             }
 
         }

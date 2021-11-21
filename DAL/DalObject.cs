@@ -248,8 +248,10 @@ namespace DalObject
                 {
                     throw new ItemAlreadyExistsException(newParcel.Id, "ERROR: id of Parcel already exists\n");
                 }
-            }
+            }     
             Parcels.Add(newParcel);
+            
+            Config.NewParcelId++;
         }
         /// <summary>
         /// if we've found an available drone, we will affiliate the parcel with it

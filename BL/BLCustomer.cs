@@ -99,7 +99,7 @@ namespace BL
             IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
             List<ParceltAtCustomer> lstSending = new List<ParceltAtCustomer>();
             List<ParceltAtCustomer> lstReceived = new List<ParceltAtCustomer>();
-            ParceltAtCustomer parcelAtCstmr = new ParceltAtCustomer();
+            
             CustomerInParcel cstmrInPrcl = new CustomerInParcel();
 
             Customer temp = new Customer();
@@ -115,6 +115,7 @@ namespace BL
             {
                 if ((parcel.SenderId == customer.Id) && (parcel.Delivered == DateTime.MinValue))
                 {
+                    ParceltAtCustomer parcelAtCstmr = new ParceltAtCustomer();
                     parcelAtCstmr.Id = parcel.Id;
                     parcelAtCstmr.status = ParcelStatus.Created;
                     parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
@@ -127,6 +128,7 @@ namespace BL
                 }
                 else if ((parcel.TargetId == customer.Id) && (parcel.Delivered != DateTime.MinValue))
                 {
+                    ParceltAtCustomer parcelAtCstmr = new ParceltAtCustomer();
                     parcelAtCstmr.Id = parcel.Id;
                     parcelAtCstmr.status = ParcelStatus.Supplied;
                     parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
