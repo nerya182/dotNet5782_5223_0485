@@ -18,7 +18,7 @@ namespace IBL
                 string output = $"Customer id: #{Id} , Name:{Name} , Phone #:{Phone} , Location {Location}\n";
                 if (FromCustomer.Count != 0)
                 {
-                    output += $"List of Parcel At Customer: {FromCustomer}\n";
+                    output += $"List of Parcel At Customer:\n";
                     for(int i =0;i<FromCustomer.Count; i++)
                     {
                         output += FromCustomer[i];
@@ -26,7 +26,7 @@ namespace IBL
                 }                 
                 if (ToCustomer.Count != 0)
                 {
-                    output += $"List of Parcel At Customer: {ToCustomer}\n";
+                    output += $"List of Parcel At Customer:\n";
                     for (int i = 0; i < ToCustomer.Count; i++)
                     {
                         output += ToCustomer[i];
