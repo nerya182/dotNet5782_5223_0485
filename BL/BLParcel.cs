@@ -92,10 +92,10 @@ namespace BL
         {
             IDAL.DO.Parcel parcel = dal.GetParcel(id);
             DroneInParcel droneInParcel = new DroneInParcel();
-            CustomerInParcel customerInParcel = new CustomerInParcel();
+            CustomerInParcel customerInParcel1 = new CustomerInParcel();
+            CustomerInParcel customerInParcel2 = new CustomerInParcel();
             Parcel temp = new Parcel();
-
-            temp.Id = parcel.Id;
+             temp.Id = parcel.Id;
             temp.Weight = (WeightCategories)parcel.Weight;
             temp.Priority = (Priorities)parcel.Priority;
             temp.Affiliation = parcel.Affiliation;
@@ -103,21 +103,25 @@ namespace BL
             temp.Delivered = parcel.Delivered;
             temp.PickedUp = parcel.PickedUp;
 
-            DroneToList droneToList = GetDroneFromLstDrone(parcel.DroneId);
-            droneInParcel.DroneId = droneToList.Id;
-            droneInParcel.location = droneToList.Location;
-            droneInParcel.Battery = droneToList.Battery;
-            temp.drone = droneInParcel;
-
+            if (parcel.DroneId != 0)
+            {
+                DroneToList droneToList = listDrone.Find(i => i.Id == parcel.DroneId);
+                // DroneToList droneToList = GetDroneFromLstDrone(parcel.DroneId);
+                droneInParcel.DroneId = droneToList.Id;
+                droneInParcel.location = droneToList.Location;
+                droneInParcel.Battery = droneToList.Battery;
+                temp.drone = droneInParcel;
+            }
+            
             IDAL.DO.Customer sender = dal.GetCustomer(parcel.SenderId);
-            customerInParcel.Id = sender.Id;
-            customerInParcel.Name = sender.Name;
-            temp.Sender = customerInParcel;
+            customerInParcel1.Id = sender.Id;
+            customerInParcel1.Name = sender.Name;
+            temp.Sender = customerInParcel1;
 
             IDAL.DO.Customer target = dal.GetCustomer(parcel.TargetId);
-            customerInParcel.Id = target.Id;
-            customerInParcel.Name = target.Name;
-            temp.Target = customerInParcel;
+            customerInParcel2.Id = target.Id;
+            customerInParcel2.Name = target.Name;
+            temp.Target = customerInParcel2;
 
             return temp;
         }
