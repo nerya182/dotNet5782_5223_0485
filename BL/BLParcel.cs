@@ -22,6 +22,7 @@ namespace BL
                 temp.PickedUp = DateTime.MinValue;
                 temp.Delivered = DateTime.MinValue;
                 temp.DroneId = 0;
+                temp.Id = dal.GetParcelId();
                 dal.AddParcel(temp);
 
             }
@@ -30,11 +31,6 @@ namespace BL
                 throw new ItemAlreadyExistsException(temp.Id, "Enter a new customer number\n", e);
             }
         }
-        public int GetParcelId()
-        {
-            return dal.GetParcelId() - 1;
-        }
-
         public IEnumerable<Parcel> GetListParcelOnAir()
         {
             IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcelOnAir();
@@ -125,7 +121,10 @@ namespace BL
 
             return temp;
         }
-
+        public int GetParcelId()
+        {
+            return dal.GetParcelId()-1;
+        }
     }
 }
 

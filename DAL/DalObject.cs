@@ -250,8 +250,8 @@ namespace DalObject
                 }
             }     
             Parcels.Add(newParcel);
-            
-            Config.NewParcelId++;
+            DataSource.Config.NewParcelId++;
+            Console.WriteLine(Config.NewParcelId);
         }
         /// <summary>
         /// if we've found an available drone, we will affiliate the parcel with it
@@ -679,7 +679,7 @@ namespace DalObject
                     {
                         s.Name = updateStation.Name;
                     }
-                    if (chargingPositions != 0)
+                    if (chargingPositions !=-1)
                     {
                         if (chargingPositions -AvailableChargeSlotsInStation(updateStation.Id) < 0)
                         {

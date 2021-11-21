@@ -23,13 +23,13 @@ namespace IBL
             public int ParcelBeingPassedId { get; set; }
             public override string ToString()
             {
-                return $"DroneToList # {Id} " +
-                       $"Model: {Model }" +
-                       $"MaxWeight: {MaxWeight}" +
-                    $"Status: {Status}" +
-                       $"Battery:{Battery}, " +
-                       $"location: {Location}, " +
-                       $"parcel number being passed: {ParcelBeingPassedId}\n";
+                return $"DroneId # {Id}  " +
+                       $"Model: {Model}   " +
+                       $"MaxWeight: {MaxWeight}  " +
+                       $"Status: {Status}   " +
+                       $"Battery:{Battery}   " +
+                       $"location: {Location}   " +
+                       $"parcel number being passed: {ParcelBeingPassedId}\n   ";
             }
         }
     }

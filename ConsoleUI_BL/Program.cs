@@ -327,12 +327,12 @@ namespace ConsoleUI_BL
                 Console.WriteLine("Enter a unique ID number of drone");
                 droneId = int.Parse(Console.ReadLine());
                 bl.ReleaseDroneFromCharging(droneId);
+                Console.WriteLine("The update was successful");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("The update was successful");
         }
 
         private static void SendingDroneForCharging(IBL.IBL bl)
@@ -343,12 +343,12 @@ namespace ConsoleUI_BL
                 Console.WriteLine("Enter a unique ID number of drone");
                 droneId = int.Parse(Console.ReadLine());
                 bl.SendingDroneForCharging(droneId);
+                Console.WriteLine("The update was successful");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("The update was successful");
         }
 
         private static void UpdateCustomer(IBL.IBL bl)
@@ -363,31 +363,41 @@ namespace ConsoleUI_BL
                 Console.WriteLine("Insert the new phone of the customer or click enter");
                 updateCustomer.Phone = Console.ReadLine();
                 bl.UpdateCustomer(updateCustomer);
+                Console.WriteLine("The update was successful");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("The update was successful");
         }
         private static void UpdateStation(IBL.IBL bl)
         {
             try
             {
-                Station updateStation = new Station();
+                string inpute="";
+                int chargingPositions = 0;
+               Station updateStation = new Station();
                 Console.WriteLine("Enter a unique ID number of station");
                 updateStation.Id = int.Parse(Console.ReadLine());
                 Console.WriteLine("Insert the new name of the station or click enter");
                 updateStation.Name = Console.ReadLine();
-                Console.WriteLine("Insert the total amount of charging of the station or click ");
-                int.TryParse(Console.ReadLine(), out int chargingPositions);
-                bl.UpdateStation(updateStation, chargingPositions);
+                Console.WriteLine("Insert the total amount of charging of the station or click enter");
+                inpute = Console.ReadLine();
+                if (inpute!="")
+                {
+                    chargingPositions = int.Parse(inpute);
+                }
+                else
+                {
+                    chargingPositions = -1;
+                }
+                bl.UpdateStation(updateStation,chargingPositions);
+                Console.WriteLine("The update was successful");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("The update was successful");
         }
         private static void UpdateDrone(IBL.IBL bl)
         {
@@ -399,12 +409,13 @@ namespace ConsoleUI_BL
                 Console.WriteLine("Insert the  new model of the drone");
                 updateDrone.Model = Console.ReadLine();
                 bl.UpdateDrone(updateDrone);
+                Console.WriteLine("The update was successful");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("The update was successful");
+           
         }
 
         private static void AddCustomer(IBL.IBL bl)
@@ -425,12 +436,12 @@ namespace ConsoleUI_BL
                 locationOfnewCustomer.Longitude = double.Parse(Console.ReadLine());
                 newCustomer.Location = locationOfnewCustomer;
                 bl.AddCustomer(newCustomer);
+                Console.WriteLine("Added successfully");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("Added successfully");
         }
 
         private static void AddParcel(IBL.IBL bl)
@@ -458,12 +469,12 @@ namespace ConsoleUI_BL
                 droneInParcel.DroneId = 0;
                 newParcel.drone = droneInParcel;
                 bl.AddParcel(newParcel);
+                Console.WriteLine("Added successfully");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("Added successfully");
             Console.WriteLine("Parcel #: " + bl.GetParcelId() );
         }
 
@@ -482,12 +493,12 @@ namespace ConsoleUI_BL
                 Console.WriteLine("Enter a unique ID number station to put the drone initial charge ");
                 chargingStationId = int.Parse(Console.ReadLine());
                 bl.AddDrone(newDrone, chargingStationId);
+                Console.WriteLine("Added successfully");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("Added successfully");
         }
 
         public static void AddStation(IBL.IBL bl)
@@ -509,12 +520,12 @@ namespace ConsoleUI_BL
                 newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
                 newStation.droneInCharging = new List<DroneInCharging>(0);
                 bl.AddStation(newStation);
+                Console.WriteLine("Added successfully");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("Added successfully");
         }
 
         public static void PrintAll<T>(T t)
