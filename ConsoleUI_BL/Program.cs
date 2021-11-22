@@ -325,7 +325,6 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
-          
         }
 
         private static void ReleaseDroneFromCharging(IBL.IBL bl)

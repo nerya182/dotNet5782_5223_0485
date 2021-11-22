@@ -320,22 +320,23 @@ namespace BL
                  if (parcelsFiltered.Count == 0)
                      parcelsFiltered = helpParcelsFiltered.FindAll(i => i.Weight == (IDAL.DO.WeightCategories)drone.MaxWeight - 2 && (drone.MaxWeight - 2) > 0);
 
+                
+                    IDAL.DO.Parcel parcel = GetClosestParcel(parcelsFiltered, drone);
 
-                 IDAL.DO.Parcel parcel = GetClosestParcel(parcelsFiltered, drone);
-                 IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
-                 IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
-                 double minimumBattery =
-                     GetMinimumBatteryToShip(drone, customerSender, customerTarget, parcel.Weight);
+                    IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
+                    IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
+                    double minimumBattery =
+                        GetMinimumBatteryToShip(drone, customerSender, customerTarget, parcel.Weight);
 
-                 if (drone.Status == DroneStatuses.Available && drone.Battery > minimumBattery)
-                 {
-                     drone.Status = DroneStatuses.Delivery;
-                     dal.Affiliate(parcel.Id, drone.Id);
-                     drone.ParcelBeingPassedId = parcel.Id;
-                     flag = true;
-                 }
-
-                 parcels.Remove(parcel);
+                    if (drone.Status == DroneStatuses.Available && drone.Battery > minimumBattery)
+                    {
+                        drone.Status = DroneStatuses.Delivery;
+                        dal.Affiliate(parcel.Id, drone.Id);
+                        drone.ParcelBeingPassedId = parcel.Id;
+                        flag = true;
+                    }
+                    parcels.Remove(parcel);
+                
             } while (!flag&&parcels.Count>0);
 
             if (parcels.Count==0)
