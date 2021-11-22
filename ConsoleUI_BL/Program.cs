@@ -225,21 +225,29 @@ namespace ConsoleUI_BL
 
         private static void ViewParcelOnAirList(IBL.IBL bl)
         {
-            IEnumerable<Parcel> PrintParcelOnAir = new List<Parcel>();
-            PrintParcelOnAir = bl.GetListParcelOnAir();
-            foreach (Parcel objStation in PrintParcelOnAir)
+            IEnumerable<Parcel> PrintParcel = new List<Parcel>();
+            PrintParcel = bl.GetListParcel();
+            foreach (Parcel objParcel in PrintParcel)
             {
-                Console.WriteLine(objStation);
+                if(objParcel.Affiliation == DateTime.MinValue)
+                {
+                    ParcelToList parcelToList = bl.MakeParcelToList(objParcel);
+                    Console.WriteLine(parcelToList);
+                }   
             }
         }
 
         private static void ViewStationsWithOpenSlotsList(IBL.IBL bl)
         {
-            IEnumerable<Station> PrintStationsWithOpenSlots = new List<Station>();
-            PrintStationsWithOpenSlots = bl.GetListStationsWithOpenSlots();
-            foreach (Station objStation in PrintStationsWithOpenSlots)
+            IEnumerable<Station> PrintStation = new List<Station>();
+            PrintStation = bl.GetListStation();
+            foreach (Station objStation in PrintStation)
             {
-                Console.WriteLine(objStation);
+                if(objStation.AvailableChargeSlots > 0)
+                {
+                    StationToList stationToList = bl.MakeStationToList(objStation);
+                    Console.WriteLine(stationToList);
+                }     
             }
         }
 

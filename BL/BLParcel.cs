@@ -31,11 +31,11 @@ namespace BL
                 throw new ItemAlreadyExistsException(temp.Id, "Enter a new customer number\n", e);
             }
         }
-        public IEnumerable<Parcel> GetListParcelOnAir()
+        public int GetParcelId()
         {
-            IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcelOnAir();
-            return (IEnumerable<Parcel>)parcels;
+            return dal.GetParcelId() - 1;
         }
+
 
         public IEnumerable<Parcel> GetListParcel()
         {
