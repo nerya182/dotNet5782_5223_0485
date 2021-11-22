@@ -303,12 +303,12 @@ namespace ConsoleUI_BL
                 Console.WriteLine("Enter a unique ID number of drone");
                 droneId = int.Parse(Console.ReadLine());
                 bl.ParcelCollectionByDrone(droneId);
+                Console.WriteLine("The update was successful");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("The update was successful");
         }
 
         private static void AffiliateParcelToDrone(IBL.IBL bl)

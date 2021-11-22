@@ -22,7 +22,7 @@ namespace IBL
             {
                 string output = $"Drone id: {Id} , Model={Model} , Status: { Status} , MaxWeight:{ MaxWeight} , battery:{(int)Battery}, Location {Location}\n";
                 if (ParcelTransfer != null)
-                    output += $"Parcel Transfer {ParcelTransfer}\n";
+                    output += $"\nParcel Transfer: {ParcelTransfer}\n";
                 return output;
                    
             }

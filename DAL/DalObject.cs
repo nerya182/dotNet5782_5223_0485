@@ -274,12 +274,12 @@ namespace DalObject
                 throw new ItemNotFoundException(droneId, "ERROR: id of Drone not found\n");
             }
 
-            for (int i = 0; i < Drones.Count; i++)
+            for (int i = 0; i < Parcels.Count; i++)
             {
-                if (Drones[i].Id == droneId)
+                if (Parcels[i].Id == idParcel)
                 {
                     Parcel p = Parcels[i];
-                    p.DroneId = Drones[i].Id;
+                    p.DroneId = droneId;
                     p.Affiliation = DateTime.Now;
                     Parcels[i] = p;
                     break;
@@ -647,7 +647,20 @@ namespace DalObject
 
         public double GetElectricUsageNumber(WeightCategories weight)
         {
-            throw new NotImplementedException();
+            if (weight == (WeightCategories)1)
+            {
+                return Config.lightWeight;
+            }
+            if (weight == (WeightCategories)2)
+            {
+                return Config.mediumWeight;
+            }
+            if (weight == (WeightCategories)3)
+            {
+                return Config.heavyWeight;
+            }
+
+            return Config.heavyWeight;
         }
 
         public void UpdateCustomer(Customer updateCustomer)

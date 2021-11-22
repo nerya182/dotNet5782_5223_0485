@@ -71,16 +71,16 @@ namespace BL
                 if (parceltAtCustomer.status == ParcelStatus.Supplied)
                     count1++;
             }
-            customerToList.Received_Parcels = count1;
-            customerToList.OnTheWay_Parcels = objCustomer.ToCustomer.Count - count1;
+            customerToList.ReceivedParcels = count1;
+            customerToList.OnTheWayParcels = objCustomer.ToCustomer.Count - count1;
             int count2 = 0;
             foreach (ParceltAtCustomer parceltAtCustomer1 in objCustomer.FromCustomer)
             {
                 if (parceltAtCustomer1.status == ParcelStatus.Supplied)
                     count2++;
             }
-            customerToList.Delivered_Supplied_Parcels = count2;
-            customerToList.Delivered_NotSupplied_Parcels = objCustomer.FromCustomer.Count - count2;
+            customerToList.DeliveredSuppliedParcels = count2;
+            customerToList.DeliveredNotSuppliedParcels = objCustomer.FromCustomer.Count - count2;
             return customerToList;
         }
 

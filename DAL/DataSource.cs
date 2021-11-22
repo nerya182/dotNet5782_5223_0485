@@ -14,10 +14,10 @@ namespace DalObject
         {
             internal static int NewParcelId = 1;
 
-            internal static double available=0.2;
-            internal static double lightWeight=0.4;
-            internal static double mediumWeight=0.5;
-            internal static double heavyWeight=0.6;
+            internal static double available=0.05;
+            internal static double lightWeight=0.1;
+            internal static double mediumWeight=0.15;
+            internal static double heavyWeight=0.2;
 
             internal static double chargeSpeed=100;
         }
@@ -55,7 +55,7 @@ namespace DalObject
             for (int i = 0; i < 3; i++)//רחפנים מסוג קל
             {
                 NameDrone nameDrone = (NameDrone)R.Next(0, 18);
-                WeightCategories weightCategories = (WeightCategories)(1);
+                WeightCategories weightCategories = (WeightCategories)(R.Next(1,4));
                 Drone newDrone = new Drone() { Id = R.Next(1000, 100001), Model = nameDrone.ToString(), MaxWeight = weightCategories};
                 Drones.Add(newDrone);
             }
@@ -96,7 +96,7 @@ namespace DalObject
             for (int i = 0; i < 3; i++)//חבילות קלות לרחפנים קלים,שנוצרו אך לא שויכו
             {
                 Priorities priorities = (Priorities)R.Next(1, 3);
-                WeightCategories weightCategories = (WeightCategories)(R.Next(1,4)) ;
+                WeightCategories weightCategories = (WeightCategories)(R.Next(1,3)) ;
                 Parcel newParcel = new Parcel()
                 {
                     Id = Config.NewParcelId,
@@ -163,7 +163,7 @@ namespace DalObject
                     Id = Config.NewParcelId,
                     SenderId = Customers[R.Next(0, Customers.Count)].Id,
                     TargetId = Customers[R.Next(0, Customers.Count)].Id,
-                    DroneId = Drones[i + 8].Id,
+                    DroneId =0,
                     Weight = weightCategories,
                     Priority = priorities,
                     Creating = DateTime.Now.AddMinutes(-180),

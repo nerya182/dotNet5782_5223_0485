@@ -24,7 +24,7 @@ namespace IBL
             public override string ToString()
             {
                 string output = $"Id: {Id}, Weight: {Weight}, Priority: {Priority}, Collect location: {collection}, Supply location: {SupplyPoint}, distance transportation: {distanceTransportation},\n " +
-                    $"Sender: {Sender}, Target: {Receiver}, Parcel Situation: ";
+                    $"Sender: {Sender}, Target: {Receiver}, Parcel Situation:";
                 if (!ParcelSituation)
                     output += "Waiting to be picked up";
                 else
