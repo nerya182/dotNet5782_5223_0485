@@ -86,16 +86,6 @@ namespace BL
             temp.location = location;
             temp.AvailableChargeSlots = station.AvailableChargeSlots;
             List<IDAL.DO.DroneCharge> asList = droneCharge.ToList();
-            /*for (int i = 0; i < asList.Count(); i++)
-            {
-                if(asList[i].StationId == id)
-                {
-                    
-                    DrnInChrg.DroneId = asList[i].DroneId;
-                    DrnInChrg.Battery = GetDroneFromLstDrone(asList[i].DroneId).Battery;
-                    lstDrnInChrg.Add(DrnInChrg);
-                }
-            }*/
             foreach (var drnChrg in droneCharge)
             {
                 if (drnChrg.StationId == id)
@@ -119,7 +109,7 @@ namespace BL
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                throw new IllegalActionException("Enter the correct number of charging points", e);
             }
         }
     }

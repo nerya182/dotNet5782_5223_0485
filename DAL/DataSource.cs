@@ -96,7 +96,7 @@ namespace DalObject
             for (int i = 0; i < 3; i++)//חבילות קלות לרחפנים קלים,שנוצרו אך לא שויכו
             {
                 Priorities priorities = (Priorities)R.Next(1, 3);
-                WeightCategories weightCategories = (WeightCategories)(1) ;
+                WeightCategories weightCategories = (WeightCategories)(R.Next(1,4)) ;
                 Parcel newParcel = new Parcel()
                 {
                     Id = Config.NewParcelId,

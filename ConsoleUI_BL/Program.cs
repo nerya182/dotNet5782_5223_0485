@@ -311,12 +311,13 @@ namespace ConsoleUI_BL
                 Console.WriteLine("Enter a unique ID number of drone");
                 droneId = int.Parse(Console.ReadLine());
                 bl.AffiliateParcelToDrone(droneId);
+                Console.WriteLine("The update was successful");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("The update was successful");
+          
         }
 
         private static void ReleaseDroneFromCharging(IBL.IBL bl)
@@ -375,8 +376,8 @@ namespace ConsoleUI_BL
             try
             {
                 string inpute="";
-                int chargingPositions = 0;
-               Station updateStation = new Station();
+                int chargingPositions = -1;
+                Station updateStation = new Station();
                 Console.WriteLine("Enter a unique ID number of station");
                 updateStation.Id = int.Parse(Console.ReadLine());
                 Console.WriteLine("Insert the new name of the station or click enter");
@@ -386,10 +387,6 @@ namespace ConsoleUI_BL
                 if (inpute!="")
                 {
                     chargingPositions = int.Parse(inpute);
-                }
-                else
-                {
-                    chargingPositions = -1;
                 }
                 bl.UpdateStation(updateStation,chargingPositions);
                 Console.WriteLine("The update was successful");
@@ -401,11 +398,18 @@ namespace ConsoleUI_BL
         }
         private static void UpdateDrone(IBL.IBL bl)
         {
+            bool id;
+            int idDrone;
+           
             try
             {
                 DroneToList updateDrone = new DroneToList();
-                Console.WriteLine("Enter a unique ID number of drone");
-                updateDrone.Id= int.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("Enter a unique ID number of drone");
+                    id = int.TryParse(Console.ReadLine(), out idDrone);
+                } while (!id);
+                updateDrone.Id = idDrone;
                 Console.WriteLine("Insert the  new model of the drone");
                 updateDrone.Model = Console.ReadLine();
                 bl.UpdateDrone(updateDrone);
@@ -415,7 +419,6 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
-           
         }
 
         private static void AddCustomer(IBL.IBL bl)

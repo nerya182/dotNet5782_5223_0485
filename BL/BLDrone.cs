@@ -168,7 +168,7 @@ namespace BL
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                throw new ItemNotFoundException(newDrone.Id, "Enter an existing drone number in the system", e);
             }
         }
         public Drone DroneDisplay(int id)
@@ -303,32 +303,45 @@ namespace BL
             {
                 throw new ItemAlreadyExistsException(droneId);
             }
-            List<IDAL.DO.Parcel> parcels = dal.ListParcel().ToList();
-            List<IDAL.DO.Parcel> parcelsFiltered = new List<IDAL.DO.Parcel>();
-            parcelsFiltered = parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Urgent);
-            if (parcelsFiltered.Count == 0) { parcelsFiltered= parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Express); }
-            if (parcelsFiltered.Count == 0) { parcelsFiltered= parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Regular); }
-
-            parcels = parcelsFiltered;
-
-            parcelsFiltered = parcels.FindAll(i => i.Weight == (IDAL.DO.WeightCategories)drone.MaxWeight);
-            if (parcelsFiltered.Count == 0)
-                parcelsFiltered = parcels.FindAll(i => i.Weight == (IDAL.DO.WeightCategories)drone.MaxWeight - 1 && (drone.MaxWeight - 1) > 0);
-            if (parcelsFiltered.Count == 0)
-                parcelsFiltered = parcels.FindAll(i => i.Weight == (IDAL.DO.WeightCategories)drone.MaxWeight - 2 && (drone.MaxWeight - 2) > 0);
-
-            IDAL.DO.Parcel parcel = GetClosestParcel(parcelsFiltered, drone);
-            IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
-            IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
-            double minimumBattery =
-                GetMinimumBatteryToShip(drone, customerSender, customerTarget, parcel.Weight);
-
-            if (drone.Status == DroneStatuses.Available && drone.Battery > minimumBattery)
+             bool flag = false;
+             List<IDAL.DO.Parcel> parcels = dal.ListParcel().ToList().FindAll(i=>i.Affiliation == DateTime.MinValue & i.DroneId == 0);
+            do
             {
-                drone.Status = DroneStatuses.Delivery;
-                dal.Affiliate(parcel.Id, drone.Id);
+                 List<IDAL.DO.Parcel> parcelsFiltered = new List<IDAL.DO.Parcel>();
+                 parcelsFiltered = parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Urgent && i.Affiliation == DateTime.MinValue&i.DroneId==0);
+                 if (parcelsFiltered.Count == 0) { parcelsFiltered = parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Express && i.Affiliation == DateTime.MinValue&&i.DroneId == 0); }
+                 if (parcelsFiltered.Count == 0) { parcelsFiltered = parcels.FindAll(i => i.Priority == IDAL.DO.Priorities.Regular && i.Affiliation == DateTime.MinValue&& i.DroneId == 0); }
+
+                 List<IDAL.DO.Parcel> helpParcelsFiltered = parcelsFiltered;
+
+                 parcelsFiltered = helpParcelsFiltered.FindAll(i => i.Weight == (IDAL.DO.WeightCategories)drone.MaxWeight);
+                 if (parcelsFiltered.Count == 0)
+                     parcelsFiltered = helpParcelsFiltered.FindAll(i => i.Weight == (IDAL.DO.WeightCategories)drone.MaxWeight - 1 && (drone.MaxWeight - 1) > 0);
+                 if (parcelsFiltered.Count == 0)
+                     parcelsFiltered = helpParcelsFiltered.FindAll(i => i.Weight == (IDAL.DO.WeightCategories)drone.MaxWeight - 2 && (drone.MaxWeight - 2) > 0);
+
+
+                 IDAL.DO.Parcel parcel = GetClosestParcel(parcelsFiltered, drone);
+                 IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
+                 IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
+                 double minimumBattery =
+                     GetMinimumBatteryToShip(drone, customerSender, customerTarget, parcel.Weight);
+
+                 if (drone.Status == DroneStatuses.Available && drone.Battery > minimumBattery)
+                 {
+                     drone.Status = DroneStatuses.Delivery;
+                     dal.Affiliate(parcel.Id, drone.Id);
+                     drone.ParcelBeingPassedId = parcel.Id;
+                     flag = true;
+                 }
+
+                 parcels.Remove(parcel);
+            } while (!flag&&parcels.Count>0);
+
+            if (parcels.Count==0)
+            {
+                throw new IllegalActionException("No suitable package was found for pairing a drone");
             }
-            drone.ParcelBeingPassedId = parcel.Id;
         }
 
         private double GetMinimumBatteryToShip(DroneToList drone, IDAL.DO.Customer customerSender, IDAL.DO.Customer customerTarget, IDAL.DO.WeightCategories weight)
