@@ -26,7 +26,7 @@ namespace IBL
                 return $"DroneId # {Id}  " +
                        $"Model: {Model}   " +
                        $"MaxWeight: {MaxWeight}  " +
-                       $"Status: {Status}   " +
+                       $"Status: {Status} \n" +
                        $"Battery:{Battery}   " +
                        $"location: {Location}   " +
                        $"parcel number being passed: {ParcelBeingPassedId}\n   ";
