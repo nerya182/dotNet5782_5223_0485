@@ -125,10 +125,6 @@ namespace BL
 
             return temp;
         }
-        public int GetParcelId()
-        {
-            return dal.GetParcelId()-1;
-        }
     }
 }
 
