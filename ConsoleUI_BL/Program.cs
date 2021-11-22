@@ -80,7 +80,7 @@ namespace ConsoleUI_BL
 
         private static void UpdateOptions(IBL.IBL bl, int input)
         {
-            Console.WriteLine("What would you like to bl?\n" +
+            Console.WriteLine("What would you like to do?\n" +
                             "1- Update drone data\n" +
                             "2- Update station data\n" +
                             "3- Update customer data\n" +
@@ -361,11 +361,18 @@ namespace ConsoleUI_BL
 
         private static void UpdateCustomer(IBL.IBL bl)
         {
+            bool flag;
+            int IdCustomer;
+
             try
             {
                 Customer updateCustomer = new Customer();
-                Console.WriteLine("Enter a unique ID number of Customer");
-                updateCustomer.Id = int.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("Enter a unique ID number of Customer");
+                    flag = int.TryParse(Console.ReadLine(), out IdCustomer);
+                } while (!flag);
+                updateCustomer.Id = IdCustomer;
                 Console.WriteLine("Insert the new name of the customer or click enter");
                 updateCustomer.Name = Console.ReadLine();
                 Console.WriteLine("Insert the new phone of the customer or click enter");
@@ -380,20 +387,26 @@ namespace ConsoleUI_BL
         }
         private static void UpdateStation(IBL.IBL bl)
         {
+            bool flag;
+            int IdStation;
             try
             {
-                string inpute="";
+                string input="";
                 int chargingPositions = -1;
                 Station updateStation = new Station();
-                Console.WriteLine("Enter a unique ID number of station");
-                updateStation.Id = int.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("Enter a unique ID number of Station");
+                    flag = int.TryParse(Console.ReadLine(), out IdStation);
+                } while (!flag);
+                updateStation.Id = IdStation;
                 Console.WriteLine("Insert the new name of the station or click enter");
                 updateStation.Name = Console.ReadLine();
                 Console.WriteLine("Insert the total amount of charging of the station or click enter");
-                inpute = Console.ReadLine();
-                if (inpute!="")
+                input = Console.ReadLine();
+                if (input!="")
                 {
-                    chargingPositions = int.Parse(inpute);
+                    chargingPositions = int.Parse(input);
                 }
                 bl.UpdateStation(updateStation,chargingPositions);
                 Console.WriteLine("The update was successful");
@@ -405,7 +418,7 @@ namespace ConsoleUI_BL
         }
         private static void UpdateDrone(IBL.IBL bl)
         {
-            bool id;
+            bool flag;
             int idDrone;
            
             try
@@ -414,8 +427,8 @@ namespace ConsoleUI_BL
                 do
                 {
                     Console.WriteLine("Enter a unique ID number of drone");
-                    id = int.TryParse(Console.ReadLine(), out idDrone);
-                } while (!id);
+                    flag = int.TryParse(Console.ReadLine(), out idDrone);
+                } while (!flag);
                 updateDrone.Id = idDrone;
                 Console.WriteLine("Insert the  new model of the drone");
                 updateDrone.Model = Console.ReadLine();
@@ -430,20 +443,35 @@ namespace ConsoleUI_BL
 
         private static void AddCustomer(IBL.IBL bl)
         {
+            bool flag;
+            int IdCustomer, num;
+
             try
             {
                 Customer newCustomer = new Customer();
                 Location locationOfnewCustomer = new Location();
-                Console.WriteLine("Enter a unique ID number");
-                newCustomer.Id = int.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("Enter a unique ID number of Customer");
+                    flag = int.TryParse(Console.ReadLine(), out IdCustomer);
+                } while (!flag);
+                newCustomer.Id = IdCustomer;
                 Console.WriteLine(" Enter the customer name");
                 newCustomer.Name = Console.ReadLine();
                 Console.WriteLine(" Enter a phone number");
                 newCustomer.Phone = Console.ReadLine();
-                Console.WriteLine("What is your Latitude?");
-                locationOfnewCustomer.Lattitude=double.Parse(Console.ReadLine());
-                Console.WriteLine("What is your longitude?");
-                locationOfnewCustomer.Longitude = double.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("What is your Latitude?");
+                    flag = int.TryParse(Console.ReadLine(), out num);
+                } while (!flag);
+                locationOfnewCustomer.Lattitude=num;
+                do
+                {
+                    Console.WriteLine("What is your longitude?");
+                    flag = int.TryParse(Console.ReadLine(), out num);
+                } while (!flag);
+                locationOfnewCustomer.Longitude = num;
                 newCustomer.Location = locationOfnewCustomer;
                 bl.AddCustomer(newCustomer);
                 Console.WriteLine("Added successfully");
@@ -513,12 +541,18 @@ namespace ConsoleUI_BL
 
         public static void AddStation(IBL.IBL bl)
         {
+            bool flag;
+            int IdStation;
             try
             {
                 Station newStation = new Station();
                 Location locationOfNewStation = new Location();
-                Console.WriteLine("Enter a unique ID number of station");
-                newStation.Id = int.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("Enter a unique ID number of Station");
+                    flag = int.TryParse(Console.ReadLine(), out IdStation);
+                } while (!flag);
+                newStation.Id = IdStation;
                 Console.WriteLine("Enter the name of the station");
                 newStation.Name = Console.ReadLine();
                 Console.WriteLine("Enter the longitude of the station");
