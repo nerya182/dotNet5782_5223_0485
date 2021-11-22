@@ -17,7 +17,6 @@ namespace IBL
         IEnumerable<Station> GetListStation();
         Drone DroneDisplay(int id);
         IEnumerable<Station> GetListStationsWithOpenSlots();
-        IEnumerable<IDAL.DO.Parcel> GetListParcelOnAir();
         IEnumerable<Parcel> GetListParcel();
         IEnumerable<Customer> GetListCustomer();
         IEnumerable<Drone> GetListDrone();
