@@ -32,6 +32,19 @@ namespace BL
         public void AddCustomer(Customer newCustomer)
         {
             IDAL.DO.Customer temp = new IDAL.DO.Customer();
+
+            if (newCustomer.Location.Lattitude > 90 || newCustomer.Location.Lattitude < -90)
+            {
+                throw new IllegalActionException("Invalid lattitude value");
+            }
+            if (newCustomer.Location.Longitude > 180 || newCustomer.Location.Longitude < -180)
+            {
+                throw new IllegalActionException("Invalid longitude value");
+            }
+            if (!dal.CheckId(newCustomer.Id))
+            {
+                throw new IllegalActionException("Incorrect ID number");
+            }
             try
             {
                 temp.Id = newCustomer.Id;
@@ -147,30 +160,34 @@ namespace BL
 
         public void UpdateCustomer(Customer updateCustomer)
         {
+
+            IDAL.DO.Customer customer = dal.GetCustomer(updateCustomer.Id);
+            if (updateCustomer.Name == "" && updateCustomer.Phone == "")
+            {
+                throw new IllegalActionException("Must update at least one feature");
+            } ;
+            char[] stringArray = updateCustomer.Phone.ToCharArray();
+            if (stringArray.Length!=10||stringArray[0]!='0'||stringArray[1]!='5')
+            {
+                throw new IllegalActionException("Invalid cell phone number");
+            }
             try
             {
-                bool change = false;
-                IDAL.DO.Customer customer = dal.GetCustomer(updateCustomer.Id);
                 if (updateCustomer.Name != "")
                 {
                     customer.Name = updateCustomer.Name;
-                    change = true;
+
                 }
                 if (updateCustomer.Phone != "")
-                { 
-                    customer.Phone = updateCustomer.Phone;
-                    change = true;
-                }
-                if (change)
                 {
-                    dal.UpdateCustomer(customer);
+                    customer.Phone = updateCustomer.Phone;
                 }
+                dal.UpdateCustomer(customer);
             }
             catch (Exception e)
             {
-                throw new ItemNotFoundException(updateCustomer.Id, "Enter an existing customer in the system\n");
+                throw new ItemNotFoundException(updateCustomer.Id, "Enter an existing customer in the system", e);
             }
-           
         }
     }
           

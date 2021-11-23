@@ -10,6 +10,15 @@ namespace BL
     {
         public void AddParcel(Parcel newParcel)
         {
+            if (!dal.CheckId(newParcel.Sender.Id))
+            {
+                throw new IllegalActionException("Incorrect ID number of sender");
+
+            }
+            if (!dal.CheckId(newParcel.Target.Id))
+            {
+                throw new IllegalActionException("Incorrect ID number of target");
+            }
             IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
             try
             {
@@ -24,7 +33,6 @@ namespace BL
                 temp.DroneId = 0;
                 temp.Id = dal.GetParcelId();
                 dal.AddParcel(temp);
-
             }
             catch (Exception e)
             {
@@ -35,8 +43,6 @@ namespace BL
         {
             return dal.GetParcelId() - 1;
         }
-
-
         public IEnumerable<Parcel> GetListParcel()
         {
             IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
@@ -69,7 +75,6 @@ namespace BL
         private IDAL.DO.Parcel GetClosestParcel(List<IDAL.DO.Parcel> parcels, DroneToList drone)
         {
             int i = 0, index = 0;
-
             Location closestParcel = new Location();
             IDAL.DO.Customer customer = dal.GetCustomer(parcels[0].SenderId);
             closestParcel.Lattitude = customer.Lattitude;
@@ -102,27 +107,22 @@ namespace BL
             temp.Creating = parcel.Creating;
             temp.Delivered = parcel.Delivered;
             temp.PickedUp = parcel.PickedUp;
-
             if (parcel.DroneId != 0)
             {
                 DroneToList droneToList = listDrone.Find(i => i.Id == parcel.DroneId);
-                // DroneToList droneToList = GetDroneFromLstDrone(parcel.DroneId);
                 droneInParcel.DroneId = droneToList.Id;
                 droneInParcel.location = droneToList.Location;
                 droneInParcel.Battery = droneToList.Battery;
                 temp.drone = droneInParcel;
             }
-            
             IDAL.DO.Customer sender = dal.GetCustomer(parcel.SenderId);
             customerInParcel1.Id = sender.Id;
             customerInParcel1.Name = sender.Name;
             temp.Sender = customerInParcel1;
-
             IDAL.DO.Customer target = dal.GetCustomer(parcel.TargetId);
             customerInParcel2.Id = target.Id;
             customerInParcel2.Name = target.Name;
             temp.Target = customerInParcel2;
-
             return temp;
         }
     }

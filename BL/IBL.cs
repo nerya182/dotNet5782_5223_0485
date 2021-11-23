@@ -34,7 +34,8 @@ namespace IBL
         Customer CustomerDisplay(int id);
         Parcel ParcelDisplay(int id);
         void UpdateCustomer(Customer updateCustomer);
-        void UpdateStation(Station updateStation, int chargingPositions);
+        void UpdateStationPositions(int stationId, int chargingPositions);
         int GetParcelId();
+        void UpdateStationName(int id, string name);
     }
 }

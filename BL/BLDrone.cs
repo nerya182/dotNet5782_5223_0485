@@ -114,7 +114,6 @@ namespace BL
         public void AddDrone(DroneToList newDrone, int chargingStationId)
         {
             bool flag = false;
-
             IDAL.DO.Drone temp = new IDAL.DO.Drone();
             temp.Id = newDrone.Id;
             temp.Model = newDrone.Model;
@@ -123,32 +122,29 @@ namespace BL
             newDrone.Battery = r.Next(20, 41);
             newDrone.Status = DroneStatuses.Charging;
             newDrone.ParcelBeingPassedId = 0;
-            foreach (var objStation in dal.ListBaseStation())
+            IDAL.DO.Station chargingStation = dal.ListBaseStation().ToList().Find(i => i.Id == chargingStationId);
+            if (chargingStation.Id!=0)
             {
-                if (objStation.Id == chargingStationId)
+                Location laLocationOfNewDrone = new Location()
+                    {Lattitude = chargingStation.Longitude, Longitude = chargingStation.Longitude};
+                newDrone.Location = laLocationOfNewDrone;
+                IDAL.DO.DroneCharge droneToCharge = new IDAL.DO.DroneCharge()
+                    {StationId = chargingStation.Id, DroneId = newDrone.Id, EntryTime = DateTime.Now};
+                dal.AddDroneToCharge(droneToCharge);
+                try
                 {
-                    Location laLocationOfNewDrone = new Location();
-                    laLocationOfNewDrone.Lattitude = objStation.Lattitude;
-                    laLocationOfNewDrone.Longitude = objStation.Longitude;
-                    newDrone.Location = laLocationOfNewDrone;
-                    IDAL.DO.DroneCharge droneToCharge = new IDAL.DO.DroneCharge() { StationId = objStation.Id, DroneId = newDrone.Id, EntryTime = DateTime.Now };
-                    dal.AddDroneToCharge(droneToCharge);
-                    flag = true;
-                    break;
+                    dal.AddDrone(temp);
+                    listDrone.Add(newDrone);
+                }
+                catch (Exception e)
+                {
+                    throw new ItemAlreadyExistsException(temp.Id, "Enter a new drone number", e);
                 }
             }
-            if (!flag)
+            else
             {
-                throw new ItemNotFoundException(chargingStationId, "Enter an existing station number in the system for initial charging of the drone\n");
-            }
-            try
-            {
-                dal.AddDrone(temp);
-                listDrone.Add(newDrone);
-            }
-            catch (Exception e)
-            {
-                throw new ItemAlreadyExistsException(temp.Id, "Enter a new drone number", e);
+                throw new ItemNotFoundException(chargingStationId,
+                    "Enter an existing station number in the system for initial charging of the drone\n");
             }
         }
         public void UpdateDrone(DroneToList newDrone)
@@ -278,6 +274,16 @@ namespace BL
         public void ParcelCollectionByDrone(int droneId)
         {
             DroneToList drone = listDrone.Find(i => i.Id == droneId);
+            if (drone==null)
+            {
+                throw new ItemNotFoundException(droneId, "Enter an existing skimmer number in the system");
+            }
+
+            if (drone.Status!=DroneStatuses.Delivery)
+            {
+                throw new IllegalActionException("The drone is not in delivery mode");
+            }
+            
             IDAL.DO.Parcel parcel = dal.GetParcel(drone.ParcelBeingPassedId);
             IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
             if (parcel.Affiliation != DateTime.MinValue && parcel.PickedUp == DateTime.MinValue && parcel.DroneId == drone.Id && drone.Status == DroneStatuses.Delivery)
@@ -292,7 +298,7 @@ namespace BL
             }
             else
             {
-                throw new IllegalActionException("The drone is not in delivery mode / not associated with this parcel\n");
+                throw new IllegalActionException("The drone is not  not associated with this parcel");
             }
         }
 
@@ -303,7 +309,7 @@ namespace BL
             IDAL.DO.Drone d = dal.ListDrone().ToList().Find(i => i.Id == droneId);
             if (drone == null)
             {
-                throw new ItemNotFoundException(droneId);
+                throw new ItemNotFoundException(droneId, "Enter an existing skimmer number in the system");
             }
             if (drone.Status == DroneStatuses.Charging || drone.Status == DroneStatuses.Delivery)
             {
@@ -369,7 +375,7 @@ namespace BL
         public void ReleaseDroneFromCharging(int droneId)
         {
             DateTime timeOfCharging = DateTime.MinValue;
-            var drone = listDrone.Find(i => i.Id == droneId);
+            DroneToList drone = listDrone.Find(i => i.Id == droneId);
             if (drone == null)
             {
                 throw new ItemNotFoundException(droneId, "Enter an existing drone number in the system");
@@ -390,10 +396,10 @@ namespace BL
         }
         public void SendingDroneForCharging(int droneId)
         {
-            var drone = listDrone.Find(i => i.Id == droneId);
+            DroneToList drone = listDrone.Find(i => i.Id == droneId);
             if (drone == null)
             {
-                throw new ItemNotFoundException(droneId);
+                throw new ItemNotFoundException(droneId, "Enter an existing skimmer number in the system");
             }
             if (drone.Status != DroneStatuses.Available)
             {

@@ -44,10 +44,11 @@ namespace IDAL
         double GetChargeSpeed();
         double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2);
         double Deg2rad(double deg);
+        bool CheckId(int id);
         int AvailableChargeSlotsInStation(int id);
         double GetElectricUsageNumber(WeightCategories weight);
         void UpdateCustomer(Customer updateCustomer);
-        void UpdateStation(Station station, int chargingPositions);
+        void UpdateStation(Station station);
         void UpdateDrone(Drone updateDrone);
        // int GetParcelId();
 

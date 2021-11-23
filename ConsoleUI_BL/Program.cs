@@ -388,11 +388,10 @@ namespace ConsoleUI_BL
         private static void UpdateStation(IBL.IBL bl)
         {
             bool flag;
-            int IdStation;
+            int IdStation, positions=0;
+            string chargingPositions;
             try
             {
-                string input="";
-                int chargingPositions = -1;
                 Station updateStation = new Station();
                 do
                 {
@@ -402,13 +401,15 @@ namespace ConsoleUI_BL
                 updateStation.Id = IdStation;
                 Console.WriteLine("Insert the new name of the station or click enter");
                 updateStation.Name = Console.ReadLine();
-                Console.WriteLine("Insert the total amount of charging of the station or click enter");
-                input = Console.ReadLine();
-                if (input!="")
+                do
                 {
-                    chargingPositions = int.Parse(input);
-                }
-                bl.UpdateStation(updateStation,chargingPositions);
+                    Console.WriteLine("Insert the total amount of charging of the station or click enter");
+                    chargingPositions=Console.ReadLine();
+                    if (chargingPositions =="") { flag = true; }
+                    else{flag=int.TryParse(chargingPositions,out positions);}
+                } while (!flag);
+                if (chargingPositions != "") bl.UpdateStationPositions(updateStation.Id, positions);
+                if (updateStation.Name != "") bl.UpdateStationName(updateStation.Id, updateStation.Name);
                 Console.WriteLine("The update was successful");
             }
             catch (Exception e)
@@ -444,8 +445,8 @@ namespace ConsoleUI_BL
         private static void AddCustomer(IBL.IBL bl)
         {
             bool flag;
-            int IdCustomer, num;
-
+            int IdCustomer;
+            double num;
             try
             {
                 Customer newCustomer = new Customer();
@@ -456,20 +457,20 @@ namespace ConsoleUI_BL
                     flag = int.TryParse(Console.ReadLine(), out IdCustomer);
                 } while (!flag);
                 newCustomer.Id = IdCustomer;
-                Console.WriteLine(" Enter the customer name");
+                Console.WriteLine("Enter the customer name");
                 newCustomer.Name = Console.ReadLine();
-                Console.WriteLine(" Enter a phone number");
+                Console.WriteLine("Enter a phone number");
                 newCustomer.Phone = Console.ReadLine();
                 do
                 {
                     Console.WriteLine("What is your Latitude?");
-                    flag = int.TryParse(Console.ReadLine(), out num);
+                    flag = double.TryParse(Console.ReadLine(), out num);
                 } while (!flag);
                 locationOfnewCustomer.Lattitude=num;
                 do
                 {
                     Console.WriteLine("What is your longitude?");
-                    flag = int.TryParse(Console.ReadLine(), out num);
+                    flag = double.TryParse(Console.ReadLine(), out num);
                 } while (!flag);
                 locationOfnewCustomer.Longitude = num;
                 newCustomer.Location = locationOfnewCustomer;
@@ -542,7 +543,7 @@ namespace ConsoleUI_BL
         public static void AddStation(IBL.IBL bl)
         {
             bool flag;
-            int IdStation;
+            int idStation;
             try
             {
                 Station newStation = new Station();
@@ -550,9 +551,9 @@ namespace ConsoleUI_BL
                 do
                 {
                     Console.WriteLine("Enter a unique ID number of Station");
-                    flag = int.TryParse(Console.ReadLine(), out IdStation);
+                    flag = int.TryParse(Console.ReadLine(), out idStation);
                 } while (!flag);
-                newStation.Id = IdStation;
+                newStation.Id = idStation;
                 Console.WriteLine("Enter the name of the station");
                 newStation.Name = Console.ReadLine();
                 Console.WriteLine("Enter the longitude of the station");
@@ -570,11 +571,6 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine(e);
             }
-        }
-
-        public static void PrintAll<T>(T t)
-        {
-            Console.WriteLine(t);
         }
     }  
 }

@@ -11,6 +11,14 @@ namespace BL
         public void AddStation(Station newStation)
         {
             IDAL.DO.Station temp = new IDAL.DO.Station();
+            if (newStation.location.Lattitude > 90 || newStation.location.Lattitude < -90)
+            {
+                throw new IllegalActionException("Invalid lattitude value");
+            } 
+            if (newStation.location.Longitude > 180 || newStation.location.Longitude < -180)
+            {
+                throw new IllegalActionException("Invalid longitude value");
+            }
             try
             {
                 temp.Id = newStation.Id;
@@ -45,7 +53,6 @@ namespace BL
             }
             return stations[index];
         }
-
         public IEnumerable<Station> GetListStation()
         {
             IEnumerable<IDAL.DO.Station> stations = dal.ListBaseStation();
@@ -76,7 +83,6 @@ namespace BL
             IDAL.DO.Station station = dal.GetStation(id);
             IEnumerable<IDAL.DO.DroneCharge> droneCharge = dal.ListDroneCharge();
             List<DroneInCharging> lstDrnInChrg = new List<DroneInCharging>();
-            
             Station temp = new Station();
             Location location = new Location();
             location.Longitude = station.Longitude;
@@ -99,13 +105,26 @@ namespace BL
             temp.droneInCharging = lstDrnInChrg;
             return temp;
         }
-        public void UpdateStation(Station updateStation, int chargingPositions)
+        public void UpdateStationPositions(int stationId, int chargingPositions)
         {
             try
             {
                 List<IDAL.DO.Station> Stations = dal.ListBaseStation().ToList();
-                IDAL.DO.Station station = new IDAL.DO.Station { Id = updateStation.Id, Name = updateStation.Name };
-                dal.UpdateStation(station, chargingPositions);
+                IDAL.DO.Station station = new IDAL.DO.Station { Id =stationId,AvailableChargeSlots = chargingPositions};
+                dal.UpdateStation(station);
+            }
+            catch (Exception e)
+            {
+                throw new IllegalActionException("Enter the correct number of charging points", e);
+            }
+        }
+        public void UpdateStationName(int stationId, string stationName)
+        {
+            try
+            {
+                List<IDAL.DO.Station> stations = dal.ListBaseStation().ToList();
+                IDAL.DO.Station station = new IDAL.DO.Station { Id = stationId,Name = stationName };
+                dal.UpdateStation(station);
             }
             catch (Exception e)
             {

@@ -684,7 +684,7 @@ namespace DalObject
             }
         }
 
-        public void UpdateStation(Station updateStation, int chargingPositions)
+        public void UpdateStation(Station updateStation)
         {
             bool flag = false;
             for (int i = 0; i < Stations.Count(); i++)
@@ -696,16 +696,16 @@ namespace DalObject
                     {
                         s.Name = updateStation.Name;
                     }
-                    if (chargingPositions !=-1)
+                    if (updateStation.AvailableChargeSlots !=0)
                     {
-                        if (chargingPositions -AvailableChargeSlotsInStation(updateStation.Id) < 0)
+                        if (updateStation.AvailableChargeSlots -AvailableChargeSlotsInStation(updateStation.Id) < 0)
                         {
                             throw new IllegalActionException("The total amount of charging stations is invalid\n");
                         }
                         else
                         {
                             s.AvailableChargeSlots =
-                                chargingPositions -AvailableChargeSlotsInStation(updateStation.Id);
+                                updateStation.AvailableChargeSlots -AvailableChargeSlotsInStation(updateStation.Id);
                         }
                     }
                     Stations[i] = s;
@@ -738,8 +738,40 @@ namespace DalObject
                 throw new ItemNotFoundException(updateDrone.Id, "Enter an existing drone number in the system\n");
             }
         }
+
+        public bool CheckId(int id)
+        {
+            int number = id / 10;
+            int s = 0, kefel=0, SumOfDigitsOfProduct=0;
+            for (int i = 1; i <= 8; i++)
+            {
+                if (i % 2 == 0)
+                    kefel = (number % 10);
+                else
+                    kefel = (number % 10) * 2;
+                number /= 10;
+                SumOfDigitsOfProduct = sumDigits(kefel);
+                s += SumOfDigitsOfProduct;
+            }
+            if (s % 10 == 0)
+                return 0==id%10;
+            else
+                return (10 - s % 10)==id%10;
+        }
+        private int sumDigits(int num)
+        {
+            int s = 0;
+            while (num > 0)
+            {
+                s = s + num % 10;
+                num /= 10;
+            }
+            return s;
+        }
     }
 }
+
+
 
 
 
