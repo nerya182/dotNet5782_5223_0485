@@ -121,26 +121,27 @@ namespace ConsoleUI_BL
 
         public static void DisplayOptions(IBL.IBL bl, int input)
         {
-            Console.WriteLine("What would you like to bl?\n" +
+            Console.WriteLine("What would you like to do?\n" +
                            "1- Base Stations display\n" +
                            "2- Drones display \n" +
                            "3- Customers display \n" +
                            "4- parcels display \n");
             int id = new int();
+            bool flag = new bool();
             int.TryParse(Console.ReadLine(), out input);
             switch (input)
             {
                 case 1:
-                    DisplayStation(bl, id);
+                    DisplayStation(bl, id, flag);
                     break;
                 case 2:
-                    DisplayDrone(bl, id);
+                    DisplayDrone(bl, id, flag);
                     break;
                 case 3:
-                    DisplayCustomer(bl, id);   
+                    DisplayCustomer(bl, id, flag);   
                     break;
                 case 4:
-                    DisplayParcel(bl, id);              
+                    DisplayParcel(bl, id, flag);              
                     break;
             }
         }
@@ -251,31 +252,43 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void DisplayStation(IBL.IBL bl, int id)
+        private static void DisplayStation(IBL.IBL bl, int id, bool flag)
         {
-            Console.WriteLine("Enter the station ID number");
-            int.TryParse(Console.ReadLine(), out id);
+            do
+            {
+                Console.WriteLine("Enter the station ID number");
+                flag = int.TryParse(Console.ReadLine(), out id);
+            } while (!flag);
             Console.WriteLine(bl.BaseStationDisplay(id));
         }
 
-        private static void DisplayDrone(IBL.IBL bl, int id)
+        private static void DisplayDrone(IBL.IBL bl, int id, bool flag)
         {
-            Console.WriteLine("Enter the Drone ID number");
-            int.TryParse(Console.ReadLine(), out id);
+            do
+            {
+                Console.WriteLine("Enter the Drone ID number");
+                flag = int.TryParse(Console.ReadLine(), out id);
+            } while (!flag);
             Console.WriteLine(bl.DroneDisplay(id));
         }
 
-        private static void DisplayCustomer(IBL.IBL bl, int id)
+        private static void DisplayCustomer(IBL.IBL bl, int id, bool flag)
         {
-            Console.WriteLine("Enter the Customer ID number");
-            int.TryParse(Console.ReadLine(), out id);
+            do
+            {
+                Console.WriteLine("Enter the Customer ID number");
+                flag = int.TryParse(Console.ReadLine(), out id);
+            } while (!flag);
             Console.WriteLine(bl.CustomerDisplay(id));
         }
 
-        private static void DisplayParcel(IBL.IBL bl, int id)
+        private static void DisplayParcel(IBL.IBL bl, int id, bool flag)
         {
-            Console.WriteLine("Enter a parcel ID number");
-            int.TryParse(Console.ReadLine(), out id);
+            do
+            {
+                Console.WriteLine("Enter the parcel ID number");
+                flag = int.TryParse(Console.ReadLine(), out id);
+            } while (!flag);
             Console.WriteLine(bl.ParcelDisplay(id));
         }
 
@@ -284,15 +297,20 @@ namespace ConsoleUI_BL
             try
             {
                 int droneId;
-                Console.WriteLine("Enter a unique ID number of drone");
-                droneId = int.Parse(Console.ReadLine());
+                bool flag;
+                do
+                {
+                    Console.WriteLine("Enter a unique ID number of drone");
+                    flag = int.TryParse(Console.ReadLine(), out droneId);
+                } while (!flag);
                 bl.DeliveryOfParcelByDrone(droneId);
+                Console.WriteLine("The update was successful");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("The update was successful");
+
         }
 
         private static void ParcelCollectionByDrone(IBL.IBL bl)
@@ -300,8 +318,12 @@ namespace ConsoleUI_BL
             try
             {
                 int droneId;
-                Console.WriteLine("Enter a unique ID number of drone");
-                droneId = int.Parse(Console.ReadLine());
+                bool flag;
+                do
+                {
+                    Console.WriteLine("Enter a unique ID number of drone");
+                    flag = int.TryParse(Console.ReadLine(), out droneId);
+                } while (!flag);
                 bl.ParcelCollectionByDrone(droneId);
                 Console.WriteLine("The update was successful");
             }
@@ -316,8 +338,12 @@ namespace ConsoleUI_BL
             try
             {
                 int droneId;
-                Console.WriteLine("Enter a unique ID number of drone");
-                droneId = int.Parse(Console.ReadLine());
+                bool flag;
+                do
+                {
+                    Console.WriteLine("Enter a unique ID number of drone");
+                    flag = int.TryParse(Console.ReadLine(), out droneId);
+                } while (!flag);
                 bl.AffiliateParcelToDrone(droneId);
                 Console.WriteLine("The update was successful");
             }
@@ -332,8 +358,12 @@ namespace ConsoleUI_BL
             try
             {
                 int droneId;
-                Console.WriteLine("Enter a unique ID number of drone");
-                droneId = int.Parse(Console.ReadLine());
+                bool flag;
+                do
+                {
+                    Console.WriteLine("Enter a unique ID number of drone");
+                    flag = int.TryParse(Console.ReadLine(), out droneId);
+                } while (!flag);
                 bl.ReleaseDroneFromCharging(droneId);
                 Console.WriteLine("The update was successful");
             }
@@ -348,8 +378,12 @@ namespace ConsoleUI_BL
             try
             {
                 int droneId;
-                Console.WriteLine("Enter a unique ID number of drone");
-                droneId = int.Parse(Console.ReadLine());
+                bool flag;
+                do
+                {
+                    Console.WriteLine("Enter a unique ID number of drone");
+                    flag = int.TryParse(Console.ReadLine(), out droneId);
+                } while (!flag);
                 bl.SendingDroneForCharging(droneId);
                 Console.WriteLine("The update was successful");
             }
@@ -485,17 +519,27 @@ namespace ConsoleUI_BL
 
         private static void AddParcel(IBL.IBL bl)
         {
+            bool flag;
+            int IdCustomer;
             try
             {
                 Parcel newParcel = new Parcel();
                 CustomerInParcel sender = new CustomerInParcel();
                 CustomerInParcel target = new CustomerInParcel();
                 DroneInParcel droneInParcel = new DroneInParcel();
-                Console.WriteLine("Enter a sending customer ID number");
-                sender.Id = int.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("Enter a sending customer ID number");
+                    flag = int.TryParse(Console.ReadLine(), out IdCustomer);
+                } while (!flag);
+                sender.Id = IdCustomer;
                 newParcel.Sender = sender;
-                Console.WriteLine("Enter a receives Customer  ID number");
-                target.Id = int.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("Enter a target Customer  ID number");
+                    flag = int.TryParse(Console.ReadLine(), out IdCustomer);
+                } while (!flag);
+                target.Id = IdCustomer;
                 newParcel.Target = target;
                 Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy");
                 newParcel.Weight = (WeightCategories) int.Parse(Console.ReadLine());
@@ -519,18 +563,28 @@ namespace ConsoleUI_BL
 
         private static void AddDrone(IBL.IBL bl)
         {
+            bool flag;
+            int Id;
             try
             {
                 int chargingStationId;
                 DroneToList newDrone = new DroneToList();
-                Console.WriteLine("Enter a unique ID number");
-                newDrone.Id = int.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("Enter a unique ID number");
+                    flag = int.TryParse(Console.ReadLine(), out Id);
+                } while (!flag);
+                newDrone.Id = Id;
                 Console.WriteLine("Insert the model of the drone");
                 newDrone.Model = Console.ReadLine();
                 Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy");
                 newDrone.MaxWeight = (WeightCategories)int.Parse(Console.ReadLine());
-                Console.WriteLine("Enter a unique ID number station to put the drone initial charge ");
-                chargingStationId = int.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("Enter a unique ID number station to put the drone in initial charge");
+                    flag = int.TryParse(Console.ReadLine(), out Id);
+                } while (!flag);
+                chargingStationId = Id;
                 bl.AddDrone(newDrone, chargingStationId);
                 Console.WriteLine("Added successfully");
             }
@@ -543,7 +597,8 @@ namespace ConsoleUI_BL
         public static void AddStation(IBL.IBL bl)
         {
             bool flag;
-            int idStation;
+            int idStation, number;
+            double num;
             try
             {
                 Station newStation = new Station();
@@ -556,13 +611,25 @@ namespace ConsoleUI_BL
                 newStation.Id = idStation;
                 Console.WriteLine("Enter the name of the station");
                 newStation.Name = Console.ReadLine();
-                Console.WriteLine("Enter the longitude of the station");
-                locationOfNewStation.Longitude= double.Parse(Console.ReadLine());
-                Console.WriteLine("Enter the latitude of the station");
-                locationOfNewStation.Lattitude = double.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("What is your Longtitude?");
+                    flag = double.TryParse(Console.ReadLine(), out num);
+                } while (!flag);
+                locationOfNewStation.Longitude = num;
+                do
+                {
+                    Console.WriteLine("What is your Lattitude?");
+                    flag = double.TryParse(Console.ReadLine(), out num);
+                } while (!flag);
+                locationOfNewStation.Lattitude = num;
                 newStation.location = locationOfNewStation;
-                Console.WriteLine("Enter the number of charging points available at the station");
-                newStation.AvailableChargeSlots = int.Parse(Console.ReadLine());
+                do
+                {
+                    Console.WriteLine("Enter the number of charging points available at the station");
+                    flag = int.TryParse(Console.ReadLine(), out number);
+                } while (!flag);
+                newStation.AvailableChargeSlots = number;
                 newStation.droneInCharging = new List<DroneInCharging>(0);
                 bl.AddStation(newStation);
                 Console.WriteLine("Added successfully");
