@@ -8,6 +8,11 @@ namespace BL
 {
     public partial class BL : IBL.IBL
     {
+        /// <summary>
+        /// Returns the closest station to the customer
+        /// </summary>
+        /// <param name="customerSender"> customer which we are looking for the cloosest station to</param>
+        /// <returns> station that is closest to customer</returns>
         private IDAL.DO.Station GetClosestCustomer(IDAL.DO.Customer customerSender)
         {
             List<IDAL.DO.Station> stations = dal.ListBaseStation().ToList();
@@ -29,6 +34,10 @@ namespace BL
             return stations[index];
         }
 
+        /// <summary>
+        /// Adding a customer to our list of customers in data source
+        /// </summary>
+        /// <param name="newCustomer"> Customer of type IBL BO</param>
         public void AddCustomer(Customer newCustomer)
         {
             IDAL.DO.Customer temp = new IDAL.DO.Customer();
@@ -59,7 +68,10 @@ namespace BL
                 throw new ItemAlreadyExistsException(temp.Id, "Enter a new customer number\n", e);
             }
         }
-
+        /// <summary>
+        /// Retrieving our list of customers of type IBL BO
+        /// </summary>
+        /// <returns> IEnumeravle of customers</returns>
         public IEnumerable<Customer> GetListCustomer()
         {
             IEnumerable<IDAL.DO.Customer> customers = dal.ListCustomer();
@@ -72,6 +84,11 @@ namespace BL
             return temp;
         }
 
+        /// <summary>
+        /// Retrieving the info needed to transform the 'customer' into a 'customertolist'
+        /// </summary>
+        /// <param name="objCustomer"> customer to be transformed</param>
+        /// <returns> customertolist after we've found necessary info </returns>
         public CustomerToList MakeCustomerToList(Customer objCustomer)
         {
             CustomerToList customerToList = new CustomerToList();
@@ -96,7 +113,11 @@ namespace BL
             customerToList.DeliveredNotSuppliedParcels = objCustomer.FromCustomer.Count - count2;
             return customerToList;
         }
-
+        /// <summary>
+        /// Retrieving Electric usage number
+        /// </summary>
+        /// <param name="weight"> Weight </param>
+        /// <returns> Electric usage number</returns>
         private double GetElectricUsageNumber(IDAL.DO.WeightCategories weight)
         {
             if (weight == IDAL.DO.WeightCategories.Light) { return LightElec; }
@@ -106,6 +127,11 @@ namespace BL
             return AvailbleElec;
         }
 
+        /// <summary>
+        /// Returning a customer of type IBL BO according to ID in order to display
+        /// </summary>
+        /// <param name="id"> Customer ID</param>
+        /// <returns> Customer to be displayed</returns>
         public Customer CustomerDisplay(int id)
         {
             IDAL.DO.Customer customer = dal.GetCustomer(id);
@@ -158,6 +184,10 @@ namespace BL
             return temp;
         }
 
+        /// <summary>
+        /// Updating the customer's info
+        /// </summary>
+        /// <param name="updateCustomer">Customer to be updated </param>
         public void UpdateCustomer(Customer updateCustomer)
         {
 

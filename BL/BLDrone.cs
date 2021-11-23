@@ -15,6 +15,9 @@ namespace BL
         public double IntermeduateElec { get; set; }
         public double HeavyElec { get; set; }
         public double ChargePerHours { get; set; }
+        /// <summary>
+        /// BL Ctor
+        /// </summary>
         public BL()
         {
             Random R = new Random();
@@ -111,9 +114,13 @@ namespace BL
                 }
             }
         }
+        /// <summary>
+        /// Adding a drone
+        /// </summary>
+        /// <param name="newDrone"> Drone to be added </param>
+        /// <param name="chargingStationId"> number of station we wish to charge the drone </param>
         public void AddDrone(DroneToList newDrone, int chargingStationId)
         {
-            bool flag = false;
             IDAL.DO.Drone temp = new IDAL.DO.Drone();
             temp.Id = newDrone.Id;
             temp.Model = newDrone.Model;
@@ -147,6 +154,10 @@ namespace BL
                     "Enter an existing station number in the system for initial charging of the drone\n");
             }
         }
+        /// <summary>
+        /// Updating a drone's model
+        /// </summary>
+        /// <param name="newDrone"> Drone to be updated </param>
         public void UpdateDrone(DroneToList newDrone)
         {
             try
@@ -167,6 +178,11 @@ namespace BL
                 throw new ItemNotFoundException(newDrone.Id, "Enter an existing drone number in the system", e);
             }
         }
+        /// <summary>
+        /// Returning Drone according to ID in order to be displayed
+        /// </summary>
+        /// <param name="id"> drone ID</param>
+        /// <returns> Drone to be displayed </returns>
         public Drone DroneDisplay(int id)
         {
             IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
@@ -223,6 +239,10 @@ namespace BL
             temp.ParcelTransfer = prclTrnsfr;
             return temp;
         }
+        /// <summary>
+        /// Retrieving the list of drones
+        /// </summary>
+        /// <returns> UEnumerable of drones </returns>
         public IEnumerable<Drone> GetListDrone()
         {
             IEnumerable<IDAL.DO.Drone> drones = dal.ListDrone();
@@ -234,6 +254,11 @@ namespace BL
             }
             return temp;
         }
+        /// <summary>
+        /// Retrieving information to transform drone into dronetolist and returning it
+        /// </summary>
+        /// <param name="objDrone"> drone to be transformed to dronetolist</param>
+        /// <returns> dronetolist after we've found necessary info</returns>
         public DroneToList MakeDroneToList(Drone objDrone)
         {
             DroneToList droneToList = new DroneToList(); 
@@ -249,7 +274,10 @@ namespace BL
                 droneToList.ParcelBeingPassedId = objDrone.ParcelTransfer.Id;
             return droneToList;
         }
-
+        /// <summary>
+        /// Drone delivering the parcel that answers the criterias that were given to us
+        /// </summary>
+        /// <param name="droneId"> Drone ID</param>
         public void DeliveryOfParcelByDrone(int droneId)
         {
             DroneToList drone = listDrone.Find(i => i.Id == droneId);
@@ -271,6 +299,10 @@ namespace BL
                 throw new IllegalActionException("The parcel was not collected by the drone\n");
             }
         }
+        /// <summary>
+        /// Drone picking up the parcel he was assigned to
+        /// </summary>
+        /// <param name="droneId"> Drone ID</param>
         public void ParcelCollectionByDrone(int droneId)
         {
             DroneToList drone = listDrone.Find(i => i.Id == droneId);
@@ -301,7 +333,10 @@ namespace BL
                 throw new IllegalActionException("The drone is not  not associated with this parcel");
             }
         }
-
+        /// <summary>
+        /// Affiliating drone with the parcel that answers the criterias that were given to us
+        /// </summary>
+        /// <param name="droneId"> Drone ID</param>
         public void AffiliateParcelToDrone(int droneId)
         {
             bool flag = false;
@@ -357,7 +392,14 @@ namespace BL
                 throw new IllegalActionException("There is not enough battery for the drone to make the shipment");
             }
         }
-
+        /// <summary>
+        /// Returning the amount of battery needed in order to make the shipment
+        /// </summary>
+        /// <param name="drone"> Drone that needs to make the shipment</param>
+        /// <param name="customerSender"> The sender</param>
+        /// <param name="customerTarget"> The target</param>
+        /// <param name="weight"> Weight the Drone can carry</param>
+        /// <returns></returns>
         private double GetMinimumBatteryToShip(DroneToList drone, IDAL.DO.Customer customerSender, IDAL.DO.Customer customerTarget, IDAL.DO.WeightCategories weight)
         {
             double distance1 = dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,//distance to send
@@ -372,6 +414,10 @@ namespace BL
             return (distance2 * GetElectricUsageNumber(weight) + distance1 * AvailbleElec +
                     distance3 * AvailbleElec);
         }
+        /// <summary>
+        /// Releasing drone from charging according to ID
+        /// </summary>
+        /// <param name="droneId"> Drone ID</param>
         public void ReleaseDroneFromCharging(int droneId)
         {
             DateTime timeOfCharging = DateTime.MinValue;
@@ -394,6 +440,10 @@ namespace BL
                 drone.Battery = 100;
             }
         }
+        /// <summary>
+        /// Charging a drone according to ID
+        /// </summary>
+        /// <param name="droneId"> Drone ID</param>
         public void SendingDroneForCharging(int droneId)
         {
             DroneToList drone = listDrone.Find(i => i.Id == droneId);
@@ -427,6 +477,11 @@ namespace BL
 
         }
 
+        /// <summary>
+        /// Recieving a dronetolist
+        /// </summary>
+        /// <param name="id"> Drone ID</param>
+        /// <returns> Dronetolist we we're looking for</returns>
         public DroneToList GetDroneFromLstDrone(int id)
         {
             bool flag = false;

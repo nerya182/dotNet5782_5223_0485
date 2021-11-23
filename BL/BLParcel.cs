@@ -8,6 +8,10 @@ namespace BL
 {
     public partial class BL : IBL.IBL
     {
+        /// <summary>
+        /// Adding a Parcel to our Data Source
+        /// </summary>
+        /// <param name="newParcel"> Parecl to be added </param>
         public void AddParcel(Parcel newParcel)
         {
             if (!dal.CheckId(newParcel.Sender.Id))
@@ -39,10 +43,18 @@ namespace BL
                 throw new ItemAlreadyExistsException(temp.Id, "Enter a new customer number\n", e);
             }
         }
+        /// <summary>
+        /// Receives the last Parcel ID
+        /// </summary>
+        /// <returns> ID of parcel</returns>
         public int GetParcelId()
         {
             return dal.GetParcelId() - 1;
         }
+        /// <summary>
+        /// Returns the list of parcels
+        /// </summary>
+        /// <returns> IEnumeranle of parcels</returns>
         public IEnumerable<Parcel> GetListParcel()
         {
             IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
@@ -54,6 +66,11 @@ namespace BL
             }
             return temp;
         }
+        /// <summary>
+        /// Retrieving info to transform parcel into parceltolist and returning it
+        /// </summary>
+        /// <param name="objParcel"> Parcel to be transformed</param>
+        /// <returns> parceltolist after we've found all its necessary fields</returns>
         public ParcelToList MakeParcelToList(Parcel objParcel)
         {
             ParcelToList parcelToList = new ParcelToList();
@@ -72,6 +89,12 @@ namespace BL
                 parcelToList.ShipmentStatus = ParcelStatus.Created;
             return parcelToList;
         }
+        /// <summary>
+        /// Returns the closest parcel to the drone in order for him to pick it up
+        /// </summary>
+        /// <param name="parcels"> list of parcels </param>
+        /// <param name="drone"> drone thta will take the parcel</param>
+        /// <returns> parcel that is closest </returns>
         private IDAL.DO.Parcel GetClosestParcel(List<IDAL.DO.Parcel> parcels, DroneToList drone)
         {
             int i = 0, index = 0;
@@ -93,6 +116,11 @@ namespace BL
             }
             return parcels[index];
         }
+        /// <summary>
+        /// returning parcel according to ID in order to display
+        /// </summary>
+        /// <param name="id"> Id number</param>
+        /// <returns> Parcel to be displayed </returns>
         public Parcel ParcelDisplay(int id)
         {
             IDAL.DO.Parcel parcel = dal.GetParcel(id);

@@ -180,6 +180,10 @@ namespace ConsoleUI_BL
                     break;
             }
         }
+        /// <summary>
+        /// View the list of stations of type stationtolist
+        /// </summary>
+        /// <param name="bl"></param>
         private static void ViewStationList(IBL.IBL bl)
         {
             IEnumerable<Station> PrintStation = new List<Station>();
@@ -191,6 +195,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// View the list of drones of type dronetolist
+        /// </summary>
+        /// <param name="bl"></param>
         private static void ViewDroneList(IBL.IBL bl)
         {
             IEnumerable<Drone> PrintDrone = new List<Drone>();
@@ -202,6 +210,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// view the list of customers of type customertolist
+        /// </summary>
+        /// <param name="bl"></param>
         private static void ViewCustomerList(IBL.IBL bl)
         {
             IEnumerable<Customer> PrintCustomer = new List<Customer>();
@@ -213,6 +225,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// View the list of parcels of type parceltolist
+        /// </summary>
+        /// <param name="bl"></param>
         private static void ViewParcelList(IBL.IBL bl)
         {
             IEnumerable<Parcel> PrintParcel = new List<Parcel>();
@@ -224,6 +240,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// view the list of parcels that have not been affiliated with a drone
+        /// </summary>
+        /// <param name="bl"></param>
         private static void ViewParcelOnAirList(IBL.IBL bl)
         {
             IEnumerable<Parcel> PrintParcel = new List<Parcel>();
@@ -238,6 +258,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// View the list of stations that have open charging slots
+        /// </summary>
+        /// <param name="bl"></param>
         private static void ViewStationsWithOpenSlotsList(IBL.IBL bl)
         {
             IEnumerable<Station> PrintStation = new List<Station>();
@@ -252,6 +276,12 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// Displaying a station according to its ID
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="id"></param>
+        /// <param name="flag"></param>
         private static void DisplayStation(IBL.IBL bl, int id, bool flag)
         {
             do
@@ -262,6 +292,12 @@ namespace ConsoleUI_BL
             Console.WriteLine(bl.BaseStationDisplay(id));
         }
 
+        /// <summary>
+        /// Displaying a drone according to its ID
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="id"></param>
+        /// <param name="flag"></param>
         private static void DisplayDrone(IBL.IBL bl, int id, bool flag)
         {
             do
@@ -272,6 +308,12 @@ namespace ConsoleUI_BL
             Console.WriteLine(bl.DroneDisplay(id));
         }
 
+        /// <summary>
+        /// Displaying a customer according to its ID
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="id"></param>
+        /// <param name="flag"></param>
         private static void DisplayCustomer(IBL.IBL bl, int id, bool flag)
         {
             do
@@ -282,6 +324,12 @@ namespace ConsoleUI_BL
             Console.WriteLine(bl.CustomerDisplay(id));
         }
 
+        /// <summary>
+        /// Displaying a parcel according to its ID
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="id"></param>
+        /// <param name="flag"></param>
         private static void DisplayParcel(IBL.IBL bl, int id, bool flag)
         {
             do
@@ -292,6 +340,10 @@ namespace ConsoleUI_BL
             Console.WriteLine(bl.ParcelDisplay(id));
         }
 
+        /// <summary>
+        /// Drone delivering a parcel
+        /// </summary>
+        /// <param name="bl"></param>
         private static void DeliveryOfParcelByDrone(IBL.IBL bl)
         {
             try
@@ -313,6 +365,10 @@ namespace ConsoleUI_BL
 
         }
 
+        /// <summary>
+        /// Drone picking up a parcel
+        /// </summary>
+        /// <param name="bl"></param>
         private static void ParcelCollectionByDrone(IBL.IBL bl)
         {
             try
@@ -333,6 +389,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// Assigning a parcel to a drone
+        /// </summary>
+        /// <param name="bl"></param>
         private static void AffiliateParcelToDrone(IBL.IBL bl)
         {
             try
@@ -353,6 +413,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// Drone being released from charger
+        /// </summary>
+        /// <param name="bl"></param>
         private static void ReleaseDroneFromCharging(IBL.IBL bl)
         {
             try
@@ -373,6 +437,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// Charging a drone
+        /// </summary>
+        /// <param name="bl"></param>
         private static void SendingDroneForCharging(IBL.IBL bl)
         {
             try
@@ -393,6 +461,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// Updating a customer's info
+        /// </summary>
+        /// <param name="bl"></param>
         private static void UpdateCustomer(IBL.IBL bl)
         {
             bool flag;
@@ -419,6 +491,10 @@ namespace ConsoleUI_BL
                 Console.WriteLine(e);
             }
         }
+        /// <summary>
+        /// Updating a stations's info
+        /// </summary>
+        /// <param name="bl"></param>
         private static void UpdateStation(IBL.IBL bl)
         {
             bool flag;
@@ -451,6 +527,10 @@ namespace ConsoleUI_BL
                 Console.WriteLine(e);
             }
         }
+        /// <summary>
+        /// Updating a drone's info
+        /// </summary>
+        /// <param name="bl"></param>
         private static void UpdateDrone(IBL.IBL bl)
         {
             bool flag;
@@ -475,7 +555,10 @@ namespace ConsoleUI_BL
                 Console.WriteLine(e);
             }
         }
-
+        /// <summary>
+        /// Adding a customer
+        /// </summary>
+        /// <param name="bl"></param>
         private static void AddCustomer(IBL.IBL bl)
         {
             bool flag;
@@ -516,7 +599,10 @@ namespace ConsoleUI_BL
                 Console.WriteLine(e);
             }
         }
-
+        /// <summary>
+        /// Adding a parcel
+        /// </summary>
+        /// <param name="bl"></param>
         private static void AddParcel(IBL.IBL bl)
         {
             bool flag;
@@ -561,6 +647,10 @@ namespace ConsoleUI_BL
             Console.WriteLine("Parcel #: " + bl.GetParcelId() );
         }
 
+        /// <summary>
+        /// Adding a drone
+        /// </summary>
+        /// <param name="bl"></param>
         private static void AddDrone(IBL.IBL bl)
         {
             bool flag;
@@ -594,6 +684,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// Adding a station
+        /// </summary>
+        /// <param name="bl"></param>
         public static void AddStation(IBL.IBL bl)
         {
             bool flag;

@@ -8,6 +8,10 @@ namespace BL
 {
     public partial class BL : IBL.IBL
     {
+        /// <summary>
+        /// Adding a station to our data source
+        /// </summary>
+        /// <param name="newStation"> IBL BO type station </param>
         public void AddStation(Station newStation)
         {
             IDAL.DO.Station temp = new IDAL.DO.Station();
@@ -33,6 +37,11 @@ namespace BL
                 throw new ItemAlreadyExistsException(temp.Id, "Enter a new station number\n", e);
             }
         }
+        /// <summary>
+        /// Retrieving the closest station to the drone
+        /// </summary>
+        /// <param name="drone"> drone which we are looking for closest station to</param>
+        /// <returns> closest station </returns>
         private IDAL.DO.Station GetClosestStation(DroneToList drone)
         {
             List<IDAL.DO.Station> stations = dal.ListBaseStation().ToList();
@@ -53,6 +62,10 @@ namespace BL
             }
             return stations[index];
         }
+        /// <summary>
+        /// Returns our list of stations
+        /// </summary>
+        /// <returns> IEnumerable of stations</returns>
         public IEnumerable<Station> GetListStation()
         {
             IEnumerable<IDAL.DO.Station> stations = dal.ListBaseStation();
@@ -64,11 +77,20 @@ namespace BL
             }
             return temp;
         }
+        /// <summary>
+        /// Returns the stations that have an open charge slot
+        /// </summary>
+        /// <returns> IEnumerable of stations </returns>
         public IEnumerable<Station> GetListStationsWithOpenSlots()
         {
             IEnumerable<IDAL.DO.Station> stations = dal.ListStationsWithOpenSlots();
             return (IEnumerable<Station>)stations;
         }
+        /// <summary>
+        /// Retrieving info to transform station into station to list
+        /// </summary>
+        /// <param name="objStation"> Station that we will recieve rest of its info</param>
+        /// <returns> stationto list after we recieved the necessary info </returns>
         public StationToList MakeStationToList(Station objStation)
         {
             StationToList stationToList = new StationToList();
@@ -78,6 +100,11 @@ namespace BL
             stationToList.UsedChargeSlots = objStation.droneInCharging.Count;
             return stationToList;
         }
+        /// <summary>
+        /// Returning a Station according to ID in order to be displayed
+        /// </summary>
+        /// <param name="id"> Id number </param>
+        /// <returns> Station to be displayed </returns>
         public Station BaseStationDisplay(int id)
         {
             IDAL.DO.Station station = dal.GetStation(id);
@@ -105,6 +132,11 @@ namespace BL
             temp.droneInCharging = lstDrnInChrg;
             return temp;
         }
+        /// <summary>
+        /// Updating the amount of available slots the station has
+        /// </summary>
+        /// <param name="stationId"> ID of Station </param>
+        /// <param name="chargingPositions"> Amount of available charge slots </param>
         public void UpdateStationPositions(int stationId, int chargingPositions)
         {
             try
@@ -118,6 +150,11 @@ namespace BL
                 throw new IllegalActionException("Enter the correct number of charging points", e);
             }
         }
+        /// <summary>
+        /// Updating the stations name
+        /// </summary>
+        /// <param name="stationId"> Station ID</param>
+        /// <param name="stationName"> The name that the station will be changed to </param>
         public void UpdateStationName(int stationId, string stationName)
         {
             try
