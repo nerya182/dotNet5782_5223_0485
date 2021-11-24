@@ -21,7 +21,6 @@ namespace BL
         public BL()
         {
             Random R = new Random();
-
             dal = new DalObject.DalObject();
             double[] elecUsage = dal.GetElectricUsage();
             AvailbleElec = elecUsage[0];
@@ -29,16 +28,13 @@ namespace BL
             IntermeduateElec = elecUsage[2];
             HeavyElec = elecUsage[3];
             ChargePerHours = elecUsage[4];
-
             List<IDAL.DO.Parcel> dalParcels = dal.ListParcel().ToList();
             List<IDAL.DO.Drone> dalDrones = dal.ListDrone().ToList();
-
             for (int i = 0; i < dalDrones.Count; i++)
             {
                 DroneToList droneToList = new DroneToList { Id = dalDrones[i].Id, Model = dalDrones[i].Model, MaxWeight = (WeightCategories)dalDrones[i].MaxWeight };
                 listDrone.Add(droneToList);
             }
-
             foreach (IDAL.DO.Parcel parcel in dal.ListParcel())
             {
                 if (parcel.Delivered == DateTime.MinValue && parcel.DroneId != 0)
@@ -51,7 +47,7 @@ namespace BL
                             listDrone[i].Status = DroneStatuses.Delivery;
                             IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
                             IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
-                            if (parcel.PickedUp == DateTime.MinValue)//שוייך אבל לא נאסף
+                            if (parcel.PickedUp == DateTime.MinValue)
                             {
                                 IDAL.DO.Station stationCloset = GetClosestCustomer(customerSender);
                                 Location locationUpdate = new Location();
@@ -61,7 +57,7 @@ namespace BL
                             }
                             else
                             {
-                                if (parcel.Delivered == DateTime.MinValue)//נאספה אך לא סופקה
+                                if (parcel.Delivered == DateTime.MinValue)
                                 {
                                     Location locationUpdate = new Location();
                                     locationUpdate.Lattitude = customerSender.Lattitude;
@@ -77,8 +73,7 @@ namespace BL
                     }
                 }
             }
-
-            foreach (DroneToList drone in listDrone)//נעדכן את הרחפן במקרה שהוא לא עושה משלוח
+            foreach (DroneToList drone in listDrone)
             {
                 if (drone.Status != DroneStatuses.Delivery)
                 {
@@ -185,59 +180,60 @@ namespace BL
         /// <returns> Drone to be displayed </returns>
         public Drone DroneDisplay(int id)
         {
-            IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
-            ParcelTransfer prclTrnsfr = new ParcelTransfer();
-            Location tempLocationSupply = new Location();
-            Location tempLocationCollect = new Location();
-            CustomerInParcel sender = new CustomerInParcel();
-            CustomerInParcel receiver = new CustomerInParcel();
-            Drone temp = new Drone();
-            DroneToList drone = GetDroneFromLstDrone(id);
-            temp.Id = drone.Id;
-            temp.Model = drone.Model;
-            temp.MaxWeight = drone.MaxWeight;
-            temp.Battery = drone.Battery;
-            temp.Status = drone.Status;
-            temp.Location = drone.Location;
-            foreach (var parcel in parcels)
+            try
             {
-                if (parcel.DroneId == id)
+                IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
+                ParcelTransfer prclTrnsfr = new ParcelTransfer();
+                Location tempLocationSupply = new Location();
+                Location tempLocationCollect = new Location();
+                CustomerInParcel sender = new CustomerInParcel();
+                CustomerInParcel receiver = new CustomerInParcel();
+                Drone temp = new Drone();
+                DroneToList drone = GetDroneFromLstDrone(id);
+                temp.Id = drone.Id;
+                temp.Model = drone.Model;
+                temp.MaxWeight = drone.MaxWeight;
+                temp.Battery = drone.Battery;
+                temp.Status = drone.Status;
+                temp.Location = drone.Location;
+                foreach (var parcel in parcels)
                 {
-                    prclTrnsfr.Id = parcel.Id;
-                    prclTrnsfr.Weight = (WeightCategories)parcel.Weight;
-                    prclTrnsfr.Priority = (Priorities)parcel.Priority;
-
-                    if (parcel.PickedUp != DateTime.MinValue)
-                        prclTrnsfr.ParcelSituation = true;
-                    else
-                        prclTrnsfr.ParcelSituation = false;
-
-                    IDAL.DO.Customer target1 = dal.GetCustomer(parcel.TargetId);
-                    tempLocationSupply.Lattitude = target1.Lattitude;
-                    tempLocationSupply.Longitude = target1.Longitude;
-                    prclTrnsfr.SupplyPoint = tempLocationSupply;
-
-                    IDAL.DO.Customer sender1 = dal.GetCustomer(parcel.SenderId);
-                    tempLocationCollect.Lattitude = sender1.Lattitude;
-                    tempLocationCollect.Longitude = sender1.Longitude;
-                    prclTrnsfr.collection = tempLocationCollect;
-
-                    prclTrnsfr.distanceTransportation = dal.GetDistanceFromLatLonInKm(
-                        tempLocationSupply.Lattitude,
-                        tempLocationSupply.Longitude, tempLocationCollect.Lattitude,
-                        tempLocationCollect.Longitude);
-
-                    sender.Id = sender1.Id;
-                    sender.Name = sender1.Name;
-                    prclTrnsfr.Sender = sender;
-
-                    receiver.Id = target1.Id;
-                    receiver.Name = target1.Name;
-                    prclTrnsfr.Receiver = receiver;
+                    if (parcel.DroneId == id)
+                    {
+                        prclTrnsfr.Id = parcel.Id;
+                        prclTrnsfr.Weight = (WeightCategories)parcel.Weight;
+                        prclTrnsfr.Priority = (Priorities)parcel.Priority;
+                        if (parcel.PickedUp != DateTime.MinValue)
+                            prclTrnsfr.ParcelSituation = true;
+                        else
+                            prclTrnsfr.ParcelSituation = false;
+                        IDAL.DO.Customer target1 = dal.GetCustomer(parcel.TargetId);
+                        tempLocationSupply.Lattitude = target1.Lattitude;
+                        tempLocationSupply.Longitude = target1.Longitude;
+                        prclTrnsfr.SupplyPoint = tempLocationSupply;
+                        IDAL.DO.Customer sender1 = dal.GetCustomer(parcel.SenderId);
+                        tempLocationCollect.Lattitude = sender1.Lattitude;
+                        tempLocationCollect.Longitude = sender1.Longitude;
+                        prclTrnsfr.collection = tempLocationCollect;
+                        prclTrnsfr.distanceTransportation = dal.GetDistanceFromLatLonInKm(
+                            tempLocationSupply.Lattitude,
+                            tempLocationSupply.Longitude, tempLocationCollect.Lattitude,
+                            tempLocationCollect.Longitude);
+                        sender.Id = sender1.Id;
+                        sender.Name = sender1.Name;
+                        prclTrnsfr.Sender = sender;
+                        receiver.Id = target1.Id;
+                        receiver.Name = target1.Name;
+                        prclTrnsfr.Receiver = receiver;
+                    }
                 }
+                temp.ParcelTransfer = prclTrnsfr;
+                return temp;
             }
-            temp.ParcelTransfer = prclTrnsfr;
-            return temp;
+            catch (Exception e)
+            {
+                throw new ItemNotFoundException(id, "Enter an existing drone in the system", e); ;
+            }
         }
         /// <summary>
         /// Retrieving the list of drones

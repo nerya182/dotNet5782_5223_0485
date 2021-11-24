@@ -1,4 +1,6 @@
-﻿using IBL;
+﻿/* Binyamin Mor- 317510485,  Nerya Baracassa- 208915223
+ The program created a whole big Drone operating system. we've entered some info ourselves, but we are mainly setting the grounds for a much bigger project! */
+using IBL;
 using IBL.BO;
 using System;
 using System.Collections.Generic;
@@ -639,12 +641,12 @@ namespace ConsoleUI_BL
                 newParcel.drone = droneInParcel;
                 bl.AddParcel(newParcel);
                 Console.WriteLine("Added successfully");
+                Console.WriteLine("Parcel #: " + bl.GetParcelId());
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            Console.WriteLine("Parcel #: " + bl.GetParcelId() );
         }
 
         /// <summary>

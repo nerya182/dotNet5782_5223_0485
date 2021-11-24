@@ -23,6 +23,10 @@ namespace BL
             {
                 throw new IllegalActionException("Incorrect ID number of target");
             }
+            IDAL.DO.Customer senderCustomer = dal.ListCustomer().ToList().Find(i => i.Id == newParcel.Sender.Id);
+            if (senderCustomer.Id==0) throw new IllegalActionException("The sender number does not exist in the system");
+            IDAL.DO.Customer targetCustomer = dal.ListCustomer().ToList().Find(i => i.Id == newParcel.Target.Id);
+            if (senderCustomer.Id ==0) throw new IllegalActionException("The target number does not exist in the system");
             IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
             try
             {

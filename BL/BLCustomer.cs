@@ -123,7 +123,6 @@ namespace BL
             if (weight == IDAL.DO.WeightCategories.Light) { return LightElec; }
             if (weight == IDAL.DO.WeightCategories.Medium) { return IntermeduateElec; }
             if (weight == IDAL.DO.WeightCategories.Heavy) { return HeavyElec; }
-
             return AvailbleElec;
         }
 
@@ -134,54 +133,62 @@ namespace BL
         /// <returns> Customer to be displayed</returns>
         public Customer CustomerDisplay(int id)
         {
-            IDAL.DO.Customer customer = dal.GetCustomer(id);
-            IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
-            List<ParceltAtCustomer> lstSending = new List<ParceltAtCustomer>();
-            List<ParceltAtCustomer> lstReceived = new List<ParceltAtCustomer>();
-            
-            CustomerInParcel cstmrInPrcl = new CustomerInParcel();
-
-            Customer temp = new Customer();
-            Location location = new Location();
-            location.Longitude = customer.Longitude;
-            location.Lattitude = customer.Lattitude;
-            temp.Id = customer.Id;
-            temp.Name = customer.Name;
-            temp.Phone = customer.Phone;
-            temp.Location = location;
-
-            foreach (var parcel in parcels)
+            try
             {
-                if ((parcel.SenderId == customer.Id) && (parcel.Delivered == DateTime.MinValue))
+                IDAL.DO.Customer customer = dal.GetCustomer(id);
+                IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
+                List<ParceltAtCustomer> lstSending = new List<ParceltAtCustomer>();
+                List<ParceltAtCustomer> lstReceived = new List<ParceltAtCustomer>();
+
+                CustomerInParcel cstmrInPrcl = new CustomerInParcel();
+
+                Customer temp = new Customer();
+                Location location = new Location();
+                location.Longitude = customer.Longitude;
+                location.Lattitude = customer.Lattitude;
+                temp.Id = customer.Id;
+                temp.Name = customer.Name;
+                temp.Phone = customer.Phone;
+                temp.Location = location;
+
+                foreach (var parcel in parcels)
                 {
-                    ParceltAtCustomer parcelAtCstmr = new ParceltAtCustomer();
-                    parcelAtCstmr.Id = parcel.Id;
-                    parcelAtCstmr.status = ParcelStatus.Created;
-                    parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
-                    parcelAtCstmr.Priority = (Priorities)parcel.Priority;
-                    IDAL.DO.Customer cstmr = dal.GetCustomer(parcel.TargetId);
-                    cstmrInPrcl.Id = cstmr.Id;
-                    cstmrInPrcl.Name = cstmr.Name;
-                    parcelAtCstmr.OpposingSide = cstmrInPrcl;
-                    lstSending.Add(parcelAtCstmr);
+                    if ((parcel.SenderId == customer.Id) && (parcel.Delivered == DateTime.MinValue))
+                    {
+                        ParceltAtCustomer parcelAtCstmr = new ParceltAtCustomer();
+                        parcelAtCstmr.Id = parcel.Id;
+                        parcelAtCstmr.status = ParcelStatus.Created;
+                        parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
+                        parcelAtCstmr.Priority = (Priorities)parcel.Priority;
+                        IDAL.DO.Customer cstmr = dal.GetCustomer(parcel.TargetId);
+                        cstmrInPrcl.Id = cstmr.Id;
+                        cstmrInPrcl.Name = cstmr.Name;
+                        parcelAtCstmr.OpposingSide = cstmrInPrcl;
+                        lstSending.Add(parcelAtCstmr);
+                    }
+                    else if ((parcel.TargetId == customer.Id) && (parcel.Delivered != DateTime.MinValue))
+                    {
+                        ParceltAtCustomer parcelAtCstmr = new ParceltAtCustomer();
+                        parcelAtCstmr.Id = parcel.Id;
+                        parcelAtCstmr.status = ParcelStatus.Supplied;
+                        parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
+                        parcelAtCstmr.Priority = (Priorities)parcel.Priority;
+                        IDAL.DO.Customer cstmr = dal.GetCustomer(parcel.SenderId);
+                        cstmrInPrcl.Id = cstmr.Id;
+                        cstmrInPrcl.Name = cstmr.Name;
+                        parcelAtCstmr.OpposingSide = cstmrInPrcl;
+                        lstReceived.Add(parcelAtCstmr);
+                    }
                 }
-                else if ((parcel.TargetId == customer.Id) && (parcel.Delivered != DateTime.MinValue))
-                {
-                    ParceltAtCustomer parcelAtCstmr = new ParceltAtCustomer();
-                    parcelAtCstmr.Id = parcel.Id;
-                    parcelAtCstmr.status = ParcelStatus.Supplied;
-                    parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
-                    parcelAtCstmr.Priority = (Priorities)parcel.Priority;
-                    IDAL.DO.Customer cstmr = dal.GetCustomer(parcel.SenderId);
-                    cstmrInPrcl.Id = cstmr.Id;
-                    cstmrInPrcl.Name = cstmr.Name;
-                    parcelAtCstmr.OpposingSide = cstmrInPrcl;
-                    lstReceived.Add(parcelAtCstmr);
-                }
+                temp.FromCustomer = lstSending;
+                temp.ToCustomer = lstReceived;
+                return temp;
             }
-            temp.FromCustomer = lstSending;
-            temp.ToCustomer = lstReceived;
-            return temp;
+            catch (Exception e)
+            {
+                throw  new ItemNotFoundException(id, "Enter an existing parcel in the system", e);
+            }
+            
         }
 
         /// <summary>

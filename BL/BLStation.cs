@@ -107,30 +107,37 @@ namespace BL
         /// <returns> Station to be displayed </returns>
         public Station BaseStationDisplay(int id)
         {
-            IDAL.DO.Station station = dal.GetStation(id);
-            IEnumerable<IDAL.DO.DroneCharge> droneCharge = dal.ListDroneCharge();
-            List<DroneInCharging> lstDrnInChrg = new List<DroneInCharging>();
-            Station temp = new Station();
-            Location location = new Location();
-            location.Longitude = station.Longitude;
-            location.Lattitude = station.Lattitude;
-            temp.Id = station.Id;
-            temp.Name = station.Name;
-            temp.location = location;
-            temp.AvailableChargeSlots = station.AvailableChargeSlots;
-            List<IDAL.DO.DroneCharge> asList = droneCharge.ToList();
-            foreach (var drnChrg in droneCharge)
+            try
             {
-                if (drnChrg.StationId == id)
+                IDAL.DO.Station station = dal.GetStation(id);
+                IEnumerable<IDAL.DO.DroneCharge> droneCharge = dal.ListDroneCharge();
+                List<DroneInCharging> lstDrnInChrg = new List<DroneInCharging>();
+                Station temp = new Station();
+                Location location = new Location();
+                location.Longitude = station.Longitude;
+                location.Lattitude = station.Lattitude;
+                temp.Id = station.Id;
+                temp.Name = station.Name;
+                temp.location = location;
+                temp.AvailableChargeSlots = station.AvailableChargeSlots;
+                List<IDAL.DO.DroneCharge> asList = droneCharge.ToList();
+                foreach (var drnChrg in droneCharge)
                 {
-                    DroneInCharging DrnInChrg = new DroneInCharging();
-                    DrnInChrg.DroneId = drnChrg.DroneId;
-                    DrnInChrg.Battery = GetDroneFromLstDrone(drnChrg.DroneId).Battery;
-                    lstDrnInChrg.Add(DrnInChrg);
+                    if (drnChrg.StationId == id)
+                    {
+                        DroneInCharging DrnInChrg = new DroneInCharging();
+                        DrnInChrg.DroneId = drnChrg.DroneId;
+                        DrnInChrg.Battery = GetDroneFromLstDrone(drnChrg.DroneId).Battery;
+                        lstDrnInChrg.Add(DrnInChrg);
+                    }
                 }
+                temp.droneInCharging = lstDrnInChrg;
+                return temp;
             }
-            temp.droneInCharging = lstDrnInChrg;
-            return temp;
+            catch (Exception e)
+            {
+                throw new ItemNotFoundException(id, "Enter an existing station in the system", e);
+            }
         }
         /// <summary>
         /// Updating the amount of available slots the station has
