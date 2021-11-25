@@ -7,7 +7,7 @@ using System.Threading.Tasks;
  
 namespace IBL
 {
-    public interface  IBL
+    public interface IBL
     {
         /// <summary>
         /// Adding a station to our data source

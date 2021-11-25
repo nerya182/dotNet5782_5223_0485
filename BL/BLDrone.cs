@@ -345,7 +345,7 @@ namespace BL
             {
                 throw new IllegalActionException("The drone is in charge / delivery mode");
             }
-            List<IDAL.DO.Parcel> parcels = dal.ListParcel(i => i.Affiliation == DateTime.MinValue && i.DroneId == 0 && i.Weight <= d.MaxWeight).ToList();
+            List<IDAL.DO.Parcel> parcels = dal.ListParcel(i => i.Affiliation == null && i.DroneId == 0 && i.Weight <= d.MaxWeight).ToList();
             if (parcels.Count==0)
             {
                 throw new IllegalActionException("There are no packages waiting to be shipped");

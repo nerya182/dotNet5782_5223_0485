@@ -22,7 +22,6 @@ namespace IDAL
             public DateTime? PickedUp { get; set; }
             public DateTime? Delivered { get; set; }
 
-
             public override string ToString()
             {
                 return $"Parcel #{Id}, SenderId: #{SenderId}, TargetId: #{TargetId}, " +
