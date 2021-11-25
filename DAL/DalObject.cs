@@ -464,10 +464,7 @@ namespace DalObject
             List<Parcel> PrintParcelOnAir = new List<Parcel>();
             foreach(Parcel parcel in ListParcel(i => i.DroneId != 0))
             {
-                PrintParcelOnAir.Add(parcel);
-                
-                if(GetParcel(i).Affiliation == null)
-                    PrintParcelOnAir.Add(GetParcel(i));
+                PrintParcelOnAir.Add(parcel);   
             }
             return PrintParcelOnAir;
         }

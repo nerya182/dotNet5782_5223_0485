@@ -29,9 +29,7 @@ namespace BL
             HeavyElec = elecUsage[3];
             ChargePerHours = elecUsage[4];
             List<IDAL.DO.Parcel> dalParcels = dal.ListParcel(i => true).ToList();
-            List<IDAL.DO.Drone> dalDrones = dal.ListDrone().ToList();
-            List<IDAL.DO.Parcel> dalParcels = dal.ListParcel().ToList();
-            List<IDAL.DO.Drone> dalDrones = dal.ListDrone(i=>true).ToList();
+            List<IDAL.DO.Drone> dalDrones = dal.ListDrone(i => true).ToList();
             for (int i = 0; i < dalDrones.Count; i++)
             {
                 DroneToList droneToList = new DroneToList { Id = dalDrones[i].Id, Model = dalDrones[i].Model, MaxWeight = (WeightCategories)dalDrones[i].MaxWeight };
@@ -98,8 +96,7 @@ namespace BL
 
                     if (drone.Status == DroneStatuses.Available)
                     {
-                        List<IDAL.DO.Parcel> parcels = dal.ListParcel(i => i.Delivered != DateTime.MinValue).ToList();
-                        List<IDAL.DO.Parcel> parcels = dal.ListParcel().ToList().FindAll(i => i.Delivered != null);
+                        List<IDAL.DO.Parcel> parcels = dal.ListParcel(i => i.Delivered != null).ToList();
                         IDAL.DO.Parcel parcel = parcels.ElementAt(R.Next(0, parcels.Count));
                         IDAL.DO.Customer customer = dal.GetCustomer(parcel.TargetId);
                         Location locationCustomer = new Location { Lattitude = customer.Lattitude, Longitude = customer.Longitude };
@@ -349,7 +346,6 @@ namespace BL
                 throw new IllegalActionException("The drone is in charge / delivery mode");
             }
             List<IDAL.DO.Parcel> parcels = dal.ListParcel(i => i.Affiliation == DateTime.MinValue && i.DroneId == 0 && i.Weight <= d.MaxWeight).ToList();
-            List<IDAL.DO.Parcel> parcels = dal.ListParcel().ToList().FindAll(i => i.Affiliation == null && i.DroneId == 0 && (i.Weight <= d.MaxWeight));
             if (parcels.Count==0)
             {
                 throw new IllegalActionException("There are no packages waiting to be shipped");
