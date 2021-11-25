@@ -15,7 +15,7 @@ namespace BL
         /// <returns> station that is closest to customer</returns>
         private IDAL.DO.Station GetClosestCustomer(IDAL.DO.Customer customerSender)
         {
-            List<IDAL.DO.Station> stations = dal.ListBaseStation().ToList();
+            List<IDAL.DO.Station> stations = dal.ListBaseStation(i => true).ToList();
             Location closestStation = new Location();
             closestStation.Lattitude = stations[0].Lattitude;
             closestStation.Longitude = stations[0].Longitude;
@@ -136,7 +136,7 @@ namespace BL
             try
             {
                 IDAL.DO.Customer customer = dal.GetCustomer(id);
-                IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
+                IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel(i => true);
                 List<ParceltAtCustomer> lstSending = new List<ParceltAtCustomer>();
                 List<ParceltAtCustomer> lstReceived = new List<ParceltAtCustomer>();
 

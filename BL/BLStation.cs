@@ -44,7 +44,7 @@ namespace BL
         /// <returns> closest station </returns>
         private IDAL.DO.Station GetClosestStation(DroneToList drone)
         {
-            List<IDAL.DO.Station> stations = dal.ListBaseStation().ToList();
+            List<IDAL.DO.Station> stations = dal.ListBaseStation(i => true).ToList();
             Location closestStation = new Location();
             closestStation.Lattitude = stations[0].Lattitude;
             closestStation.Longitude = stations[0].Longitude;
@@ -66,11 +66,10 @@ namespace BL
         /// Returns our list of stations
         /// </summary>
         /// <returns> IEnumerable of stations</returns>
-        public IEnumerable<Station> GetListStation()
+        public IEnumerable<Station> GetListStation(Predicate<IDAL.DO.Station> predicate)
         {
-            IEnumerable<IDAL.DO.Station> stations = dal.ListBaseStation();
             List<Station> temp = new List<Station>();
-            foreach (var station in stations)
+            foreach (IDAL.DO.Station station in dal.ListBaseStation(predicate))
             {
                 Station obj = BaseStationDisplay(station.Id);
                 temp.Add(obj);
@@ -148,7 +147,7 @@ namespace BL
         {
             try
             {
-                List<IDAL.DO.Station> Stations = dal.ListBaseStation().ToList();
+                List<IDAL.DO.Station> Stations = dal.ListBaseStation(i => true).ToList();
                 IDAL.DO.Station station = new IDAL.DO.Station { Id =stationId,AvailableChargeSlots = chargingPositions};
                 dal.UpdateStation(station);
             }
@@ -166,7 +165,7 @@ namespace BL
         {
             try
             {
-                List<IDAL.DO.Station> stations = dal.ListBaseStation().ToList();
+                List<IDAL.DO.Station> stations = dal.ListBaseStation(i => true).ToList();
                 IDAL.DO.Station station = new IDAL.DO.Station { Id = stationId,Name = stationName };
                 dal.UpdateStation(station);
             }

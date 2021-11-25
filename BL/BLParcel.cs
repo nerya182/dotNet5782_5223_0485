@@ -59,11 +59,10 @@ namespace BL
         /// Returns the list of parcels
         /// </summary>
         /// <returns> IEnumeranle of parcels</returns>
-        public IEnumerable<Parcel> GetListParcel()
+        public IEnumerable<Parcel> GetListParcel(Predicate<IDAL.DO.Parcel> predicate)
         {
-            IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel();
             List<Parcel> temp = new List<Parcel>();
-            foreach (var parcel in parcels)
+            foreach (IDAL.DO.Parcel parcel in dal.ListParcel(predicate))
             {
                 Parcel obj = ParcelDisplay(parcel.Id);
                 temp.Add(obj);

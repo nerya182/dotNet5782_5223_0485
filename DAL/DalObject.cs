@@ -356,13 +356,9 @@ namespace DalObject
         /// Returning a list of all the Stations
         /// </summary>
         /// <returns> List </returns>
-        public IEnumerable<Station> ListBaseStation()  
+        public IEnumerable<Station> ListBaseStation(Predicate<Station> predicate)  
         {
-            List<Station> PrintStation = new List<Station>();
-            for (int i = 0; i < Stations.Count; i++)
-            {
-                PrintStation.Add(GetStation(Stations[i].Id));
-            }
+            List<Station> PrintStation = DataSource.Stations.FindAll(predicate);          
             return PrintStation;
         }
         /// <summary>
@@ -410,13 +406,9 @@ namespace DalObject
         /// Returning a list of all the Parcels
         /// </summary>
         /// <returns> List </returns>
-        public IEnumerable<Parcel> ListParcel()  
+        public IEnumerable<Parcel> ListParcel(Predicate<Parcel> predicate)  
         {
-            List<Parcel> PrintParcel = new List<Parcel>();
-            for (int i = 0; i <Parcels.Count; i++)
-            {
-                PrintParcel.Add(GetParcel(Parcels[i].Id));
-            }
+            List<Parcel> PrintParcel = DataSource.Parcels.FindAll(predicate);
             return PrintParcel;
         }
         /// <summary>
@@ -478,14 +470,9 @@ namespace DalObject
         public IEnumerable<Parcel> ListParcelOnAir()  
         {
             List<Parcel> PrintParcelOnAir = new List<Parcel>();
-            for (int i = 1; i <Parcels.Count; i++)
+            foreach(Parcel parcel in ListParcel(i => i.DroneId != 0))
             {
-                
-                if(GetParcel(i).Affiliation == DateTime.MinValue)
-                    PrintParcelOnAir.Add(GetParcel(i));
-
-               // if (GetParcel(i).DroneId == -1)
-                 //   PrintParcelOnAir.Add(GetParcel(i));
+                PrintParcelOnAir.Add(parcel);
             }
             return PrintParcelOnAir;
         }
@@ -533,13 +520,12 @@ namespace DalObject
         /// <returns> List </returns>
         public IEnumerable<Station> ListStationsWithOpenSlots()
         {
-            List<Station> ?PrintCustomer = new List<Station>();
-            for (int i = 0; i <Stations.Count; i++)
+            List<Station>PrintCustomer = new List<Station>();
+            foreach (Station station in ListBaseStation(i => i.AvailableChargeSlots > 0))
             {
-                if (GetStation(Stations[i].Id).AvailableChargeSlots > 0)
-                    PrintCustomer.Add(GetStation(Stations[i].Id));  
+                PrintCustomer.Add(station);
             }
-            return PrintCustomer;  
+            return PrintCustomer;
         }
 
         /// <summary>

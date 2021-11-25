@@ -132,9 +132,7 @@ namespace ConsoleUI
                         {
 
                             case 's':
-                                IEnumerable<Station> PrintStation = new List<Station>();   
-                                PrintStation = DO.ListBaseStation();
-                                foreach (Station objStation in PrintStation)
+                                foreach (Station objStation in DO.ListBaseStation(i => true))
                                 {
                                     Console.WriteLine(objStation);
                                 }
@@ -156,25 +154,19 @@ namespace ConsoleUI
                                 }
                                 break;
                             case 'p':
-                                IEnumerable<Parcel> PrintParcel = new List<Parcel>();
-                                PrintParcel = DO.ListParcel();
-                                foreach (Parcel objParcel in PrintParcel)
+                                foreach (Parcel objParcel in DO.ListParcel(i => true))
                                 {
                                     Console.WriteLine(objParcel);
                                 }
                                 break;
                             case 'f':
-                                IEnumerable<Parcel> PrintParcelOnAir = new List<Parcel>();
-                                PrintParcelOnAir = DO.ListParcelOnAir();
-                                foreach (Parcel objParcel in PrintParcelOnAir)
+                                foreach (Parcel objParcel in DO.ListParcelOnAir())
                                 {
                                     Console.WriteLine(objParcel);
                                 }
                                 break;
                             case 'o':
-                                IEnumerable<Station> PrintStationsWithOpenSlots = new List<Station>();
-                                PrintStationsWithOpenSlots = DO.ListStationsWithOpenSlots();
-                                foreach (Station objStation in PrintStationsWithOpenSlots)
+                                foreach (Station objStation in DO.ListStationsWithOpenSlots())
                                 {
                                     Console.WriteLine(objStation);
                                 }

@@ -39,7 +39,7 @@ namespace IBL
         /// Returns our list of stations
         /// </summary>
         /// <returns>IEnumerable of stations</returns>
-        IEnumerable<Station> GetListStation();
+        IEnumerable<Station> GetListStation(Predicate<IDAL.DO.Station> predicate);
         /// <summary>
         /// Returning Drone according to ID in order to be displayed
         /// </summary>
@@ -55,7 +55,7 @@ namespace IBL
         /// Returns the list of parcels
         /// </summary>
         /// <returns>IEnumeranle of parcels</returns>
-        IEnumerable<Parcel> GetListParcel();
+        IEnumerable<Parcel> GetListParcel(Predicate<IDAL.DO.Parcel> predicate);
         /// <summary>
         /// Retrieving our list of customers of type IBL BO
         /// </summary>

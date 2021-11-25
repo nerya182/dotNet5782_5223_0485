@@ -103,7 +103,7 @@ namespace IDAL
         ///  Returning a list of all the Stations
         /// </summary>
         /// <returns>list</returns>
-        IEnumerable<Station> ListBaseStation();
+        IEnumerable<Station> ListBaseStation(Predicate<IDAL.DO.Station> predicate);
         /// <summary>
         /// /Returning a list of all the drone charge
         /// </summary>
@@ -123,7 +123,7 @@ namespace IDAL
         /// /Returning a list of all the Parcels
         /// </summary>
         /// <returns>List</returns>
-        IEnumerable<Parcel> ListParcel();
+        IEnumerable<Parcel> ListParcel(Predicate<IDAL.DO.Parcel> predicate);
         /// <summary>
         /// distance calculation
         /// </summary>

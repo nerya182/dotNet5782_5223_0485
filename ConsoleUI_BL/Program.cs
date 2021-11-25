@@ -188,9 +188,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewStationList(IBL.IBL bl)
         {
-            IEnumerable<Station> PrintStation = new List<Station>();
-            PrintStation = bl.GetListStation();
-            foreach (Station objStation in PrintStation)
+            foreach (Station objStation in bl.GetListStation(i => true))
             {
                 StationToList stationToList = bl.MakeStationToList(objStation);
                 Console.WriteLine(stationToList);
@@ -233,9 +231,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewParcelList(IBL.IBL bl)
         {
-            IEnumerable<Parcel> PrintParcel = new List<Parcel>();
-            PrintParcel = bl.GetListParcel();
-            foreach (Parcel objParcel in PrintParcel)
+            foreach (Parcel objParcel in bl.GetListParcel(i => true))
             {
                 ParcelToList parcelToList = bl.MakeParcelToList(objParcel);
                 Console.WriteLine(parcelToList);
@@ -248,15 +244,10 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewParcelOnAirList(IBL.IBL bl)
         {
-            IEnumerable<Parcel> PrintParcel = new List<Parcel>();
-            PrintParcel = bl.GetListParcel();
-            foreach (Parcel objParcel in PrintParcel)
+            foreach (Parcel objParcel in bl.GetListParcel(i => i.DroneId != 0))
             {
-                if(objParcel.Affiliation == DateTime.MinValue)
-                {
-                    ParcelToList parcelToList = bl.MakeParcelToList(objParcel);
-                    Console.WriteLine(parcelToList);
-                }   
+                ParcelToList parcelToList = bl.MakeParcelToList(objParcel);
+                Console.WriteLine(parcelToList);
             }
         }
 
@@ -266,15 +257,10 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewStationsWithOpenSlotsList(IBL.IBL bl)
         {
-            IEnumerable<Station> PrintStation = new List<Station>();
-            PrintStation = bl.GetListStation();
-            foreach (Station objStation in PrintStation)
+            foreach (Station objStation in bl.GetListStation(i => i.AvailableChargeSlots > 0))
             {
-                if(objStation.AvailableChargeSlots > 0)
-                {
-                    StationToList stationToList = bl.MakeStationToList(objStation);
-                    Console.WriteLine(stationToList);
-                }     
+                StationToList stationToList = bl.MakeStationToList(objStation);
+                Console.WriteLine(stationToList);
             }
         }
 
