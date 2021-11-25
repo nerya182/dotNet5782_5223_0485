@@ -140,17 +140,13 @@ namespace ConsoleUI
                                 }
                                 break;
                             case 'd':
-                                IEnumerable <Drone> PrintDrone = new List<Drone>();   
-                                PrintDrone = DO.ListDrone();
-                                foreach (Drone objDrone in PrintDrone)
+                                foreach (Drone objDrone in DO.ListDrone(i=>true))
                                 {
                                     Console.WriteLine(objDrone);
                                 }
                                 break;
                             case 'c':
-                                IEnumerable<Customer> PrintCustomer = new List<Customer>();
-                                PrintCustomer = DO.ListCustomer();
-                                foreach (Customer objCustomer in PrintCustomer)
+                                foreach (Customer objCustomer in DO.ListCustomer(i=>true))
                                 {
                                     Console.WriteLine(objCustomer);
                                 }

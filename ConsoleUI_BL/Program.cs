@@ -203,9 +203,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewDroneList(IBL.IBL bl)
         {
-            IEnumerable<Drone> PrintDrone = new List<Drone>();
-            PrintDrone = bl.GetListDrone();
-            foreach (Drone objDrone in PrintDrone)
+            foreach (Drone objDrone in bl.GetListDrone(i=>true))
             {
                 DroneToList droneToList = bl.MakeDroneToList(objDrone);
                 Console.WriteLine(droneToList);
@@ -218,9 +216,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewCustomerList(IBL.IBL bl)
         {
-            IEnumerable<Customer> PrintCustomer = new List<Customer>();
-            PrintCustomer = bl.GetListCustomer();
-            foreach (Customer objCustomer in PrintCustomer)
+            foreach (Customer objCustomer in bl.GetListCustomer(i=>true))
             {
                 CustomerToList customerToList = bl.MakeCustomerToList(objCustomer);
                 Console.WriteLine(customerToList);

@@ -29,7 +29,7 @@ namespace BL
             HeavyElec = elecUsage[3];
             ChargePerHours = elecUsage[4];
             List<IDAL.DO.Parcel> dalParcels = dal.ListParcel().ToList();
-            List<IDAL.DO.Drone> dalDrones = dal.ListDrone().ToList();
+            List<IDAL.DO.Drone> dalDrones = dal.ListDrone(i=>true).ToList();
             for (int i = 0; i < dalDrones.Count; i++)
             {
                 DroneToList droneToList = new DroneToList { Id = dalDrones[i].Id, Model = dalDrones[i].Model, MaxWeight = (WeightCategories)dalDrones[i].MaxWeight };
@@ -37,7 +37,7 @@ namespace BL
             }
             foreach (IDAL.DO.Parcel parcel in dal.ListParcel())
             {
-                if (parcel.Delivered == DateTime.MinValue && parcel.DroneId != 0)
+                if (parcel.Delivered == null && parcel.DroneId != 0)
                 {
                     for (int i = 0; i < listDrone.Count; i++)
                     {
@@ -47,7 +47,7 @@ namespace BL
                             listDrone[i].Status = DroneStatuses.Delivery;
                             IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
                             IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
-                            if (parcel.PickedUp == DateTime.MinValue)
+                            if (parcel.PickedUp ==null)
                             {
                                 IDAL.DO.Station stationCloset = GetClosestCustomer(customerSender);
                                 Location locationUpdate = new Location();
@@ -57,7 +57,7 @@ namespace BL
                             }
                             else
                             {
-                                if (parcel.Delivered == DateTime.MinValue)
+                                if (parcel.Delivered == null)
                                 {
                                     Location locationUpdate = new Location();
                                     locationUpdate.Lattitude = customerSender.Lattitude;
@@ -96,7 +96,7 @@ namespace BL
 
                     if (drone.Status == DroneStatuses.Available)
                     {
-                        List<IDAL.DO.Parcel> parcels = dal.ListParcel().ToList().FindAll(i => i.Delivered != DateTime.MinValue);
+                        List<IDAL.DO.Parcel> parcels = dal.ListParcel().ToList().FindAll(i => i.Delivered != null);
                         IDAL.DO.Parcel parcel = parcels.ElementAt(R.Next(0, parcels.Count));
                         IDAL.DO.Customer customer = dal.GetCustomer(parcel.TargetId);
                         Location locationCustomer = new Location { Lattitude = customer.Lattitude, Longitude = customer.Longitude };
@@ -203,7 +203,7 @@ namespace BL
                         prclTrnsfr.Id = parcel.Id;
                         prclTrnsfr.Weight = (WeightCategories)parcel.Weight;
                         prclTrnsfr.Priority = (Priorities)parcel.Priority;
-                        if (parcel.PickedUp != DateTime.MinValue)
+                        if (parcel.PickedUp != null)
                             prclTrnsfr.ParcelSituation = true;
                         else
                             prclTrnsfr.ParcelSituation = false;
@@ -239,11 +239,10 @@ namespace BL
         /// Retrieving the list of drones
         /// </summary>
         /// <returns> UEnumerable of drones </returns>
-        public IEnumerable<Drone> GetListDrone()
+        public IEnumerable<Drone> GetListDrone(Predicate<IDAL.DO.Drone> predicate)
         {
-            IEnumerable<IDAL.DO.Drone> drones = dal.ListDrone();
             List<Drone> temp = new List<Drone>();
-            foreach (var drone in drones)
+            foreach (IDAL.DO.Drone drone in dal.ListDrone(predicate))
             {
                 Drone obj = DroneDisplay(drone.Id);
                 temp.Add(obj);
@@ -279,7 +278,7 @@ namespace BL
             DroneToList drone = listDrone.Find(i => i.Id == droneId);
             IDAL.DO.Parcel parcel = dal.GetParcel(drone.ParcelBeingPassedId);
             IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
-            if (parcel.DroneId == droneId && parcel.PickedUp != DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
+            if (parcel.DroneId == droneId && parcel.PickedUp != null && parcel.Delivered == null)
             {
                 double distance = dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,
                     customerTarget.Lattitude, customerTarget.Longitude);
@@ -314,7 +313,7 @@ namespace BL
             
             IDAL.DO.Parcel parcel = dal.GetParcel(drone.ParcelBeingPassedId);
             IDAL.DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
-            if (parcel.Affiliation != DateTime.MinValue && parcel.PickedUp == DateTime.MinValue && parcel.DroneId == drone.Id && drone.Status == DroneStatuses.Delivery)
+            if (parcel.Affiliation != null && parcel.PickedUp == null && parcel.DroneId == drone.Id && drone.Status == DroneStatuses.Delivery)
             {
                 double distance = dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,
                     customerSender.Lattitude, customerSender.Longitude);
@@ -337,7 +336,7 @@ namespace BL
         {
             bool flag = false;
             DroneToList drone = listDrone.Find(i => i.Id == droneId);
-            IDAL.DO.Drone d = dal.ListDrone().ToList().Find(i => i.Id == droneId);
+            IDAL.DO.Drone d = dal.ListDrone(i=>true).ToList().Find(i => i.Id == droneId);
             if (drone == null)
             {
                 throw new ItemNotFoundException(droneId, "Enter an existing skimmer number in the system");
@@ -346,7 +345,7 @@ namespace BL
             {
                 throw new IllegalActionException("The drone is in charge / delivery mode");
             }
-            List<IDAL.DO.Parcel> parcels = dal.ListParcel().ToList().FindAll(i => i.Affiliation == DateTime.MinValue && i.DroneId == 0 && (i.Weight <= d.MaxWeight));
+            List<IDAL.DO.Parcel> parcels = dal.ListParcel().ToList().FindAll(i => i.Affiliation == null && i.DroneId == 0 && (i.Weight <= d.MaxWeight));
             if (parcels.Count==0)
             {
                 throw new IllegalActionException("There are no packages waiting to be shipped");
@@ -416,7 +415,7 @@ namespace BL
         /// <param name="droneId"> Drone ID</param>
         public void ReleaseDroneFromCharging(int droneId)
         {
-            DateTime timeOfCharging = DateTime.MinValue;
+            DateTime? timeOfCharging = null;
             DroneToList drone = listDrone.Find(i => i.Id == droneId);
             if (drone == null)
             {
@@ -428,8 +427,8 @@ namespace BL
             }
             timeOfCharging = dal.ListDroneCharge().ToList().Find(i => i.DroneId == droneId).EntryTime;
             dal.ReleaseDroneFromCharger(droneId);
-            TimeSpan time = DateTime.Now- timeOfCharging;
-            drone.Battery +=(int)dal.GetChargeSpeed()*((int)time.TotalHours);
+            TimeSpan? time = DateTime.Now- timeOfCharging;
+            drone.Battery +=(int)dal.GetChargeSpeed()*((time.Value.Hours));
             drone.Status = DroneStatuses.Available;
             if (drone.Battery > 100)
             {
@@ -493,6 +492,5 @@ namespace BL
                 throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
             return null;
         }
-
     }
 }
