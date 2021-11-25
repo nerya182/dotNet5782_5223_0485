@@ -72,9 +72,9 @@ namespace BL
         /// Retrieving our list of customers of type IBL BO
         /// </summary>
         /// <returns> IEnumeravle of customers</returns>
-        public IEnumerable<Customer> GetListCustomer()
+        public IEnumerable<Customer> GetListCustomer(Predicate<IDAL.DO.Customer> predicate)
         {
-            IEnumerable<IDAL.DO.Customer> customers = dal.ListCustomer();
+            IEnumerable<IDAL.DO.Customer> customers = dal.ListCustomer(predicate);
             List<Customer> temp = new List<Customer>();
             foreach (var customer in customers)
             {
@@ -96,17 +96,17 @@ namespace BL
             customerToList.Name = objCustomer.Name;
             customerToList.Phone = objCustomer.Phone;
             int count1 = 0;
-            foreach (ParceltAtCustomer parceltAtCustomer in objCustomer.ToCustomer)
+            foreach (ParceltAtCustomer parcelAtCustomer in objCustomer.ToCustomer)
             {
-                if (parceltAtCustomer.status == ParcelStatus.Supplied)
+                if (parcelAtCustomer.status == ParcelStatus.Supplied)
                     count1++;
             }
             customerToList.ReceivedParcels = count1;
             customerToList.OnTheWayParcels = objCustomer.ToCustomer.Count - count1;
             int count2 = 0;
-            foreach (ParceltAtCustomer parceltAtCustomer1 in objCustomer.FromCustomer)
+            foreach (ParceltAtCustomer parcelAtCustomer1 in objCustomer.FromCustomer)
             {
-                if (parceltAtCustomer1.status == ParcelStatus.Supplied)
+                if (parcelAtCustomer1.status == ParcelStatus.Supplied)
                     count2++;
             }
             customerToList.DeliveredSuppliedParcels = count2;
@@ -153,7 +153,7 @@ namespace BL
 
                 foreach (var parcel in parcels)
                 {
-                    if ((parcel.SenderId == customer.Id) && (parcel.Delivered == DateTime.MinValue))
+                    if ((parcel.SenderId == customer.Id) && (parcel.Delivered ==null))
                     {
                         ParceltAtCustomer parcelAtCstmr = new ParceltAtCustomer();
                         parcelAtCstmr.Id = parcel.Id;
@@ -166,7 +166,7 @@ namespace BL
                         parcelAtCstmr.OpposingSide = cstmrInPrcl;
                         lstSending.Add(parcelAtCstmr);
                     }
-                    else if ((parcel.TargetId == customer.Id) && (parcel.Delivered != DateTime.MinValue))
+                    else if ((parcel.TargetId == customer.Id) && (parcel.Delivered !=null))
                     {
                         ParceltAtCustomer parcelAtCstmr = new ParceltAtCustomer();
                         parcelAtCstmr.Id = parcel.Id;

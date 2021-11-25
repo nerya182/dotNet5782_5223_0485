@@ -90,7 +90,7 @@ namespace BL
         /// </summary>
         /// <param name="objStation"> Station that we will recieve rest of its info</param>
         /// <returns> stationto list after we recieved the necessary info </returns>
-        public StationToList MakeStationToList(Station objStation)
+        public StationToList MakeStationToList( Station objStation)
         {
             StationToList stationToList = new StationToList();
             stationToList.Id = objStation.Id;

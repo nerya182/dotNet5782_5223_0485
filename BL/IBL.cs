@@ -60,12 +60,12 @@ namespace IBL
         /// Retrieving our list of customers of type IBL BO
         /// </summary>
         /// <returns>IEnumerable list of customer</returns>
-        IEnumerable<Customer> GetListCustomer();
+        IEnumerable<Customer> GetListCustomer(Predicate<IDAL.DO.Customer> predicate);
         /// <summary>
         /// Retrieving the list of drones
         /// </summary>
         /// <returns>UEnumerable of drones</returns>
-        IEnumerable<Drone> GetListDrone();
+        IEnumerable<Drone> GetListDrone(Predicate<IDAL.DO.Drone>predicate);
         /// <summary>
         /// Retrieving info to transform parcel into parceltolist and returning it
         /// </summary>

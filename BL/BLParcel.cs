@@ -23,9 +23,9 @@ namespace BL
             {
                 throw new IllegalActionException("Incorrect ID number of target");
             }
-            IDAL.DO.Customer senderCustomer = dal.ListCustomer().ToList().Find(i => i.Id == newParcel.Sender.Id);
+            IDAL.DO.Customer senderCustomer = dal.ListCustomer(i=>true).ToList().Find(i => i.Id == newParcel.Sender.Id);
             if (senderCustomer.Id==0) throw new IllegalActionException("The sender number does not exist in the system");
-            IDAL.DO.Customer targetCustomer = dal.ListCustomer().ToList().Find(i => i.Id == newParcel.Target.Id);
+            IDAL.DO.Customer targetCustomer = dal.ListCustomer(i=>true).ToList().Find(i => i.Id == newParcel.Target.Id);
             if (senderCustomer.Id ==0) throw new IllegalActionException("The target number does not exist in the system");
             IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
             try
@@ -35,9 +35,9 @@ namespace BL
                 temp.Weight = (IDAL.DO.WeightCategories)newParcel.Weight;
                 temp.Priority = (IDAL.DO.Priorities)newParcel.Priority;
                 temp.Creating = DateTime.Now;
-                temp.Affiliation = DateTime.MinValue;
-                temp.PickedUp = DateTime.MinValue;
-                temp.Delivered = DateTime.MinValue;
+                temp.Affiliation = null;
+                temp.PickedUp = null;
+                temp.Delivered = null;
                 temp.DroneId = 0;
                 temp.Id = dal.GetParcelId();
                 dal.AddParcel(temp);
@@ -82,11 +82,11 @@ namespace BL
             parcelToList.Priority = objParcel.Priority;
             parcelToList.SenderName = objParcel.Sender.Name;
             parcelToList.TargetName = objParcel.Target.Name;
-            if (objParcel.Delivered != DateTime.MinValue)
+            if (objParcel.Delivered != null)
                 parcelToList.ShipmentStatus = ParcelStatus.Supplied;
-            else if (objParcel.PickedUp != DateTime.MinValue)
+            else if (objParcel.PickedUp != null)
                 parcelToList.ShipmentStatus = ParcelStatus.PickedUp;
-            else if (objParcel.Affiliation != DateTime.MinValue)
+            else if (objParcel.Affiliation != null)
                 parcelToList.ShipmentStatus = ParcelStatus.Assigned;
             else
                 parcelToList.ShipmentStatus = ParcelStatus.Created;

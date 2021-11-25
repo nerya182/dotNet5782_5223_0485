@@ -106,9 +106,9 @@ namespace DalObject
                     Weight = weightCategories,
                     Priority = priorities,
                     Creating = DateTime.Now,
-                    Delivered = DateTime.MinValue,
-                    PickedUp = DateTime.MinValue,
-                    Affiliation = DateTime.MinValue
+                    Delivered = null,
+                    PickedUp = null,
+                    Affiliation = null
                 };
                 Parcels.Add(newParcel);
                 Config.NewParcelId++;
@@ -127,8 +127,8 @@ namespace DalObject
                     Priority = priorities,
                     Creating = DateTime.Now.AddMinutes(-60),
                     Affiliation = DateTime.Now.AddMinutes(-30),
-                    Delivered = DateTime.MinValue,
-                    PickedUp = DateTime.MinValue,
+                    Delivered = null,
+                    PickedUp = null,
                    
                 };
                 Parcels.Add(newParcel);
@@ -149,7 +149,7 @@ namespace DalObject
                     Creating = DateTime.Now.AddMinutes(-120),
                     Affiliation = DateTime.Now.AddMinutes(-90),
                     PickedUp = DateTime.Now.AddMinutes(-60),
-                    Delivered = DateTime.MinValue
+                    Delivered = null
                 };
                 Parcels.Add(newParcel);
                 Config.NewParcelId++;

@@ -113,12 +113,12 @@ namespace IDAL
         /// Returning a list of all the Drones
         /// </summary>
         /// <returns>list</returns>
-        IEnumerable<Drone> ListDrone();
+        IEnumerable<Drone> ListDrone(Predicate<Drone> predicate);
         /// <summary>
         /// Returning a list of all the Customers
         /// </summary>
         /// <returns>List</returns>
-        IEnumerable<Customer> ListCustomer();
+        IEnumerable<Customer> ListCustomer(Predicate<Customer> predicate);
         /// <summary>
         /// /Returning a list of all the Parcels
         /// </summary>

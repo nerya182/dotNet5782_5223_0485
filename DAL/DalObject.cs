@@ -118,7 +118,7 @@ namespace DalObject
         /// <returns> DateTime </returns>
         public  DateTime GetParcelCreating(int parcelId) 
         {
-            DateTime time = DateTime.MinValue;
+            DateTime? time =null;
             foreach (Parcel objParcel in DataSource.Parcels)
             {
                 if (objParcel.Id == parcelId)
@@ -126,11 +126,11 @@ namespace DalObject
                     time = objParcel.Creating;
                 }
             }
-            if (time==DateTime.MinValue)
+            if (time==null)
             {
                 throw new ItemNotFoundException(parcelId, "ERROR :id of parcel not found\n");
             }
-            return time; 
+            return (DateTime)time; 
 
         }
         /// <summary>
@@ -140,7 +140,7 @@ namespace DalObject
         /// <returns> DateTime</returns>
         public  DateTime GetParcelAffiliation(int parcelId) 
         {
-            DateTime time = DateTime.MinValue;
+            DateTime? time = null;
             foreach (Parcel objParcel in DataSource.Parcels)
             {
                 if (objParcel.Id == parcelId)
@@ -148,11 +148,11 @@ namespace DalObject
                     time = objParcel.Affiliation;
                 }
             }
-            if (time==DateTime.MinValue)
+            if (time==null)
             {
                 throw new ItemNotFoundException(parcelId, "ERROR :id of parcel not found\n");
             }
-            return time;
+            return (DateTime)time;
         }
         /// <summary>
         /// Returns the time the parcel was picked up
@@ -161,7 +161,7 @@ namespace DalObject
         /// <returns> DateTime </returns>
         public  DateTime GetParcelPickedUp(int parcelId)   
         {
-            DateTime time = DateTime.MinValue;
+            DateTime? time = null;
             foreach (Parcel objParcel in DataSource.Parcels)
             {
                 if (objParcel.Id == parcelId)
@@ -169,11 +169,11 @@ namespace DalObject
                     time = objParcel.PickedUp;
                 }
             }
-            if (time==DateTime.MinValue)
+            if (time==null)
             {
                 throw new ItemNotFoundException(parcelId,"ERROR :id of parcel not found\n");
             }
-            return time;
+            return (DateTime)time;
         }
         /// <summary>
         /// Returns the time the parcel was delivered
@@ -182,7 +182,7 @@ namespace DalObject
         /// <returns> DateTime </returns>
         public  DateTime GetParcelDelivered(int parcelId)  
         {
-            DateTime time = DateTime.MinValue;
+            DateTime? time = null;
             foreach (Parcel objParcel in DataSource.Parcels)
             {
                 if (objParcel.Id == parcelId)
@@ -190,11 +190,11 @@ namespace DalObject
                     time = objParcel.Delivered;
                 }
             }
-            if (time==DateTime.MinValue)
+            if (time==null)
             {
                 throw new ItemNotFoundException(parcelId,"ERROR :id of parcel not found\n");
             }
-            return time;
+            return (DateTime)time;
         }
         /// <summary>
         /// Adding a station to the next open index
@@ -378,13 +378,9 @@ namespace DalObject
         /// Returning a list of all the Drones
         /// </summary>
         /// <returns> List </returns>
-        public IEnumerable<Drone> ListDrone()   
+        public IEnumerable<Drone> ListDrone(Predicate<Drone> predicate)
         {
-            List<Drone> printDrone = new List<Drone>();
-            for (int i = 0; i < Drones.Count; i++)
-            {
-                printDrone.Add(GetDrone(Drones[i].Id));
-            }
+            List<Drone> printDrone = DataSource.Drones.FindAll(predicate);
             return printDrone;
         }
 
@@ -392,13 +388,9 @@ namespace DalObject
         /// Returning a list of all the Customers
         /// </summary>
         /// <returns> List </returns>
-        public IEnumerable<Customer> ListCustomer()   
+        public IEnumerable<Customer> ListCustomer(Predicate<Customer> predicate)
         {
-            List<Customer> PrintCustomer = new List<Customer>();
-            for (int i = 0; i <Customers.Count; i++)
-            {
-                PrintCustomer.Add(GetCustomer(Customers[i].Id));
-            }
+            List<Customer> PrintCustomer = DataSource.Customers.FindAll(predicate);
             return PrintCustomer;
         }
 
@@ -473,6 +465,9 @@ namespace DalObject
             foreach(Parcel parcel in ListParcel(i => i.DroneId != 0))
             {
                 PrintParcelOnAir.Add(parcel);
+                
+                if(GetParcel(i).Affiliation == null)
+                    PrintParcelOnAir.Add(GetParcel(i));
             }
             return PrintParcelOnAir;
         }
