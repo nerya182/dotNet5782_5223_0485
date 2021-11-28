@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using IBL;
 using IBL.BO;
 
+
 namespace PL
 {
     /// <summary>
@@ -26,11 +27,13 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+          
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
         {
-            new DisplayListOfDrones(bl).Show();
+            new DronesListWindow(bl).Show();
         }
     }
+    
 }

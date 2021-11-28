@@ -8,19 +8,16 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-              VerticalAlignment="Stretch" Width="auto">
+VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="Box1" HorizontalAlignment="Center" Margin="0,103,0,0" VerticalAlignment="Top" Width="120"/>
-            <ComboBox Name="Box2" HorizontalAlignment="Center" Margin="0,98,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
-            <ComboBox Name="Box3" HorizontalAlignment="Center" Margin="0,93,0,0" VerticalAlignment="Top" Width="120" Grid.Column="2"/>
-            <ComboBox Name="Box4" HorizontalAlignment="Center" Margin="0,93,0,0" VerticalAlignment="Top" Width="120" Grid.Column="3"/>
-            <TextBox HorizontalAlignment="Center" Margin="0,45,0,0" Text="nerya king" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="83,170,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+            <Button Content="Button" Grid.Column="2" HorizontalAlignment="Left" Margin="100,77,0,0" VerticalAlignment="Top" Click="ShowDronesButton_Click"/>
         </Grid>
+
+
     </Grid>
 </Window>
