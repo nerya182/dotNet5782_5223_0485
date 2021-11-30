@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Margin="0,0,10,0">
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
@@ -15,9 +15,8 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <Button Content="Button" Grid.Column="2" HorizontalAlignment="Left" Margin="100,77,0,0" VerticalAlignment="Top" Click="ShowDronesButton_Click"/>
+            <Image Source="/Drone-Fast-Delivery.jpg" Stretch="UniformToFill" Grid.ColumnSpan="4" Margin="0,0,-4,0"/>
+            <Button Content="view list drones" Grid.Column="2" HorizontalAlignment="Left" Margin="52,77,0,0" VerticalAlignment="Top" Click="ShowDronesButton_Click" Height="33" Width="88"/>
         </Grid>
-
-
     </Grid>
 </Window>

@@ -166,7 +166,7 @@ namespace ConsoleUI_BL
                     ViewStationList(bl);  
                     break;
                 case '2':
-                    ViewDroneList(bl);
+                    Console.WriteLine(ViewDroneList(bl));
                     break;
                 case '3':
                     ViewCustomerList(bl); 
@@ -199,13 +199,14 @@ namespace ConsoleUI_BL
         /// View the list of drones of type dronetolist
         /// </summary>
         /// <param name="bl"></param>
-        private static void ViewDroneList(IBL.IBL bl)
+        private static List<DroneToList> ViewDroneList(IBL.IBL bl)
         {
+            List <DroneToList> drones = new List <DroneToList>();
             foreach (Drone objDrone in bl.GetListDrone(i=>true))
-            {
-                DroneToList droneToList = bl.MakeDroneToList(objDrone);
-                Console.WriteLine(droneToList);
+            { 
+                drones.Add(bl.MakeDroneToList(objDrone));
             }
+            return drones;
         }
 
         /// <summary>

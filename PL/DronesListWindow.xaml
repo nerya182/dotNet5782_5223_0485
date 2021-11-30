@@ -24,8 +24,9 @@
                 </ListView.View>
             </ListView>
         </Grid>
-        <ComboBox Name="StatusSelector" Grid.Row="0"  Margin="217,32,463,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="-0.167,-0.56" SelectionChanged="StatusSelector_SelectionChanged" Height="36" Grid.ColumnSpan="2"/>
-        <TextBox HorizontalAlignment="Left"   Grid.Row="0" Margin="442,31,0,0" Text="רחפו סטטוס" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="26" Grid.ColumnSpan="2" RenderTransformOrigin="1.524,1.933"/>
+        <Button Content="add drone" HorizontalAlignment="Left" Margin="626,15,0,0" VerticalAlignment="Top" Height="44" Width="69" Click="Add_Button_Click" Grid.ColumnSpan="2"/>
+        <ComboBox Name="StatusSelector" Grid.Row="0"  Margin="200,26,480,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="-0.167,-0.56" SelectionChanged="StatusSelector_SelectionChanged" Height="36" Grid.ColumnSpan="2"/>
+        <TextBox HorizontalAlignment="Left"   Grid.Row="0" Margin="377,26,0,0" Text="רחפו סטטוס" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="26" Grid.ColumnSpan="2" RenderTransformOrigin="1.524,1.933"/>
         <ComboBox Name="WeightCategoriesSelector"  Grid.Row="0" HorizontalAlignment="Left" Margin="34,31,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="WeightCategoriesSelector_SelectionChanged" Height="34" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

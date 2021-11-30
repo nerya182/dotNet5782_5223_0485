@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using IBL.BO;
 
 namespace PL
 {
@@ -19,9 +20,23 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        public DroneWindow()
+        IBL.IBL bldw;
+        public DroneWindow(IBL.IBL blw)
         {
-            InitializeComponent();
+          InitializeComponent();
+          bldw = blw;
+          WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            int chargingStationId=0;
+            IBL.BO.DroneToList newDrone = new IBL.BO.DroneToList();
+            newDrone.Id = int.Parse(TextBox_id.Text);
+            newDrone.Model = TextBox_model.Text;
+            newDrone.MaxWeight = (WeightCategories)WeightSelector.SelectedItem;
+            chargingStationId = int.Parse(TextBox_charge_Station_id.Text);
+            bldw.AddDrone(newDrone, chargingStationId);
         }
     }
 }

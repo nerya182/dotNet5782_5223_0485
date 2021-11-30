@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="DroneWindow" Height="450" Width="800">
     <Grid>
-        
+        <Label Name="label_id" Content="Enter a unique ID number:" HorizontalAlignment="Left" Height="24" Margin="35,82,0,0" VerticalAlignment="Top" Width="154"/>
+        <Label Name="label_model" Content="Insert the model of the drone:" HorizontalAlignment="Left" Height="24" Margin="35,111,0,0" VerticalAlignment="Top" Width="174"/>
+        <ComboBox  Name="WeightSelector" Text="Weight" HorizontalAlignment="Left" Margin="221,145,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="label_weight" Content="Weight:" HorizontalAlignment="Left" Height="24" Margin="35,143,0,0" VerticalAlignment="Top" Width="174"/>
+        <TextBox x:Name="TextBox_id" HorizontalAlignment="Left" Margin="221,85,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TextBox_model" HorizontalAlignment="Left" Margin="221,114,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="label_charge_Station_id" Content="Initial charging station number:" HorizontalAlignment="Left" Height="24" Margin="35,172,0,0" VerticalAlignment="Top" Width="174"/>
+        <TextBox x:Name="TextBox_charge_Station_id" HorizontalAlignment="Left" Margin="221,178,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button  Name="add_button" Content="Add" HorizontalAlignment="Left" Margin="221,217,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="Button_Click"/>
     </Grid>
 </Window>
