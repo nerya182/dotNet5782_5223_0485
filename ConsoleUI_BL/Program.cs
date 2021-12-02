@@ -1,10 +1,8 @@
 ﻿/* Binyamin Mor- 317510485,  Nerya Baracassa- 208915223
  The program created a whole big Drone operating system. we've entered some info ourselves, but we are mainly setting the grounds for a much bigger project! */
-using IBL;
 using IBL.BO;
 using System;
 using System.Collections.Generic;
-using System.Threading.Channels;
 
 namespace ConsoleUI_BL
 {
@@ -12,7 +10,7 @@ namespace ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            IBL.IBL bl =new BL.BL();
+            IBL.IBL bl = new BL.BL();
             int input = new int();
             CHOICE choice;
             do
@@ -36,10 +34,10 @@ namespace ConsoleUI_BL
                         AddOptions(bl, input);
                         break;
                     case CHOICE.UPDATE:
-                        UpdateOptions(bl, input);                      
+                        UpdateOptions(bl, input);
                         break;
                     case CHOICE.DISPLAY:
-                        DisplayOptions(bl, input);                      
+                        DisplayOptions(bl, input);
                         break;
                     case CHOICE.VIEW_LIST:
                         ViewListOptions(bl);
@@ -140,10 +138,10 @@ namespace ConsoleUI_BL
                     DisplayDrone(bl, id, flag);
                     break;
                 case 3:
-                    DisplayCustomer(bl, id, flag);   
+                    DisplayCustomer(bl, id, flag);
                     break;
                 case 4:
-                    DisplayParcel(bl, id, flag);              
+                    DisplayParcel(bl, id, flag);
                     break;
             }
         }
@@ -163,22 +161,22 @@ namespace ConsoleUI_BL
             {
 
                 case '1':
-                    ViewStationList(bl);  
+                    ViewStationList(bl);
                     break;
                 case '2':
                     Console.WriteLine(ViewDroneList(bl));
                     break;
                 case '3':
-                    ViewCustomerList(bl); 
+                    ViewCustomerList(bl);
                     break;
                 case '4':
-                    ViewParcelList(bl);        
+                    ViewParcelList(bl);
                     break;
                 case '5':
-                    ViewParcelOnAirList(bl);               
+                    ViewParcelOnAirList(bl);
                     break;
                 case '6':
-                    ViewStationsWithOpenSlotsList(bl);    
+                    ViewStationsWithOpenSlotsList(bl);
                     break;
             }
         }
@@ -201,9 +199,9 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static List<DroneToList> ViewDroneList(IBL.IBL bl)
         {
-            List <DroneToList> drones = new List <DroneToList>();
-            foreach (Drone objDrone in bl.GetListDrone(i=>true))
-            { 
+            List<DroneToList> drones = new List<DroneToList>();
+            foreach (Drone objDrone in bl.GetListDrone(i => true))
+            {
                 drones.Add(bl.MakeDroneToList(objDrone));
             }
             return drones;
@@ -215,7 +213,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewCustomerList(IBL.IBL bl)
         {
-            foreach (Customer objCustomer in bl.GetListCustomer(i=>true))
+            foreach (Customer objCustomer in bl.GetListCustomer(i => true))
             {
                 CustomerToList customerToList = bl.MakeCustomerToList(objCustomer);
                 Console.WriteLine(customerToList);
@@ -483,7 +481,7 @@ namespace ConsoleUI_BL
         private static void UpdateStation(IBL.IBL bl)
         {
             bool flag;
-            int IdStation, positions=0;
+            int IdStation, positions = 0;
             string chargingPositions;
             try
             {
@@ -499,9 +497,9 @@ namespace ConsoleUI_BL
                 do
                 {
                     Console.WriteLine("Insert the total amount of charging of the station or click enter");
-                    chargingPositions=Console.ReadLine();
-                    if (chargingPositions =="") { flag = true; }
-                    else{flag=int.TryParse(chargingPositions,out positions);}
+                    chargingPositions = Console.ReadLine();
+                    if (chargingPositions == "") { flag = true; }
+                    else { flag = int.TryParse(chargingPositions, out positions); }
                 } while (!flag);
                 if (chargingPositions != "") bl.UpdateStationPositions(updateStation.Id, positions);
                 if (updateStation.Name != "") bl.UpdateStationName(updateStation.Id, updateStation.Name);
@@ -520,7 +518,7 @@ namespace ConsoleUI_BL
         {
             bool flag;
             int idDrone;
-           
+
             try
             {
                 DroneToList updateDrone = new DroneToList();
@@ -568,7 +566,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine("What is your Latitude?");
                     flag = double.TryParse(Console.ReadLine(), out num);
                 } while (!flag);
-                locationOfnewCustomer.Lattitude=num;
+                locationOfnewCustomer.Lattitude = num;
                 do
                 {
                     Console.WriteLine("What is your longitude?");
@@ -613,9 +611,9 @@ namespace ConsoleUI_BL
                 target.Id = IdCustomer;
                 newParcel.Target = target;
                 Console.WriteLine("enter 1-Light ,2- Medium ,3-Heavy");
-                newParcel.Weight = (WeightCategories) int.Parse(Console.ReadLine());
+                newParcel.Weight = (WeightCategories)int.Parse(Console.ReadLine());
                 Console.WriteLine("enter  1-Regular , 2-Express , 3-Urgent");
-                newParcel.Priority = (Priorities) int.Parse(Console.ReadLine());
+                newParcel.Priority = (Priorities)int.Parse(Console.ReadLine());
                 newParcel.Creating = DateTime.Now;
                 newParcel.Affiliation = DateTime.MinValue;
                 newParcel.Delivered = DateTime.MinValue;
@@ -718,5 +716,5 @@ namespace ConsoleUI_BL
                 Console.WriteLine(e);
             }
         }
-    }  
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IBL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IBL.BO;
 
 namespace PL
 {
@@ -23,14 +23,14 @@ namespace PL
         IBL.IBL bldw;
         public DroneWindow(IBL.IBL blw)
         {
-          InitializeComponent();
-          bldw = blw;
-          WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            InitializeComponent();
+            bldw = blw;
+            WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int chargingStationId=0;
+
+            int chargingStationId = 0;
             IBL.BO.DroneToList newDrone = new IBL.BO.DroneToList();
             newDrone.Id = int.Parse(TextBox_id.Text);
             newDrone.Model = TextBox_model.Text;

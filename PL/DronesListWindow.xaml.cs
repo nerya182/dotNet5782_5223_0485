@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IBL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IBL;
-using IBL.BO;
 
 namespace PL
 {
@@ -22,8 +21,6 @@ namespace PL
     public partial class DronesListWindow : Window
     {
         IBL.IBL blw;
-       
-         
         public DronesListWindow(IBL.IBL bl)
         {
             InitializeComponent();
@@ -32,7 +29,6 @@ namespace PL
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             DronesListView.ItemsSource = blw.GetListDrone(i => true);
         }
-
         private void DronesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DronesListView.ItemsSource = blw.GetListDrone(i => true);
@@ -41,7 +37,7 @@ namespace PL
         private void WeightCategoriesSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             IBL.BO.WeightCategories weight = (IBL.BO.WeightCategories)(WeightCategories)WeightCategoriesSelector.SelectedItem;
-         DronesListView.ItemsSource = blw.GetListDrone(i => i.MaxWeight == weight);
+            DronesListView.ItemsSource = blw.GetListDrone(i => i.MaxWeight == weight);
         }
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -51,7 +47,7 @@ namespace PL
 
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-           new DroneWindow(blw).Show();
+            new DroneWindow(blw).Show();
         }
     }
 }
