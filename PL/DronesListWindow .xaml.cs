@@ -29,19 +29,17 @@ namespace PL
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             DronesListView.ItemsSource = blw.GetListDrone(i => true);
         }
+
         private void DronesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DronesListView.ItemsSource = blw.GetListDrone(i => true);
         }
 
-        private void WeightCategoriesSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            IBL.BO.WeightCategories weight = (IBL.BO.WeightCategories)(WeightCategories)WeightCategoriesSelector.SelectedItem;
-            DronesListView.ItemsSource = blw.GetListDrone(i => i.MaxWeight == weight);
-        }
+       
+
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            IBL.BO.DroneStatuses statuses = (IBL.BO.DroneStatuses)(DroneStatuses)StatusSelector.SelectedItem;
+            IBL.BO.DroneStatuses statuses = (IBL.BO.DroneStatuses) (DroneStatuses) StatusSelector.SelectedItem;
             DronesListView.ItemsSource = blw.GetListDrone(i => i.Status == statuses);
         }
 
@@ -49,8 +47,12 @@ namespace PL
         {
             new DroneWindow(blw).Show();
         }
+
+        private void WeightCategoriesSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            IBL.BO.WeightCategories weight =
+                (IBL.BO.WeightCategories)(WeightCategories)WeightCategoriesSelector.SelectedItem;
+            DronesListView.ItemsSource = blw.GetListDrone(i => i.MaxWeight == weight);
+        }
     }
 }
-    
-
-

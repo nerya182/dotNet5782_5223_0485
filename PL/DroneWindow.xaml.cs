@@ -29,14 +29,21 @@ namespace PL
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-            int chargingStationId = 0;
-            IBL.BO.DroneToList newDrone = new IBL.BO.DroneToList();
-            newDrone.Id = int.Parse(TextBox_id.Text);
-            newDrone.Model = TextBox_model.Text;
-            newDrone.MaxWeight = (WeightCategories)WeightSelector.SelectedItem;
-            chargingStationId = int.Parse(TextBox_charge_Station_id.Text);
-            bldw.AddDrone(newDrone, chargingStationId);
+            try
+            {
+                int chargingStationId = 0;
+                IBL.BO.DroneToList newDrone = new IBL.BO.DroneToList();
+                newDrone.Id = int.Parse(TextBox_id.Text);
+                newDrone.Model = TextBox_model.Text;
+                newDrone.MaxWeight = (WeightCategories)WeightSelector.SelectedItem;
+                chargingStationId = int.Parse(TextBox_charge_Station_id.Text);
+                bldw.AddDrone(newDrone, chargingStationId);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+            
         }
     }
 }
