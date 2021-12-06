@@ -25,11 +25,11 @@ namespace PL
         {
             InitializeComponent();
         }
-
         private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
         {
-            new DronesListWindow(bl).Show();
-            Hide();
+            this.Visibility = Visibility.Hidden;
+            DronesListWindow dronesListWindow = new DronesListWindow(bl, this);
+            dronesListWindow.Show();
         }
     }
 }

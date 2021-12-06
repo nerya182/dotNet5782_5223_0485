@@ -27,7 +27,7 @@ namespace IBL
                        $"Model: {Model}   " +
                        $"MaxWeight: {MaxWeight}  " +
                        $"Status: {Status}   \n" +
-                       $"Battery:{(int)Battery}   " +
+                       $"Battery:{(int)Battery}%   " +
                        $"location: {Location}   " +
                        $"parcel number being passed: {ParcelBeingPassedId}\n   ";
             }

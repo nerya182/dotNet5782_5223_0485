@@ -1,0 +1,43 @@
+﻿<Window x:Class="PL.DronesListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="DronesListWindow" Height="640" Width="800">
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="400*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Margin="0,-4,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <Label Name="Status" Content="drone status:" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+            <ComboBox Name="WeightCategoriesSelector"  SelectionChanged="WeightCategoriesSelector_SelectionChanged" Grid.Column="3" HorizontalAlignment="Left" Margin="22,26,0,0" VerticalAlignment="Top" Width="120"/>
+            <ComboBox Name="StatusSelector" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged" HorizontalAlignment="Left" Margin="32,27,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+            <Label Content="drone max Weight" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="27" Width="108"/>
+            <Button Content="close" Grid.Column="3" HorizontalAlignment="Left" Margin="154,12,0,0" VerticalAlignment="Top" Background="#FFFA0A0A" Click="Button_Click"/>
+        </Grid>
+        <ListView x:Name="DronesListView" Grid.Row="1" Margin="0,6,0,68">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" x:Name="Id" Header="Id" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Model}" x:Name="Model" Header="Model" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Location}" x:Name="Location" Header="Location" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Battery}" x:Name="Battery" Header="Battery %" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=MaxWeight}" x:Name="Weight" Header="Weight" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Status}" x:Name="DronesStatus" Header="DronesStatus" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelBeingPassedId}" x:Name="ParcelTransfer"  Header="parcel in transfer" Width="auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="add new drone" HorizontalAlignment="Left" Margin="687,499,0,0" Grid.Row="1" VerticalAlignment="Top" Height="33" Width="90" Click="Add_Button_Click"/>
+    </Grid>
+
+</Window>

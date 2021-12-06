@@ -239,13 +239,13 @@ namespace BL
         /// Retrieving the list of drones
         /// </summary>
         /// <returns> UEnumerable of drones </returns>
-        public IEnumerable<Drone> GetListDrone(Predicate<IBL.BO.Drone> predicate)
+        public IEnumerable<DroneToList> GetListDrone(Predicate<IBL.BO.DroneToList> predicate)
         {
-            List<Drone> temp = new List<Drone>();
+            List<DroneToList> temp = new List<DroneToList>();
             foreach (IDAL.DO.Drone drone in dal.ListDrone(i=>true))
             {
                 Drone obj = DroneDisplay(drone.Id);
-                temp.Add(obj);
+                temp.Add(MakeDroneToList(obj));
             }
             temp = temp.FindAll(predicate);
             return temp;
