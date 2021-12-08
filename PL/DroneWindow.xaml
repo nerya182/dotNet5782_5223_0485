@@ -7,22 +7,44 @@
         mc:Ignorable="d"
         Title="DroneWindow" Height="450" Width="800">
     <Grid>
-        <Label Name="label_id" Content="Enter a unique ID number:" HorizontalAlignment="Left" Height="24" Margin="35,82,0,0" VerticalAlignment="Top" Width="154"/>
-        <Label Name="label_model" Content="Insert the model of the drone:" HorizontalAlignment="Left" Height="24" Margin="35,111,0,0" VerticalAlignment="Top" Width="174"/>
+        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill"/>
+        <Label Name="label_id" Content="Enter  ID number:" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
+        <Label Name="label_model" Content="Insert the model" HorizontalAlignment="Left" Height="29" Margin="28,106,0,0" VerticalAlignment="Top" Width="199" FontSize="16" FontWeight="Black"/>
         <ComboBox  Name="WeightSelector" Text="Weight" HorizontalAlignment="Left" Margin="221,149,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="label_weight" Content="Weight:" HorizontalAlignment="Left" Margin="35,143,0,0" VerticalAlignment="Top" Width="174"/>
+        <Label x:Name="label_weight" Content="Weight:" HorizontalAlignment="Left" Margin="35,143,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
         <TextBox x:Name="TextBox_id" HorizontalAlignment="Left" Margin="221,85,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="TextBox_model" HorizontalAlignment="Left" Margin="221,114,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="label_charge_Station_id" Content="Initial charging station number:" HorizontalAlignment="Left" Margin="35,172,0,0" VerticalAlignment="Top"/>
-        <Button  Name="add_button" Content="Add" HorizontalAlignment="Left" Margin="221,337,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="AddButton_Click"/>
-        <Label Content="status:" HorizontalAlignment="Left" Margin="35,0,0,0" VerticalAlignment="Center" Width="174"/>
-        <ComboBox Name="StatusAdd"  HorizontalAlignment="Left" Margin="221,210,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Delivery:" HorizontalAlignment="Left" Margin="35,235,0,0" VerticalAlignment="Top" Width="174"/>
+        <Label x:Name="label_charge_Station_id" Content="Initial charging station number:" HorizontalAlignment="Left" Margin="35,172,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Black"/>
+        <Button  Name="add_button" Content="Add" HorizontalAlignment="Left" Margin="221,337,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="AddButton_Click" FontWeight="Black"/>
+        <Label  Name="statusch" Content="status:" HorizontalAlignment="Left" Margin="35,208,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
+        <ComboBox Name="StatusAdd" Text="Select max weight" HorizontalAlignment="Left" Margin="221,210,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label   Name="Delivery" Content="Delivery:" HorizontalAlignment="Left" Margin="35,235,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
         <TextBox x:Name="TextBoxDelivery" HorizontalAlignment="Left" Margin="221,241,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Lattitude:" HorizontalAlignment="Left" Margin="37,266,0,0" VerticalAlignment="Top" Width="174"/>
+        <Label Name="Lattitude" Content="Lattitude:" HorizontalAlignment="Left" Margin="37,266,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black" FontStyle="Normal" FontStretch="Expanded"/>
         <TextBox x:Name="TextBoxLattitude" HorizontalAlignment="Left" Margin="221,270,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label  Content="Longitude:"  HorizontalAlignment="Left" Margin="36,297,0,0" VerticalAlignment="Top" Width="174"/>
+        <Label Name="Longitud" Content="Longitude:"  HorizontalAlignment="Left" Margin="36,297,0,0" VerticalAlignment="Top" Width="174" FontWeight="Heavy" FontStretch="Medium" FontSize="16"/>
         <TextBox x:Name="TextBoxLongitude" HorizontalAlignment="Left" Margin="222,305,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <ComboBox Name="chargeStationId" HorizontalAlignment="Left" Margin="221,179,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button  x:Name="Cancel_add_button" Content="Cancel Add" HorizontalAlignment="Left" Margin="221,377,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="Cancel_Add_Button_Click" FontWeight="Black"/>
+        <ListView Name="listViewUpdate" Margin="346,82,10,236" FontWeight="Black">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" x:Name="Id" Header="Id" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Model}" x:Name="Model" Header="Model" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Location}" x:Name="Location" Header="Location" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Battery}" x:Name="Battery" Header="Battery %" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=MaxWeight}" x:Name="Weight" Header="Weight" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Status}" x:Name="DronesStatus" Header="DronesStatus" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelTransfer}" x:Name="ParcelInTransfer"  Header="parcel in transfer" Width="auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label  x:Name="UpdateOptions" Content="Update options:" HorizontalAlignment="Left" Margin="359,212,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
+        <ComboBox x:Name="ComboBoxUpdateOptions"  HorizontalAlignment="Left" Margin="496,212,0,0" VerticalAlignment="Top" Width="218" SelectionChanged="ComboBoxUpdateOptions_SelectionChanged"/>
+        <TextBox Name="TextBoxNewModel"  HorizontalAlignment="Left" Margin="521,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Height="24" Width="137"/>
+        <Label   x:Name="labelTextBoxNewModel" Content="Insert a new model " HorizontalAlignment="Left" Margin="359,253,0,0" VerticalAlignment="Top" Width="162" FontSize="16" FontWeight="Black"/>
+        <Button  x:Name="NewModel" Content="update" HorizontalAlignment="Left" Margin="673,255,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="updateButton_Click" FontSize="14" FontWeight="Black"/>
+        <Button  x:Name="close_button" Content="close" HorizontalAlignment="Left" Margin="730,26,0,0" VerticalAlignment="Top" Height="34" Width="44" Click="closeButton_Click" Background="#FFED0E0E" RenderTransformOrigin="0.5,0.589" FontWeight="Black"/>
+
     </Grid>
 </Window>

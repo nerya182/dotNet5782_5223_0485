@@ -493,5 +493,19 @@ namespace BL
                 throw new ItemNotFoundException(id, "ERROR :id of drone not found\n");
             return null;
         }
+        /// <summary>
+        /// Retrieving the list of drones
+        /// </summary>
+        /// <returns> UEnumerable of drones </returns>
+        public IEnumerable<Drone> GetDrones()
+        {
+            List<Drone> temp = new List<Drone>();
+            foreach (IDAL.DO.Drone drone in dal.ListDrone(i => true))
+            {
+                Drone obj = DroneDisplay(drone.Id);
+                temp.Add(obj);
+            }
+            return temp;
+        }
     }
 }

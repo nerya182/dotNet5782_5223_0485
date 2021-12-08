@@ -68,6 +68,11 @@ namespace IBL
         /// <returns>UEnumerable of drones</returns>
         IEnumerable<DroneToList> GetListDrone(Predicate<DroneToList> predicate);
         /// <summary>
+        /// Retrieving the list of drones
+        /// </summary>
+        /// <returns>UEnumerable of drones</returns>
+        IEnumerable<Drone> GetDrones();
+        /// <summary>
         /// Retrieving info to transform parcel into parceltolist and returning it
         /// </summary>
         /// <param name="objParcel"></param>

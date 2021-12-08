@@ -18,8 +18,7 @@ namespace DalObject
             internal static double lightWeight=0.1;
             internal static double mediumWeight=0.15;
             internal static double heavyWeight=0.2;
-
-            internal static double chargeSpeed=100;
+            internal static double chargeSpeed=500;
         }
     
         public static List<Customer> Customers = new List<Customer>();

@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <None Remove="Drone-Fast-Delivery.jpg" />
+    <None Remove="images.jpg" />
+    <None Remove="maxresdefault.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +18,8 @@
 
   <ItemGroup>
     <Resource Include="Drone-Fast-Delivery.jpg" />
+    <Resource Include="images.jpg" />
+    <Resource Include="maxresdefault.jpg" />
   </ItemGroup>
 
 </Project>
