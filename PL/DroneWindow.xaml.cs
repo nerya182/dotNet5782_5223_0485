@@ -28,7 +28,7 @@ namespace PL
         DronesListWindow droneListWin;
         bool flagClosure = true;
         /// <summary>
-        /// constructor for "half" of the window
+        /// constructor for add drone  window
         /// </summary>
         /// <param name="blw"> gives access to the BL functions</param>
         /// <param name="w"> gives access to the previous window</param>
@@ -128,7 +128,7 @@ namespace PL
             this.Close();
         }
         /// <summary>
-        /// constructor for "half" of the window
+        /// constructor for display drone window
         /// </summary>
         /// <param name="blw">gives access to the BL functions</param>
         /// <param name="selectedItem"></param>
@@ -164,7 +164,15 @@ namespace PL
             TextBoxLongitude.Text = droneSelected.ParcelTransfer.ToString();
             TextBoxParcelTransfer.Text = droneSelected.Battery.ToString();
             TextBoxLongitude.Width = 300;
-            TextBoxLongitude.Height = 80;
+            TextBoxLongitude.Height = 100;
+            TextBox_id.IsEnabled = false;
+            TextBox_model.IsEnabled = false;
+            WeightTextBox.IsEnabled = false;
+            TextBoxDelivery.IsEnabled = false;
+            TextBoxParcelTransfer.IsEnabled = false;
+            TextBoxLattitude.IsEnabled = false;
+            TextBoxLongitude.IsEnabled = false;
+            TextBoxLongitude.FontSize = 10;
             switch (droneSelected.Status)
             {
                 case DroneStatuses.Available:
