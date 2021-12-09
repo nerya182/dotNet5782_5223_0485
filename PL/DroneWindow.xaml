@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneWindow" Height="450" Width="800">
+        Title="DroneWindow" Height="450" Width="800" WindowStyle="ToolWindow">
     <Grid x:Name="nn">
         <Image Source="/maxresdefault.jpg" Stretch="UniformToFill"/>
         <Label Name="label_id" Content="Enter  ID number:" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
@@ -14,7 +14,7 @@
         <Label x:Name="label_weight" Content="Weight:" HorizontalAlignment="Left" Margin="35,143,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
         <TextBox x:Name="TextBox_id" TextChanged="idInput_TextChanged" HorizontalAlignment="Left" Margin="221,85,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  />
         <TextBox x:Name="TextBox_model" TextChanged="DroneModel_TextChanged" HorizontalAlignment="Left" Margin="221,114,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="label_charge_Station_id" Content="Initial charging station number:" HorizontalAlignment="Left" Margin="34,176,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Black"/>
+        <Label x:Name="label_charge_Station_id" Content="Initial charging station:" HorizontalAlignment="Left" Margin="31,176,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Black"/>
         <Button  Name="add_button" Content="Add" HorizontalAlignment="Left" Margin="221,337,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="AddButton_Click" FontWeight="Black"/>
         <Label   Name="Delivery" Content="Delivery:" HorizontalAlignment="Left" Margin="33,211,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
         <TextBox x:Name="TextBoxDelivery" HorizontalAlignment="Left" Margin="221,217,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
@@ -29,7 +29,7 @@
         <Button  x:Name="NewModel" Content="update" HorizontalAlignment="Left" Margin="560,161,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="updateButton_Click" FontSize="14" FontWeight="Black"/>
         <Button  x:Name="close_button" Content="close" HorizontalAlignment="Left" Margin="730,26,0,0" VerticalAlignment="Top" Height="34" Width="44" Click="closeButton_Click" Background="#FFED0E0E" RenderTransformOrigin="0.5,0.589" FontWeight="Black"/>
         <TextBox x:Name="WeightTextBox" HorizontalAlignment="Left" Margin="222,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="TextBoxParcelTransfer" HorizontalAlignment="Left" Margin="222,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TextBoxParcelTransfer" HorizontalAlignment="Left" Margin="224,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button  x:Name="changeModelButton" Content="set model" HorizontalAlignment="Left" Margin="367,89,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="ModelButton_Click"/>
         <Button  x:Name="sendOrReleaseButton" Content="charge" HorizontalAlignment="Left" Margin="367,125,0,0" VerticalAlignment="Top"  FontSize="14" FontWeight="Black" Click="sendOrReleaseButtonButton_Click"/>
         <Button  x:Name="delivery" Content="AllDelivery" HorizontalAlignment="Left" Margin="367,159,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="allDeliveryButtonButton_Click"/>

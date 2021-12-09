@@ -101,7 +101,7 @@ namespace PL
                 TextBoxLattitude.Text = bldw.BaseStationDisplay(chargingStationId).location.Lattitude.ToString();
                 TextBoxLongitude.Text = bldw.BaseStationDisplay(chargingStationId).location.Longitude.ToString();
                 bldw.AddDrone(newDrone, chargingStationId);
-                droneListWin.DronesListView.ItemsSource = bldw.GetListDrone();
+                droneListWin.DronesListView.Items.Refresh();
                 MessageBox.Show("Added successfully");
                 TextBox_id.IsEnabled = false;
                 chargeStationId.IsEnabled = false;
@@ -110,6 +110,7 @@ namespace PL
                 add_button.IsEnabled = false;
                 flagClosure = false;
                 this.Close();
+                droneListWin.Filterrefresh(); 
             }
             catch (Exception exception)
             {
@@ -213,6 +214,7 @@ namespace PL
                 updateDrone.Id = selected.Id;
                 bldw.UpdateDrone(updateDrone);
                 MessageBox.Show("Update successfully");
+                TextBox_model.Text = TextBoxNewModel.Text;
                 TextBoxNewModel.Visibility = Visibility.Hidden;
                 labelTextBoxNewModel.Visibility = Visibility.Hidden;
                 NewModel.Visibility = Visibility.Hidden;
@@ -233,13 +235,14 @@ namespace PL
         {
             flagClosure = false;
             this.Close();
-           
+            droneListWin.Show();
+
         }
         protected override void OnClosing(CancelEventArgs e)
         {
-            droneListWin.Visibility = Visibility.Visible;
             base.OnClosed(e);
             e.Cancel = flagClosure;
+            droneListWin.Show();
         }
         /// <summary>
         /// model of drone has been entered
@@ -293,10 +296,15 @@ namespace PL
             if (str=="Sending to charging")
             {
                 try
-                {
+                { 
                     droneId = selected.Id;
                     bldw.SendingDroneForCharging(droneId);
+                    TextBoxDelivery.Text = DroneStatuses.Charging.ToString();
+                    TextBoxLattitude.Text = bldw.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
+                    sendOrReleaseButton.Content = "Release drone";
+                    sendOrReleaseButton.Visibility = Visibility.Visible;
+                    delivery.Visibility = Visibility.Hidden;
 
                 }
                 catch (Exception exception)
@@ -310,8 +318,14 @@ namespace PL
                 {
                     droneId = selected.Id;
                     bldw.ReleaseDroneFromCharging(droneId);
+                    TextBoxParcelTransfer.Text =((int)bldw.DroneDisplay(droneId).Battery).ToString();
+                    TextBoxDelivery.Text = DroneStatuses.Available.ToString();
+                    TextBoxLattitude.Text = bldw.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
-
+                    sendOrReleaseButton.Content = "Sending to charging";
+                    sendOrReleaseButton.Visibility = Visibility.Visible;
+                    delivery.Content = "Affiliation";
+                    delivery.Visibility = Visibility.Visible;
                 }
                 catch (Exception exception)
                 {
@@ -324,8 +338,12 @@ namespace PL
                 {
                     droneId = selected.Id;
                     bldw.ParcelCollectionByDrone(droneId);
+                    TextBoxLongitude.Text = bldw.DroneDisplay(droneId).ParcelTransfer.ToString();
+                    TextBoxParcelTransfer.Text = ((int)bldw.DroneDisplay(droneId).Battery).ToString();
+                    TextBoxLattitude.Text = bldw.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
-
+                    sendOrReleaseButton.Content = "Package delivery";
+                    sendOrReleaseButton.Visibility = Visibility.Visible;
                 }
                 catch (Exception exception)
                 {
@@ -338,7 +356,15 @@ namespace PL
                 {
                     droneId = selected.Id;
                     bldw.DeliveryOfParcelByDrone(droneId);
+                    TextBoxLongitude.Text = bldw.DroneDisplay(droneId).ParcelTransfer.ToString();
+                    TextBoxParcelTransfer.Text = ((int)bldw.DroneDisplay(droneId).Battery).ToString();
+                    TextBoxDelivery.Text = DroneStatuses.Available.ToString();
+                    TextBoxLattitude.Text = bldw.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
+                    sendOrReleaseButton.Content = "Sending to charging";
+                    sendOrReleaseButton.Visibility = Visibility.Visible;
+                    delivery.Content = "Affiliation";
+                    delivery.Visibility = Visibility.Visible;
 
                 }
                 catch (Exception exception)
@@ -356,16 +382,25 @@ namespace PL
             labelTextBoxNewModel.Visibility = Visibility.Hidden;
             NewModel.Visibility = Visibility.Hidden;
             string str = (string)delivery.Content;
-            try
+            if (str== "Affiliation")
             {
-                droneId = selected.Id;
-                bldw.AffiliateParcelToDrone(droneId);
-                MessageBox.Show("Update successfully");
-
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
+                try
+                {
+                    droneId = selected.Id;
+                    bldw.AffiliateParcelToDrone(droneId);
+                    TextBoxLongitude.Text = bldw.DroneDisplay(droneId).ParcelTransfer.ToString();
+                    TextBoxParcelTransfer.Text = ((int)bldw.DroneDisplay(droneId).Battery).ToString();
+                    TextBoxLattitude.Text = bldw.DroneDisplay(droneId).Location.ToString();
+                    TextBoxDelivery.Text = DroneStatuses.Delivery.ToString();
+                    MessageBox.Show("Update successfully");
+                    sendOrReleaseButton.Content = "Package collection";
+                    sendOrReleaseButton.Visibility = Visibility.Visible;
+                    delivery.Visibility = Visibility.Hidden;
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
             }
             droneListWin.DronesListView.ItemsSource = bldw.GetListDrone();
         }

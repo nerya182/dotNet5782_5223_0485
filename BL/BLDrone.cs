@@ -389,6 +389,7 @@ namespace BL
 
             if (parcels.Count==0)
             {
+                drone.Status = DroneStatuses.Available;
                 throw new IllegalActionException("There is not enough battery for the drone to make the shipment");
             }
         }

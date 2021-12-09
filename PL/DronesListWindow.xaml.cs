@@ -63,7 +63,9 @@ namespace PL
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
             DroneWindow droneWindow = new DroneWindow(blw,this);
+            this.Visibility = Visibility.Hidden;
             droneWindow.Show();
+
             DronesListView.Items.Refresh();
             DronesListView.ItemsSource = blw.GetListDrone();
             if (WeightCategoriesSelector.SelectedItem != null)
@@ -150,7 +152,24 @@ namespace PL
         /// <param name="e"></param>
         private void DoubleClickUpdateDrone(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            new DroneWindow(blw, DronesListView.SelectedItem,this).Show();
+            DroneWindow droneWindow=new DroneWindow(blw, DronesListView.SelectedItem,this);
+            droneWindow.Show();
+            this.Visibility = Visibility.Hidden;
+        }
+        public void Filterrefresh()
+        {
+            resetDronesList();
+            if (WeightCategoriesSelector.SelectedItem != null)
+            {
+                IBL.BO.WeightCategories selectedWeight = (IBL.BO.WeightCategories)WeightCategoriesSelector.SelectedItem;
+                DronesListView.ItemsSource = blw.GetByWeight(DronesListView.ItemsSource, selectedWeight);
+            }
+            if (StatusSelector.SelectedItem != null)
+            {
+                IBL.BO.DroneStatuses selectedStatus = (IBL.BO.DroneStatuses)StatusSelector.SelectedItem;
+                DronesListView.ItemsSource = blw.GetByStatus(DronesListView.ItemsSource, selectedStatus);
+            }
+            DronesListView.Items.Refresh();
         }
     }
 }

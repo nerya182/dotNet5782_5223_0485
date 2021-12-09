@@ -29,11 +29,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label x:Name="Status" Content="drone status:" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="16"/>
-            <ComboBox x:Name="WeightCategoriesSelector"  SelectionChanged="WeightCategoriesSelector_SelectionChanged" Grid.Column="2" HorizontalAlignment="Left" Margin="195,26,0,0" VerticalAlignment="Top" Width="145" FontWeight="Bold" FontSize="16" Grid.ColumnSpan="3"/>
+            <ComboBox x:Name="WeightCategoriesSelector"  SelectionChanged="WeightCategoriesSelector_SelectionChanged" Grid.Column="3" HorizontalAlignment="Left" Margin="1,0,0,0" VerticalAlignment="Center" Width="153" FontWeight="Bold" FontSize="16"/>
             <ComboBox x:Name="StatusSelector" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged" HorizontalAlignment="Left" Margin="36,27,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold" FontSize="16"/>
-            <Label Content="drone max Weight" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" Margin="20,0,0,0"/>
-            <Button Content="close" Grid.Column="3" HorizontalAlignment="Left" Margin="145,12,0,0" VerticalAlignment="Top" Background="#FFFA0A0A" Click="Button_Click" FontWeight="Bold" FontSize="16"/>
-            <Button Content="reset" Grid.Column="3" HorizontalAlignment="Left" Margin="146,42,0,0" Click="Button_reset_Click" Background="{x:Null}" FontWeight="Bold" FontSize="16"/>
+            <Label Content="drone max Weight:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
+            <Button Content="close" Grid.Column="3" HorizontalAlignment="Left" Margin="154,12,0,0" VerticalAlignment="Top" Background="#FFFA0A0A" Click="Button_Click" FontWeight="Bold" FontSize="16" Width="44"/>
+            <Button Content="reset" Grid.Column="3" HorizontalAlignment="Left" Margin="153,42,0,0" Click="Button_reset_Click" Background="{x:Null}" FontWeight="Bold" FontSize="16" Width="44"/>
         </Grid>
         <ListView x:Name="DronesListView" MouseDoubleClick="DoubleClickUpdateDrone" Margin="10,10,175,326"  d:ItemsSource="{d:SampleData}" Foreground="#FF070708" FontWeight="Bold" Grid.Row="1">
             <ListView.View>
