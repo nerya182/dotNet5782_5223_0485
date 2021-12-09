@@ -25,6 +25,11 @@ namespace PL
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// first button clicked to view the list of drones
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
         {
             this.Visibility = Visibility.Hidden;
