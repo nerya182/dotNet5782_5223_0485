@@ -38,12 +38,14 @@ namespace PL
             bldw = blw;
             droneListWin = w;
             close_button.Visibility = Visibility.Hidden;
-          
+            changeModelButton.Visibility = Visibility.Hidden;
             UpdateOptions.Visibility = Visibility.Hidden;
             ComboBoxUpdateOptions.Visibility = Visibility.Hidden;
             TextBoxNewModel.Visibility = Visibility.Hidden;
             labelTextBoxNewModel.Visibility = Visibility.Hidden;
             NewModel.Visibility = Visibility.Hidden;
+            sendOrReleaseButton.Visibility = Visibility.Hidden;
+            delivery.Visibility = Visibility.Hidden;
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             chargeStationId.ItemsSource = from IBL.BO.Station s in bldw.GetListStation()
                                           where s.AvailableChargeSlots>0
@@ -160,15 +162,39 @@ namespace PL
             NewModel.Visibility = Visibility.Hidden;
             selected = (DroneToList)selectedItem;
             droneSelected = bldw.DroneDisplay(selected.Id);
-            ComboBoxUpdateOptions.IsEditable = true;
-            ComboBoxUpdateOptions.Text = "Select Update";
-          
-            ComboBoxUpdateOptions.Items.Add("drone model");
-            ComboBoxUpdateOptions.Items.Add("Sending a drone for charging");
-            ComboBoxUpdateOptions.Items.Add("Release drone from charging");
-            ComboBoxUpdateOptions.Items.Add("Sending the drone for delivery");
-            ComboBoxUpdateOptions.Items.Add("Package collection");
-            ComboBoxUpdateOptions.Items.Add("Package delivery");
+            switch (droneSelected.Status)
+            {
+                case DroneStatuses.Available:
+                    changeModelButton.Visibility = Visibility.Visible;
+                    sendOrReleaseButton.Content = "Sending to charging";
+                    sendOrReleaseButton.Visibility = Visibility.Visible;
+                    delivery.Content = "Affiliation";
+                    delivery.Visibility = Visibility.Visible;
+                    break;
+                case DroneStatuses.Charging:
+                    changeModelButton.Visibility = Visibility.Visible;
+                    sendOrReleaseButton.Content = "Release drone";
+                    sendOrReleaseButton.Visibility = Visibility.Visible;
+                    delivery.Visibility = Visibility.Hidden;
+                    break;
+                case DroneStatuses.Delivery:
+                    changeModelButton.Visibility = Visibility.Visible;
+                    Parcel parcel = blw.GetListParcel().First(i => i.Id == selected.ParcelBeingPassedId);
+                    if (parcel.PickedUp==null)
+                    {
+                        sendOrReleaseButton.Content = "Package collection";
+                        sendOrReleaseButton.Visibility = Visibility.Visible;
+                    }
+                    else if(parcel.Delivered==null)
+                    {
+                        sendOrReleaseButton.Content = "Package delivery";
+                        sendOrReleaseButton.Visibility = Visibility.Visible;
+                    }
+                    delivery.Visibility = Visibility.Hidden;
+                    break;
+                default:
+                    break;
+            }
         }
         /// <summary>
         /// update has been selected
@@ -186,75 +212,18 @@ namespace PL
             {
 
                 case 0:
-                    TextBoxNewModel.Visibility = Visibility.Visible;
-                    labelTextBoxNewModel.Visibility = Visibility.Visible;
-                    NewModel.Visibility = Visibility.Visible;
+                   
                     break;
                 case 1:
-                    try
-                    {
-                        droneId = selected.Id;
-                        bldw.SendingDroneForCharging(droneId);
-                        MessageBox.Show("Update successfully");
-                        
-                    }
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show(exception.Message);
-                    }
+                   
                     break;
                 case 2:
-                    try
-                    {
-                        droneId = selected.Id;
-                        bldw.ReleaseDroneFromCharging(droneId);
-                        MessageBox.Show("Update successfully");
-                       
-                    }
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show(exception.Message);
-                    }
+                    
                     break;
                 case 3:
-                    try
-                    {
-                        droneId = selected.Id;
-                        bldw.AffiliateParcelToDrone(droneId);
-                        MessageBox.Show("Update successfully");
-                        
-                    }
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show(exception.Message);
-                    }
+                   
                     break;
-                case 4:
-                    try
-                    {
-                        droneId = selected.Id;
-                        bldw.ParcelCollectionByDrone(droneId);
-                        MessageBox.Show("Update successfully");
-                      
-                    }
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show(exception.Message);
-                    }
-                    break;
-                case 5:
-                    try
-                    {
-                        droneId = selected.Id;
-                        bldw.DeliveryOfParcelByDrone(droneId);
-                        MessageBox.Show("Update successfully");
-                        
-                    }
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show(exception.Message);
-                    }
-                    break;
+               
                 default:
                     break;
             }
@@ -283,6 +252,7 @@ namespace PL
             {
                 MessageBox.Show(exception.Message);
             }
+            droneListWin.DronesListView.ItemsSource = bldw.GetListDrone();
         }
         /// <summary>
         /// closing the current window
@@ -334,6 +304,100 @@ namespace PL
             {
                 TextBox_id.Background = (Brush)bc.ConvertFrom("#FFFA8072");
             }         
-        }  
+        }
+
+        private void ModelButton_Click(object sender, RoutedEventArgs e)
+        {
+            TextBoxNewModel.Visibility = Visibility.Visible;
+            labelTextBoxNewModel.Visibility = Visibility.Visible;
+            NewModel.Visibility = Visibility.Visible;
+        }
+
+        private void sendOrReleaseButtonButton_Click(object sender, RoutedEventArgs e)
+        {
+            TextBoxNewModel.Visibility = Visibility.Hidden;
+            labelTextBoxNewModel.Visibility = Visibility.Hidden;
+            NewModel.Visibility = Visibility.Hidden;
+            string str = (string)sendOrReleaseButton.Content;
+            int droneId;
+            if (str=="Sending to charging")
+            {
+                try
+                {
+                    droneId = selected.Id;
+                    bldw.SendingDroneForCharging(droneId);
+                    MessageBox.Show("Update successfully");
+
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+            }
+            if (str== "Release drone")
+            {
+                try
+                {
+                    droneId = selected.Id;
+                    bldw.ReleaseDroneFromCharging(droneId);
+                    MessageBox.Show("Update successfully");
+
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+            }
+            if (str == "Package collection")
+            {
+                try
+                {
+                    droneId = selected.Id;
+                    bldw.ParcelCollectionByDrone(droneId);
+                    MessageBox.Show("Update successfully");
+
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+            }
+            else if (str == "Package delivery")
+            {
+                try
+                {
+                    droneId = selected.Id;
+                    bldw.DeliveryOfParcelByDrone(droneId);
+                    MessageBox.Show("Update successfully");
+
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+            }
+            droneListWin.DronesListView.ItemsSource = bldw.GetListDrone();
+        }
+
+        private void allDeliveryButtonButton_Click(object sender, RoutedEventArgs e)
+        {
+            int droneId;
+            TextBoxNewModel.Visibility = Visibility.Hidden;
+            labelTextBoxNewModel.Visibility = Visibility.Hidden;
+            NewModel.Visibility = Visibility.Hidden;
+            string str = (string)delivery.Content;
+            try
+            {
+                droneId = selected.Id;
+                bldw.AffiliateParcelToDrone(droneId);
+                MessageBox.Show("Update successfully");
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+            droneListWin.DronesListView.ItemsSource = bldw.GetListDrone();
+        }
     }
 }
