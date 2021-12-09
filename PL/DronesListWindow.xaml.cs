@@ -156,6 +156,9 @@ namespace PL
             droneWindow.Show();
             this.Visibility = Visibility.Hidden;
         }
+        /// <summary>
+        /// saves the filter although drone window has been closed
+        /// </summary>
         public void Filterrefresh()
         {
             resetDronesList();
