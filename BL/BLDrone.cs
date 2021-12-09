@@ -277,6 +277,10 @@ namespace BL
         public void DeliveryOfParcelByDrone(int droneId)
         {
             DroneToList drone = listDrone.Find(i => i.Id == droneId);
+            if (drone.Status != DroneStatuses.Delivery)
+            {
+                throw new IllegalActionException("The drone is not in delivery mode");
+            }
             IDAL.DO.Parcel parcel = dal.GetParcel(drone.ParcelBeingPassedId);
             IDAL.DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
             if (parcel.DroneId == droneId && parcel.PickedUp != null && parcel.Delivered == null)
@@ -447,7 +451,12 @@ namespace BL
             {
                 throw new ItemNotFoundException(droneId, "Enter an existing skimmer number in the system");
             }
-            if (drone.Status != DroneStatuses.Available)
+            if (drone.Status == DroneStatuses.Charging)
+            {
+                throw new IllegalActionException("The drone is already charging");
+            }
+
+            if (drone.Status == DroneStatuses.Delivery)
             {
                 throw new IllegalActionException("The drone is not available");
             }

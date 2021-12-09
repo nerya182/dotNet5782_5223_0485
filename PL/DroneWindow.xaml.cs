@@ -33,7 +33,7 @@ namespace PL
             bldw = blw;
             droneListWin = w;
             close_button.Visibility = Visibility.Hidden;
-            listViewUpdate.Visibility = Visibility.Hidden;
+          
             UpdateOptions.Visibility = Visibility.Hidden;
             ComboBoxUpdateOptions.Visibility = Visibility.Hidden;
             TextBoxNewModel.Visibility = Visibility.Hidden;
@@ -43,15 +43,13 @@ namespace PL
             chargeStationId.ItemsSource = from IBL.BO.Station s in bldw.GetListStation()
                                           where s.AvailableChargeSlots>0
                                           select s.Id;
-            StatusAdd.ItemsSource = from DroneStatuses ds in Enum.GetValues(typeof(DroneStatuses))
-                                    where ds == DroneStatuses.Charging
-                                    select ds;
+            
             WeightSelector.Text = "Select max weight";
             chargeStationId.Text = "select BaseStation";
-            StatusAdd.Text = "select status";
+            
             chargeStationId.IsEditable = true;
             WeightSelector.IsEditable = true;
-            StatusAdd.IsEditable = true;
+            
             TextBoxDelivery.IsEnabled = false;
             TextBoxDelivery.Text = "0";
             TextBoxLattitude.IsEnabled = false;
@@ -61,11 +59,34 @@ namespace PL
         {
             try
             {
+                bool flag;
+                int id;
                 int chargingStationId = 0;
                 IBL.BO.DroneToList newDrone = new IBL.BO.DroneToList();
+                flag = int.TryParse(TextBox_id.Text,out id);
+                if (!flag)
+                {
+                    MessageBox.Show("error ,drone id was not entered ");
+                    return;
+                }
                 newDrone.Id = int.Parse(TextBox_id.Text);
+                if (TextBox_model.Text==null)
+                {
+                    MessageBox.Show("error ,model drone was not entered ");
+                    return;
+                }
                 newDrone.Model = TextBox_model.Text;
+                if (WeightSelector.SelectedItem == null)
+                {
+                    MessageBox.Show("error ,weight was not entered ");
+                    return;
+                }
                 newDrone.MaxWeight = (WeightCategories)WeightSelector.SelectedItem;
+                if (chargeStationId.SelectedItem == null)
+                {
+                    MessageBox.Show("error ,charge station id was not entered ");
+                    return;
+                }
                 chargingStationId = (int)chargeStationId.SelectedItem;
                 TextBoxLattitude.Text = bldw.BaseStationDisplay(chargingStationId).location.Lattitude.ToString();
                 TextBoxLongitude.Text = bldw.BaseStationDisplay(chargingStationId).location.Longitude.ToString();
@@ -94,7 +115,6 @@ namespace PL
         public DroneWindow(IBL.IBL blw, object selectedItem, DronesListWindow w)
         {
             InitializeComponent();
-           
             droneListWin = w;
             bldw = blw;
             close_button.Visibility = Visibility.Visible;
@@ -105,9 +125,7 @@ namespace PL
             TextBox_id.Visibility = Visibility.Hidden;
             TextBox_model.Visibility = Visibility.Hidden;
             label_charge_Station_id.Visibility = Visibility.Hidden;
-            add_button.Visibility = Visibility.Hidden;
-            statusch.Visibility = Visibility.Hidden;
-            StatusAdd.Visibility = Visibility.Hidden;
+            add_button.Visibility = Visibility.Hidden;         
             Delivery.Visibility = Visibility.Hidden;
             TextBoxDelivery.Visibility = Visibility.Hidden;
             Lattitude.Visibility = Visibility.Hidden;
@@ -124,9 +142,7 @@ namespace PL
             droneSelected = bldw.DroneDisplay(selected.Id);
             ComboBoxUpdateOptions.IsEditable = true;
             ComboBoxUpdateOptions.Text = "Select Update";
-            listViewUpdate.ItemsSource = from IBL.BO.Drone d in bldw.GetDrones()
-                                         where d.Id == selected.Id
-                                         select d;
+          
             ComboBoxUpdateOptions.Items.Add("drone model");
             ComboBoxUpdateOptions.Items.Add("Sending a drone for charging");
             ComboBoxUpdateOptions.Items.Add("Release drone from charging");
@@ -156,7 +172,7 @@ namespace PL
                         droneId = selected.Id;
                         bldw.SendingDroneForCharging(droneId);
                         MessageBox.Show("Update successfully");
-                        listViewUpdate.ItemsSource = bldw.GetDrones().Where(i=>i.Id==droneId);
+                        
                     }
                     catch (Exception exception)
                     {
@@ -169,7 +185,7 @@ namespace PL
                         droneId = selected.Id;
                         bldw.ReleaseDroneFromCharging(droneId);
                         MessageBox.Show("Update successfully");
-                        listViewUpdate.ItemsSource = bldw.GetDrones().Where(i => i.Id == droneId);
+                       
                     }
                     catch (Exception exception)
                     {
@@ -182,7 +198,7 @@ namespace PL
                         droneId = selected.Id;
                         bldw.AffiliateParcelToDrone(droneId);
                         MessageBox.Show("Update successfully");
-                        listViewUpdate.ItemsSource = bldw.GetDrones().Where(i => i.Id == droneId);
+                        
                     }
                     catch (Exception exception)
                     {
@@ -195,7 +211,7 @@ namespace PL
                         droneId = selected.Id;
                         bldw.ParcelCollectionByDrone(droneId);
                         MessageBox.Show("Update successfully");
-                        listViewUpdate.ItemsSource = bldw.GetDrones().Where(i => i.Id == droneId);
+                      
                     }
                     catch (Exception exception)
                     {
@@ -208,7 +224,7 @@ namespace PL
                         droneId = selected.Id;
                         bldw.DeliveryOfParcelByDrone(droneId);
                         MessageBox.Show("Update successfully");
-                        listViewUpdate.ItemsSource = bldw.GetDrones().Where(i => i.Id == droneId);
+                        
                     }
                     catch (Exception exception)
                     {
@@ -233,7 +249,7 @@ namespace PL
                 TextBoxNewModel.Visibility = Visibility.Hidden;
                 labelTextBoxNewModel.Visibility = Visibility.Hidden;
                 NewModel.Visibility = Visibility.Hidden;
-                listViewUpdate.ItemsSource = bldw.GetDrones().Where(i => i.Id == selected.Id);
+               
             }
             catch (Exception exception)
             {
@@ -245,9 +261,11 @@ namespace PL
         {
             flagClosure = false;
             this.Close();
+           
         }
         protected override void OnClosing(CancelEventArgs e)
         {
+            droneListWin.Visibility = Visibility.Visible;
             base.OnClosed(e);
             e.Cancel = flagClosure;
         }
