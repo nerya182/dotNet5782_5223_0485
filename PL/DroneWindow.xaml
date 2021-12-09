@@ -26,8 +26,6 @@
         <TextBox x:Name="TextBoxLongitude" HorizontalAlignment="Left" Margin="222,299,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <ComboBox Name="chargeStationId" HorizontalAlignment="Left" Margin="221,179,0,0" VerticalAlignment="Top" Width="120"/>
         <Button  x:Name="Cancel_add_button" Content="Cancel Add" HorizontalAlignment="Left" Margin="221,377,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="Cancel_Add_Button_Click" FontWeight="Black"/>
-        <Label  x:Name="UpdateOptions" Content="Update options:" HorizontalAlignment="Left" Margin="388,317,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
-        <ComboBox x:Name="ComboBoxUpdateOptions"  HorizontalAlignment="Left" Margin="567,337,0,0" VerticalAlignment="Top" Width="218" SelectionChanged="ComboBoxUpdateOptions_SelectionChanged"/>
         <TextBox Name="TextBoxNewModel"  HorizontalAlignment="Left" Margin="548,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Height="24" Width="138"/>
         <Label   x:Name="labelTextBoxNewModel" Content="Insert a new model:" HorizontalAlignment="Left" Margin="536,85,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
         <Button  x:Name="NewModel" Content="update" HorizontalAlignment="Left" Margin="560,161,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="updateButton_Click" FontSize="14" FontWeight="Black"/>

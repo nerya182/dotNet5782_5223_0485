@@ -39,8 +39,6 @@ namespace PL
             droneListWin = w;
             close_button.Visibility = Visibility.Hidden;
             changeModelButton.Visibility = Visibility.Hidden;
-            UpdateOptions.Visibility = Visibility.Hidden;
-            ComboBoxUpdateOptions.Visibility = Visibility.Hidden;
             TextBoxNewModel.Visibility = Visibility.Hidden;
             labelTextBoxNewModel.Visibility = Visibility.Hidden;
             NewModel.Visibility = Visibility.Hidden;
@@ -50,13 +48,10 @@ namespace PL
             chargeStationId.ItemsSource = from IBL.BO.Station s in bldw.GetListStation()
                                           where s.AvailableChargeSlots>0
                                           select s.Id;
-            
             WeightSelector.Text = "Select max weight";
             chargeStationId.Text = "select BaseStation";
-            
             chargeStationId.IsEditable = true;
             WeightSelector.IsEditable = true;
-            
             TextBoxDelivery.IsEnabled = false;
             TextBoxDelivery.Text = "0";
             TextBoxLattitude.IsEnabled = false;
@@ -196,39 +191,7 @@ namespace PL
                     break;
             }
         }
-        /// <summary>
-        /// update has been selected
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ComboBoxUpdateOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int selectedView = ComboBoxUpdateOptions.SelectedIndex;
-            int droneId;
-            TextBoxNewModel.Visibility = Visibility.Hidden;
-            labelTextBoxNewModel.Visibility = Visibility.Hidden;
-            NewModel.Visibility = Visibility.Hidden;
-            switch (selectedView)
-            {
-
-                case 0:
-                   
-                    break;
-                case 1:
-                   
-                    break;
-                case 2:
-                    
-                    break;
-                case 3:
-                   
-                    break;
-               
-                default:
-                    break;
-            }
-            droneListWin.DronesListView.ItemsSource= bldw.GetListDrone();
-        }
+       
         /// <summary>
         /// button that opens all the update options
         /// </summary>
