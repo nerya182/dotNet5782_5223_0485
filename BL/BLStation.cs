@@ -66,10 +66,10 @@ namespace BL
         /// Returns our list of stations
         /// </summary>
         /// <returns> IEnumerable of stations</returns>
-        public IEnumerable<Station> GetListStation(Predicate<IDAL.DO.Station> predicate)
+        public IEnumerable<Station> GetListStation()
         {
             List<Station> temp = new List<Station>();
-            foreach (IDAL.DO.Station station in dal.ListBaseStation(predicate))
+            foreach (IDAL.DO.Station station in dal.ListBaseStation(i=>true))
             {
                 Station obj = BaseStationDisplay(station.Id);
                 temp.Add(obj);

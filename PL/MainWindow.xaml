@@ -8,6 +8,6 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Image Source="/Drone-Fast-Delivery.jpg" Stretch="UniformToFill"></Image>
-        <Button Content="view list drones" HorizontalAlignment="Left" Margin="200,250,0,0" VerticalAlignment="Top" Click="ShowDronesButton_Click" Height="33" Width="88"/>
+        <Button Content="view list drones" HorizontalAlignment="Left" Margin="200,248,0,0" VerticalAlignment="Top" Click="ShowDronesButton_Click" Height="33" FontWeight="Bold"/>
     </Grid>
 </Window>

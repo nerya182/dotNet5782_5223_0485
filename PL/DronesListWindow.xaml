@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DronesListWindow" Height="640" Width="800" WindowStyle="None">
+        Title="DronesListWindow" Height="640" Width="800" WindowStyle="ToolWindow">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -27,17 +27,15 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-
             </Grid.ColumnDefinitions>
             <Label x:Name="Status" Content="drone status:" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="16"/>
             <ComboBox x:Name="WeightCategoriesSelector"  SelectionChanged="WeightCategoriesSelector_SelectionChanged" Grid.Column="2" HorizontalAlignment="Left" Margin="195,26,0,0" VerticalAlignment="Top" Width="145" FontWeight="Bold" FontSize="16" Grid.ColumnSpan="3"/>
             <ComboBox x:Name="StatusSelector" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged" HorizontalAlignment="Left" Margin="36,27,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold" FontSize="16"/>
             <Label Content="drone max Weight" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" Margin="20,0,0,0"/>
             <Button Content="close" Grid.Column="3" HorizontalAlignment="Left" Margin="145,12,0,0" VerticalAlignment="Top" Background="#FFFA0A0A" Click="Button_Click" FontWeight="Bold" FontSize="16"/>
-            <Button Content="reset" Grid.Column="3" HorizontalAlignment="Left" Margin="146,42,0,7" Click="Button_reset_Click" Background="{x:Null}" FontWeight="Bold" FontSize="16"/>
+            <Button Content="reset" Grid.Column="3" HorizontalAlignment="Left" Margin="146,42,0,0" Click="Button_reset_Click" Background="{x:Null}" FontWeight="Bold" FontSize="16"/>
         </Grid>
-        <ListView x:Name="DronesListView" MouseDoubleClick="DoubleClickUpdateDrone" Margin="10,10,212,345"  d:ItemsSource="{d:SampleData}" Foreground="#FF070708" FontWeight="Bold" Grid.Row="1">
-
+        <ListView x:Name="DronesListView" MouseDoubleClick="DoubleClickUpdateDrone" Margin="10,10,175,326"  d:ItemsSource="{d:SampleData}" Foreground="#FF070708" FontWeight="Bold" Grid.Row="1">
             <ListView.View>
                 <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="auto"/>

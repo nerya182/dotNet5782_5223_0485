@@ -40,13 +40,17 @@ namespace IBL
         /// Returns our list of stations
         /// </summary>
         /// <returns>IEnumerable of stations</returns>
-        IEnumerable<Station> GetListStation(Predicate<IDAL.DO.Station> predicate);
+        IEnumerable<Station> GetListStation();
+        IEnumerable<DroneToList> GetByStatus(IEnumerable itemsSource, DroneStatuses selectedStatus);
+
         /// <summary>
         /// Returning Drone according to ID in order to be displayed
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Drone to be displayed</returns>
         Drone DroneDisplay(int id);
+        IEnumerable<DroneToList> GetByWeight(IEnumerable itemsSource, WeightCategories selectedWeight);
+
         /// <summary>
         /// Returns the stations that have an open charge slot
         /// </summary>
@@ -56,17 +60,17 @@ namespace IBL
         /// Returns the list of parcels
         /// </summary>
         /// <returns>IEnumeranle of parcels</returns>
-        IEnumerable<Parcel> GetListParcel(Predicate<IDAL.DO.Parcel> predicate);
+        IEnumerable<Parcel> GetListParcel();
         /// <summary>
         /// Retrieving our list of customers of type IBL BO
         /// </summary>
         /// <returns>IEnumerable list of customer</returns>
-        IEnumerable<Customer> GetListCustomer(Predicate<IDAL.DO.Customer> predicate);
+        IEnumerable<Customer> GetListCustomer();
         /// <summary>
         /// Retrieving the list of drones
         /// </summary>
         /// <returns>UEnumerable of drones</returns>
-        IEnumerable<DroneToList> GetListDrone(Predicate<DroneToList> predicate);
+        IEnumerable<DroneToList> GetListDrone();
         /// <summary>
         /// Retrieving the list of drones
         /// </summary>

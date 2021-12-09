@@ -16,7 +16,7 @@ namespace IBL
             public Location location { get; set; }
             public override string ToString()
             {
-                return $"DroneId: #{DroneId}, Battery: {Battery}%,location :{location}\n";
+                return $"DroneId: #{DroneId}, Battery: {(int)Battery}%,location :{location}\n";
             }
 
         }

@@ -186,7 +186,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewStationList(IBL.IBL bl)
         {
-            foreach (Station objStation in bl.GetListStation(i => true))
+            foreach (Station objStation in bl.GetListStation())
             {
                 StationToList stationToList = bl.MakeStationToList(objStation);
                 Console.WriteLine(stationToList);
@@ -199,7 +199,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewDroneList(IBL.IBL bl)
         {
-            foreach (DroneToList obj in bl.GetListDrone(i => true))
+            foreach (DroneToList obj in bl.GetListDrone())
             {
                 Console.WriteLine(obj);
             }
@@ -211,7 +211,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewCustomerList(IBL.IBL bl)
         {
-            foreach (Customer objCustomer in bl.GetListCustomer(i => true))
+            foreach (Customer objCustomer in bl.GetListCustomer())
             {
                 CustomerToList customerToList = bl.MakeCustomerToList(objCustomer);
                 Console.WriteLine(customerToList);
@@ -224,7 +224,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewParcelList(IBL.IBL bl)
         {
-            foreach (Parcel objParcel in bl.GetListParcel(i => true))
+            foreach (Parcel objParcel in bl.GetListParcel())
             {
                 ParcelToList parcelToList = bl.MakeParcelToList(objParcel);
                 Console.WriteLine(parcelToList);
@@ -237,10 +237,13 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewParcelOnAirList(IBL.IBL bl)
         {
-            foreach (Parcel objParcel in bl.GetListParcel(i => i.DroneId != 0))
+            foreach (Parcel objParcel in bl.GetListParcel())
             {
-                ParcelToList parcelToList = bl.MakeParcelToList(objParcel);
-                Console.WriteLine(parcelToList);
+                if (objParcel.Affiliation==null)
+                {
+                    ParcelToList parcelToList = bl.MakeParcelToList(objParcel);
+                    Console.WriteLine(parcelToList);
+                }
             }
         }
 
@@ -250,14 +253,17 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewStationsWithOpenSlotsList(IBL.IBL bl)
         {
-            foreach (Station objStation in bl.GetListStation(i => i.AvailableChargeSlots > 0))
+            foreach (Station objStation in bl.GetListStation())
             {
-                StationToList stationToList = bl.MakeStationToList(objStation);
-                Console.WriteLine(stationToList);
+                if (objStation.AvailableChargeSlots>0)
+                {
+                    StationToList stationToList = bl.MakeStationToList(objStation);
+                    Console.WriteLine(stationToList);
+                }
             }
         }
 
-        /// <summary>
+        /// <summary>)
         /// Displaying a station according to its ID
         /// </summary>
         /// <param name="bl"></param>

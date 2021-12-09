@@ -72,9 +72,9 @@ namespace BL
         /// Retrieving our list of customers of type IBL BO
         /// </summary>
         /// <returns> IEnumeravle of customers</returns>
-        public IEnumerable<Customer> GetListCustomer(Predicate<IDAL.DO.Customer> predicate)
+        public IEnumerable<Customer> GetListCustomer()
         {
-            IEnumerable<IDAL.DO.Customer> customers = dal.ListCustomer(predicate);
+            IEnumerable<IDAL.DO.Customer> customers = dal.ListCustomer(i=>true);
             List<Customer> temp = new List<Customer>();
             foreach (var customer in customers)
             {

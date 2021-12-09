@@ -40,7 +40,8 @@ namespace PL
             labelTextBoxNewModel.Visibility = Visibility.Hidden;
             NewModel.Visibility = Visibility.Hidden;
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            chargeStationId.ItemsSource = from IBL.BO.Station s in bldw.GetListStation(i => true)
+            chargeStationId.ItemsSource = from IBL.BO.Station s in bldw.GetListStation()
+                                          where s.AvailableChargeSlots>0
                                           select s.Id;
             StatusAdd.ItemsSource = from DroneStatuses ds in Enum.GetValues(typeof(DroneStatuses))
                                     where ds == DroneStatuses.Charging
@@ -69,7 +70,7 @@ namespace PL
                 TextBoxLattitude.Text = bldw.BaseStationDisplay(chargingStationId).location.Lattitude.ToString();
                 TextBoxLongitude.Text = bldw.BaseStationDisplay(chargingStationId).location.Longitude.ToString();
                 bldw.AddDrone(newDrone, chargingStationId);
-                droneListWin.DronesListView.ItemsSource = bldw.GetListDrone(i => true);
+                droneListWin.DronesListView.ItemsSource = bldw.GetListDrone();
                 MessageBox.Show("Added successfully");
                 TextBox_id.IsEnabled = false;
                 chargeStationId.IsEnabled = false;
@@ -78,13 +79,11 @@ namespace PL
                 add_button.IsEnabled = false;
                 flagClosure = false;
                 this.Close();
-
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
             }
-
         }
 
         private void Cancel_Add_Button_Click(object sender, RoutedEventArgs e)
@@ -94,8 +93,9 @@ namespace PL
         }
         public DroneWindow(IBL.IBL blw, object selectedItem, DronesListWindow w)
         {
-            droneListWin = w;
             InitializeComponent();
+           
+            droneListWin = w;
             bldw = blw;
             close_button.Visibility = Visibility.Visible;
             label_id.Visibility = Visibility.Hidden;
@@ -122,6 +122,7 @@ namespace PL
             NewModel.Visibility = Visibility.Hidden;
             selected = (DroneToList)selectedItem;
             droneSelected = bldw.DroneDisplay(selected.Id);
+            ComboBoxUpdateOptions.IsEditable = true;
             ComboBoxUpdateOptions.Text = "Select Update";
             listViewUpdate.ItemsSource = from IBL.BO.Drone d in bldw.GetDrones()
                                          where d.Id == selected.Id
@@ -217,7 +218,7 @@ namespace PL
                 default:
                     break;
             }
-            droneListWin.DronesListView.ItemsSource= bldw.GetListDrone(i => true);
+            droneListWin.DronesListView.ItemsSource= bldw.GetListDrone();
         }
 
         private void updateButton_Click(object sender, RoutedEventArgs e)
@@ -250,5 +251,32 @@ namespace PL
             base.OnClosed(e);
             e.Cancel = flagClosure;
         }
+        private void DroneModel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var bc = new BrushConverter();
+            string text = TextBox_model.Text;
+            if (text != null && text != "" && char.IsLetter(text.ElementAt(0)))
+            {
+                TextBox_model.BorderBrush = (Brush)bc.ConvertFrom("#FF99B4D1");
+                TextBox_model.Background = (Brush)bc.ConvertFrom("#FFFFFFFF");
+            }
+            else TextBox_model.Background = (Brush)bc.ConvertFrom("#FFFA8072");
+        }
+        private void idInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var bc = new BrushConverter();
+            if (TextBox_id.Text != null && TextBox_id.Text != string.Empty && (TextBox_id.Text).All(char.IsDigit))
+            {
+                TextBox_id.BorderBrush = (Brush)bc.ConvertFrom("#FF99B4D1");
+                TextBox_id.Background = (Brush)bc.ConvertFrom("#FFFFFFFF");
+            }
+            else
+            {
+                TextBox_id.Background = (Brush)bc.ConvertFrom("#FFFA8072");
+            }   
+                
+        }
+
+      
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using IBL.BO;
@@ -239,7 +240,7 @@ namespace BL
         /// Retrieving the list of drones
         /// </summary>
         /// <returns> UEnumerable of drones </returns>
-        public IEnumerable<DroneToList> GetListDrone(Predicate<IBL.BO.DroneToList> predicate)
+        public IEnumerable<DroneToList> GetListDrone()
         {
             List<DroneToList> temp = new List<DroneToList>();
             foreach (IDAL.DO.Drone drone in dal.ListDrone(i=>true))
@@ -247,7 +248,6 @@ namespace BL
                 Drone obj = DroneDisplay(drone.Id);
                 temp.Add(MakeDroneToList(obj));
             }
-            temp = temp.FindAll(predicate);
             return temp;
         }
         /// <summary>
@@ -460,7 +460,7 @@ namespace BL
                 IDAL.DO.DroneCharge droneCharge = new()
                 { DroneId = drone.Id, StationId = closestStation.Id, EntryTime = DateTime.Now };
                 dal.AddDroneToCharge(droneCharge);
-                drone.Battery = distance * dal.GetElectricUsage()[0];
+                drone.Battery += distance * dal.GetElectricUsage()[0];
                 drone.Location.Lattitude = closestStation.Lattitude;
                 drone.Location.Longitude = closestStation.Longitude;
                 drone.Status = DroneStatuses.Charging;
@@ -504,6 +504,30 @@ namespace BL
             {
                 Drone obj = DroneDisplay(drone.Id);
                 temp.Add(obj);
+            }
+            return temp;
+        }
+        public IEnumerable<DroneToList> GetByStatus(IEnumerable itemsSource, DroneStatuses selectedStatus)
+        {
+            List<DroneToList> temp = new List<DroneToList>();
+            foreach (DroneToList drone in itemsSource)
+            {
+                if (drone.Status == selectedStatus)
+                {
+                    temp.Add(drone);
+                }
+            }
+            return temp;
+        }
+        public IEnumerable<DroneToList> GetByWeight(IEnumerable itemsSource, WeightCategories selectedWeight)
+        {
+            List<DroneToList> temp = new List<DroneToList>();
+            foreach (DroneToList drone in itemsSource)
+            {
+                if (drone.MaxWeight == selectedWeight)
+                {
+                    temp.Add(drone);
+                }
             }
             return temp;
         }

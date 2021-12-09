@@ -23,7 +23,7 @@ namespace PL
             blw = bl;
             WeightCategoriesSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            DronesListView.ItemsSource = blw.GetListDrone(i => true);
+            DronesListView.ItemsSource = blw.GetListDrone();
             main = mainWindow;
             StatusSelector.Text = "Select status";
             WeightCategoriesSelector.Text = "Select max weight";
@@ -32,41 +32,33 @@ namespace PL
         }
         private void DronesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           DronesListView.ItemsSource = blw.GetListDrone(i => true);
+           DronesListView.ItemsSource = blw.GetListDrone();
         }
         public void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             resetDronesList();
             if (StatusSelector.SelectedItem == null) return;
             IBL.BO.DroneStatuses selectedStatus = (IBL.BO.DroneStatuses)StatusSelector.SelectedItem;
-            DronesListView.ItemsSource = from IBL.BO.DroneToList d in DronesListView.ItemsSource
-                                         where d.Status == selectedStatus
-                                         select d;
+            DronesListView.ItemsSource = blw.GetByStatus(DronesListView.ItemsSource, selectedStatus);
             if (WeightCategoriesSelector.SelectedItem == null) return;
             IBL.BO.WeightCategories selectedWeight = (IBL.BO.WeightCategories)WeightCategoriesSelector.SelectedItem;
-            DronesListView.ItemsSource = from IBL.BO.DroneToList d in DronesListView.ItemsSource
-                                         where d.MaxWeight == selectedWeight
-                                         select d;
+            DronesListView.ItemsSource = blw.GetByWeight(DronesListView.ItemsSource, selectedWeight);
         }
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
             DroneWindow droneWindow = new DroneWindow(blw,this);
             droneWindow.Show();
             DronesListView.Items.Refresh();
-            DronesListView.ItemsSource = blw.GetListDrone(i => true);
+            DronesListView.ItemsSource = blw.GetListDrone();
             if (WeightCategoriesSelector.SelectedItem != null)
             {
                 IBL.BO.WeightCategories selectedWeight = (IBL.BO.WeightCategories)WeightCategoriesSelector.SelectedItem;
-                DronesListView.ItemsSource = from IBL.BO.DroneToList d in DronesListView.ItemsSource
-                                             where d.MaxWeight == selectedWeight
-                                             select d;
+                DronesListView.ItemsSource = blw.GetByWeight(DronesListView.ItemsSource, selectedWeight);
             } 
             if (StatusSelector.SelectedItem != null)
             {
                 IBL.BO.DroneStatuses selectedStatus = (IBL.BO.DroneStatuses)StatusSelector.SelectedItem;
-                DronesListView.ItemsSource = from IBL.BO.DroneToList d in DronesListView.ItemsSource
-                                             where d.Status == selectedStatus
-                                             select d;
+                DronesListView.ItemsSource = blw.GetByStatus(DronesListView.ItemsSource, selectedStatus);
             }
         }
         private void WeightCategoriesSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -74,14 +66,10 @@ namespace PL
             resetDronesList();
             if (WeightCategoriesSelector.SelectedItem == null) return;
             IBL.BO.WeightCategories selectedWeight = (IBL.BO.WeightCategories)WeightCategoriesSelector.SelectedItem;
-            DronesListView.ItemsSource = from IBL.BO.DroneToList d in DronesListView.ItemsSource
-                                         where d.MaxWeight == selectedWeight
-                                         select d;
+            DronesListView.ItemsSource = blw.GetByWeight(DronesListView.ItemsSource, selectedWeight);
             if (StatusSelector.SelectedItem == null) return;
             IBL.BO.DroneStatuses selectedStatus = (IBL.BO.DroneStatuses)StatusSelector.SelectedItem;
-            DronesListView.ItemsSource = from IBL.BO.DroneToList d in DronesListView.ItemsSource
-                                         where d.Status == selectedStatus
-                                         select d;
+            DronesListView.ItemsSource = blw.GetByStatus(DronesListView.ItemsSource, selectedStatus);
         }
         public void resetDronesList_click(object sender, RoutedEventArgs e)
         {
@@ -90,7 +78,7 @@ namespace PL
         }
         private void resetDronesList()
         {
-            DronesListView.ItemsSource = blw.GetListDrone(i => true);
+            DronesListView.ItemsSource = blw.GetListDrone();
             DronesListView.Items.Refresh();
         }
         public void resetComboBoxes()
@@ -113,7 +101,7 @@ namespace PL
         private void Button_reset_Click(object sender, RoutedEventArgs e)
         {
             resetComboBoxes();
-            DronesListView.ItemsSource = blw.GetListDrone(i => true);
+            DronesListView.ItemsSource = blw.GetListDrone();
             StatusSelector.IsEditable = true;
             WeightCategoriesSelector.IsEditable = true;
             StatusSelector.Text = "Select status";
