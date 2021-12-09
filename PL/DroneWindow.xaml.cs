@@ -27,6 +27,11 @@ namespace PL
         IBL.BO.Drone droneSelected = new IBL.BO.Drone();
         DronesListWindow droneListWin;
         bool flagClosure = true;
+        /// <summary>
+        /// constructor for "half" of the window
+        /// </summary>
+        /// <param name="blw"> gives access to the BL functions</param>
+        /// <param name="w"> gives access to the previous window</param>
         public DroneWindow(IBL.IBL blw, DronesListWindow w)
         {
             InitializeComponent();
@@ -57,6 +62,11 @@ namespace PL
             TextBoxLattitude.IsEnabled = false;
             TextBoxLongitude.IsEnabled = false;
         }
+        /// <summary>
+        /// user has added a drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -85,12 +95,22 @@ namespace PL
                 MessageBox.Show(exception.Message);
             }
         }
-
+        /// <summary>
+        /// user would like to cancel the add
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Cancel_Add_Button_Click(object sender, RoutedEventArgs e)
         {
             flagClosure = false;
             this.Close();
         }
+        /// <summary>
+        /// constructor for "half" of the window
+        /// </summary>
+        /// <param name="blw">gives access to the BL functions</param>
+        /// <param name="selectedItem"></param>
+        /// <param name="w">gives access to the previous window</param>
         public DroneWindow(IBL.IBL blw, object selectedItem, DronesListWindow w)
         {
             InitializeComponent();
@@ -134,7 +154,11 @@ namespace PL
             ComboBoxUpdateOptions.Items.Add("Package collection");
             ComboBoxUpdateOptions.Items.Add("Package delivery");
         }
-
+        /// <summary>
+        /// update has been selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ComboBoxUpdateOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedView = ComboBoxUpdateOptions.SelectedIndex;
@@ -220,7 +244,11 @@ namespace PL
             }
             droneListWin.DronesListView.ItemsSource= bldw.GetListDrone();
         }
-
+        /// <summary>
+        /// button that opens all the update options
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
             IBL.BO.DroneToList updateDrone = new IBL.BO.DroneToList();
@@ -240,7 +268,11 @@ namespace PL
                 MessageBox.Show(exception.Message);
             }
         }
-
+        /// <summary>
+        /// closing the current window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void closeButton_Click(object sender, RoutedEventArgs e)
         {
             flagClosure = false;
@@ -251,6 +283,11 @@ namespace PL
             base.OnClosed(e);
             e.Cancel = flagClosure;
         }
+        /// <summary>
+        /// model of drone has been entered
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DroneModel_TextChanged(object sender, TextChangedEventArgs e)
         {
             var bc = new BrushConverter();
@@ -262,6 +299,11 @@ namespace PL
             }
             else TextBox_model.Background = (Brush)bc.ConvertFrom("#FFFA8072");
         }
+        /// <summary>
+        /// id of drone has been entered
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void idInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             var bc = new BrushConverter();
@@ -273,10 +315,7 @@ namespace PL
             else
             {
                 TextBox_id.Background = (Brush)bc.ConvertFrom("#FFFA8072");
-            }   
-                
-        }
-
-      
+            }         
+        }  
     }
 }
