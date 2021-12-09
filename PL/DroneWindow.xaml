@@ -21,9 +21,9 @@
         <Label   Name="Delivery" Content="Delivery:" HorizontalAlignment="Left" Margin="33,211,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
         <TextBox x:Name="TextBoxDelivery" HorizontalAlignment="Left" Margin="221,217,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Name="Lattitude" Content="Lattitude:" HorizontalAlignment="Left" Margin="35,248,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black" FontStyle="Normal" FontStretch="Expanded"/>
-        <TextBox x:Name="TextBoxLattitude" HorizontalAlignment="Left" Margin="221,258,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TextBoxLattitude" HorizontalAlignment="Left" Margin="221,258,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.346,-3.728"/>
         <Label Name="Longitud" Content="Longitude:"  HorizontalAlignment="Left" Margin="34,289,0,0" VerticalAlignment="Top" Width="174" FontWeight="Heavy" FontStretch="Medium" FontSize="16"/>
-        <TextBox x:Name="TextBoxLongitude" HorizontalAlignment="Left" Margin="222,299,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TextBoxLongitude" HorizontalAlignment="Left" Margin="222,299,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="17.96"/>
         <ComboBox Name="chargeStationId" HorizontalAlignment="Left" Margin="221,179,0,0" VerticalAlignment="Top" Width="120"/>
         <Button  x:Name="Cancel_add_button" Content="Cancel Add" HorizontalAlignment="Left" Margin="221,377,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="Cancel_Add_Button_Click" FontWeight="Black"/>
         <Label  x:Name="UpdateOptions" Content="Update options:" HorizontalAlignment="Left" Margin="359,212,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
@@ -32,5 +32,7 @@
         <Label   x:Name="labelTextBoxNewModel" Content="Insert a new model " HorizontalAlignment="Left" Margin="359,253,0,0" VerticalAlignment="Top" Width="162" FontSize="16" FontWeight="Black"/>
         <Button  x:Name="NewModel" Content="update" HorizontalAlignment="Left" Margin="673,255,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="updateButton_Click" FontSize="14" FontWeight="Black"/>
         <Button  x:Name="close_button" Content="close" HorizontalAlignment="Left" Margin="730,26,0,0" VerticalAlignment="Top" Height="34" Width="44" Click="closeButton_Click" Background="#FFED0E0E" RenderTransformOrigin="0.5,0.589" FontWeight="Black"/>
+        <TextBox x:Name="WeightTextBox" HorizontalAlignment="Left" Margin="222,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TextBoxParcelTransfer" HorizontalAlignment="Left" Margin="222,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>
