@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using IBL.BO;
-using IDAL;
+using BlApi;
+using BO;
 
 namespace BL
 {
-    public partial class BL : IBL.IBL
+    internal partial class BL : IBL
     {
         /// <summary>
         /// Adding a station to our data source
@@ -14,7 +14,7 @@ namespace BL
         /// <param name="newStation"> IBL BO type station </param>
         public void AddStation(Station newStation)
         {
-            IDAL.DO.Station temp = new IDAL.DO.Station();
+            DO.Station temp = new DO.Station();
             if (newStation.location.Lattitude > 90 || newStation.location.Lattitude < -90)
             {
                 throw new IllegalActionException("Invalid lattitude value");
@@ -42,9 +42,9 @@ namespace BL
         /// </summary>
         /// <param name="drone"> drone which we are looking for closest station to</param>
         /// <returns> closest station </returns>
-        private IDAL.DO.Station GetClosestStation(DroneToList drone)
+        private DO.Station GetClosestStation(DroneToList drone)
         {
-            List<IDAL.DO.Station> stations = dal.ListBaseStation(i => true).ToList();
+            List<DO.Station> stations = dal.ListBaseStation(i => true).ToList();
             Location closestStation = new Location();
             closestStation.Lattitude = stations[0].Lattitude;
             closestStation.Longitude = stations[0].Longitude;
@@ -69,7 +69,7 @@ namespace BL
         public IEnumerable<Station> GetListStation()
         {
             List<Station> temp = new List<Station>();
-            foreach (IDAL.DO.Station station in dal.ListBaseStation(i=>true))
+            foreach (DO.Station station in dal.ListBaseStation(i=>true))
             {
                 Station obj = BaseStationDisplay(station.Id);
                 temp.Add(obj);
@@ -82,7 +82,7 @@ namespace BL
         /// <returns> IEnumerable of stations </returns>
         public IEnumerable<Station> GetListStationsWithOpenSlots()
         {
-            IEnumerable<IDAL.DO.Station> stations = dal.ListStationsWithOpenSlots();
+            IEnumerable<DO.Station> stations = dal.ListStationsWithOpenSlots();
             return (IEnumerable<Station>)stations;
         }
         /// <summary>
@@ -108,8 +108,8 @@ namespace BL
         {
             try
             {
-                IDAL.DO.Station station = dal.GetStation(id);
-                IEnumerable<IDAL.DO.DroneCharge> droneCharge = dal.ListDroneCharge();
+                DO.Station station = dal.GetStation(id);
+                IEnumerable<DO.DroneCharge> droneCharge = dal.ListDroneCharge();
                 List<DroneInCharging> lstDrnInChrg = new List<DroneInCharging>();
                 Station temp = new Station();
                 Location location = new Location();
@@ -119,7 +119,7 @@ namespace BL
                 temp.Name = station.Name;
                 temp.location = location;
                 temp.AvailableChargeSlots = station.AvailableChargeSlots;
-                List<IDAL.DO.DroneCharge> asList = droneCharge.ToList();
+                List<DO.DroneCharge> asList = droneCharge.ToList();
                 foreach (var drnChrg in droneCharge)
                 {
                     if (drnChrg.StationId == id)
@@ -147,8 +147,8 @@ namespace BL
         {
             try
             {
-                List<IDAL.DO.Station> Stations = dal.ListBaseStation(i => true).ToList();
-                IDAL.DO.Station station = new IDAL.DO.Station { Id =stationId,AvailableChargeSlots = chargingPositions};
+                List<DO.Station> Stations = dal.ListBaseStation(i => true).ToList();
+                DO.Station station = new DO.Station { Id =stationId,AvailableChargeSlots = chargingPositions};
                 dal.UpdateStation(station);
             }
             catch (Exception e)
@@ -165,8 +165,8 @@ namespace BL
         {
             try
             {
-                List<IDAL.DO.Station> stations = dal.ListBaseStation(i => true).ToList();
-                IDAL.DO.Station station = new IDAL.DO.Station { Id = stationId,Name = stationName };
+                List<DO.Station> stations = dal.ListBaseStation(i => true).ToList();
+                DO.Station station = new DO.Station { Id = stationId,Name = stationName };
                 dal.UpdateStation(station);
             }
             catch (Exception e)

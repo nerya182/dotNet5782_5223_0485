@@ -1,16 +1,18 @@
 ﻿/* Binyamin Mor- 317510485,  Nerya Baracassa- 208915223
  The program created a whole big Drone operating system. we've entered some info ourselves, but we are mainly setting the grounds for a much bigger project! */
-using IBL.BO;
+using BO;
 using System;
 using System.Collections.Generic;
+using BlApi;
 
 namespace ConsoleUI_BL
 {
     class Program
     {
+        private static BlApi.IBL bl;
         static void Main(string[] args)
         {
-            IBL.IBL bl = new BL.BL();
+            bl = BlFactory.GetBl();
             int input = new int();
             CHOICE choice;
             do
@@ -51,7 +53,7 @@ namespace ConsoleUI_BL
             while (choice != CHOICE.EXIT);
         }
 
-        private static void AddOptions(IBL.IBL bl, int input)
+        private static void AddOptions(BlApi.IBL bl, int input)
         {
             Console.WriteLine("What would you like to add? \n" +
                               "1-Add a new base Station.\n" +
@@ -78,7 +80,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void UpdateOptions(IBL.IBL bl, int input)
+        private static void UpdateOptions(BlApi.IBL bl, int input)
         {
             Console.WriteLine("What would you like to do?\n" +
                             "1- Update drone data\n" +
@@ -119,7 +121,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        public static void DisplayOptions(IBL.IBL bl, int input)
+        public static void DisplayOptions(BlApi.IBL bl, int input)
         {
             Console.WriteLine("What would you like to do?\n" +
                            "1- Base Stations display\n" +
@@ -146,7 +148,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        private static void ViewListOptions(IBL.IBL bl)
+        private static void ViewListOptions(BlApi.IBL bl)
         {
             Console.WriteLine("Which List would you like to view? \n" +
                             "1 - Stations\n" +
@@ -184,7 +186,7 @@ namespace ConsoleUI_BL
         /// View the list of stations of type stationtolist
         /// </summary>
         /// <param name="bl"></param>
-        private static void ViewStationList(IBL.IBL bl)
+        private static void ViewStationList(BlApi.IBL bl)
         {
             foreach (Station objStation in bl.GetListStation())
             {
@@ -197,7 +199,7 @@ namespace ConsoleUI_BL
         /// View the list of drones of type dronetolist
         /// </summary>
         /// <param name="bl"></param>
-        private static void ViewDroneList(IBL.IBL bl)
+        private static void ViewDroneList(BlApi.IBL bl)
         {
             foreach (DroneToList obj in bl.GetListDrone())
             {
@@ -209,7 +211,7 @@ namespace ConsoleUI_BL
         /// view the list of customers of type customertolist
         /// </summary>
         /// <param name="bl"></param>
-        private static void ViewCustomerList(IBL.IBL bl)
+        private static void ViewCustomerList(BlApi.IBL bl)
         {
             foreach (Customer objCustomer in bl.GetListCustomer())
             {
@@ -222,7 +224,7 @@ namespace ConsoleUI_BL
         /// View the list of parcels of type parceltolist
         /// </summary>
         /// <param name="bl"></param>
-        private static void ViewParcelList(IBL.IBL bl)
+        private static void ViewParcelList(BlApi.IBL bl)
         {
             foreach (Parcel objParcel in bl.GetListParcel())
             {
@@ -235,7 +237,7 @@ namespace ConsoleUI_BL
         /// view the list of parcels that have not been affiliated with a drone
         /// </summary>
         /// <param name="bl"></param>
-        private static void ViewParcelOnAirList(IBL.IBL bl)
+        private static void ViewParcelOnAirList(BlApi.IBL bl)
         {
             foreach (Parcel objParcel in bl.GetListParcel())
             {
@@ -251,7 +253,7 @@ namespace ConsoleUI_BL
         /// View the list of stations that have open charging slots
         /// </summary>
         /// <param name="bl"></param>
-        private static void ViewStationsWithOpenSlotsList(IBL.IBL bl)
+        private static void ViewStationsWithOpenSlotsList(BlApi.IBL bl)
         {
             foreach (Station objStation in bl.GetListStation())
             {
@@ -269,7 +271,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="id"></param>
         /// <param name="flag"></param>
-        private static void DisplayStation(IBL.IBL bl, int id, bool flag)
+        private static void DisplayStation(BlApi.IBL bl, int id, bool flag)
         {
             do
             {
@@ -285,7 +287,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="id"></param>
         /// <param name="flag"></param>
-        private static void DisplayDrone(IBL.IBL bl, int id, bool flag)
+        private static void DisplayDrone(BlApi.IBL bl, int id, bool flag)
         {
             do
             {
@@ -301,7 +303,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="id"></param>
         /// <param name="flag"></param>
-        private static void DisplayCustomer(IBL.IBL bl, int id, bool flag)
+        private static void DisplayCustomer(BlApi.IBL bl, int id, bool flag)
         {
             do
             {
@@ -317,7 +319,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="id"></param>
         /// <param name="flag"></param>
-        private static void DisplayParcel(IBL.IBL bl, int id, bool flag)
+        private static void DisplayParcel(BlApi.IBL bl, int id, bool flag)
         {
             do
             {
@@ -331,7 +333,7 @@ namespace ConsoleUI_BL
         /// Drone delivering a parcel
         /// </summary>
         /// <param name="bl"></param>
-        private static void DeliveryOfParcelByDrone(IBL.IBL bl)
+        private static void DeliveryOfParcelByDrone(BlApi.IBL bl)
         {
             try
             {
@@ -356,7 +358,7 @@ namespace ConsoleUI_BL
         /// Drone picking up a parcel
         /// </summary>
         /// <param name="bl"></param>
-        private static void ParcelCollectionByDrone(IBL.IBL bl)
+        private static void ParcelCollectionByDrone(BlApi.IBL bl)
         {
             try
             {
@@ -380,7 +382,7 @@ namespace ConsoleUI_BL
         /// Assigning a parcel to a drone
         /// </summary>
         /// <param name="bl"></param>
-        private static void AffiliateParcelToDrone(IBL.IBL bl)
+        private static void AffiliateParcelToDrone(BlApi.IBL bl)
         {
             try
             {
@@ -404,7 +406,7 @@ namespace ConsoleUI_BL
         /// Drone being released from charger
         /// </summary>
         /// <param name="bl"></param>
-        private static void ReleaseDroneFromCharging(IBL.IBL bl)
+        private static void ReleaseDroneFromCharging(BlApi.IBL bl)
         {
             try
             {
@@ -428,7 +430,7 @@ namespace ConsoleUI_BL
         /// Charging a drone
         /// </summary>
         /// <param name="bl"></param>
-        private static void SendingDroneForCharging(IBL.IBL bl)
+        private static void SendingDroneForCharging(BlApi.IBL bl)
         {
             try
             {
@@ -452,7 +454,7 @@ namespace ConsoleUI_BL
         /// Updating a customer's info
         /// </summary>
         /// <param name="bl"></param>
-        private static void UpdateCustomer(IBL.IBL bl)
+        private static void UpdateCustomer(BlApi.IBL bl)
         {
             bool flag;
             int IdCustomer;
@@ -482,7 +484,7 @@ namespace ConsoleUI_BL
         /// Updating a stations's info
         /// </summary>
         /// <param name="bl"></param>
-        private static void UpdateStation(IBL.IBL bl)
+        private static void UpdateStation(BlApi.IBL bl)
         {
             bool flag;
             int IdStation, positions = 0;
@@ -518,7 +520,7 @@ namespace ConsoleUI_BL
         /// Updating a drone's info
         /// </summary>
         /// <param name="bl"></param>
-        private static void UpdateDrone(IBL.IBL bl)
+        private static void UpdateDrone(BlApi.IBL bl)
         {
             bool flag;
             int idDrone;
@@ -546,7 +548,7 @@ namespace ConsoleUI_BL
         /// Adding a customer
         /// </summary>
         /// <param name="bl"></param>
-        private static void AddCustomer(IBL.IBL bl)
+        private static void AddCustomer(BlApi.IBL bl)
         {
             bool flag;
             int IdCustomer;
@@ -590,7 +592,7 @@ namespace ConsoleUI_BL
         /// Adding a parcel
         /// </summary>
         /// <param name="bl"></param>
-        private static void AddParcel(IBL.IBL bl)
+        private static void AddParcel(BlApi.IBL bl)
         {
             bool flag;
             int IdCustomer;
@@ -638,7 +640,7 @@ namespace ConsoleUI_BL
         /// Adding a drone
         /// </summary>
         /// <param name="bl"></param>
-        private static void AddDrone(IBL.IBL bl)
+        private static void AddDrone(BlApi.IBL bl)
         {
             bool flag;
             int Id;
@@ -675,7 +677,7 @@ namespace ConsoleUI_BL
         /// Adding a station
         /// </summary>
         /// <param name="bl"></param>
-        public static void AddStation(IBL.IBL bl)
+        public static void AddStation(BlApi.IBL bl)
         {
             bool flag;
             int idStation, number;

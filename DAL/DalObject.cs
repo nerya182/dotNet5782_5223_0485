@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL;
-using IDAL.DO;
+using DO;
 using static DalObject.DataSource;
+using DalApi;
 
 namespace DalObject 
 {
-    public class DalObject: IDAL.IDal
+    internal class DalObject: IDal
     {
-        public DalObject()
+        static readonly IDal instance = new DalObject();
+        public static IDal Instance { get => instance; }
+        private DalObject()
         {
             DataSource.Initialize();
         }
@@ -709,7 +711,7 @@ namespace DalObject
             {
                 if (Stations[i].Id == updateStation.Id)
                 {
-                    IDAL.DO.Station s = Stations[i];
+                    DO.Station s = Stations[i];
                     if (updateStation.Name != "")
                     {
                         s.Name = updateStation.Name;
@@ -747,7 +749,7 @@ namespace DalObject
             {
                 if (Drones[i].Id == updateDrone.Id)
                 {
-                    IDAL.DO.Drone d = Drones[i];
+                    DO.Drone d = Drones[i];
                     d.Model = updateDrone.Model;
                    Drones[i] = d;
                     flag = true;

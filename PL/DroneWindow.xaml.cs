@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IBL.BO;
+using BO;
 
 namespace PL
 {
@@ -22,9 +22,9 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        IBL.IBL bldw;
-        IBL.BO.DroneToList selected = new IBL.BO.DroneToList();
-        IBL.BO.Drone droneSelected = new IBL.BO.Drone();
+        BlApi.IBL bldw;
+        BO.DroneToList selected = new BO.DroneToList();
+        BO.Drone droneSelected = new BO.Drone();
         DronesListWindow droneListWin;
         bool flagClosure = true;
         /// <summary>
@@ -32,7 +32,7 @@ namespace PL
         /// </summary>
         /// <param name="blw"> gives access to the BL functions</param>
         /// <param name="w"> gives access to the previous window</param>
-        public DroneWindow(IBL.IBL blw, DronesListWindow w)
+        public DroneWindow(BlApi.IBL blw, DronesListWindow w)
         {
             InitializeComponent();
             bldw = blw;
@@ -48,7 +48,7 @@ namespace PL
             sendOrReleaseButton.Visibility = Visibility.Hidden;
             delivery.Visibility = Visibility.Hidden;
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            chargeStationId.ItemsSource = from IBL.BO.Station s in bldw.GetListStation()
+            chargeStationId.ItemsSource = from BO.Station s in bldw.GetListStation()
                                           where s.AvailableChargeSlots>0
                                           select s.Id;
             WeightSelector.Text = "Select max weight";
@@ -72,7 +72,7 @@ namespace PL
                 bool flag;
                 int id;
                 int chargingStationId = 0;
-                IBL.BO.DroneToList newDrone = new IBL.BO.DroneToList();
+                BO.DroneToList newDrone = new BO.DroneToList();
                 flag = int.TryParse(TextBox_id.Text,out id);
                 if (!flag)
                 {
@@ -133,7 +133,7 @@ namespace PL
         /// <param name="blw">gives access to the BL functions</param>
         /// <param name="selectedItem"></param>
         /// <param name="w">gives access to the previous window</param>
-        public DroneWindow(IBL.IBL blw, object selectedItem, DronesListWindow w)
+        public DroneWindow(BlApi.IBL blw, object selectedItem, DronesListWindow w)
         {
             InitializeComponent();
             droneListWin = w;
@@ -215,7 +215,7 @@ namespace PL
         /// <param name="e"></param>
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
-            IBL.BO.DroneToList updateDrone = new IBL.BO.DroneToList();
+            BO.DroneToList updateDrone = new BO.DroneToList();
             try
             {
                 updateDrone.Model = TextBoxNewModel.Text;

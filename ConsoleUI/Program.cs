@@ -4,17 +4,18 @@
 using System;
 using System.Collections.Generic;
 using DalObject;
-using IDAL.DO;
-using IDAL;
+using DO;
+
 
 
 namespace ConsoleUI
 {
     class Program
     {
+        private static DalApi.IDal DO;
         static void Main(string[] args)
         {
-            IDAL.IDal DO = new DalObject.DalObject();
+            DO = DalApi.DalFactory.GetDal("List");
             CHOICE choice;
             do {
                 Console.WriteLine("\nMenu:\n" +
@@ -183,7 +184,7 @@ namespace ConsoleUI
         /// <summary>
         /// distance calculation
         /// </summary>
-        public static void distance(IDAL.IDal DO)
+        public static void distance(DalApi.IDal DO)
         {
             double latitude, longitude,distance;
             char temp;
@@ -202,7 +203,7 @@ namespace ConsoleUI
         /// <summary>
         /// Delivering Parcel
         /// </summary>
-        public static void SupplyParcel(IDAL.IDal DO)
+        public static void SupplyParcel(DalApi.IDal DO)
         {
             Console.WriteLine("What is the Parcel Id?");
             int id;
@@ -212,7 +213,7 @@ namespace ConsoleUI
         /// <summary>
         /// Parcel picked up
         /// </summary>
-        public static void PickupParcel(IDAL.IDal DO)
+        public static void PickupParcel(DalApi.IDal DO)
         {
             int id;
             Console.WriteLine(" What is the Parcel Id? \n");
@@ -222,7 +223,7 @@ namespace ConsoleUI
         /// <summary>
         /// Affiliating a drone to a parcel
         /// </summary>
-        public static void AffiliateOfDrone(IDAL.IDal DO)
+        public static void AffiliateOfDrone(DalApi.IDal DO)
         {
             int idParcel, idDrone;
             Console.WriteLine(" What is the Parcel Id? \n");
@@ -234,7 +235,7 @@ namespace ConsoleUI
         /// <summary>
         /// Releasing Drone from charging
         /// </summary>
-        public static void ReleaseDrone(IDAL.IDal DO)
+        public static void ReleaseDrone(DalApi.IDal DO)
         {
             Console.WriteLine("What is the Drone Id? \n");
             int droneId;
@@ -253,7 +254,7 @@ namespace ConsoleUI
         /// <summary>
         /// Adding a Station with all its fields
         /// </summary>
-        private static void AddStation(IDAL.IDal DO) 
+        private static void AddStation(DalApi.IDal DO) 
         {
             Station newStation = new Station();
             Console.WriteLine("Enter a unique ID number of staion");
@@ -271,7 +272,7 @@ namespace ConsoleUI
         /// <summary>
         /// Adding a Drone with all its fields
         /// </summary>
-        public static void AddDrone(IDAL.IDal DO)  
+        public static void AddDrone(DalApi.IDal DO)  
         {
             Drone newDrone = new Drone();
             Console.WriteLine("Enter a unique ID number");
@@ -285,7 +286,7 @@ namespace ConsoleUI
         /// <summary>
         /// Adding a Customer with all its fields
         /// </summary>
-        public static void AddCustomer(IDAL.IDal DO)  
+        public static void AddCustomer(DalApi.IDal DO)  
         {
             Customer newCustomer = new Customer();
             Console.WriteLine("Enter a unique ID number");
@@ -303,7 +304,7 @@ namespace ConsoleUI
         /// <summary>
         /// Adding a Parcel with all its fields
         /// </summary>
-        public static void AddParcel(IDAL.IDal DO)  
+        public static void AddParcel(DalApi.IDal DO)  
         {
             Parcel newParcel = new Parcel();
             newParcel.Id = DO.GetParcelId();
@@ -326,7 +327,7 @@ namespace ConsoleUI
         /// <summary>
         /// Charging the drone, Adding a DroneCharger
         /// </summary>
-        public static void SendDroneToCharge(IDAL.IDal DO)
+        public static void SendDroneToCharge(DalApi.IDal DO)
         {
             Console.WriteLine("What is the Drone Id?");
             int DroneId, StationId;

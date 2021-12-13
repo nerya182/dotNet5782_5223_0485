@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
+using DO;
 using DalObject;
 
-namespace IDAL
+namespace DalApi
 {
     public interface IDal
     {
         /// <summary>
      ///  Returns the station in the certain index
-     /// </summary>
+     /// </summary
      /// <param name="id"></param>
      /// <returns>Station</returns>
         Station GetStation(int id);
@@ -103,7 +103,7 @@ namespace IDAL
         ///  Returning a list of all the Stations
         /// </summary>
         /// <returns>list</returns>
-        IEnumerable<Station> ListBaseStation(Predicate<IDAL.DO.Station> predicate);
+        IEnumerable<Station> ListBaseStation(Predicate<DO.Station> predicate);
         /// <summary>
         /// /Returning a list of all the drone charge
         /// </summary>
@@ -123,7 +123,7 @@ namespace IDAL
         /// /Returning a list of all the Parcels
         /// </summary>
         /// <returns>List</returns>
-        IEnumerable<Parcel> ListParcel(Predicate<IDAL.DO.Parcel> predicate);
+        IEnumerable<Parcel> ListParcel(Predicate<DO.Parcel> predicate);
         /// <summary>
         /// distance calculation
         /// </summary>

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using IBL.BO;
-using IDAL;
+using BlApi;
+using BO;
 
 namespace BL
 {
-    public partial class BL : IBL.IBL
+    internal partial class BL : IBL
     {
         /// <summary>
         /// Adding a Parcel to our Data Source
@@ -23,17 +23,17 @@ namespace BL
             {
                 throw new IllegalActionException("Incorrect ID number of target");
             }
-            IDAL.DO.Customer senderCustomer = dal.ListCustomer(i=>true).ToList().Find(i => i.Id == newParcel.Sender.Id);
+            DO.Customer senderCustomer = dal.ListCustomer(i=>true).ToList().Find(i => i.Id == newParcel.Sender.Id);
             if (senderCustomer.Id==0) throw new IllegalActionException("The sender number does not exist in the system");
-            IDAL.DO.Customer targetCustomer = dal.ListCustomer(i=>true).ToList().Find(i => i.Id == newParcel.Target.Id);
+            DO.Customer targetCustomer = dal.ListCustomer(i=>true).ToList().Find(i => i.Id == newParcel.Target.Id);
             if (senderCustomer.Id ==0) throw new IllegalActionException("The target number does not exist in the system");
-            IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
+            DO.Parcel temp = new DO.Parcel();
             try
             {
                 temp.SenderId = newParcel.Sender.Id;
                 temp.TargetId = newParcel.Target.Id;
-                temp.Weight = (IDAL.DO.WeightCategories)newParcel.Weight;
-                temp.Priority = (IDAL.DO.Priorities)newParcel.Priority;
+                temp.Weight = (DO.WeightCategories)newParcel.Weight;
+                temp.Priority = (DO.Priorities)newParcel.Priority;
                 temp.Creating = DateTime.Now;
                 temp.Affiliation = null;
                 temp.PickedUp = null;
@@ -62,7 +62,7 @@ namespace BL
         public IEnumerable<Parcel> GetListParcel()
         {
             List<Parcel> temp = new List<Parcel>();
-            foreach (IDAL.DO.Parcel parcel in dal.ListParcel(i=>true))
+            foreach (DO.Parcel parcel in dal.ListParcel(i=>true))
             {
                 Parcel obj = ParcelDisplay(parcel.Id);
                 temp.Add(obj);
@@ -98,11 +98,11 @@ namespace BL
         /// <param name="parcels"> list of parcels </param>
         /// <param name="drone"> drone thta will take the parcel</param>
         /// <returns> parcel that is closest </returns>
-        private IDAL.DO.Parcel GetClosestParcel(List<IDAL.DO.Parcel> parcels, DroneToList drone)
+        private DO.Parcel GetClosestParcel(List<DO.Parcel> parcels, DroneToList drone)
         {
             int i = 0, index = 0;
             Location closestParcel = new Location();
-            IDAL.DO.Customer customer = dal.GetCustomer(parcels[0].SenderId);
+            DO.Customer customer = dal.GetCustomer(parcels[0].SenderId);
             closestParcel.Lattitude = customer.Lattitude;
             closestParcel.Longitude = customer.Longitude;
             foreach (var parcel in parcels)
@@ -126,7 +126,7 @@ namespace BL
         /// <returns> Parcel to be displayed </returns>
         public Parcel ParcelDisplay(int id)
         {
-            IDAL.DO.Parcel parcel = dal.GetParcel(id);
+            DO.Parcel parcel = dal.GetParcel(id);
             DroneInParcel droneInParcel = new DroneInParcel();
             CustomerInParcel customerInParcel1 = new CustomerInParcel();
             CustomerInParcel customerInParcel2 = new CustomerInParcel();
@@ -146,11 +146,11 @@ namespace BL
                 droneInParcel.Battery = droneToList.Battery;
                 temp.drone = droneInParcel;
             }
-            IDAL.DO.Customer sender = dal.GetCustomer(parcel.SenderId);
+            DO.Customer sender = dal.GetCustomer(parcel.SenderId);
             customerInParcel1.Id = sender.Id;
             customerInParcel1.Name = sender.Name;
             temp.Sender = customerInParcel1;
-            IDAL.DO.Customer target = dal.GetCustomer(parcel.TargetId);
+            DO.Customer target = dal.GetCustomer(parcel.TargetId);
             customerInParcel2.Id = target.Id;
             customerInParcel2.Name = target.Name;
             temp.Target = customerInParcel2;

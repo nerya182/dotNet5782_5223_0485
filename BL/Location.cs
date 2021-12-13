@@ -4,19 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL
+namespace BO
 {
-    namespace BO
+    public class Location
     {
-        public class Location
-        {
-            public double Longitude { get; set; }
-            public double Lattitude { get; set; }
+        public double Longitude { get; set; }
+        public double Lattitude { get; set; }
 
-            public override string ToString()
-            {
-                return $"{Convert.ConvertLongitude(Longitude)}, {Convert.ConvertLattitude(Lattitude)}";
-            }
+        public override string ToString()
+        {
+            return $"{Convert.ConvertLongitude(Longitude)}, {Convert.ConvertLattitude(Lattitude)}";
         }
     }
 }
+

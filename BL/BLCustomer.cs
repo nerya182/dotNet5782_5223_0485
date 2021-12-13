@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using IBL.BO;
-using IDAL;
+using BlApi;
+using BO;
 
 namespace BL
 {
-    public partial class BL : IBL.IBL
+    internal partial class BL : IBL
     {
         /// <summary>
         /// Returns the closest station to the customer
         /// </summary>
         /// <param name="customerSender"> customer which we are looking for the cloosest station to</param>
         /// <returns> station that is closest to customer</returns>
-        private IDAL.DO.Station GetClosestCustomer(IDAL.DO.Customer customerSender)
+        private DO.Station GetClosestCustomer(DO.Customer customerSender)
         {
-            List<IDAL.DO.Station> stations = dal.ListBaseStation(i => true).ToList();
+            List<DO.Station> stations = dal.ListBaseStation(i => true).ToList();
             Location closestStation = new Location();
             closestStation.Lattitude = stations[0].Lattitude;
             closestStation.Longitude = stations[0].Longitude;
@@ -40,7 +40,7 @@ namespace BL
         /// <param name="newCustomer"> Customer of type IBL BO</param>
         public void AddCustomer(Customer newCustomer)
         {
-            IDAL.DO.Customer temp = new IDAL.DO.Customer();
+            DO.Customer temp = new DO.Customer();
 
             if (newCustomer.Location.Lattitude > 90 || newCustomer.Location.Lattitude < -90)
             {
@@ -74,7 +74,7 @@ namespace BL
         /// <returns> IEnumeravle of customers</returns>
         public IEnumerable<Customer> GetListCustomer()
         {
-            IEnumerable<IDAL.DO.Customer> customers = dal.ListCustomer(i=>true);
+            IEnumerable<DO.Customer> customers = dal.ListCustomer(i=>true);
             List<Customer> temp = new List<Customer>();
             foreach (var customer in customers)
             {
@@ -118,11 +118,11 @@ namespace BL
         /// </summary>
         /// <param name="weight"> Weight </param>
         /// <returns> Electric usage number</returns>
-        private double GetElectricUsageNumber(IDAL.DO.WeightCategories weight)
+        private double GetElectricUsageNumber(DO.WeightCategories weight)
         {
-            if (weight == IDAL.DO.WeightCategories.Light) { return LightElec; }
-            if (weight == IDAL.DO.WeightCategories.Medium) { return IntermeduateElec; }
-            if (weight == IDAL.DO.WeightCategories.Heavy) { return HeavyElec; }
+            if (weight == DO.WeightCategories.Light) { return LightElec; }
+            if (weight == DO.WeightCategories.Medium) { return IntermeduateElec; }
+            if (weight == DO.WeightCategories.Heavy) { return HeavyElec; }
             return AvailbleElec;
         }
 
@@ -135,8 +135,8 @@ namespace BL
         {
             try
             {
-                IDAL.DO.Customer customer = dal.GetCustomer(id);
-                IEnumerable<IDAL.DO.Parcel> parcels = dal.ListParcel(i => true);
+                DO.Customer customer = dal.GetCustomer(id);
+                IEnumerable<DO.Parcel> parcels = dal.ListParcel(i => true);
                 List<ParceltAtCustomer> lstSending = new List<ParceltAtCustomer>();
                 List<ParceltAtCustomer> lstReceived = new List<ParceltAtCustomer>();
 
@@ -160,7 +160,7 @@ namespace BL
                         parcelAtCstmr.status = ParcelStatus.Created;
                         parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
                         parcelAtCstmr.Priority = (Priorities)parcel.Priority;
-                        IDAL.DO.Customer cstmr = dal.GetCustomer(parcel.TargetId);
+                        DO.Customer cstmr = dal.GetCustomer(parcel.TargetId);
                         cstmrInPrcl.Id = cstmr.Id;
                         cstmrInPrcl.Name = cstmr.Name;
                         parcelAtCstmr.OpposingSide = cstmrInPrcl;
@@ -173,7 +173,7 @@ namespace BL
                         parcelAtCstmr.status = ParcelStatus.Supplied;
                         parcelAtCstmr.Weight = (WeightCategories)parcel.Weight;
                         parcelAtCstmr.Priority = (Priorities)parcel.Priority;
-                        IDAL.DO.Customer cstmr = dal.GetCustomer(parcel.SenderId);
+                        DO.Customer cstmr = dal.GetCustomer(parcel.SenderId);
                         cstmrInPrcl.Id = cstmr.Id;
                         cstmrInPrcl.Name = cstmr.Name;
                         parcelAtCstmr.OpposingSide = cstmrInPrcl;
@@ -198,7 +198,7 @@ namespace BL
         public void UpdateCustomer(Customer updateCustomer)
         {
 
-            IDAL.DO.Customer customer = dal.GetCustomer(updateCustomer.Id);
+            DO.Customer customer = dal.GetCustomer(updateCustomer.Id);
             if (updateCustomer.Name == "" && updateCustomer.Phone == "")
             {
                 throw new IllegalActionException("Must update at least one feature");
