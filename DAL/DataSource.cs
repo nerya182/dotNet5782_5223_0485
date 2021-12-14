@@ -20,7 +20,7 @@ namespace DalObject
             internal static double heavyWeight=0.2;
             internal static double chargeSpeed=500;
         }
-    
+     
         public static List<Customer> Customers = new List<Customer>();
         public static List<Station> Stations = new List<Station>();
         public static List<Drone> Drones = new List<Drone>();

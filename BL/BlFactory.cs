@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace BlApi
 {
+    /// <summary>
+    /// returns an object BL
+    /// </summary>
     public static class BlFactory
     {
         public static IBL GetBl()
