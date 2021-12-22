@@ -185,7 +185,5 @@ namespace BlApi
         public void DeleteParcel(Parcel newParcel);
         public void DeleteCustomer(Customer customer);
         public void DeleteStation(Station station);
-        IEnumerable<StationToList> GetStations();
-        IEnumerable<ParcelToList> GetParcels();
     }
 }

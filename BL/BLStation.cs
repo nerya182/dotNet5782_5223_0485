@@ -192,15 +192,5 @@ namespace BL
             if (station.droneInCharging.Count == 0)
                 dal.DeleteStation(station.Id);
         }
-        public IEnumerable<StationToList> GetStations()
-        {
-            List<StationToList> temp = new List<StationToList>();
-            foreach (DO.Station station in dal.ListBaseStation(i => true))
-            {
-                Station obj = BaseStationDisplay(station.Id);
-                temp.Add(MakeStationToList(obj));
-            }
-            return temp;
-        }
     }
 }
