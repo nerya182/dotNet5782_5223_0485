@@ -62,6 +62,18 @@ namespace BL
             }
             return stations[index];
         }
+
+        public IEnumerable<StationToList> GetStations()
+        {
+            List<StationToList> temp = new List<StationToList>();
+            foreach (DO.Station station in dal.ListBaseStation(i => true))
+            {
+                Station obj = BaseStationDisplay(station.Id);
+                temp.Add(MakeStationToList(obj));
+            }
+            return temp;
+        }
+
         /// <summary>
         /// Returns our list of stations
         /// </summary>
@@ -174,15 +186,11 @@ namespace BL
                 throw new IllegalActionException("Enter the correct number of charging points", e);
             }
         }
-        public IEnumerable<StationToList> GetStations()
+
+        public void DeleteStation(Station station)
         {
-            List<StationToList> temp = new List<StationToList>();
-            foreach (DO.Station station in dal.ListBaseStation(i => true))
-            {
-                Station obj = BaseStationDisplay(station.Id);
-                temp.Add(MakeStationToList(obj));
-            }
-            return temp;
+            if (station.droneInCharging.Count == 0)
+                dal.DeleteStation(station.Id);
         }
     }
 }

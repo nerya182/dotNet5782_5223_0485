@@ -118,13 +118,13 @@ namespace PL
             add_button.Visibility = Visibility.Hidden;
             TextBoxLattitude.FontSize = 10;
             label_number_of_chargeslots.Content = "Available Charge Slots:";
-            Lattitude.Content = "Used Charge Slots: ";
-            Longitud.Visibility = Visibility.Hidden;
+            Lattitude.Content = "Location: ";
+            Longitud.Content = "List of Drones:";
             selected = (StationToList)selectedItem;
             stationSelected = bl.BaseStationDisplay(selected.Id);
             TextBox_id.Text = stationSelected.Id.ToString();
             TextBox_name.Text = stationSelected.Name;
-            TextBoxLattitude.Text = stationSelected.droneInCharging.Count.ToString();
+            TextBoxLattitude.Text = stationSelected.location.ToString();
             TextBoxLongitude.Visibility = Visibility.Hidden;
             TextBoxChargeSlots.Text = stationSelected.AvailableChargeSlots.ToString();
             TextBoxLongitude.Width = 300;
@@ -136,6 +136,10 @@ namespace PL
             TextBoxLongitude.IsEnabled = false;
             TextBoxLongitude.FontSize = 10;
             close_button.Visibility = Visibility.Visible;
+            TextBoxNewName.Visibility = Visibility.Hidden;
+            labelTextBoxNewName.Visibility = Visibility.Hidden;
+            NewName.Visibility = Visibility.Hidden;
+            listOfDrones.ItemsSource = stationSelected.droneInCharging;
         }
         private void idInput_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -183,6 +187,13 @@ namespace PL
                 MessageBox.Show(exception.Message);
             }
             managerPage.listStaions.ItemsSource = bl.GetStations();
+        }
+
+        private void UpdateName_Click_1(object sender, RoutedEventArgs e)
+        {
+            labelTextBoxNewName.Visibility = Visibility.Visible;
+            TextBoxNewName.Visibility = Visibility.Visible;
+            NewName.Visibility = Visibility.Visible;
         }
     }
 }

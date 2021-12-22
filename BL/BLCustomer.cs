@@ -192,7 +192,7 @@ namespace BL
             }
             catch (Exception e)
             {
-                throw  new ItemNotFoundException(id, "Enter an existing parcel in the system", e);
+                throw  new ItemNotFoundException(id, "Enter an existing customer in the system", e);
             }
             
         }
@@ -231,6 +231,27 @@ namespace BL
             {
                 throw new ItemNotFoundException(updateCustomer.Id, "Enter an existing customer in the system", e);
             }
+        }
+
+        public void DeleteCustomer(Customer customer)
+        {
+            bool flag = true;
+            int count = customer.FromCustomer.Count;
+            for(int i = 0; i < count; i++)
+            {
+                if(customer.FromCustomer[i].status != ParcelStatus.Supplied)
+                {
+                    flag = false;
+                    break;
+                }
+                if(customer.ToCustomer[i].status != ParcelStatus.Supplied)
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag == true)
+                dal.DeleteCustomer(customer.Id);
         }
     }
           

@@ -70,6 +70,10 @@ namespace BlApi
         /// Retrieving the list of drones
         /// </summary>
         /// <returns>UEnumerable of drones</returns>
+        /// 
+        public IEnumerable<StationToList> GetStations();
+
+        public IEnumerable<ParcelToList> GetParcels();
         IEnumerable<DroneToList> GetListDrone();
         /// <summary>
         /// Retrieving the list of drones
@@ -171,7 +175,15 @@ namespace BlApi
         /// <param name="id"></param>
         /// <param name="name"></param>
         void UpdateStationName(int id, string name);
-        IEnumerable<StationToList> GetStations();
-        IEnumerable<ParcelToList> GetParcels();
+
+        public IEnumerable<ParcelToList> GetParcelByStatus(IEnumerable itemsSource, ParcelStatus selectedStatus);
+
+        public IEnumerable<ParcelToList> GetParcelByWeight(IEnumerable itemsSource, WeightCategories selectedWeight);
+
+        public IEnumerable<ParcelToList> GetParcelByPriority(IEnumerable itemsSource, Priorities selectedPriority);
+
+        public void DeleteParcel(Parcel newParcel);
+        public void DeleteCustomer(Customer customer);
+        public void DeleteStation(Station station);
     }
 }

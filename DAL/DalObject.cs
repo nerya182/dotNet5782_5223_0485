@@ -800,6 +800,21 @@ namespace DalObject
             }
             return s;
         }
+
+        public void DeleteParcel(int id)
+        {
+            Parcels.Remove(ParcelDisplay(id));          
+        }
+
+        public void DeleteStation(int id)
+        {
+            Stations.Remove(BaseStationDisplay(id));
+        }
+
+        public void DeleteCustomer(int id)
+        {
+            Customers.Remove(CustomerDisplay(id));
+        }
     }
 }
 
