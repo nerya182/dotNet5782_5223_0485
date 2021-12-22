@@ -25,7 +25,18 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+            manager.Visibility = Visibility.Hidden;
         }
-        
+  
+        private void Start_Click(object sender, RoutedEventArgs e)
+        {
+            start.Visibility = Visibility.Hidden;
+            manager.Visibility = Visibility.Visible;
+        }
+
+        private void Manager_Click(object sender, RoutedEventArgs e)
+        {
+            this.Content = new ManagerPage(this);
+        }
     }
 }

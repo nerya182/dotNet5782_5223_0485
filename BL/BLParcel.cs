@@ -215,6 +215,16 @@ namespace BL
                 dal.DeleteParcel(newParcel.Id);
             }
         }
+        public IEnumerable<ParcelToList> GetParcels()
+        {
+            List<ParcelToList> temp = new List<ParcelToList>();
+            foreach (DO.Parcel parcel in dal.ListParcel(i => true))
+            {
+                Parcel obj = ParcelDisplay(parcel.Id);
+                temp.Add(MakeParcelToList(obj));
+            }
+            return temp;
+        }
     }
 }
 

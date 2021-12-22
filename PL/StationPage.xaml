@@ -1,0 +1,31 @@
+﻿<Page x:Class="PL.StationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PL"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StationPage">
+
+    <Grid x:Name="ww">
+        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill"/>
+        <Label Name="label_id" Content="Enter  ID number:" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
+        <Label Name="label_name" Content="Enter the name" HorizontalAlignment="Left" Height="29" Margin="34,106,0,0" VerticalAlignment="Top" Width="199" FontSize="16" FontWeight="Black"/>
+        <TextBox x:Name="TextBox_id" TextChanged="idInput_TextChanged" HorizontalAlignment="Left" Margin="221,85,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  />
+        <TextBox x:Name="TextBox_name" TextChanged="StationName_TextChanged" HorizontalAlignment="Left" Margin="221,114,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="label_number_of_chargeslots" Content="Number of charge slots:" HorizontalAlignment="Left" Margin="35,143,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Black"/>
+        <Button  Name="add_button" Content="Add" HorizontalAlignment="Left" Margin="221,270,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="AddButton_Click" FontWeight="Black"/>
+        <Label Name="Lattitude" Content="Lattitude:" HorizontalAlignment="Left" Margin="31,176,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black" FontStyle="Normal" FontStretch="Expanded"/>
+        <TextBox x:Name="TextBoxLattitude" HorizontalAlignment="Left" Margin="222,179,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Name="Longitud" Content="Longitude:"  HorizontalAlignment="Left" Margin="31,211,0,0" VerticalAlignment="Top" Width="174" FontWeight="Heavy" FontStretch="Medium" FontSize="16"/>
+        <TextBox x:Name="TextBoxLongitude" HorizontalAlignment="Left" Margin="222,217,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label   x:Name="labelTextBoxNewName" Content="Insert a new name:" HorizontalAlignment="Left" Margin="536,85,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+        <TextBox Name="TextBoxNewName"  HorizontalAlignment="Left" Margin="548,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Height="24" Width="138"/>
+        <Button  x:Name="NewName" Content="update" HorizontalAlignment="Left" Margin="560,161,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="updateButton_Click" FontSize="14" FontWeight="Black"/>
+        <TextBox x:Name="TextBoxChargeSlots" HorizontalAlignment="Left" Margin="222,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button  x:Name="close_button" HorizontalAlignment="Left" Margin="703,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Cancel_Add_Button_Click">
+            <Image Source="/back-button.png" />
+        </Button>
+    </Grid>
+</Page>

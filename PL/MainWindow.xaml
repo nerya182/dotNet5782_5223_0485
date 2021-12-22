@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Image Source="/Drone-Fast-Delivery.jpg" Stretch="UniformToFill"></Image>
-
-
+        <Button x:Name="start" Content="start" HorizontalAlignment="Left" Margin="128,180,0,0" VerticalAlignment="Top" Click="Start_Click" Height="33" FontWeight="Bold" Width="70"/>
+        <Button x:Name="manager" Content="manager" HorizontalAlignment="Left" Margin="251,176,0,0" VerticalAlignment="Top" Click="Manager_Click" Height="33" FontWeight="Bold" Width="70"/>
     </Grid>
 </Window>

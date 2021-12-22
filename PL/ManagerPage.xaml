@@ -1,0 +1,114 @@
+﻿<Page x:Class="PL.ManagerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PL"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ManagerPage">
+
+    <Grid Background="White">
+        <TabControl Name="TabManager" Margin="2,0,283,2" SelectionChanged="TabManager_SelectionChanged">
+            <TabItem Name="tabDrones" Header="list drone">
+                <Grid Background="White"  Height="422" HorizontalAlignment="Left" Width="507">
+                    <ListView Name="listDrones"  MouseDoubleClick="DoubleClickUpdateDrone" Margin="0,0,5,6"  >
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Model}" x:Name="Model" Header="Model" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Location}" x:Name="Location" Header="Location" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Battery}" x:Name="Battery" Header="Battery %" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" x:Name="Weight" Header="Weight" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Status}" x:Name="DronesStatus" Header="DronesStatus" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ParcelBeingPassedId}" x:Name="ParcelTransfer"  Header="num parcel" Width="auto"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem  Header="list parcels">
+                <Grid Background="#FFE5E5E5" Margin="0,0,5,0">
+                    <ListView Name="listParcel" Margin="0,0,0,3" HorizontalAlignment="Center" Width="502">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id_parcel" Header="Id" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding SenderName}" x:Name="SenderOfParcel" Header="Sender" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding TargetName}" x:Name="Target" Header="Target" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Weight}" x:Name="Weight_parcel" Header="Weight" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Priority}" x:Name="Priority" Header="Priority" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ShipmentStatus}" x:Name="ShipmentStatus" Header="Shipment Status" Width="auto"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Name="tabStation" Header="list station">
+                <Grid Background="#FFE5E5E5" Margin="0,0,-6,0">
+                    <ListView Name="listStaions" Margin="0,0,0,30" HorizontalAlignment="Left" Width="auto" MouseDoubleClick="DoubleClickUpdateStaion">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id_station" Header="Id" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Name}" x:Name="name_station" Header="Name of sender" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding UsedChargeSlots}" x:Name="UsedChargeSlots" Header="num use charge slots" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding AvailableChargeSlots}" x:Name="AvailableChargeSlots" Header=" num available charge slots" Width="auto"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="list customers">
+                <Grid Background="White" Margin="0,0,2,0" Height="auto">
+                    <ListView Name="listCustomers" MouseDoubleClick="DoubleClickUpdateCustomer" Margin="0,0,0,0" HorizontalAlignment="Left" Width="auto" >
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id_customer" Header="Id" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Name}" x:Name="name" Header="Name" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Phone}" x:Name="number_phone" Header="Phone" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding DeliveredSuppliedParcels}" x:Name="DeliveredSupplied" Header="DeliveredSupplied" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding DeliveredNotSuppliedParcels}" x:Name="DeliveredNotSupplied" Header="DeliveredNotSupplied" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ReceivedParcels}" x:Name="Received" Header=" Received" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding OnTheWayParcels }" x:Name="OnTheWay"  Header="OnTheWay" Width="auto"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <TabControl TabStripPlacement="Right" Margin="520,24,0,25"  >
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <ContentPresenter Content="{TemplateBinding Content}">
+                                    <ContentPresenter.LayoutTransform>
+                                        <RotateTransform Angle="90" />
+                                    </ContentPresenter.LayoutTransform>
+                                </ContentPresenter>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Padding" Value="3" />
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="Options" Margin="0,-3,-2,-1">
+                <Grid Margin="0,0,0,0">
+                    <Button x:Name="ADD" Content="ADD" Click="ADD_Click" Width="auto" Height="auto" Margin="-3,68,3,264"/>
+                    <Button x:Name="displayButton" Content="display" Click="display_Click" Width="auto" Height="auto" Margin="-2,128,2,204"/>
+                    <Button x:Name="deleteButton" Content="delete" Click="delete_Click" Width="auto" Height="auto" Margin="0,190,0,142"/>
+
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Display" />
+            <TabItem Header="Graphs" >
+
+            </TabItem>
+           
+        </TabControl>
+
+
+
+    </Grid>
+</Page>
