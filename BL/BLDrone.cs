@@ -22,7 +22,7 @@ namespace BL
         public double ChargePerHours { get; set; }
         /// <summary>
         /// BL Ctor
-        /// </summary>
+        /// </summary> 
         internal BL()
         {
             Random R = new Random();
@@ -247,7 +247,7 @@ namespace BL
         public IEnumerable<DroneToList> GetListDrone()
         {
             List<DroneToList> temp = new List<DroneToList>();
-            foreach (DO.Drone drone in dal.ListDrone(i=>true))
+            foreach (DroneToList drone in listDrone)
             {
                 Drone obj = DroneDisplay(drone.Id);
                 temp.Add(MakeDroneToList(obj));

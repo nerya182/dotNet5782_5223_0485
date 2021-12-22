@@ -174,5 +174,15 @@ namespace BL
                 throw new IllegalActionException("Enter the correct number of charging points", e);
             }
         }
+        public IEnumerable<StationToList> GetStations()
+        {
+            List<StationToList> temp = new List<StationToList>();
+            foreach (DO.Station station in dal.ListBaseStation(i => true))
+            {
+                Station obj = BaseStationDisplay(station.Id);
+                temp.Add(MakeStationToList(obj));
+            }
+            return temp;
+        }
     }
 }

@@ -54,6 +54,11 @@ namespace BL
             {
                 throw new IllegalActionException("Incorrect ID number");
             }
+            char[] stringArray = newCustomer.Phone.ToCharArray();
+            if (stringArray.Length != 10 || stringArray[0] != '0' || stringArray[1] != '5')
+            {
+                throw new IllegalActionException("Invalid cell phone number");
+            }
             try
             {
                 temp.Id = newCustomer.Id;
@@ -72,14 +77,15 @@ namespace BL
         /// Retrieving our list of customers of type IBL BO
         /// </summary>
         /// <returns> IEnumeravle of customers</returns>
-        public IEnumerable<Customer> GetListCustomer()
+        public IEnumerable<CustomerToList> GetListCustomer()
         {
             IEnumerable<DO.Customer> customers = dal.ListCustomer(i=>true);
-            List<Customer> temp = new List<Customer>();
+            List<CustomerToList> temp = new List<CustomerToList>();
             foreach (var customer in customers)
             {
                 Customer obj = CustomerDisplay(customer.Id);
-                temp.Add(obj);
+                CustomerToList cus = MakeCustomerToList(obj);
+                temp.Add(cus);
             }
             return temp;
         }
@@ -202,7 +208,7 @@ namespace BL
             if (updateCustomer.Name == "" && updateCustomer.Phone == "")
             {
                 throw new IllegalActionException("Must update at least one feature");
-            } ;
+            } 
             char[] stringArray = updateCustomer.Phone.ToCharArray();
             if (stringArray.Length!=10||stringArray[0]!='0'||stringArray[1]!='5')
             {

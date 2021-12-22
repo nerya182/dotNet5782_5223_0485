@@ -65,7 +65,7 @@ namespace BlApi
         /// Retrieving our list of customers of type IBL BO
         /// </summary>
         /// <returns>IEnumerable list of customer</returns>
-        IEnumerable<Customer> GetListCustomer();
+        IEnumerable<CustomerToList> GetListCustomer();
         /// <summary>
         /// Retrieving the list of drones
         /// </summary>
@@ -171,5 +171,7 @@ namespace BlApi
         /// <param name="id"></param>
         /// <param name="name"></param>
         void UpdateStationName(int id, string name);
+        IEnumerable<StationToList> GetStations();
+        IEnumerable<ParcelToList> GetParcels();
     }
 }

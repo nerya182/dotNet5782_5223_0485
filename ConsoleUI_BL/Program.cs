@@ -213,11 +213,8 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         private static void ViewCustomerList(BlApi.IBL bl)
         {
-            foreach (Customer objCustomer in bl.GetListCustomer())
-            {
-                CustomerToList customerToList = bl.MakeCustomerToList(objCustomer);
-                Console.WriteLine(customerToList);
-            }
+            foreach (CustomerToList objCustomer in bl.GetListCustomer())
+                Console.WriteLine(objCustomer);
         }
 
         /// <summary>

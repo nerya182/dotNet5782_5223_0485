@@ -25,17 +25,18 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+            manager.Visibility = Visibility.Hidden;
         }
-        /// <summary>
-        /// first button clicked to view the list of drones
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
+  
+        private void Start_Click(object sender, RoutedEventArgs e)
         {
-            this.Visibility = Visibility.Hidden;
-            DronesListWindow dronesListWindow = new DronesListWindow(bl, this);
-            dronesListWindow.Show();
+            start.Visibility = Visibility.Hidden;
+            manager.Visibility = Visibility.Visible;
+        }
+
+        private void Manager_Click(object sender, RoutedEventArgs e)
+        {
+            this.Content = new ManagerPage(this);
         }
     }
 }

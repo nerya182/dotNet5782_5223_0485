@@ -1,0 +1,61 @@
+﻿<Page x:Class="PL.CustomerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PL"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CustomerPage">
+    <Grid>
+        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill"/>
+        <Label x:Name="label_id" Content="Enter ID number" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
+        <Label x:Name="label_name" Content="Enter name" HorizontalAlignment="Left" Height="29" Margin="35,106,0,0" VerticalAlignment="Top" Width="199" FontSize="16" FontWeight="Black"/>
+        <Label x:Name="label_phon" Content="Enter phone number" HorizontalAlignment="Left" Margin="35,143,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
+        <TextBox x:Name="TextBox_id" TextChanged="DroneId_TextChanged" HorizontalAlignment="Left" Margin="221,85,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"  />
+        <TextBox x:Name="TextBox_name" TextChanged="DroneName_TextChanged" HorizontalAlignment="Left" Margin="221,114,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+        <Label x:Name="label_latitude" Content="Enter your latitude" HorizontalAlignment="Left" Margin="35,174,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Black"/>
+        <Button  x:Name="add_button" Content="Add" HorizontalAlignment="Left" Margin="336,373,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="AddButton_Click" FontWeight="Black"/>
+        <Label   x:Name="label_longitude" Content="Enter your longitude" HorizontalAlignment="Left" Margin="37,211,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
+        <TextBox x:Name="TextBox_longitude" HorizontalAlignment="Left" Margin="221,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" />
+
+
+
+        <TextBox x:Name="PhoneTextBox" HorizontalAlignment="Left" Margin="221,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" />
+        <TextBox x:Name="TextBoxLatitude" HorizontalAlignment="Left" Margin="221,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135"/>
+        <Button  x:Name="NameButton" Content="set name" HorizontalAlignment="Left" Margin="367,89,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="NameButton_Click"/>
+        <Button  x:Name="PhoneButton" Content="set phone" HorizontalAlignment="Left" Margin="379,125,0,0" VerticalAlignment="Top"  FontSize="14" FontWeight="Black" Click="PhoneButton_Click"/>
+        <Label   x:Name="label_TextBoxNew" Content="Insert a new name" HorizontalAlignment="Left" Margin="536,85,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+        <TextBox x:Name="TextBoxNewModel"  HorizontalAlignment="Left" Margin="548,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Height="24" Width="138"/>
+        <Button  x:Name="NewUpdate" Content="update" HorizontalAlignment="Left" Margin="560,161,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="updateButton_Click" FontSize="14" FontWeight="Black"/>
+        <Label   x:Name="label_received" Content="received" HorizontalAlignment="Left" Margin="38,257,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
+        <ListView Name="listFromeCustomer" Margin="50,246,439,81">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" x:Name="Weight_customer" Header="Weight" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Priority}" x:Name="Priority" Header="Priority" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding status}" x:Name="status" Header="status" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding OpposingSide}" x:Name="OpposingSide" Header="Opposing Side" Width="auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="listToCustomer" Margin="432,243,17,82">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id1" Header="Id" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" x:Name="Weight_customer1" Header="Weight" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Priority}" x:Name="Priority1" Header="Priority" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding status}" x:Name="status1" Header="status" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding OpposingSide}" x:Name="OpposingSide1" Header="Opposing Side" Width="auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Name="lable_parcelsto" Content="parcels to customer" FontSize="16" FontWeight="Black" HorizontalAlignment="Left" Margin="520,206,0,0" VerticalAlignment="Top" Width="auto"/>
+        <Label Name="lable_parcelsfo" Content="parcels frome customer" FontSize="16" FontWeight="Black" HorizontalAlignment="Left" Margin="100,206,0,0" VerticalAlignment="Top" Width="auto"/>
+        <Button  HorizontalAlignment="Left" Margin="703,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Cancel_Add_Button_Click">
+            <Image Source="/back-button.png" />
+        </Button>
+
+    </Grid>
+</Page>

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,34 +12,35 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BO;
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for DroneWindow.xaml
+    /// Interaction logic for DronePage.xaml
     /// </summary>
-    public partial class DroneWindow : Window
+    public partial class DronePage : Page
     {
-        BlApi.IBL bldw;
+        BlApi.IBL bl;
         BO.DroneToList selected = new BO.DroneToList();
         BO.Drone droneSelected = new BO.Drone();
-        DronesListWindow droneListWin;
-        bool flagClosure = true;
+        MainWindow mainWindow;
+        ManagerPage managerPage;
+
         /// <summary>
         /// constructor for add drone  window
         /// </summary>
         /// <param name="blw"> gives access to the BL functions</param>
         /// <param name="w"> gives access to the previous window</param>
-        public DroneWindow(BlApi.IBL blw, DronesListWindow w)
+        public DronePage(ManagerPage manager,MainWindow main)
         {
             InitializeComponent();
-            bldw = blw;
-            droneListWin = w;
+            bl = BlApi.BlFactory.GetBl();
+            mainWindow = main;
+            managerPage = manager;
             TextBoxParcelTransfer.Visibility = Visibility.Hidden;
             WeightTextBox.Visibility = Visibility.Hidden;
-            close_button.Visibility = Visibility.Hidden;
             label_id.Content = "Enter ID Number:";
             changeModelButton.Visibility = Visibility.Hidden;
             TextBoxNewModel.Visibility = Visibility.Hidden;
@@ -48,8 +49,8 @@ namespace PL
             sendOrReleaseButton.Visibility = Visibility.Hidden;
             delivery.Visibility = Visibility.Hidden;
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            chargeStationId.ItemsSource = from BO.Station s in bldw.GetListStation()
-                                          where s.AvailableChargeSlots>0
+            chargeStationId.ItemsSource = from BO.Station s in bl.GetListStation()
+                                          where s.AvailableChargeSlots > 0
                                           select s.Id;
             WeightSelector.Text = "Select max weight";
             chargeStationId.Text = "select BaseStation";
@@ -73,14 +74,14 @@ namespace PL
                 int id;
                 int chargingStationId = 0;
                 BO.DroneToList newDrone = new BO.DroneToList();
-                flag = int.TryParse(TextBox_id.Text,out id);
+                flag = int.TryParse(TextBox_id.Text, out id);
                 if (!flag)
                 {
                     MessageBox.Show("error ,drone id was not entered ");
                     return;
                 }
                 newDrone.Id = int.Parse(TextBox_id.Text);
-                if (TextBox_model.Text==null)
+                if (TextBox_model.Text == null)
                 {
                     MessageBox.Show("error ,model drone was not entered ");
                     return;
@@ -98,19 +99,17 @@ namespace PL
                     return;
                 }
                 chargingStationId = (int)chargeStationId.SelectedItem;
-                TextBoxLattitude.Text = bldw.BaseStationDisplay(chargingStationId).location.Lattitude.ToString();
-                TextBoxLongitude.Text = bldw.BaseStationDisplay(chargingStationId).location.Longitude.ToString();
-                bldw.AddDrone(newDrone, chargingStationId);
-                droneListWin.DronesListView.Items.Refresh();
+                TextBoxLattitude.Text = bl.BaseStationDisplay(chargingStationId).location.Lattitude.ToString();
+                TextBoxLongitude.Text = bl.BaseStationDisplay(chargingStationId).location.Longitude.ToString();
+                bl.AddDrone(newDrone, chargingStationId);
+                managerPage.listDrones.Items.Refresh();
                 MessageBox.Show("Added successfully");
                 TextBox_id.IsEnabled = false;
                 chargeStationId.IsEnabled = false;
                 TextBox_model.IsEnabled = false;
                 WeightSelector.IsEnabled = false;
                 add_button.IsEnabled = false;
-                flagClosure = false;
-                this.Close();
-                droneListWin.Filterrefresh(); 
+                managerPage.FilterRefreshDrones();
             }
             catch (Exception exception)
             {
@@ -124,8 +123,10 @@ namespace PL
         /// <param name="e"></param>
         private void Cancel_Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            flagClosure = false;
-            this.Close();
+            ManagerPage page = new ManagerPage(mainWindow);
+            mainWindow.Content = page;
+            page.TabManager.SelectedIndex = 0;
+            managerPage.TabManager.SelectedIndex = 0;
         }
         /// <summary>
         /// constructor for display drone window
@@ -133,12 +134,12 @@ namespace PL
         /// <param name="blw">gives access to the BL functions</param>
         /// <param name="selectedItem"></param>
         /// <param name="w">gives access to the previous window</param>
-        public DroneWindow(BlApi.IBL blw, object selectedItem, DronesListWindow w)
+        public DronePage(object selectedItem, ManagerPage manager, MainWindow main)
         {
             InitializeComponent();
-            droneListWin = w;
-            bldw = blw;
-            close_button.Visibility = Visibility.Visible;
+            mainWindow = main;
+            managerPage = manager;
+            bl = BlApi.BlFactory.GetBl();
             label_id.Content = "ID Number:";
             label_model.Content = "Model:";
             WeightSelector.Visibility = Visibility.Hidden;
@@ -150,12 +151,11 @@ namespace PL
             Lattitude.Content = "Location: ";
             Longitud.Content = "Parcel Tranfer:";
             chargeStationId.Visibility = Visibility.Hidden;
-            Cancel_add_button.Visibility = Visibility.Hidden;
             TextBoxNewModel.Visibility = Visibility.Hidden;
             labelTextBoxNewModel.Visibility = Visibility.Hidden;
             NewModel.Visibility = Visibility.Hidden;
             selected = (DroneToList)selectedItem;
-            droneSelected = bldw.DroneDisplay(selected.Id);
+            droneSelected = bl.DroneDisplay(selected.Id);
             TextBox_id.Text = droneSelected.Id.ToString();
             WeightTextBox.Text = droneSelected.MaxWeight.ToString();
             TextBox_model.Text = droneSelected.Model;
@@ -190,13 +190,13 @@ namespace PL
                     break;
                 case DroneStatuses.Delivery:
                     changeModelButton.Visibility = Visibility.Visible;
-                    Parcel parcel = blw.GetListParcel().First(i => i.Id == selected.ParcelBeingPassedId);
-                    if (parcel.PickedUp==null)
+                    Parcel parcel = bl.GetListParcel().First(i => i.Id == selected.ParcelBeingPassedId);
+                    if (parcel.PickedUp == null)
                     {
                         sendOrReleaseButton.Content = "Package collection";
                         sendOrReleaseButton.Visibility = Visibility.Visible;
                     }
-                    else if(parcel.Delivered==null)
+                    else if (parcel.Delivered == null)
                     {
                         sendOrReleaseButton.Content = "Package delivery";
                         sendOrReleaseButton.Visibility = Visibility.Visible;
@@ -207,7 +207,6 @@ namespace PL
                     break;
             }
         }
-       
         /// <summary>
         /// button that opens all the update options
         /// </summary>
@@ -215,43 +214,30 @@ namespace PL
         /// <param name="e"></param>
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
-            BO.DroneToList updateDrone = new BO.DroneToList();
+            BO.DroneToList updateDrone = selected;
             try
             {
                 updateDrone.Model = TextBoxNewModel.Text;
-                updateDrone.Id = selected.Id;
-                bldw.UpdateDrone(updateDrone);
+                bl.UpdateDrone(updateDrone);
                 MessageBox.Show("Update successfully");
                 TextBox_model.Text = TextBoxNewModel.Text;
                 TextBoxNewModel.Visibility = Visibility.Hidden;
                 labelTextBoxNewModel.Visibility = Visibility.Hidden;
                 NewModel.Visibility = Visibility.Hidden;
-               
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
             }
-            droneListWin.DronesListView.ItemsSource = bldw.GetListDrone();
+            managerPage.listDrones.ItemsSource = bl.GetListDrone();
         }
         /// <summary>
         /// closing the current window
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void closeButton_Click(object sender, RoutedEventArgs e)
-        {
-            flagClosure = false;
-            this.Close();
-            droneListWin.Show();
-
-        }
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosed(e);
-            e.Cancel = flagClosure;
-            droneListWin.Show();
-        }
+      
+       
         /// <summary>
         /// model of drone has been entered
         /// </summary>
@@ -284,7 +270,7 @@ namespace PL
             else
             {
                 TextBox_id.Background = (Brush)bc.ConvertFrom("#FFFA8072");
-            }         
+            }
         }
 
         private void ModelButton_Click(object sender, RoutedEventArgs e)
@@ -301,14 +287,14 @@ namespace PL
             NewModel.Visibility = Visibility.Hidden;
             string str = (string)sendOrReleaseButton.Content;
             int droneId;
-            if (str=="Sending to charging")
+            if (str == "Sending to charging")
             {
                 try
-                { 
+                {
                     droneId = selected.Id;
-                    bldw.SendingDroneForCharging(droneId);
+                    bl.SendingDroneForCharging(droneId);
                     TextBoxDelivery.Text = DroneStatuses.Charging.ToString();
-                    TextBoxLattitude.Text = bldw.DroneDisplay(droneId).Location.ToString();
+                    TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
                     sendOrReleaseButton.Content = "Release drone";
                     sendOrReleaseButton.Visibility = Visibility.Visible;
@@ -320,15 +306,15 @@ namespace PL
                     MessageBox.Show(exception.Message);
                 }
             }
-            if (str== "Release drone")
+            if (str == "Release drone")
             {
                 try
                 {
                     droneId = selected.Id;
-                    bldw.ReleaseDroneFromCharging(droneId);
-                    TextBoxParcelTransfer.Text =((int)bldw.DroneDisplay(droneId).Battery).ToString();
+                    bl.ReleaseDroneFromCharging(droneId);
+                    TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
                     TextBoxDelivery.Text = DroneStatuses.Available.ToString();
-                    TextBoxLattitude.Text = bldw.DroneDisplay(droneId).Location.ToString();
+                    TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
                     sendOrReleaseButton.Content = "Sending to charging";
                     sendOrReleaseButton.Visibility = Visibility.Visible;
@@ -345,10 +331,10 @@ namespace PL
                 try
                 {
                     droneId = selected.Id;
-                    bldw.ParcelCollectionByDrone(droneId);
-                    TextBoxLongitude.Text = bldw.DroneDisplay(droneId).ParcelTransfer.ToString();
-                    TextBoxParcelTransfer.Text = ((int)bldw.DroneDisplay(droneId).Battery).ToString();
-                    TextBoxLattitude.Text = bldw.DroneDisplay(droneId).Location.ToString();
+                    bl.ParcelCollectionByDrone(droneId);
+                    TextBoxLongitude.Text = bl.DroneDisplay(droneId).ParcelTransfer.ToString();
+                    TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
+                    TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
                     sendOrReleaseButton.Content = "Package delivery";
                     sendOrReleaseButton.Visibility = Visibility.Visible;
@@ -363,11 +349,11 @@ namespace PL
                 try
                 {
                     droneId = selected.Id;
-                    bldw.DeliveryOfParcelByDrone(droneId);
-                    TextBoxLongitude.Text = bldw.DroneDisplay(droneId).ParcelTransfer.ToString();
-                    TextBoxParcelTransfer.Text = ((int)bldw.DroneDisplay(droneId).Battery).ToString();
+                    bl.DeliveryOfParcelByDrone(droneId);
+                    TextBoxLongitude.Text = bl.DroneDisplay(droneId).ParcelTransfer.ToString();
+                    TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
                     TextBoxDelivery.Text = DroneStatuses.Available.ToString();
-                    TextBoxLattitude.Text = bldw.DroneDisplay(droneId).Location.ToString();
+                    TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
                     sendOrReleaseButton.Content = "Sending to charging";
                     sendOrReleaseButton.Visibility = Visibility.Visible;
@@ -380,7 +366,7 @@ namespace PL
                     MessageBox.Show(exception.Message);
                 }
             }
-            droneListWin.DronesListView.ItemsSource = bldw.GetListDrone();
+            managerPage.listDrones.ItemsSource = bl.GetListDrone();
         }
 
         private void allDeliveryButtonButton_Click(object sender, RoutedEventArgs e)
@@ -390,15 +376,15 @@ namespace PL
             labelTextBoxNewModel.Visibility = Visibility.Hidden;
             NewModel.Visibility = Visibility.Hidden;
             string str = (string)delivery.Content;
-            if (str== "Affiliation")
+            if (str == "Affiliation")
             {
                 try
                 {
                     droneId = selected.Id;
-                    bldw.AffiliateParcelToDrone(droneId);
-                    TextBoxLongitude.Text = bldw.DroneDisplay(droneId).ParcelTransfer.ToString();
-                    TextBoxParcelTransfer.Text = ((int)bldw.DroneDisplay(droneId).Battery).ToString();
-                    TextBoxLattitude.Text = bldw.DroneDisplay(droneId).Location.ToString();
+                    bl.AffiliateParcelToDrone(droneId);
+                    TextBoxLongitude.Text = bl.DroneDisplay(droneId).ParcelTransfer.ToString();
+                    TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
+                    TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
                     TextBoxDelivery.Text = DroneStatuses.Delivery.ToString();
                     MessageBox.Show("Update successfully");
                     sendOrReleaseButton.Content = "Package collection";
@@ -410,7 +396,10 @@ namespace PL
                     MessageBox.Show(exception.Message);
                 }
             }
-            droneListWin.DronesListView.ItemsSource = bldw.GetListDrone();
+            managerPage.listDrones.ItemsSource = bl.GetListDrone();
         }
+
+       
     }
 }
+
