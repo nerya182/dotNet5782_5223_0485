@@ -29,7 +29,7 @@
             </TabItem>
             <TabItem  Header="list parcels">
                 <Grid Background="#FFE5E5E5" Margin="0,0,5,0">
-                    <ListView Name="listParcel" Margin="0,0,0,3" HorizontalAlignment="Center" Width="502">
+                    <ListView Name="listParcel" Margin="0,0,0,3" MouseDoubleClick="DoubleClickUpdateParcel" HorizontalAlignment="Center" Width="502">
                         <ListView.View>
                             <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
                                 <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id_parcel" Header="Id" Width="auto"/>
@@ -97,15 +97,11 @@
                     <Button x:Name="ADD" Content="ADD" Click="ADD_Click" Width="auto" Height="auto" Margin="-3,68,3,264"/>
                     <Button x:Name="displayButton" Content="display" Click="display_Click" Width="auto" Height="auto" Margin="-2,128,2,204"/>
                     <Button x:Name="deleteButton" Content="delete" Click="delete_Click" Width="auto" Height="auto" Margin="0,190,0,142"/>
-
                 </Grid>
-
             </TabItem>
             <TabItem Header="Display" />
             <TabItem Header="Graphs" >
-
             </TabItem>
-           
         </TabControl>
 
 

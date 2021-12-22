@@ -45,6 +45,8 @@ namespace PL
                     mainWindow.Content = dronePage;
                     break;
                 case 1:
+                    parcelPage parcelPage = new parcelPage(this, mainWindow);
+                    mainWindow.Content = parcelPage;
                     break;
                 case 2:
                     StationPage stationPage = new StationPage(this,mainWindow);
@@ -73,6 +75,11 @@ namespace PL
         {
             listCustomers.ItemsSource = bl.GetListCustomer();
             listCustomers.Items.Refresh();
+        }
+        public void FilterRefreshParcels()
+        {
+            listParcel.ItemsSource = bl.GetParcels();
+            listParcel.Items.Refresh();
         }
 
         private void DoubleClickUpdateDrone(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -156,14 +163,16 @@ namespace PL
             mainWindow.Content = dronePage;
         }
 
-        private void DoubleClickUpdateCustomer(object sender, MouseButtonEventArgs e)
+        private void DoubleClickUpdateCustomer(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             CustomerPage dronePage = new CustomerPage(mainWindow,listCustomers.SelectedItem, this);
             mainWindow.Content = dronePage;
         }
-        public void RefreshTab()
+
+        private void DoubleClickUpdateParcel(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            TabManager.SelectedItem = 2;
+            parcelPage parcelPage = new parcelPage(mainWindow, listParcel.SelectedItem, this);
+            mainWindow.Content = parcelPage;
         }
     }
 }
