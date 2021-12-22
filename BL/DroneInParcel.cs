@@ -14,7 +14,9 @@ namespace BO
         public Location location { get; set; }
         public override string ToString()
         {
-            return $"DroneId: #{DroneId}, Battery: {(int)Battery}%,location :{location}\n";
+            return $"DroneId: #{DroneId}, " +
+                $"Battery: {(int)Battery}%\n" +
+                $"location: {location}";
         }
 
     }

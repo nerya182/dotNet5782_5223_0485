@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using BlApi;
@@ -69,6 +70,18 @@ namespace BL
             }
             return temp;
         }
+
+        public IEnumerable<ParcelToList> GetParcels()
+        {
+            List<ParcelToList> temp = new List<ParcelToList>();
+            foreach (DO.Parcel parcel in dal.ListParcel(i => true))
+            {
+                Parcel obj = ParcelDisplay(parcel.Id);
+                temp.Add(MakeParcelToList(obj));
+            }
+            return temp;
+        }
+
         /// <summary>
         /// Retrieving info to transform parcel into parceltolist and returning it
         /// </summary>
@@ -155,6 +168,52 @@ namespace BL
             customerInParcel2.Name = target.Name;
             temp.Target = customerInParcel2;
             return temp;
+        }
+
+        public IEnumerable<ParcelToList> GetParcelByStatus(IEnumerable itemsSource, ParcelStatus selectedStatus)
+        {
+            List<ParcelToList> temp = new List<ParcelToList>();
+            foreach (ParcelToList parcel in itemsSource)
+            {
+                if (parcel.ShipmentStatus == selectedStatus)
+                {
+                    temp.Add(parcel);
+                }
+            }
+            return temp;
+        }
+        public IEnumerable<ParcelToList> GetParcelByWeight(IEnumerable itemsSource, WeightCategories selectedWeight)
+        {
+            List<ParcelToList> temp = new List<ParcelToList>();
+            foreach (ParcelToList parcel in itemsSource)
+            {
+                if (parcel.Weight == selectedWeight)
+                {
+                    temp.Add(parcel);
+                }
+            }
+            return temp;
+        }
+
+        public IEnumerable<ParcelToList> GetParcelByPriority(IEnumerable itemsSource, Priorities selectedPriority)
+        {
+            List<ParcelToList> temp = new List<ParcelToList>();
+            foreach (ParcelToList parcel in itemsSource)
+            {
+                if (parcel.Priority == selectedPriority)
+                {
+                    temp.Add(parcel);
+                }
+            }
+            return temp;
+        }
+
+        public void DeleteParcel(Parcel newParcel)
+        {
+            if(newParcel.Affiliation == null || newParcel.Delivered != null)
+            {
+                dal.DeleteParcel(newParcel.Id);
+            }
         }
     }
 }
