@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,8 +27,8 @@ namespace PL
         public ManagerPage(MainWindow main)
         {
             InitializeComponent();
-            bl= BlApi.BlFactory.GetBl();
             mainWindow = main;
+            bl = BlApi.BlFactory.GetBl();
             listDrones.ItemsSource = bl.GetListDrone();
             listCustomers.ItemsSource = bl.GetListCustomer();
             listStaions.ItemsSource = bl.GetStations();
@@ -111,21 +112,28 @@ namespace PL
             switch (selected)
             {
                 case 0:
-                    displayButton.Content = "display parcel in drone";
+                    ADD.Content = "add drone";
+                    Grouping.Content = "Grouping of status drones";
+                    Grouping2.Content = "Grouping of weight drones";
                     deleteButton.Visibility = Visibility.Hidden;
                     break;
                 case 1:
-                    displayButton.Content = "parcel";
+                    ADD.Content = "add parcel";
                     deleteButton.Content = "delete parcel";
+                    
                     deleteButton.Visibility = Visibility.Visible;
                     break;
                 case 2:
-                    displayButton.Content = "display drone in list charging drone";
+                    ADD.Content = "add station";
+                    Grouping.Content = "Grouping of charge-slots availables";
+                    Grouping2.Content = "";
                     deleteButton.Content = "delete station";
                     deleteButton.Visibility = Visibility.Visible;
                     break;
                 case 3:
-                    displayButton.Content = "customer";
+                    ADD.Content = "add customer";
+                    Grouping.Content = "Grouping of customer sender";
+                    Grouping2.Content = "Grouping of customer received";
                     deleteButton.Content = "delete customer";
                     deleteButton.Visibility = Visibility.Visible;
                     break;
@@ -141,16 +149,44 @@ namespace PL
             switch (selected)
             {
                 case 0:
-                    selectedDelete =listDrones.SelectedItem;
+                    selectedDelete = listDrones.SelectedItem;
+                    listDrones.ItemsSource = bl.GetListDrone();
                     break;
                 case 1:
-                    selectedDelete = listParcel.SelectedItem;
+                    try
+                    {
+                        selectedDelete = (ParcelToList)listParcel.SelectedItem;
+                        bl.DeleteParcel((ParcelToList)selectedDelete);
+                        listParcel.ItemsSource = bl.GetParcels();
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
                     break;
                 case 2:
-                    selectedDelete = listStaions.SelectedItem;
+                    try
+                    {
+                        selectedDelete = (StationToList)listStaions.SelectedItem;
+                        bl.DeleteStation((StationToList)selectedDelete);
+                        listStaions.ItemsSource = bl.GetStations();
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
                     break;
                 case 3:
-                    selectedDelete = listCustomers.SelectedItem;
+                    try
+                    {
+                        selectedDelete = (CustomerToList)listCustomers.SelectedItem;
+                        bl.DeleteCustomer((CustomerToList)selectedDelete);
+                        listCustomers.ItemsSource = bl.GetListCustomer();
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
                     break;
                 default:
                     break;
@@ -173,6 +209,80 @@ namespace PL
         {
             parcelPage parcelPage = new parcelPage(mainWindow, listParcel.SelectedItem, this);
             mainWindow.Content = parcelPage;
+        }
+
+        private void Grouping_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = TabManager.SelectedIndex;
+            switch (selected)
+            {
+                case 0:
+                    if (listDrones.ItemsSource != null) listDrones.ItemsSource = null;
+                    var groups = bl.GetListDrone().GroupBy(d => d.Status);
+                    foreach (var group in groups)
+                    {
+                        foreach (BO.DroneToList item in group)
+                        {
+                            listDrones.Items.Add(item);
+                        }
+                    }
+                    break;
+                case 1:
+                   
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    if (listParcel.ItemsSource != null) listParcel.ItemsSource = null;
+                    var groups2 = bl.GetParcels().GroupBy(p => p.SenderName);
+                    foreach (var group in groups2)
+                    {
+                        foreach (BO.ParcelToList item in group)
+                        {
+                            listDrones.Items.Add(item);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void Grouping_Seconde_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = TabManager.SelectedIndex;
+            switch (selected)
+            {
+                case 0:
+                    if (listDrones.ItemsSource != null) listDrones.ItemsSource = null;
+                    var groups1 = bl.GetListDrone().GroupBy(d => d.MaxWeight);
+                    foreach (var group in groups1)
+                    {
+                        foreach (BO.DroneToList item in group)
+                        {
+                            listDrones.Items.Add(item);
+                        }
+                    }
+                    break;
+                case 1:
+                  
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    if (listParcel.ItemsSource != null) listParcel.ItemsSource = null;
+                    var groups2 = bl.GetParcels().GroupBy(p => p.TargetName);
+                    foreach (var group in groups2)
+                    {
+                        foreach (BO.ParcelToList item in group)
+                        {
+                            listDrones.Items.Add(item);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

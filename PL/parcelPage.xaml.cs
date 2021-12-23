@@ -82,13 +82,13 @@ namespace PL
                 PrioritySelector.IsEnabled = false;
                 add_button.IsEnabled = false;
                 managerPage.FilterRefreshParcels();
+                Cancel_Add_Button_Click(sender, e);
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
             }
         }
-
         public parcelPage(MainWindow main, object selectedItem, ManagerPage manager)
         {
             InitializeComponent();

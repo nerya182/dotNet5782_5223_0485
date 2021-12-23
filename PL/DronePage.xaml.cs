@@ -110,6 +110,7 @@ namespace PL
                 WeightSelector.IsEnabled = false;
                 add_button.IsEnabled = false;
                 managerPage.FilterRefreshDrones();
+                Cancel_Add_Button_Click(sender, e);
             }
             catch (Exception exception)
             {

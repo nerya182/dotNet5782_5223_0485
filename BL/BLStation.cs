@@ -187,10 +187,15 @@ namespace BL
             }
         }
 
-        public void DeleteStation(Station station)
+        public void DeleteStation(StationToList station)
         {
-            if (station.droneInCharging.Count == 0)
+            if (station == null) { throw new IllegalActionException("Please click once on a station and then click delete"); }
+            if (station.UsedChargeSlots== 0)
                 dal.DeleteStation(station.Id);
+            else
+            {
+                throw new IllegalActionException("It is not possible to delete the station because there are drones in charge");
+            }
         }
     }
 }

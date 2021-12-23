@@ -208,11 +208,17 @@ namespace BL
             return temp;
         }
 
-        public void DeleteParcel(Parcel newParcel)
+        public void DeleteParcel(ParcelToList parcel)
         {
-            if(newParcel.Affiliation == null || newParcel.Delivered != null)
+            if (parcel == null) { throw new IllegalActionException("Please click once on a parcel and then click delete"); }
+            Parcel delParcel = ParcelDisplay(parcel.Id);
+            if (delParcel.Affiliation == null || delParcel.Delivered != null)
             {
-                dal.DeleteParcel(newParcel.Id);
+                dal.DeleteParcel(delParcel.Id);
+            }
+            else
+            {
+                throw new IllegalActionException("The package could not be deleted because it is in delivery mode");
             }
         }
     }

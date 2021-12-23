@@ -95,12 +95,17 @@
             <TabItem Header="Options" Margin="0,-3,-2,-1">
                 <Grid Margin="0,0,0,0">
                     <Button x:Name="ADD" Content="ADD" Click="ADD_Click" Width="auto" Height="auto" Margin="-3,68,3,264"/>
-                    <Button x:Name="displayButton" Content="display" Click="display_Click" Width="auto" Height="auto" Margin="-2,128,2,204"/>
-                    <Button x:Name="deleteButton" Content="delete" Click="delete_Click" Width="auto" Height="auto" Margin="0,190,0,142"/>
+                    <Button x:Name="deleteButton" Content="delete" Click="delete_Click" Width="auto" Height="auto" Margin="0,132,0,200"/>
+                    <Button x:Name="ADD_Copy" Content="ADD" Click="ADD_Click" Width="auto" Height="auto" Margin="-3,68,3,264"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Display" />
-            <TabItem Header="Graphs" >
+            <TabItem Header="Display" Margin="0,-2,-2,0" Height="44" VerticalAlignment="Top" >
+                <Grid Margin="0,0,0,0">
+                    <Button x:Name="Grouping" Content="Grouping" Click="Grouping_Click" Width="auto" Height="auto" Margin="-3,36,3,296"/>
+                    <Button x:Name="Grouping2" Content="Grouping" Click="Grouping_Seconde_Click" Width="auto" Height="auto" Margin="-3,100,3,232"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Graphs" Height="47" Margin="0,-2,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" >
             </TabItem>
         </TabControl>
 

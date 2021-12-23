@@ -233,8 +233,11 @@ namespace BL
             }
         }
 
-        public void DeleteCustomer(Customer customer)
+        public void DeleteCustomer(CustomerToList cus)
         {
+            if (cus == null) { throw new IllegalActionException("Please click once on a customer and then click delete"); }
+          
+            Customer customer = CustomerDisplay(cus.Id);
             bool flag = true;
             int count = customer.FromCustomer.Count;
             for(int i = 0; i < count; i++)
@@ -252,6 +255,10 @@ namespace BL
             }
             if (flag == true)
                 dal.DeleteCustomer(customer.Id);
+            else
+            {
+                throw new IllegalActionException("The customer cannot be deleted because it is in use on the system");
+            }
         }
     }
           

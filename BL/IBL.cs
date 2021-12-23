@@ -182,8 +182,8 @@ namespace BlApi
 
         public IEnumerable<ParcelToList> GetParcelByPriority(IEnumerable itemsSource, Priorities selectedPriority);
 
-        public void DeleteParcel(Parcel newParcel);
-        public void DeleteCustomer(Customer customer);
-        public void DeleteStation(Station station);
+        public void DeleteParcel(ParcelToList parcel);
+        public void DeleteCustomer(CustomerToList customer);
+        public void DeleteStation(StationToList station);
     }
 }

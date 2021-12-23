@@ -29,7 +29,7 @@ namespace PL
         public StationPage(ManagerPage manager, MainWindow main)
         {
             InitializeComponent();
-            bl = BlApi.BlFactory.GetBl();
+            bl= BlApi.BlFactory.GetBl();
             mainWindow = main;
             managerPage = manager;
             close_button.Visibility = Visibility.Hidden;
@@ -37,6 +37,8 @@ namespace PL
             labelTextBoxNewName.Visibility = Visibility.Hidden;
             NewName.Visibility = Visibility.Hidden;
             close_button.Visibility = Visibility.Visible;
+            UpdateName.Visibility = Visibility.Hidden;
+            listOfDrones.Visibility = Visibility.Hidden;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -74,14 +76,14 @@ namespace PL
                     return;
                 }
                 Location location = new Location();
-                location.Lattitude = int.Parse(TextBoxLattitude.Text);
+                location.Lattitude = double.Parse(TextBoxLattitude.Text);
                 flag = double.TryParse(TextBoxLongitude.Text, out num);
                 if (!flag)
                 {
                     MessageBox.Show("Error, Longtitude was not entered ");
                     return;
                 }
-                location.Lattitude = int.Parse(TextBoxLongitude.Text);
+                location.Lattitude = double.Parse(TextBoxLongitude.Text);
                 newStation.location = location;
                 bl.AddStation(newStation);
                 managerPage.listStaions.Items.Refresh();
@@ -93,6 +95,7 @@ namespace PL
                 TextBoxLongitude.IsEnabled = false;
                 add_button.IsEnabled = false;
                 managerPage.FilterRefreshStaions();
+                Cancel_Add_Button_Click(sender, e);
             }
             catch (Exception exception)
             {
@@ -101,17 +104,17 @@ namespace PL
         }
         private void Cancel_Add_Button_Click(object sender, RoutedEventArgs e)
         {
+            managerPage.FilterRefreshStaions();
             ManagerPage page = new ManagerPage(mainWindow);
             page.TabManager.SelectedIndex = 2;
             mainWindow.Content = page;
         }
-
         public StationPage(MainWindow main,object selectedItem, ManagerPage manager)
         {
             InitializeComponent();
+            bl = BlApi.BlFactory.GetBl();
             mainWindow = main;
             managerPage = manager;
-            bl = BlApi.BlFactory.GetBl();
             close_button.Visibility = Visibility.Visible;
             label_id.Content = "ID Number:";
             label_name.Content = "Name:";

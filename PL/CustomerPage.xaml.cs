@@ -127,6 +127,7 @@ namespace PL
                 TextBoxLatitude.IsEnabled = false;
                 TextBox_longitude.IsEnabled = false;
                 managerPage.FilterRefreshCustomres();
+                Cancel_Add_Button_Click(sender, e);
             }
             catch (Exception exception)
             {
