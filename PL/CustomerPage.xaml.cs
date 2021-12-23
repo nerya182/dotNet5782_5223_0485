@@ -24,10 +24,10 @@ namespace PL
         BlApi.IBL bl;
         ManagerPage managerPage;
         MainWindow mainWindow;
-        BO.CustomerToList selected = new BO.CustomerToList();
+        BO.Customer selected = new BO.Customer();
         BO.Customer customerSelected = new BO.Customer();
 
-        public CustomerPage(MainWindow main, object selectedItem, ManagerPage manager)
+        public CustomerPage(MainWindow main, Customer customer, ManagerPage manager)
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
@@ -37,7 +37,7 @@ namespace PL
             label_name.Content = "name";
             label_phon.Content = "phone number";
             label_latitude.Content = "Location";
-            selected = (CustomerToList)selectedItem;
+            selected = customer;
             customerSelected = bl.CustomerDisplay(selected.Id);
             TextBox_id.Text = customerSelected.Id.ToString();
             TextBox_name.Text = customerSelected.Name.ToString();

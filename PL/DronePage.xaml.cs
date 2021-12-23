@@ -1,5 +1,6 @@
 ﻿using BO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace PL
     public partial class DronePage : Page
     {
         BlApi.IBL bl;
-        BO.DroneToList selected = new BO.DroneToList();
+        BO.Drone selected = new BO.Drone();
         BO.Drone droneSelected = new BO.Drone();
         MainWindow mainWindow;
         ManagerPage managerPage;
@@ -110,7 +111,7 @@ namespace PL
                 WeightSelector.IsEnabled = false;
                 add_button.IsEnabled = false;
                 managerPage.FilterRefreshDrones();
-                Cancel_Add_Button_Click(sender, e);
+                Back_Button_Click(sender, e);
             }
             catch (Exception exception)
             {
@@ -122,7 +123,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Cancel_Add_Button_Click(object sender, RoutedEventArgs e)
+        private void Back_Button_Click(object sender, RoutedEventArgs e)
         {
             ManagerPage page = new ManagerPage(mainWindow);
             mainWindow.Content = page;
@@ -135,7 +136,7 @@ namespace PL
         /// <param name="blw">gives access to the BL functions</param>
         /// <param name="selectedItem"></param>
         /// <param name="w">gives access to the previous window</param>
-        public DronePage(object selectedItem, ManagerPage manager, MainWindow main)
+        public DronePage(Drone drone, ManagerPage manager, MainWindow main)
         {
             InitializeComponent();
             mainWindow = main;
@@ -155,15 +156,16 @@ namespace PL
             TextBoxNewModel.Visibility = Visibility.Hidden;
             labelTextBoxNewModel.Visibility = Visibility.Hidden;
             NewModel.Visibility = Visibility.Hidden;
-            selected = (DroneToList)selectedItem;
+            selected = drone;           
             droneSelected = bl.DroneDisplay(selected.Id);
-            TextBox_id.Text = droneSelected.Id.ToString();
-            WeightTextBox.Text = droneSelected.MaxWeight.ToString();
-            TextBox_model.Text = droneSelected.Model;
-            TextBoxLattitude.Text = droneSelected.Location.ToString();
-            TextBoxDelivery.Text = droneSelected.Status.ToString();
-            TextBoxLongitude.Text = droneSelected.ParcelTransfer.ToString();
-            TextBoxParcelTransfer.Text = droneSelected.Battery.ToString();
+            TextBox_id.Text = selected.Id.ToString();
+            WeightTextBox.Text = selected.MaxWeight.ToString();
+            TextBox_model.Text = selected.Model;
+            TextBoxLattitude.Text = selected.Location.ToString();
+            TextBoxDelivery.Text = selected.Status.ToString();
+            TextBoxLongitude.Visibility = Visibility.Hidden;
+            ListParcelTransfer.Items.Add(droneSelected.ParcelTransfer);
+            TextBoxParcelTransfer.Text = selected.Battery.ToString();
             TextBoxLongitude.Width = 300;
             TextBoxLongitude.Height = 100;
             TextBox_id.IsEnabled = false;
@@ -191,7 +193,7 @@ namespace PL
                     break;
                 case DroneStatuses.Delivery:
                     changeModelButton.Visibility = Visibility.Visible;
-                    Parcel parcel = bl.GetListParcel().First(i => i.Id == selected.ParcelBeingPassedId);
+                    Parcel parcel = bl.GetListParcel().First(i => i.Id == bl.MakeDroneToList(selected).ParcelBeingPassedId);
                     if (parcel.PickedUp == null)
                     {
                         sendOrReleaseButton.Content = "Package collection";
@@ -215,7 +217,7 @@ namespace PL
         /// <param name="e"></param>
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
-            BO.DroneToList updateDrone = selected;
+            BO.DroneToList updateDrone = bl.MakeDroneToList(selected);
             try
             {
                 updateDrone.Model = TextBoxNewModel.Text;
@@ -400,7 +402,13 @@ namespace PL
             managerPage.listDrones.ItemsSource = bl.GetListDrone();
         }
 
-       
+        private void OpenParcelTransfer(object sender, MouseButtonEventArgs e)
+        {
+            ParcelTransfer temp = ListParcelTransfer.SelectedItem as ParcelTransfer;
+            Parcel parcel = bl.ParcelDisplay(temp.Id);
+            parcelPage parcelPage = new parcelPage(mainWindow, parcel, managerPage);
+            mainWindow.Content = parcelPage;
+        }
     }
 }
 

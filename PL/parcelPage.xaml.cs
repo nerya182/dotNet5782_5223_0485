@@ -24,7 +24,7 @@ namespace PL
         BlApi.IBL bl;
         ManagerPage managerPage;
         MainWindow mainWindow;
-        BO.ParcelToList selected = new BO.ParcelToList();
+        BO.Parcel selected = new BO.Parcel();
         BO.Parcel parcelSelected = new BO.Parcel();
         public parcelPage(ManagerPage manager, MainWindow main)
         {
@@ -32,64 +32,36 @@ namespace PL
             bl = BlApi.BlFactory.GetBl();
             mainWindow = main;
             managerPage = manager;
+            label_DroneInParcel.Visibility = Visibility.Hidden;
+            TextBox_DroneInParcel.Visibility = Visibility.Hidden;
+            TextBox_Sender.Visibility = Visibility.Hidden;
+            TextBox_Target.Visibility = Visibility.Hidden;
+            label_created.Visibility = Visibility.Hidden;
+            label_affiliated.Visibility = Visibility.Hidden;
+            label_pickedUp.Visibility = Visibility.Hidden;
+            label_delivered.Visibility = Visibility.Hidden;
+            label_status.Visibility = Visibility.Hidden;
+            TextBox_Created.Visibility = Visibility.Hidden;
+            TextBox_Affiliated.Visibility = Visibility.Hidden;
+            TextBox_PickedUp.Visibility = Visibility.Hidden;
+            TextBox_Delivered.Visibility = Visibility.Hidden;
+            TextBox_DisplayWeight.Visibility = Visibility.Hidden;
+            TextBox_DisplayPriority.Visibility = Visibility.Hidden;
+            TextBox_DisplayStatus.Visibility = Visibility.Hidden;
+            WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            PrioritySelector.ItemsSource = Enum.GetValues(typeof(Priorities));
+            WeightSelector.Text = "Select weight";
+            PrioritySelector.Text = "Select priority";
+            WeightSelector.IsEditable = true;
+            PrioritySelector.IsEditable = true;
+            Update.Visibility = Visibility.Hidden;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                bool flag;
-                int id;
-                BO.Parcel newParcel = new BO.Parcel();
-                flag = int.TryParse(TextBox_SenderID.Text, out id);
-                if (!flag)
-                {
-                    MessageBox.Show("error, sender id was not entered ");
-                    return;
-                }
-                BO.CustomerInParcel send = new CustomerInParcel();
-                send.Id = int.Parse(TextBox_SenderID.Text);
-                send.Name = bl.CustomerDisplay(int.Parse(TextBox_SenderID.Text)).Name;
-                newParcel.Sender = send;
-                flag = int.TryParse(TextBox_TargetID.Text, out id);
-                if (!flag)
-                {
-                    MessageBox.Show("error, target id was not entered ");
-                    return;
-                }
-                BO.CustomerInParcel receive = new CustomerInParcel();
-                receive.Id = int.Parse(TextBox_TargetID.Text);
-                receive.Name = bl.CustomerDisplay(int.Parse(TextBox_TargetID.Text)).Name;
-                newParcel.Target = receive;
-                if (WeightSelector.SelectedItem == null)
-                {
-                    MessageBox.Show("error, weight was not entered ");
-                    return;
-                }
-                newParcel.Weight = (WeightCategories)WeightSelector.SelectedItem;
-                if (PrioritySelector.SelectedItem == null)
-                {
-                    MessageBox.Show("error, priority was not entered ");
-                    return;
-                }
-                newParcel.Priority = (Priorities)PrioritySelector.SelectedItem;
-                bl.AddParcel(newParcel);
-                managerPage.listParcel.Items.Refresh();
-                MessageBox.Show("Added successfully");
-                TextBox_SenderID.IsEnabled = false;
-                TextBox_TargetID.IsEnabled = false;
-                WeightSelector.IsEnabled = false;
-                PrioritySelector.IsEnabled = false;
-                add_button.IsEnabled = false;
-                managerPage.FilterRefreshParcels();
-                Cancel_Add_Button_Click(sender, e);
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
+            
         }
-        public parcelPage(MainWindow main, object selectedItem, ManagerPage manager)
+        public parcelPage(MainWindow main, Parcel parcel, ManagerPage manager)
         {
             InitializeComponent();
             mainWindow = main;
@@ -98,8 +70,14 @@ namespace PL
             WeightSelector.Visibility = Visibility.Hidden;
             PrioritySelector.Visibility = Visibility.Hidden;
             label_SenderID.Content = "Sender:";
-            selected = (ParcelToList)selectedItem;
+            selected = parcel;
             parcelSelected = bl.ParcelDisplay(selected.Id);
+            if (parcelSelected.Affiliation == null || parcelSelected.Delivered != null)
+                Update.Visibility = Visibility.Hidden;
+            else if (parcelSelected.Delivered == null && parcelSelected.PickedUp != null)
+                Update.Content = "Deliver Parcel";
+            else if (parcelSelected.PickedUp == null && parcelSelected.Affiliation != null)
+                Update.Content = "Pick-Up Parcel";
             TextBox_SenderID.Visibility = Visibility.Hidden;
             TextBox_Sender.Text = parcelSelected.Sender.ToString();
             TextBox_Sender.FontSize = 10;
@@ -112,23 +90,30 @@ namespace PL
             TextBox_DroneInParcel.FontSize = 8;
             add_button.Visibility = Visibility.Hidden;
             Cancel_add_button.Visibility = Visibility.Hidden;
+            Listview_Sender.Items.Add(parcelSelected.Sender);
+            Listview_Target.Items.Add(parcelSelected.Target);
             if (parcelSelected.Delivered != null)
             {
                 TextBox_DisplayStatus.Text = "Delivered";
+                Listview_droneinparcel.Visibility = Visibility.Hidden;
             }
             else if (parcelSelected.PickedUp != null)
             {
                 TextBox_DisplayStatus.Text = "Picked Up";
                 TextBox_DroneInParcel.Text = parcelSelected.drone.ToString();
+                Listview_droneinparcel.Items.Add(parcelSelected.drone);
             }
             else if (parcelSelected.Affiliation != null)
             {
                 TextBox_DisplayStatus.Text = "Affiliated";
                 TextBox_DroneInParcel.Text = parcelSelected.drone.ToString();
+                Listview_droneinparcel.Items.Add(parcelSelected.drone);
             }
             else
+            {
                 TextBox_DisplayStatus.Text = "Created";
-
+                Listview_droneinparcel.Visibility = Visibility.Hidden;
+            }
             TextBox_Created.Text = parcelSelected.Creating.ToString();
             if (parcelSelected.Affiliation != null)
                 TextBox_Affiliated.Text = parcelSelected.Affiliation.ToString();
@@ -173,9 +158,6 @@ namespace PL
             mainWindow.Content = page;
         }
 
-       
-
-
         private void SenderID_TextChanged(object sender, TextChangedEventArgs e)
         {
             var bc = new BrushConverter();
@@ -203,9 +185,45 @@ namespace PL
                 TextBox_TargetID.Background = (Brush)bc.ConvertFrom("#FFFA8072");
             }
         }
+
         private void Update_Click(object sender, RoutedEventArgs e)
         {
+            if(parcelSelected.PickedUp == null)
+            {
+                bl.ParcelCollectionByDrone(parcelSelected.drone.DroneId);               
+                MessageBox.Show("Parcel has been picked up");
+                TextBox_DisplayStatus.Text = "Picked-up";
+            }
+            else
+            {
+                bl.DeliveryOfParcelByDrone(parcelSelected.drone.DroneId);
+                MessageBox.Show("Parcel has been delivered");
+                TextBox_DisplayStatus.Text = "Delivered";
+            }
+        }
 
+        private void OpenDroneInParcel(object sender, MouseButtonEventArgs e)
+        {
+            DroneInParcel temp = Listview_droneinparcel.SelectedItem as DroneInParcel; 
+            Drone drone = bl.DroneDisplay(temp.DroneId);
+            DronePage dronePage = new DronePage(drone, managerPage, mainWindow);
+            mainWindow.Content = dronePage;
+        }
+
+        private void OpenSenderInParcel(object sender, MouseButtonEventArgs e)
+        {
+            CustomerInParcel temp = Listview_Sender.SelectedItem as CustomerInParcel;
+            Customer customer = bl.CustomerDisplay(temp.Id);
+            CustomerPage customerPage = new CustomerPage(mainWindow, customer, managerPage);
+            mainWindow.Content = customerPage;
+        }
+
+        private void OpenTargetInParcel(object sender, MouseButtonEventArgs e)
+        {
+            CustomerInParcel temp = Listview_Target.SelectedItem as CustomerInParcel;
+            Customer customer = bl.CustomerDisplay(temp.Id);
+            CustomerPage customerPage = new CustomerPage(mainWindow, customer, managerPage);
+            mainWindow.Content = customerPage;
         }
     }
 }

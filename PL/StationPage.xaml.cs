@@ -43,71 +43,10 @@ namespace PL
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                bool flag;
-                int id;
-                double num;
-                BO.Station newStation = new BO.Station();
-                flag = int.TryParse(TextBox_id.Text, out id);
-                if (!flag)
-                {
-                    MessageBox.Show("Error, station id was not entered ");
-                    return;
-                }
-                newStation.Id = int.Parse(TextBox_id.Text);
-                if (TextBox_name.Text == null)
-                {
-                    MessageBox.Show("Error, station name was not entered ");
-                    return;
-                }
-                newStation.Name = TextBox_name.Text;
-                flag = int.TryParse(TextBoxChargeSlots.Text, out id);
-                if (!flag)
-                {
-                    MessageBox.Show("Error, amount of slots was not entered ");
-                    return;
-                }
-                newStation.AvailableChargeSlots = int.Parse(TextBoxChargeSlots.Text);
-                flag = double.TryParse(TextBoxLattitude.Text, out num);
-                if (!flag)
-                {
-                    MessageBox.Show("Error, Lattitude was not entered ");
-                    return;
-                }
-                Location location = new Location();
-                location.Lattitude = double.Parse(TextBoxLattitude.Text);
-                flag = double.TryParse(TextBoxLongitude.Text, out num);
-                if (!flag)
-                {
-                    MessageBox.Show("Error, Longtitude was not entered ");
-                    return;
-                }
-                location.Lattitude = double.Parse(TextBoxLongitude.Text);
-                newStation.location = location;
-                bl.AddStation(newStation);
-                managerPage.listStaions.Items.Refresh();
-                MessageBox.Show("Added successfully");
-                TextBox_id.IsEnabled = false;
-                TextBox_name.IsEnabled = false;
-                TextBoxChargeSlots.IsEnabled = false;
-                TextBoxLattitude.IsEnabled = false;
-                TextBoxLongitude.IsEnabled = false;
-                add_button.IsEnabled = false;
-                managerPage.FilterRefreshStaions();
-                Cancel_Add_Button_Click(sender, e);
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
+           
         }
         private void Cancel_Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            managerPage.FilterRefreshStaions();
-            ManagerPage page = new ManagerPage(mainWindow);
-            page.TabManager.SelectedIndex = 2;
-            mainWindow.Content = page;
         }
         public StationPage(MainWindow main,object selectedItem, ManagerPage manager)
         {
@@ -147,7 +86,7 @@ namespace PL
         private void idInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             var bc = new BrushConverter();
-            if (TextBox_id.Text != null && TextBox_id.Text != string.Empty && (TextBox_id.Text).All(char.IsDigit))
+            if (TextBox_id.Text != null && TextBox_id.Text != string.Empty && TextBox_id.Text.All(char.IsDigit))
             {
                 TextBox_id.BorderBrush = (Brush)bc.ConvertFrom("#FF99B4D1");
                 TextBox_id.Background = (Brush)bc.ConvertFrom("#FFFFFFFF");
@@ -172,31 +111,18 @@ namespace PL
 
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
-            BO.StationToList updatedStation = new BO.StationToList();
-            try
-            {
-                updatedStation.Name = TextBoxNewName.Text;
-                updatedStation.Id = selected.Id;
-                bl.UpdateStationName(updatedStation.Id, updatedStation.Name);
-                MessageBox.Show("Update successfully");
-                TextBox_name.Text = TextBoxNewName.Text;
-                TextBoxNewName.Visibility = Visibility.Hidden;
-                labelTextBoxNewName.Visibility = Visibility.Hidden;
-                NewName.Visibility = Visibility.Hidden;
-
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
-            managerPage.listStaions.ItemsSource = bl.GetStations();
         }
 
         private void UpdateName_Click_1(object sender, RoutedEventArgs e)
         {
-            labelTextBoxNewName.Visibility = Visibility.Visible;
-            TextBoxNewName.Visibility = Visibility.Visible;
-            NewName.Visibility = Visibility.Visible;
+        }
+
+        private void DoubleClickOpenDrone(object sender, MouseButtonEventArgs e)
+        {
+            DroneInCharging temp = listOfDrones.SelectedItem as DroneInCharging;
+            Drone drone = bl.DroneDisplay(temp.DroneId);
+            DronePage dronePage = new DronePage(drone,managerPage,mainWindow);
+            mainWindow.Content = dronePage;
         }
     }
 }

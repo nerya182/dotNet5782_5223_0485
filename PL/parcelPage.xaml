@@ -9,7 +9,14 @@
       Title="parcelPage">
 
     <Grid x:Name="pw">
-        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="544*"/>
+            <ColumnDefinition Width="14*"/>
+            <ColumnDefinition Width="22*"/>
+            <ColumnDefinition Width="19*"/>
+            <ColumnDefinition Width="202*"/>
+        </Grid.ColumnDefinitions>
+        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill" Grid.ColumnSpan="5"/>
         <Label Name="label_SenderID" Content="Enter sender ID:" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
         <Label Name="label_TargetID" Content="Enter target ID:" HorizontalAlignment="Left" Height="29" Margin="35,106,0,0" VerticalAlignment="Top" Width="199" FontSize="16" FontWeight="Black"/>
         <TextBox x:Name="TextBox_SenderID" TextChanged="SenderID_TextChanged" HorizontalAlignment="Left" Margin="221,85,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  />
@@ -18,12 +25,12 @@
         <ComboBox  Name="WeightSelector" Text="Weight" HorizontalAlignment="Left" Margin="221,149,0,0" VerticalAlignment="Top" Width="120" />
         <Label x:Name="label_priority" Content="Priority:" HorizontalAlignment="Left" Margin="35,176,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Black"/>
         <ComboBox Name="PrioritySelector" Text="Priority" HorizontalAlignment="Left" Margin="221,179,0,0" VerticalAlignment="Top" Width="120" />
-        <Button  Name="add_button" Content="Add" HorizontalAlignment="Left" Margin="221,250,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="AddButton_Click" FontWeight="Black"/>
+        <Button  Name="add_button" Content="Add" HorizontalAlignment="Left" Margin="221,240,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="AddButton_Click" FontWeight="Black"/>
         <Button  x:Name="Cancel_add_button" Content="Cancel Add" HorizontalAlignment="Left" Margin="221,290,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="Cancel_Add_Button_Click" FontWeight="Black"/>
-        <TextBox   x:Name="TextBox_DisplayWeight" HorizontalAlignment="Left" Margin="221,149,0,0" VerticalAlignment="Top" Width="120" Height="17.96"/>
-        <TextBox   x:Name="TextBox_DisplayPriority" HorizontalAlignment="Left" Margin="221,179,0,0" VerticalAlignment="Top" Width="120" Height="17.96"/>
-        <Label     x:Name="label_status" Content="Status:" HorizontalAlignment="Left" Margin="35,209,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Black"/>
-        <TextBox   x:Name="TextBox_DisplayStatus" HorizontalAlignment="Left" Margin="221,209,0,0" VerticalAlignment="Top" Width="120" Height="17.96"/>
+        <TextBox   x:Name="TextBox_DisplayWeight" HorizontalAlignment="Left" Margin="221,149,0,0" VerticalAlignment="Top" Width="120" Height="18"/>
+        <TextBox   x:Name="TextBox_DisplayPriority" HorizontalAlignment="Left" Margin="221,179,0,0" VerticalAlignment="Top" Width="120" Height="18"/>
+        <Label     x:Name="label_status" Content="Status:" HorizontalAlignment="Left" Margin="35,0,0,0" VerticalAlignment="Center" FontSize="16" FontWeight="Black"/>
+        <TextBox   x:Name="TextBox_DisplayStatus" HorizontalAlignment="Left" Margin="221,209,0,0" VerticalAlignment="Top" Width="120" Height="18"/>
         <TextBox x:Name="TextBox_Sender"  HorizontalAlignment="Left" Margin="221,75,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  />
         <TextBox x:Name="TextBox_Target"  HorizontalAlignment="Left" Margin="221,114,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label   x:Name="label_DroneInParcel" Content="Drone In Parcel:" HorizontalAlignment="Left" Height="38" Margin="35,26,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
@@ -32,10 +39,38 @@
         <Label   x:Name="label_affiliated" Content="Affiliation Time:" HorizontalAlignment="Left" Height="38" Margin="35,270,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
         <Label   x:Name="label_pickedUp" Content="Picked-Up Time:" HorizontalAlignment="Left" Height="38" Margin="35,300,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
         <Label   x:Name="label_delivered" Content="Delivered Time:" HorizontalAlignment="Left" Height="38" Margin="35,330,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
-        <TextBox x:Name="TextBox_Created" HorizontalAlignment="Left" Margin="221,245,0,0" VerticalAlignment="Top" Width="120" Height="17.96"/>
-        <TextBox x:Name="TextBox_Affiliated" HorizontalAlignment="Left" Margin="221,275,0,0" VerticalAlignment="Top" Width="120" Height="17.96"/>
-        <TextBox x:Name="TextBox_PickedUp" HorizontalAlignment="Left" Margin="221,305,0,0" VerticalAlignment="Top" Width="120" Height="17.96"/>
-        <TextBox x:Name="TextBox_Delivered" HorizontalAlignment="Left" Margin="221,335,0,0" VerticalAlignment="Top" Width="120" Height="17.96"/>
-        <Button  x:Name ="Update" Content="Update" HorizontalAlignment="Left" Margin="561,158,0,0" VerticalAlignment="Top" FontWeight="Bold" Click="Update_Click"/>
-    </Grid> 
+        <TextBox x:Name="TextBox_Created" HorizontalAlignment="Left" Margin="221,245,0,0" VerticalAlignment="Top" Width="120" Height="18"/>
+        <TextBox x:Name="TextBox_Affiliated" HorizontalAlignment="Left" Margin="221,275,0,0" VerticalAlignment="Top" Width="120" Height="18"/>
+        <TextBox x:Name="TextBox_PickedUp" HorizontalAlignment="Left" Margin="221,305,0,0" VerticalAlignment="Top" Width="120" Height="18"/>
+        <TextBox x:Name="TextBox_Delivered" HorizontalAlignment="Left" Margin="221,335,0,0" VerticalAlignment="Top" Width="120" Height="18"/>
+        <Button  HorizontalAlignment="Left" Margin="103,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Cancel_Add_Button_Click" Grid.Column="4">
+            <Image Source="/back-button.png" />
+        </Button>
+        <Button x:Name="Update" Content="updateParcel" HorizontalAlignment="Left" Margin="28,154,0,0" VerticalAlignment="Top" Click="Update_Click" Grid.Column="4"/>
+        <ListView x:Name="Listview_droneinparcel"   Width="180" Height="90" Margin="408,24,10,336" Grid.ColumnSpan="4" MouseDoubleClick="OpenDroneInParcel">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                    <GridViewColumn DisplayMemberBinding="{Binding DroneId}" x:Name="Id_charge" Header="Id" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Battery}" x:Name="Battery_charge" Header="Battery" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding location}" x:Name="location" Header="location" Width="auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="Listview_Sender" Margin="409,137,9,223" Height="90" Width="180" Grid.ColumnSpan="4" MouseDoubleClick="OpenSenderInParcel">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="SenderId" Header="Id" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" x:Name="SenderName" Header="Name" Width="auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="Listview_Target" Margin="408,262,10,98" Height="90" Width="180" Grid.ColumnSpan="4" MouseDoubleClick="OpenTargetInParcel">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="TargetId" Header="Id" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" x:Name="TargetName" Header="Name" Width="auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
 </Page>
