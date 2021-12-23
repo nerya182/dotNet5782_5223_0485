@@ -85,7 +85,7 @@ namespace PL
         private void idInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             var bc = new BrushConverter();
-            if (TextBox_id.Text != null && TextBox_id.Text != string.Empty && (TextBox_id.Text).All(char.IsDigit))
+            if (TextBox_id.Text != null && TextBox_id.Text != string.Empty && TextBox_id.Text.All(char.IsDigit))
             {
                 TextBox_id.BorderBrush = (Brush)bc.ConvertFrom("#FF99B4D1");
                 TextBox_id.Background = (Brush)bc.ConvertFrom("#FFFFFFFF");

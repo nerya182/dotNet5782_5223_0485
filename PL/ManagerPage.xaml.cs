@@ -37,7 +37,10 @@ namespace PL
        
         private void DoubleClickUpdateDrone(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            
+            DroneToList temp = listDrones.SelectedItem as DroneToList;
+            Drone drone = bl.DroneDisplay(temp.Id);
+            DronePage dronePage = new DronePage(drone, this, mainWindow);
+            mainWindow.Content = dronePage;
         }
 
         private void display_Click(object sender, RoutedEventArgs e)
@@ -101,12 +104,18 @@ namespace PL
 
         private void DoubleClickUpdateCustomer(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-           
+            CustomerToList temp = listCustomers.SelectedItem as CustomerToList;
+            Customer customer = bl.CustomerDisplay(temp.Id);
+            CustomerPage dronePage = new CustomerPage(mainWindow, customer, this);
+            mainWindow.Content = dronePage;
         }
 
         private void DoubleClickUpdateParcel(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-       
+            ParcelToList temp = listParcel.SelectedItem as ParcelToList;
+            Parcel parcel = bl.ParcelDisplay(temp.Id);
+            parcelPage parcelPage = new parcelPage(mainWindow, parcel, this);
+            mainWindow.Content = parcelPage;
         }
 
       

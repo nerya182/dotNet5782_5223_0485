@@ -1,5 +1,6 @@
 ﻿using BO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace PL
     public partial class DronePage : Page
     {
         BlApi.IBL bl;
-        BO.DroneToList selected = new BO.DroneToList();
+        BO.Drone selected = new BO.Drone();
         BO.Drone droneSelected = new BO.Drone();
        
         /// <summary>
@@ -80,7 +81,7 @@ namespace PL
         /// <param name="blw">gives access to the BL functions</param>
         /// <param name="selectedItem"></param>
         /// <param name="w">gives access to the previous window</param>
-        public DronePage(object selectedItem)
+        public DronePage(Drone drone, ManagerPage manager, MainWindow main)
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
@@ -98,15 +99,16 @@ namespace PL
             TextBoxNewModel.Visibility = Visibility.Hidden;
             labelTextBoxNewModel.Visibility = Visibility.Hidden;
             NewModel.Visibility = Visibility.Hidden;
-            selected = (DroneToList)selectedItem;
+            selected = drone;           
             droneSelected = bl.DroneDisplay(selected.Id);
-            TextBox_id.Text = droneSelected.Id.ToString();
-            WeightTextBox.Text = droneSelected.MaxWeight.ToString();
-            TextBox_model.Text = droneSelected.Model;
-            TextBoxLattitude.Text = droneSelected.Location.ToString();
-            TextBoxDelivery.Text = droneSelected.Status.ToString();
-            TextBoxLongitude.Text = droneSelected.ParcelTransfer.ToString();
-            TextBoxParcelTransfer.Text = droneSelected.Battery.ToString();
+            TextBox_id.Text = selected.Id.ToString();
+            WeightTextBox.Text = selected.MaxWeight.ToString();
+            TextBox_model.Text = selected.Model;
+            TextBoxLattitude.Text = selected.Location.ToString();
+            TextBoxDelivery.Text = selected.Status.ToString();
+            TextBoxLongitude.Visibility = Visibility.Hidden;
+            ListParcelTransfer.Items.Add(droneSelected.ParcelTransfer);
+            TextBoxParcelTransfer.Text = selected.Battery.ToString();
             TextBoxLongitude.Width = 300;
             TextBoxLongitude.Height = 100;
             TextBox_id.IsEnabled = false;
@@ -134,7 +136,7 @@ namespace PL
                     break;
                 case DroneStatuses.Delivery:
                     changeModelButton.Visibility = Visibility.Visible;
-                    Parcel parcel = bl.GetListParcel().First(i => i.Id == selected.ParcelBeingPassedId);
+                    Parcel parcel = bl.GetListParcel().First(i => i.Id == bl.MakeDroneToList(selected).ParcelBeingPassedId);
                     if (parcel.PickedUp == null)
                     {
                         sendOrReleaseButton.Content = "Package collection";
@@ -216,6 +218,14 @@ namespace PL
         private void sendOrRelease_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void OpenParcelTransfer(object sender, MouseButtonEventArgs e)
+        {
+            ParcelTransfer temp = ListParcelTransfer.SelectedItem as ParcelTransfer;
+            Parcel parcel = bl.ParcelDisplay(temp.Id);
+            parcelPage parcelPage = new parcelPage(mainWindow, parcel, managerPage);
+            mainWindow.Content = parcelPage;
         }
     }
 }

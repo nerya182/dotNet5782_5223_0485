@@ -212,7 +212,7 @@ namespace BL
         {
             if (parcel == null) { throw new IllegalActionException("Please click once on a parcel and then click delete"); }
             Parcel delParcel = ParcelDisplay(parcel.Id);
-            if (delParcel.Affiliation == null || delParcel.Delivered != null)
+            if (delParcel.Affiliation == null)
             {
                 dal.DeleteParcel(delParcel.Id);
             }

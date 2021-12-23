@@ -25,7 +25,7 @@ namespace PL
         BO.CustomerToList selected = new BO.CustomerToList();
         BO.Customer customerSelected = new BO.Customer();
 
-        public CustomerPage(object selectedItem)
+        public CustomerPage(MainWindow main, Customer customer, ManagerPage manager)
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
@@ -33,7 +33,7 @@ namespace PL
             label_name.Content = "name";
             label_phon.Content = "phone number";
             label_latitude.Content = "Location";
-            selected = (CustomerToList)selectedItem;
+            selected = customer;
             customerSelected = bl.CustomerDisplay(selected.Id);
             TextBox_id.Text = customerSelected.Id.ToString();
             TextBox_name.Text = customerSelected.Name.ToString();
@@ -54,7 +54,7 @@ namespace PL
             TextBox_longitude.IsEnabled = false;
             add_button.Visibility = Visibility.Hidden;
         }
-        public CustomerPage()
+        public CustomerPage(ManagerPage manager, MainWindow main)
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();

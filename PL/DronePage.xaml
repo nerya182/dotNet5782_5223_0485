@@ -34,8 +34,23 @@
         <Button  x:Name="changeModelButton" Content="set model" HorizontalAlignment="Left" Margin="367,89,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="ModelButton_Click"/>
         <Button  x:Name="sendOrReleaseButton" Content="charge" HorizontalAlignment="Left" Margin="367,125,0,0" VerticalAlignment="Top"  FontSize="14" FontWeight="Black" Click="sendOrRelease_Click"/>
         <Button  x:Name="delivery" Content="AllDelivery" HorizontalAlignment="Left" Margin="367,159,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="allDeliveryButtonButton_Click"/>
-        <Button x:Name="cancelButton" HorizontalAlignment="Left" Margin="703,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Cancel_Add_Button_Click">
+        <Button  HorizontalAlignment="Left" Margin="703,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Back_Button_Click">
             <Image Source="/back-button.png" />
         </Button>
+        <ListView Name="ListParcelTransfer" HorizontalAlignment="Left" Margin="208,290,0,30" Height="130" Width="500" MouseDoubleClick="OpenParcelTransfer">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" x:Name="Weight" Header="Weight" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Priority}" x:Name="Priority" Header="Priority" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding ParcelSituation}" x:Name="ParcelSituation" Header="ParcelSituation" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding collection}" x:Name="collection" Header="collection" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding SupplyPoint}" x:Name="SupplyPoint" Header="SupplyPoint" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Sender}" x:Name="Sender" Header="Sender" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Receiver}" x:Name="Receiver" Header="Receiver" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding distanceTransportation}" x:Name="distanceTransportation" Header="distanceTransportation" Width="auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>
