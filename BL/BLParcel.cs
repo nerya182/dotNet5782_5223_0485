@@ -221,6 +221,19 @@ namespace BL
                 throw new IllegalActionException("The package could not be deleted because it is in delivery mode");
             }
         }
+        public IEnumerable<ParcelToList> GroupingSenderName()
+        {
+            List<ParcelToList> listParcel = new List<ParcelToList>();
+            var groups = GetParcels().GroupBy(p=>p.SenderName);
+            foreach (var group in groups)
+            {
+                foreach (BO.ParcelToList item in group)
+                {
+                    listStation.Add(item);
+                }
+            }
+            return (IEnumerable<ParcelToList>)listStation;
+        }
     }
 }
 

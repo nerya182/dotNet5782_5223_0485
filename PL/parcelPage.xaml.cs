@@ -22,78 +22,22 @@ namespace PL
     public partial class parcelPage : Page
     {
         BlApi.IBL bl;
-        ManagerPage managerPage;
-        MainWindow mainWindow;
+
         BO.ParcelToList selected = new BO.ParcelToList();
         BO.Parcel parcelSelected = new BO.Parcel();
-        public parcelPage(ManagerPage manager, MainWindow main)
+        public parcelPage()
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
-            mainWindow = main;
-            managerPage = manager;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                bool flag;
-                int id;
-                BO.Parcel newParcel = new BO.Parcel();
-                flag = int.TryParse(TextBox_SenderID.Text, out id);
-                if (!flag)
-                {
-                    MessageBox.Show("error, sender id was not entered ");
-                    return;
-                }
-                BO.CustomerInParcel send = new CustomerInParcel();
-                send.Id = int.Parse(TextBox_SenderID.Text);
-                send.Name = bl.CustomerDisplay(int.Parse(TextBox_SenderID.Text)).Name;
-                newParcel.Sender = send;
-                flag = int.TryParse(TextBox_TargetID.Text, out id);
-                if (!flag)
-                {
-                    MessageBox.Show("error, target id was not entered ");
-                    return;
-                }
-                BO.CustomerInParcel receive = new CustomerInParcel();
-                receive.Id = int.Parse(TextBox_TargetID.Text);
-                receive.Name = bl.CustomerDisplay(int.Parse(TextBox_TargetID.Text)).Name;
-                newParcel.Target = receive;
-                if (WeightSelector.SelectedItem == null)
-                {
-                    MessageBox.Show("error, weight was not entered ");
-                    return;
-                }
-                newParcel.Weight = (WeightCategories)WeightSelector.SelectedItem;
-                if (PrioritySelector.SelectedItem == null)
-                {
-                    MessageBox.Show("error, priority was not entered ");
-                    return;
-                }
-                newParcel.Priority = (Priorities)PrioritySelector.SelectedItem;
-                bl.AddParcel(newParcel);
-                managerPage.listParcel.Items.Refresh();
-                MessageBox.Show("Added successfully");
-                TextBox_SenderID.IsEnabled = false;
-                TextBox_TargetID.IsEnabled = false;
-                WeightSelector.IsEnabled = false;
-                PrioritySelector.IsEnabled = false;
-                add_button.IsEnabled = false;
-                managerPage.FilterRefreshParcels();
-                Cancel_Add_Button_Click(sender, e);
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
+           
         }
-        public parcelPage(MainWindow main, object selectedItem, ManagerPage manager)
+        public parcelPage(object selectedItem)
         {
             InitializeComponent();
-            mainWindow = main;
-            managerPage = manager;
             bl = BlApi.BlFactory.GetBl();
             WeightSelector.Visibility = Visibility.Hidden;
             PrioritySelector.Visibility = Visibility.Hidden;
@@ -168,9 +112,9 @@ namespace PL
 
         private void Cancel_Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            ManagerPage page = new ManagerPage(mainWindow);
+            ManagerPage page = new ManagerPage();
             page.TabManager.SelectedIndex = 1;
-            mainWindow.Content = page;
+           
         }
 
        
@@ -203,9 +147,6 @@ namespace PL
                 TextBox_TargetID.Background = (Brush)bc.ConvertFrom("#FFFA8072");
             }
         }
-        private void Update_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
     }
 }

@@ -9,6 +9,7 @@
       Title="StationPage">
 
     <Grid x:Name="ww">
+        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill"/>
         <Label Name="label_id" Content="Enter  ID number:" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
         <Label Name="label_name" Content="Enter the name" HorizontalAlignment="Left" Height="29" Margin="34,106,0,0" VerticalAlignment="Top" Width="199" FontSize="16" FontWeight="Black"/>
         <TextBox x:Name="TextBox_id" TextChanged="idInput_TextChanged" HorizontalAlignment="Left" Margin="221,85,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  />

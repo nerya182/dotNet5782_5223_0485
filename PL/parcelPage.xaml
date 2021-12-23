@@ -36,6 +36,6 @@
         <TextBox x:Name="TextBox_Affiliated" HorizontalAlignment="Left" Margin="221,275,0,0" VerticalAlignment="Top" Width="120" Height="17.96"/>
         <TextBox x:Name="TextBox_PickedUp" HorizontalAlignment="Left" Margin="221,305,0,0" VerticalAlignment="Top" Width="120" Height="17.96"/>
         <TextBox x:Name="TextBox_Delivered" HorizontalAlignment="Left" Margin="221,335,0,0" VerticalAlignment="Top" Width="120" Height="17.96"/>
-        <Button  x:Name ="Update" Content="Update" HorizontalAlignment="Left" Margin="561,158,0,0" VerticalAlignment="Top" FontWeight="Bold" Click="Update_Click"/>
+        <Button  x:Name ="Update" Content="Update" HorizontalAlignment="Left" Margin="561,158,0,0" VerticalAlignment="Top" FontWeight="Bold" />
     </Grid> 
 </Page>

@@ -32,9 +32,9 @@
         <TextBox x:Name="WeightTextBox" HorizontalAlignment="Left" Margin="222,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="TextBoxParcelTransfer" HorizontalAlignment="Left" Margin="224,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button  x:Name="changeModelButton" Content="set model" HorizontalAlignment="Left" Margin="367,89,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="ModelButton_Click"/>
-        <Button  x:Name="sendOrReleaseButton" Content="charge" HorizontalAlignment="Left" Margin="367,125,0,0" VerticalAlignment="Top"  FontSize="14" FontWeight="Black" Click="sendOrReleaseButtonButton_Click"/>
+        <Button  x:Name="sendOrReleaseButton" Content="charge" HorizontalAlignment="Left" Margin="367,125,0,0" VerticalAlignment="Top"  FontSize="14" FontWeight="Black" Click="sendOrRelease_Click"/>
         <Button  x:Name="delivery" Content="AllDelivery" HorizontalAlignment="Left" Margin="367,159,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="allDeliveryButtonButton_Click"/>
-        <Button  HorizontalAlignment="Left" Margin="703,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Cancel_Add_Button_Click">
+        <Button x:Name="cancelButton" HorizontalAlignment="Left" Margin="703,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Cancel_Add_Button_Click">
             <Image Source="/back-button.png" />
         </Button>
     </Grid>

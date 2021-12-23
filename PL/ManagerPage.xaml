@@ -59,7 +59,7 @@
             </TabItem>
             <TabItem Header="list customers">
                 <Grid Background="White" Margin="0,0,2,0" Height="auto">
-                    <ListView Name="listCustomers" MouseDoubleClick="DoubleClickUpdateCustomer" Margin="0,0,0,0" HorizontalAlignment="Left" Width="auto" >
+                    <ListView Name="listCustomers" MouseDoubleClick="DoubleClickUpdateCustomer" Margin="0,0,0,0" HorizontalAlignment="Left" Width="auto"  ItemsSource="{Binding}" >
                         <ListView.View>
                             <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
                                 <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id_customer" Header="Id" Width="auto"/>
@@ -94,15 +94,15 @@
             </TabControl.Resources>
             <TabItem Header="Options" Margin="0,-3,-2,-1">
                 <Grid Margin="0,0,0,0">
-                    <Button x:Name="ADD" Content="ADD" Click="ADD_Click" Width="auto" Height="auto" Margin="-3,68,3,264"/>
+                    <Button x:Name="ADD" Content="ADD" Click="ADD_Click" Width="auto" Height="auto" Margin="-3,66,3,266"/>
                     <Button x:Name="deleteButton" Content="delete" Click="delete_Click" Width="auto" Height="auto" Margin="0,132,0,200"/>
-                    <Button x:Name="ADD_Copy" Content="ADD" Click="ADD_Click" Width="auto" Height="auto" Margin="-3,68,3,264"/>
+                   
                 </Grid>
             </TabItem>
             <TabItem Header="Display" Margin="0,-2,-2,0" Height="44" VerticalAlignment="Top" >
                 <Grid Margin="0,0,0,0">
-                    <Button x:Name="Grouping" Content="Grouping" Click="Grouping_Click" Width="auto" Height="auto" Margin="-3,36,3,296"/>
-                    <Button x:Name="Grouping2" Content="Grouping" Click="Grouping_Seconde_Click" Width="auto" Height="auto" Margin="-3,100,3,232"/>
+                    <Button x:Name="Grouping_first" Content="Grouping" Click="Grouping_first_Click" Width="auto" Height="auto" Margin="-3,36,3,296"/>
+                    <Button x:Name="Grouping_seconde" Content="Grouping" Click="Grouping_Seconde_Click" Width="auto" Height="auto" Margin="-3,100,3,232"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Graphs" Height="47" Margin="0,-2,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" >

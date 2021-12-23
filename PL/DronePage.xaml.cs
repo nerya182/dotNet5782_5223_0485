@@ -25,20 +25,16 @@ namespace PL
         BlApi.IBL bl;
         BO.DroneToList selected = new BO.DroneToList();
         BO.Drone droneSelected = new BO.Drone();
-        MainWindow mainWindow;
-        ManagerPage managerPage;
-
+       
         /// <summary>
         /// constructor for add drone  window
         /// </summary>
         /// <param name="blw"> gives access to the BL functions</param>
         /// <param name="w"> gives access to the previous window</param>
-        public DronePage(ManagerPage manager,MainWindow main)
+        public DronePage()
         {
             InitializeComponent();
-            bl = BlApi.BlFactory.GetBl();
-            mainWindow = main;
-            managerPage = manager;
+            bl = BlApi.BlFactory.GetBl();  
             TextBoxParcelTransfer.Visibility = Visibility.Hidden;
             WeightTextBox.Visibility = Visibility.Hidden;
             label_id.Content = "Enter ID Number:";
@@ -68,54 +64,6 @@ namespace PL
         /// <param name="e"></param>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                bool flag;
-                int id;
-                int chargingStationId = 0;
-                BO.DroneToList newDrone = new BO.DroneToList();
-                flag = int.TryParse(TextBox_id.Text, out id);
-                if (!flag)
-                {
-                    MessageBox.Show("error ,drone id was not entered ");
-                    return;
-                }
-                newDrone.Id = int.Parse(TextBox_id.Text);
-                if (TextBox_model.Text == null)
-                {
-                    MessageBox.Show("error ,model drone was not entered ");
-                    return;
-                }
-                newDrone.Model = TextBox_model.Text;
-                if (WeightSelector.SelectedItem == null)
-                {
-                    MessageBox.Show("error ,weight was not entered ");
-                    return;
-                }
-                newDrone.MaxWeight = (WeightCategories)WeightSelector.SelectedItem;
-                if (chargeStationId.SelectedItem == null)
-                {
-                    MessageBox.Show("error ,charge station id was not entered ");
-                    return;
-                }
-                chargingStationId = (int)chargeStationId.SelectedItem;
-                TextBoxLattitude.Text = bl.BaseStationDisplay(chargingStationId).location.Lattitude.ToString();
-                TextBoxLongitude.Text = bl.BaseStationDisplay(chargingStationId).location.Longitude.ToString();
-                bl.AddDrone(newDrone, chargingStationId);
-                managerPage.listDrones.Items.Refresh();
-                MessageBox.Show("Added successfully");
-                TextBox_id.IsEnabled = false;
-                chargeStationId.IsEnabled = false;
-                TextBox_model.IsEnabled = false;
-                WeightSelector.IsEnabled = false;
-                add_button.IsEnabled = false;
-                managerPage.FilterRefreshDrones();
-                Cancel_Add_Button_Click(sender, e);
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
         }
         /// <summary>
         /// user would like to cancel the add
@@ -124,10 +72,7 @@ namespace PL
         /// <param name="e"></param>
         private void Cancel_Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            ManagerPage page = new ManagerPage(mainWindow);
-            mainWindow.Content = page;
-            page.TabManager.SelectedIndex = 0;
-            managerPage.TabManager.SelectedIndex = 0;
+
         }
         /// <summary>
         /// constructor for display drone window
@@ -135,11 +80,9 @@ namespace PL
         /// <param name="blw">gives access to the BL functions</param>
         /// <param name="selectedItem"></param>
         /// <param name="w">gives access to the previous window</param>
-        public DronePage(object selectedItem, ManagerPage manager, MainWindow main)
+        public DronePage(object selectedItem)
         {
             InitializeComponent();
-            mainWindow = main;
-            managerPage = manager;
             bl = BlApi.BlFactory.GetBl();
             label_id.Content = "ID Number:";
             label_model.Content = "Model:";
@@ -215,22 +158,7 @@ namespace PL
         /// <param name="e"></param>
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
-            BO.DroneToList updateDrone = selected;
-            try
-            {
-                updateDrone.Model = TextBoxNewModel.Text;
-                bl.UpdateDrone(updateDrone);
-                MessageBox.Show("Update successfully");
-                TextBox_model.Text = TextBoxNewModel.Text;
-                TextBoxNewModel.Visibility = Visibility.Hidden;
-                labelTextBoxNewModel.Visibility = Visibility.Hidden;
-                NewModel.Visibility = Visibility.Hidden;
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
-            managerPage.listDrones.ItemsSource = bl.GetListDrone();
+            
         }
         /// <summary>
         /// closing the current window
@@ -276,131 +204,19 @@ namespace PL
 
         private void ModelButton_Click(object sender, RoutedEventArgs e)
         {
-            TextBoxNewModel.Visibility = Visibility.Visible;
-            labelTextBoxNewModel.Visibility = Visibility.Visible;
-            NewModel.Visibility = Visibility.Visible;
-        }
-
-        private void sendOrReleaseButtonButton_Click(object sender, RoutedEventArgs e)
-        {
-            TextBoxNewModel.Visibility = Visibility.Hidden;
-            labelTextBoxNewModel.Visibility = Visibility.Hidden;
-            NewModel.Visibility = Visibility.Hidden;
-            string str = (string)sendOrReleaseButton.Content;
-            int droneId;
-            if (str == "Sending to charging")
-            {
-                try
-                {
-                    droneId = selected.Id;
-                    bl.SendingDroneForCharging(droneId);
-                    TextBoxDelivery.Text = DroneStatuses.Charging.ToString();
-                    TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
-                    MessageBox.Show("Update successfully");
-                    sendOrReleaseButton.Content = "Release drone";
-                    sendOrReleaseButton.Visibility = Visibility.Visible;
-                    delivery.Visibility = Visibility.Hidden;
-
-                }
-                catch (Exception exception)
-                {
-                    MessageBox.Show(exception.Message);
-                }
-            }
-            if (str == "Release drone")
-            {
-                try
-                {
-                    droneId = selected.Id;
-                    bl.ReleaseDroneFromCharging(droneId);
-                    TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
-                    TextBoxDelivery.Text = DroneStatuses.Available.ToString();
-                    TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
-                    MessageBox.Show("Update successfully");
-                    sendOrReleaseButton.Content = "Sending to charging";
-                    sendOrReleaseButton.Visibility = Visibility.Visible;
-                    delivery.Content = "Affiliation";
-                    delivery.Visibility = Visibility.Visible;
-                }
-                catch (Exception exception)
-                {
-                    MessageBox.Show(exception.Message);
-                }
-            }
-            if (str == "Package collection")
-            {
-                try
-                {
-                    droneId = selected.Id;
-                    bl.ParcelCollectionByDrone(droneId);
-                    TextBoxLongitude.Text = bl.DroneDisplay(droneId).ParcelTransfer.ToString();
-                    TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
-                    TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
-                    MessageBox.Show("Update successfully");
-                    sendOrReleaseButton.Content = "Package delivery";
-                    sendOrReleaseButton.Visibility = Visibility.Visible;
-                }
-                catch (Exception exception)
-                {
-                    MessageBox.Show(exception.Message);
-                }
-            }
-            else if (str == "Package delivery")
-            {
-                try
-                {
-                    droneId = selected.Id;
-                    bl.DeliveryOfParcelByDrone(droneId);
-                    TextBoxLongitude.Text = bl.DroneDisplay(droneId).ParcelTransfer.ToString();
-                    TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
-                    TextBoxDelivery.Text = DroneStatuses.Available.ToString();
-                    TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
-                    MessageBox.Show("Update successfully");
-                    sendOrReleaseButton.Content = "Sending to charging";
-                    sendOrReleaseButton.Visibility = Visibility.Visible;
-                    delivery.Content = "Affiliation";
-                    delivery.Visibility = Visibility.Visible;
-
-                }
-                catch (Exception exception)
-                {
-                    MessageBox.Show(exception.Message);
-                }
-            }
-            managerPage.listDrones.ItemsSource = bl.GetListDrone();
-        }
-
-        private void allDeliveryButtonButton_Click(object sender, RoutedEventArgs e)
-        {
-            int droneId;
-            TextBoxNewModel.Visibility = Visibility.Hidden;
-            labelTextBoxNewModel.Visibility = Visibility.Hidden;
-            NewModel.Visibility = Visibility.Hidden;
-            string str = (string)delivery.Content;
-            if (str == "Affiliation")
-            {
-                try
-                {
-                    droneId = selected.Id;
-                    bl.AffiliateParcelToDrone(droneId);
-                    TextBoxLongitude.Text = bl.DroneDisplay(droneId).ParcelTransfer.ToString();
-                    TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
-                    TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
-                    TextBoxDelivery.Text = DroneStatuses.Delivery.ToString();
-                    MessageBox.Show("Update successfully");
-                    sendOrReleaseButton.Content = "Package collection";
-                    sendOrReleaseButton.Visibility = Visibility.Visible;
-                    delivery.Visibility = Visibility.Hidden;
-                }
-                catch (Exception exception)
-                {
-                    MessageBox.Show(exception.Message);
-                }
-            }
-            managerPage.listDrones.ItemsSource = bl.GetListDrone();
         }
 
        
+
+        private void allDeliveryButtonButton_Click(object sender, RoutedEventArgs e)
+        {
+    
+        }
+
+        private void sendOrRelease_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 

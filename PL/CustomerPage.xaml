@@ -53,7 +53,7 @@
         </ListView>
         <Label Name="lable_parcelsto" Content="parcels to customer" FontSize="16" FontWeight="Black" HorizontalAlignment="Left" Margin="520,206,0,0" VerticalAlignment="Top" Width="auto"/>
         <Label Name="lable_parcelsfo" Content="parcels frome customer" FontSize="16" FontWeight="Black" HorizontalAlignment="Left" Margin="100,206,0,0" VerticalAlignment="Top" Width="auto"/>
-        <Button  HorizontalAlignment="Left" Margin="703,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Cancel_Add_Button_Click">
+        <Button Name="close_customer" HorizontalAlignment="Left" Margin="703,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Cancel_Add_Button_Click">
             <Image Source="/back-button.png" />
         </Button>
 

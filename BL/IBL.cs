@@ -176,14 +176,18 @@ namespace BlApi
         /// <param name="name"></param>
         void UpdateStationName(int id, string name);
 
-        public IEnumerable<ParcelToList> GetParcelByStatus(IEnumerable itemsSource, ParcelStatus selectedStatus);
+         IEnumerable<ParcelToList> GetParcelByStatus(IEnumerable itemsSource, ParcelStatus selectedStatus);
 
-        public IEnumerable<ParcelToList> GetParcelByWeight(IEnumerable itemsSource, WeightCategories selectedWeight);
+         IEnumerable<ParcelToList> GetParcelByWeight(IEnumerable itemsSource, WeightCategories selectedWeight);
 
-        public IEnumerable<ParcelToList> GetParcelByPriority(IEnumerable itemsSource, Priorities selectedPriority);
+         IEnumerable<ParcelToList> GetParcelByPriority(IEnumerable itemsSource, Priorities selectedPriority);
 
-        public void DeleteParcel(ParcelToList parcel);
-        public void DeleteCustomer(CustomerToList customer);
-        public void DeleteStation(StationToList station);
+         void DeleteParcel(ParcelToList parcel);
+         void DeleteCustomer(CustomerToList customer);
+         void DeleteStation(StationToList station);
+         IEnumerable<DroneToList> GroupingStatus();
+         IEnumerable<DroneToList> GroupingWeight();
+        IEnumerable<StationToList> GroupingAvailableChargeSlots();
+        IEnumerable<StationToList> GroupingChargeSlots();
     }
 }

@@ -197,5 +197,31 @@ namespace BL
                 throw new IllegalActionException("It is not possible to delete the station because there are drones in charge");
             }
         }
+        public IEnumerable<StationToList> GroupingAvailableChargeSlots()
+        {
+            List<StationToList> listStation = new List<StationToList>();
+            var groups = GetStations().GroupBy(s=>s.AvailableChargeSlots>0);
+            foreach (var group in groups)
+            {
+                foreach (BO.StationToList item in group)
+                {
+                    listStation.Add(item);
+                }
+            }
+            return (IEnumerable<StationToList>)listStation;
+        }
+        public IEnumerable<StationToList> GroupingChargeSlots()
+        {
+            List<StationToList> listStation = new List<StationToList>();
+            var groups = GetStations().GroupBy(s => s.AvailableChargeSlots);
+            foreach (var group in groups)
+            {
+                foreach (BO.StationToList item in group)
+                {
+                    listStation.Add(item);
+                }
+            }
+            return (IEnumerable<StationToList>)listStation;
+        }
     }
 }
