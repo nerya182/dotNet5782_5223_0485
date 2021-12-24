@@ -123,10 +123,7 @@ namespace PL
         }
         private void DoubleClickOpenDrone(object sender, MouseButtonEventArgs e)
         {
-            DroneInCharging temp = listOfDrones.SelectedItem as DroneInCharging;
-            Drone drone = bl.DroneDisplay(temp.DroneId);
-            DronePage dronePage = new DronePage(drone, managerPage, mainWindow);
-            mainWindow.Content = dronePage;
+            
         }
     }
 }

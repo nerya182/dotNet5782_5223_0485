@@ -22,25 +22,40 @@ namespace PL
     /// </summary>
     public partial class ManagerPage : Page
     {
-        BlApi.IBL bl; 
+        BlApi.IBL bl;
+        public ObservableCollection<DroneToList> droneToListObservabl;
+        public ObservableCollection<CustomerToList> customerToListObservabl;
+        public ObservableCollection<ParcelToList> parcelToListObservabl;
+        public ObservableCollection<StationToList> stationToListObservabl;
+
         public ManagerPage()
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
-            listDrones.ItemsSource = bl.GetListDrone();
-            listCustomers.DataContext = bl.GetListCustomer();
-            listStaions.ItemsSource = bl.GetStations();
-            listParcel.ItemsSource = bl.GetParcels();
-           
+            listStaions.ItemsSource= bl.GetStations();
+            droneToListObservabl = new ObservableCollection<DroneToList>();
+            customerToListObservabl = new ObservableCollection<CustomerToList>();
+            parcelToListObservabl = new ObservableCollection<ParcelToList>();
+            stationToListObservabl = new ObservableCollection<StationToList>();
+            List<StationToList> stationToLists = (List<StationToList>)bl.GetStations();
+            foreach (var item in stationToLists)
+            {
+                stationToListObservabl.Add(item);
+            }
+            //stationToListObservabl.CollectionChanged += StationToListObservabl_CollectionChanged;
+            listStaions.DataContext = stationToListObservabl;
         }
 
-       
+        private void StationToListObservabl_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            listStaions.ItemsSource = stationToListObservabl;
+        }
+
         private void DoubleClickUpdateDrone(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             DroneToList temp = listDrones.SelectedItem as DroneToList;
             Drone drone = bl.DroneDisplay(temp.Id);
-            DronePage dronePage = new DronePage(drone, this, mainWindow);
-            mainWindow.Content = dronePage;
+            DronePage dronePage = new DronePage(drone);
         }
 
         private void display_Click(object sender, RoutedEventArgs e)
@@ -104,18 +119,11 @@ namespace PL
 
         private void DoubleClickUpdateCustomer(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            CustomerToList temp = listCustomers.SelectedItem as CustomerToList;
-            Customer customer = bl.CustomerDisplay(temp.Id);
-            CustomerPage dronePage = new CustomerPage(mainWindow, customer, this);
-            mainWindow.Content = dronePage;
-        }
 
+        }
+         
         private void DoubleClickUpdateParcel(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            ParcelToList temp = listParcel.SelectedItem as ParcelToList;
-            Parcel parcel = bl.ParcelDisplay(temp.Id);
-            parcelPage parcelPage = new parcelPage(mainWindow, parcel, this);
-            mainWindow.Content = parcelPage;
         }
 
       

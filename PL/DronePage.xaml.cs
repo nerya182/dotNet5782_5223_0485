@@ -67,21 +67,12 @@ namespace PL
         {
         }
         /// <summary>
-        /// user would like to cancel the add
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Cancel_Add_Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        /// <summary>
         /// constructor for display drone window
         /// </summary>
         /// <param name="blw">gives access to the BL functions</param>
         /// <param name="selectedItem"></param>
         /// <param name="w">gives access to the previous window</param>
-        public DronePage(Drone drone, ManagerPage manager, MainWindow main)
+        public DronePage(Drone drone)
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
@@ -222,10 +213,12 @@ namespace PL
 
         private void OpenParcelTransfer(object sender, MouseButtonEventArgs e)
         {
-            ParcelTransfer temp = ListParcelTransfer.SelectedItem as ParcelTransfer;
-            Parcel parcel = bl.ParcelDisplay(temp.Id);
-            parcelPage parcelPage = new parcelPage(mainWindow, parcel, managerPage);
-            mainWindow.Content = parcelPage;
+           
+        }
+
+        private void Back_Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

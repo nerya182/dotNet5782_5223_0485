@@ -229,10 +229,23 @@ namespace BL
             {
                 foreach (BO.ParcelToList item in group)
                 {
-                    listStation.Add(item);
+                    listParcel.Add(item);
                 }
             }
-            return (IEnumerable<ParcelToList>)listStation;
+            return (IEnumerable<ParcelToList>)listParcel;
+        }
+        public IEnumerable<ParcelToList> GroupingTargetNam()
+        {
+            List<ParcelToList> listParcel = new List<ParcelToList>();
+            var groups = GetParcels().GroupBy(p => p.TargetName);
+            foreach (var group in groups)
+            {
+                foreach (BO.ParcelToList item in group)
+                {
+                    listParcel.Add(item);
+                }
+            }
+            return (IEnumerable<ParcelToList>)listParcel;
         }
     }
 }

@@ -189,5 +189,7 @@ namespace BlApi
          IEnumerable<DroneToList> GroupingWeight();
         IEnumerable<StationToList> GroupingAvailableChargeSlots();
         IEnumerable<StationToList> GroupingChargeSlots();
+        IEnumerable<ParcelToList> GroupingTargetNam();
+        IEnumerable<ParcelToList> GroupingSenderName();
     }
 }

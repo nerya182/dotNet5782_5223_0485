@@ -28,6 +28,8 @@ namespace PL
         parcelPage parcelPage;
         StationPage stationPage;
         CustomerPage customerPage;
+        Customer customer;
+        Drone drone;
         int selectedTab;
         object selectedItem;
         public MainWindow()
@@ -44,6 +46,7 @@ namespace PL
 
         private void Manager_Click(object sender, RoutedEventArgs e)
         {
+
             managerPage= new ManagerPage();
             managerPage.ADD.Click += ADD_Click;
             managerPage.listStaions.MouseDoubleClick += ListStaions_MouseDoubleClick;
@@ -67,7 +70,8 @@ namespace PL
                 case 2:
                     managerPage.listStaions.ItemsSource = bl.GroupingAvailableChargeSlots();
                     break;
-                case 3:
+                case 1:
+                    managerPage.listParcel.ItemsSource = bl.GroupingSenderName();
                     break;
             }
             
@@ -83,7 +87,8 @@ namespace PL
                 case 2:
                     managerPage.listStaions.ItemsSource = bl.GroupingChargeSlots();
                     break;
-                case 3:
+                case 1:
+                    managerPage.listParcel.ItemsSource = bl.GroupingTargetNam();
                     break;
             } 
         }
@@ -123,14 +128,25 @@ namespace PL
 
         private void ListDrones_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            selectedItem = managerPage.listDrones.SelectedItem;
-            dronePage = new DronePage(selectedItem);
+            selectedItem =managerPage.listDrones.SelectedItem;
+            DroneToList droneToList = (DroneToList)selectedItem;
+            drone = bl.DroneDisplay(droneToList.Id);
+            dronePage = new DronePage(drone);
             dronePage.changeModelButton.Click += ChangeModelButton_Click;
             dronePage.sendOrReleaseButton.Click += SendOrReleaseButton_Click;
-            dronePage.cancelButton.Click += CancelButton_Click;
+            dronePage.Back_Button.Click += Back_Button_Click;
             dronePage.delivery.Click += Delivery_Click;
             dronePage.NewModel.Click += NewModel_Click;
+            dronePage.ListParcelTransfer.MouseDoubleClick += ListParcelTransfer_MouseDoubleClick;
             this.Content = dronePage;
+        }
+
+        private void ListParcelTransfer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ParcelTransfer temp = dronePage.ListParcelTransfer.SelectedItem as ParcelTransfer;
+            Parcel parcel = bl.ParcelDisplay(temp.Id);
+            parcelPage parcelPage = new parcelPage(parcel);
+            this.Content = parcelPage;
         }
 
         private void NewModel_Click(object sender, RoutedEventArgs e)
@@ -187,8 +203,9 @@ namespace PL
 
             private void ListCustomers_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            selectedItem = managerPage.listCustomers.SelectedItem;
-            customerPage = new CustomerPage(selectedItem);
+            CustomerToList temp = (CustomerToList)managerPage.listCustomers.SelectedItem;
+            customer = bl.CustomerDisplay(temp.Id);
+            customerPage = new CustomerPage(customer);
             customerPage.NameButton.Click += NameButton_Click;
             customerPage.NewUpdate.Click += NewUpdate_Click;
             customerPage.PhoneButton.Click += PhoneButton_Click;
@@ -242,9 +259,61 @@ namespace PL
 
         private void ListParcel_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            selectedItem = managerPage.listParcel.SelectedItem;
-            parcelPage parcelPage = new parcelPage(selectedItem);
+            ParcelToList temp =(ParcelToList)managerPage.listParcel.SelectedItem;
+            Parcel parcel = bl.ParcelDisplay(temp.Id);
+            parcelPage = new parcelPage(parcel);
+            parcelPage.Back_Button.Click += Back_Button_Click1;
+            parcelPage.Update_parcel.Click += Update_parcel_Click;
+            parcelPage.Listview_droneinparcel.MouseDoubleClick += Listview_droneinparcel_MouseDoubleClick;
+            parcelPage.Listview_Target.MouseDoubleClick += Listview_Target_MouseDoubleClick;
+            parcelPage.Listview_Sender.MouseDoubleClick += Listview_Sender_MouseDoubleClick;
             this.Content =parcelPage;
+        }
+
+        private void Update_parcel_Click(object sender, RoutedEventArgs e)
+        {
+            ParcelToList parcelToList = (ParcelToList)managerPage.listParcel.SelectedItem;
+            Parcel parcelSelected = bl.ParcelDisplay(parcelToList.Id);
+            if (parcelSelected.PickedUp == null)
+            {
+                bl.ParcelCollectionByDrone(parcelSelected.drone.DroneId);
+                MessageBox.Show("Parcel has been picked up");
+                parcelPage.TextBox_DisplayStatus.Text = "Picked-up";
+            }
+            else
+            {
+                bl.DeliveryOfParcelByDrone(parcelSelected.drone.DroneId);
+                MessageBox.Show("Parcel has been delivered");
+                parcelPage.TextBox_DisplayStatus.Text = "Delivered";
+            }
+        }
+
+        private void Back_Button_Click1(object sender, RoutedEventArgs e)
+        {
+            this.Content = managerPage;
+            managerPage.listParcel.ItemsSource = bl.GetParcels();
+            managerPage.TabManager.SelectedIndex = 1;
+        }
+
+        private void Listview_Sender_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Listview_Target_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            CustomerInParcel temp = parcelPage.Listview_Target.SelectedItem as CustomerInParcel;
+            Customer customer = bl.CustomerDisplay(temp.Id);
+            customerPage = new CustomerPage(customer);
+            this.Content = customerPage;
+        }
+
+        private void Listview_droneinparcel_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DroneInParcel temp =  parcelPage.Listview_droneinparcel.SelectedItem as DroneInParcel;
+            Drone drone = bl.DroneDisplay(temp.DroneId);
+            dronePage = new DronePage(drone);
+            this.Content = dronePage;
         }
 
         private void ListStaions_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -254,7 +323,16 @@ namespace PL
             stationPage.close_button.Click += Close_button_Click1;
             stationPage.UpdateName.Click += UpdateName_Click;
             stationPage.NewName.Click += NewName_Click;
+            stationPage.listOfDrones.MouseDoubleClick += ListOfDrones_MouseDoubleClick;
             this.Content = stationPage;
+        }
+
+        private void ListOfDrones_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DroneInCharging temp = stationPage.listOfDrones.SelectedItem as DroneInCharging;
+            Drone drone = bl.DroneDisplay(temp.DroneId);
+            dronePage = new DronePage(drone);
+            this.Content = dronePage;
         }
 
         private void UpdateName_Click(object sender, RoutedEventArgs e)
@@ -279,7 +357,7 @@ namespace PL
                 case 0:
                     dronePage = new DronePage();
                     dronePage.add_button.Click += Add_button_Click;
-                    dronePage.cancelButton.Click += CancelButton_Click;
+                    dronePage.Back_Button.Click += Back_Button_Click;
                     this.Content = dronePage;
                     break;
                 case 1:
@@ -370,7 +448,7 @@ namespace PL
         {
             this.Content=managerPage;
             managerPage.TabManager.SelectedIndex = 2;
-            managerPage.listStaions.ItemsSource = bl.GetStations();
+            //managerPage.listStaions.ItemsSource = bl.GetStations();
         }
 
         private void NewName_Click(object sender, RoutedEventArgs e)
@@ -505,7 +583,7 @@ namespace PL
             }
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void Back_Button_Click(object sender, RoutedEventArgs e)
         {
             this.Content = managerPage;
             managerPage.TabManager.SelectedIndex = 0;
