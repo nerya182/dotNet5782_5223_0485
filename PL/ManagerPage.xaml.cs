@@ -26,30 +26,16 @@ namespace PL
         public ObservableCollection<DroneToList> droneToListObservabl;
         public ObservableCollection<CustomerToList> customerToListObservabl;
         public ObservableCollection<ParcelToList> parcelToListObservabl;
-        public ObservableCollection<StationToList> stationToListObservabl;
+        public ObservableCollection<StationToList> stationToListObservabl { get; set; }
 
         public ManagerPage()
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
-            listStaions.ItemsSource= bl.GetStations();
-            droneToListObservabl = new ObservableCollection<DroneToList>();
-            customerToListObservabl = new ObservableCollection<CustomerToList>();
-            parcelToListObservabl = new ObservableCollection<ParcelToList>();
-            stationToListObservabl = new ObservableCollection<StationToList>();
-            List<StationToList> stationToLists = (List<StationToList>)bl.GetStations();
-            foreach (var item in stationToLists)
-            {
-                stationToListObservabl.Add(item);
-            }
-            //stationToListObservabl.CollectionChanged += StationToListObservabl_CollectionChanged;
-            listStaions.DataContext = stationToListObservabl;
+            
         }
 
-        private void StationToListObservabl_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            listStaions.ItemsSource = stationToListObservabl;
-        }
+       
 
         private void DoubleClickUpdateDrone(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {

@@ -2,6 +2,7 @@
 using BO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,7 +47,6 @@ namespace PL
 
         private void Manager_Click(object sender, RoutedEventArgs e)
         {
-
             managerPage= new ManagerPage();
             managerPage.ADD.Click += ADD_Click;
             managerPage.listStaions.MouseDoubleClick += ListStaions_MouseDoubleClick;
@@ -56,8 +56,47 @@ namespace PL
             managerPage.deleteButton.Click += DeleteButton_Click;
             managerPage.Grouping_first.Click += Grouping_first_Click1;
             managerPage.Grouping_seconde.Click += Grouping_seconde_Click;
+            Observables();
             this.Content = managerPage;
+        }
 
+        private void Observables()
+        {
+            managerPage.stationToListObservabl = new ObservableCollection<StationToList>();
+            managerPage.parcelToListObservabl= new ObservableCollection<ParcelToList>();
+            managerPage.customerToListObservabl= new ObservableCollection<CustomerToList>();
+            managerPage.droneToListObservabl = new ObservableCollection<DroneToList>();
+            List<StationToList> stationToLists = (List<StationToList>)bl.GetStations();
+
+            foreach (var item in stationToLists)
+            {
+                managerPage.stationToListObservabl.Add(item);
+            }
+            managerPage.listStaions.DataContext = managerPage.stationToListObservabl;
+
+            List<DroneToList> droneToLists = (List<DroneToList>)bl.GetListDrone();
+
+            foreach (var item in droneToLists)
+            {
+                managerPage.droneToListObservabl.Add(item);
+            }
+            managerPage.listDrones.DataContext = managerPage.droneToListObservabl;
+
+            List<CustomerToList> customerToLists = (List<CustomerToList>)bl.GetListCustomer();
+
+            foreach (var item in customerToLists)
+            {
+                managerPage.customerToListObservabl.Add(item);
+            }
+            managerPage.listCustomers.DataContext = managerPage.customerToListObservabl;
+
+            List<ParcelToList> parcelToLists = (List<ParcelToList>)bl.GetParcels();
+
+            foreach (var item in parcelToLists)
+            {
+                managerPage.parcelToListObservabl.Add(item);
+            }
+            managerPage.listParcel.DataContext = managerPage.parcelToListObservabl;
         }
 
         private void Grouping_first_Click1(object sender, RoutedEventArgs e)
@@ -448,7 +487,6 @@ namespace PL
         {
             this.Content=managerPage;
             managerPage.TabManager.SelectedIndex = 2;
-            //managerPage.listStaions.ItemsSource = bl.GetStations();
         }
 
         private void NewName_Click(object sender, RoutedEventArgs e)
@@ -516,6 +554,8 @@ namespace PL
                 location.Lattitude = double.Parse(stationPage.TextBoxLongitude.Text);
                 newStation.location = location;
                 bl.AddStation(newStation);
+                newStation = bl.GetListStation().First(i => i.Id == newStation.Id);
+                managerPage.stationToListObservabl.Add(bl.MakeStationToList(newStation));
                 MessageBox.Show("Added successfully");
                 stationPage.TextBox_id.IsEnabled = false;
                 stationPage.TextBox_name.IsEnabled = false;
