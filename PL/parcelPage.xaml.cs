@@ -29,9 +29,6 @@ namespace PL
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
             label_DroneInParcel.Visibility = Visibility.Hidden;
-            TextBox_DroneInParcel.Visibility = Visibility.Hidden;
-            TextBox_Sender.Visibility = Visibility.Hidden;
-            TextBox_Target.Visibility = Visibility.Hidden;
             label_created.Visibility = Visibility.Hidden;
             label_affiliated.Visibility = Visibility.Hidden;
             label_pickedUp.Visibility = Visibility.Hidden;
@@ -44,6 +41,12 @@ namespace PL
             TextBox_DisplayWeight.Visibility = Visibility.Hidden;
             TextBox_DisplayPriority.Visibility = Visibility.Hidden;
             TextBox_DisplayStatus.Visibility = Visibility.Hidden;
+            Sender.Visibility = Visibility.Hidden;
+            Target.Visibility = Visibility.Hidden;
+            label_DroneInParcel.Visibility = Visibility.Hidden;
+            Listview_droneinparcel.Visibility = Visibility.Hidden;
+            Listview_Sender.Visibility = Visibility.Hidden;
+            Listview_Target.Visibility = Visibility.Hidden;
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             PrioritySelector.ItemsSource = Enum.GetValues(typeof(Priorities));
             WeightSelector.Text = "Select weight";
@@ -78,40 +81,36 @@ namespace PL
             else if (parcelSelected.PickedUp == null && parcelSelected.Affiliation != null)
                 Update_parcel.Content = "Pick-Up Parcel";
             TextBox_SenderID.Visibility = Visibility.Hidden;
-            TextBox_Sender.Text = parcelSelected.Sender.ToString();
-            TextBox_Sender.FontSize = 10;
             label_TargetID.Content = "Target:";
             TextBox_TargetID.Visibility = Visibility.Hidden;
-            TextBox_Target.Text = parcelSelected.Target.ToString();
-            TextBox_Target.FontSize = 10;
             TextBox_DisplayWeight.Text = parcelSelected.Weight.ToString();
             TextBox_DisplayPriority.Text = parcelSelected.Priority.ToString();
-            TextBox_DroneInParcel.FontSize = 8;
             add_button.Visibility = Visibility.Hidden;
-            Back_Button.Visibility = Visibility.Hidden;
+            label_SenderID.Visibility = Visibility.Hidden;
+            label_TargetID.Visibility = Visibility.Hidden;
             Listview_Sender.Items.Add(parcelSelected.Sender);
             Listview_Target.Items.Add(parcelSelected.Target);
             if (parcelSelected.Delivered != null)
             {
                 TextBox_DisplayStatus.Text = "Delivered";
                 Listview_droneinparcel.Visibility = Visibility.Hidden;
+                label_DroneInParcel.Visibility = Visibility.Hidden;
             }
             else if (parcelSelected.PickedUp != null)
             {
                 TextBox_DisplayStatus.Text = "Picked Up";
-                TextBox_DroneInParcel.Text = parcelSelected.drone.ToString();
                 Listview_droneinparcel.Items.Add(parcelSelected.drone);
             }
             else if (parcelSelected.Affiliation != null)
             {
-                TextBox_DisplayStatus.Text = "Affiliated";
-                TextBox_DroneInParcel.Text = parcelSelected.drone.ToString();
+                TextBox_DisplayStatus.Text = "Affiliated"; 
                 Listview_droneinparcel.Items.Add(parcelSelected.drone);
             }
             else
             {
                 TextBox_DisplayStatus.Text = "Created";
                 Listview_droneinparcel.Visibility = Visibility.Hidden;
+                label_DroneInParcel.Visibility = Visibility.Hidden;
             }
             TextBox_Created.Text = parcelSelected.Creating.ToString();
             if (parcelSelected.Affiliation != null)
@@ -137,9 +136,6 @@ namespace PL
             }
 
             TextBox_DisplayPriority.IsEnabled = false;
-            TextBox_DroneInParcel.IsEnabled = false;
-            TextBox_Sender.IsEnabled = false;
-            TextBox_Target.IsEnabled = false;
             TextBox_DisplayWeight.IsEnabled = false;
             TextBox_DisplayPriority.IsEnabled = false;
             TextBox_DisplayStatus.IsEnabled = false;
@@ -147,10 +143,9 @@ namespace PL
             TextBox_Affiliated.IsEnabled = false;
             TextBox_PickedUp.IsEnabled = false;
             TextBox_Delivered.IsEnabled = false;
-
         }
 
-        private void Back_Button_Click(object sender, RoutedEventArgs e)
+        private void Back_Button_Click1(object sender, RoutedEventArgs e)
         {
           
         }

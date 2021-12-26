@@ -39,6 +39,7 @@ namespace PL
             TextBoxParcelTransfer.Visibility = Visibility.Hidden;
             WeightTextBox.Visibility = Visibility.Hidden;
             label_id.Content = "Enter ID Number:";
+            ListParcelTransfer.Visibility = Visibility.Hidden;
             changeModelButton.Visibility = Visibility.Hidden;
             TextBoxNewModel.Visibility = Visibility.Hidden;
             labelTextBoxNewModel.Visibility = Visibility.Hidden;

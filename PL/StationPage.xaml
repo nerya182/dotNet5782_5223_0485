@@ -28,7 +28,7 @@
             <Image Source="/back-button.png" />
         </Button>
         <Button x:Name ="UpdateName" Content="UpdateName" HorizontalAlignment="Left" Margin="445,132,0,0" VerticalAlignment="Top" Click="UpdateName_Click_1"/>
-        <ListView Name="listOfDrones" Margin="106,248,487,36" MouseDoubleClick="DoubleClickOpenDrone">
+        <ListView Name="listOfDrones" Margin="222,217,468,67" MouseDoubleClick="DoubleClickOpenDrone" Width="110">
             <ListView.View>
                 <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
                     <GridViewColumn DisplayMemberBinding="{Binding DroneId}" x:Name="Id_charge" Header="Id" Width="auto"/>
