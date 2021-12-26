@@ -240,7 +240,7 @@ namespace PL
             }
         }
 
-            private void ListCustomers_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ListCustomers_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             CustomerToList temp = (CustomerToList)managerPage.listCustomers.SelectedItem;
             customer = bl.CustomerDisplay(temp.Id);
@@ -249,6 +249,8 @@ namespace PL
             customerPage.NewUpdate.Click += NewUpdate_Click;
             customerPage.PhoneButton.Click += PhoneButton_Click;
             customerPage.close_customer.Click += Close_customer_Click;
+            customerPage.listFromeCustomer.MouseDoubleClick += Listview_FromCustomer_MouseDoubleClick;
+            customerPage.listToCustomer.MouseDoubleClick += Listview_ToCustomer_MouseDoubleClick;
             this.Content = customerPage;
         }
 
@@ -325,6 +327,7 @@ namespace PL
                 MessageBox.Show("Parcel has been delivered");
                 parcelPage.TextBox_DisplayStatus.Text = "Delivered";
             }
+            parcelPage.Update_parcel.Visibility = Visibility.Hidden;
         }
 
         private void Back_Button_Click1(object sender, RoutedEventArgs e)
@@ -336,7 +339,10 @@ namespace PL
 
         private void Listview_Sender_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            CustomerInParcel temp = parcelPage.Listview_Sender.SelectedItem as CustomerInParcel;
+            Customer customer = bl.CustomerDisplay(temp.Id);
+            customerPage = new CustomerPage(customer);
+            this.Content = customerPage;
         }
 
         private void Listview_Target_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -408,6 +414,7 @@ namespace PL
                 case 1:
                     parcelPage = new parcelPage();
                     parcelPage.add_button.Click += Add_button_Click1;
+                    parcelPage.Back_Button.Click += Back_Button_Click1;
                     this.Content = parcelPage;
                     break;
                 case 2:
@@ -776,6 +783,22 @@ namespace PL
             dronePage.TextBoxNewModel.Visibility = Visibility.Visible;
             dronePage.labelTextBoxNewModel.Visibility = Visibility.Visible;
             dronePage.NewModel.Visibility = Visibility.Visible;
+        }
+
+        private void Listview_FromCustomer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ParceltAtCustomer temp = customerPage.listFromeCustomer.SelectedItem as ParceltAtCustomer;
+            Parcel parcel = bl.ParcelDisplay(temp.Id);
+            parcelPage = new parcelPage(parcel);
+            this.Content = parcelPage;
+        }
+
+        private void Listview_ToCustomer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ParceltAtCustomer temp = customerPage.listToCustomer.SelectedItem as ParceltAtCustomer;
+            Parcel parcel = bl.ParcelDisplay(temp.Id);
+            parcelPage = new parcelPage(parcel);
+            this.Content = parcelPage;
         }
     }
 }

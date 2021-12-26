@@ -119,6 +119,16 @@ namespace PL
                 TextBox_id.Background = (Brush)bc.ConvertFrom("#FFFA8072");
             }
         }
+
+        private void OpenLisrFromCustomer(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void OpenListToCustomer(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
 
