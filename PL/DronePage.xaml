@@ -8,36 +8,38 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DronePage">
 
-    <Grid x:Name="nn">
-        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill"/>
 
+    <Grid x:Name="mainDrone" DataContext="{Binding}">
+        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill"/>
         <Label Name="label_id" Content="Enter  ID number:" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
         <Label Name="label_model" Content="Insert the model" HorizontalAlignment="Left" Height="29" Margin="34,106,0,0" VerticalAlignment="Top" Width="199" FontSize="16" FontWeight="Black"/>
-        <ComboBox  Name="WeightSelector" Text="Weight" HorizontalAlignment="Left" Margin="221,149,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox  Name="WeightSelector"  HorizontalAlignment="Left" Margin="221,149,0,0" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="label_weight" Content="Weight:" HorizontalAlignment="Left" Margin="35,143,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
-        <TextBox x:Name="TextBox_id"  HorizontalAlignment="Left" Margin="221,85,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="idInput_TextChanged" />
-        <TextBox x:Name="TextBox_model"  HorizontalAlignment="Left" Margin="221,114,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged=" DroneModel_TextChanged"/>
-        <Label x:Name="label_charge_Station_id" Content="Initial charging station:" HorizontalAlignment="Left" Margin="31,176,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Black"/>
+        <TextBox x:Name="TextBox_id"  Text="{Binding Id}" HorizontalAlignment="Left" Margin="221,85,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="idInput_TextChanged" />
+        <TextBox x:Name="TextBox_model" Text="{Binding Model}"  HorizontalAlignment="Left" Margin="221,114,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged=" DroneModel_TextChanged"/>
+        <Label x:Name="label_charge_Station_id"  Content="Initial charging station:" HorizontalAlignment="Left" Margin="31,176,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Black"/>
         <Button  Name="add_button" Content="Add" HorizontalAlignment="Left" Margin="221,337,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="AddButton_Click" FontWeight="Black"/>
         <Label   Name="Delivery" Content="Delivery:" HorizontalAlignment="Left" Margin="33,211,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
         <TextBox x:Name="TextBoxDelivery" HorizontalAlignment="Left" Margin="221,217,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Name="Lattitude" Content="Lattitude:" HorizontalAlignment="Left" Margin="35,248,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black" FontStyle="Normal" FontStretch="Expanded"/>
-        <TextBox x:Name="TextBoxLattitude" HorizontalAlignment="Left" Margin="221,258,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TextBoxLattitude" Text="{Binding Location }" HorizontalAlignment="Left" Margin="221,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Name="Longitud" Content="Longitude:"  HorizontalAlignment="Left" Margin="34,289,0,0" VerticalAlignment="Top" Width="174" FontWeight="Heavy" FontStretch="Medium" FontSize="16"/>
         <TextBox x:Name="TextBoxLongitude" HorizontalAlignment="Left" Margin="222,299,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <ComboBox Name="chargeStationId" HorizontalAlignment="Left" Margin="221,179,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox Name="chargeStationId" SelectedItem="{Binding Path=chargeStationId}" HorizontalAlignment="Left" Margin="221,179,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox Name="TextBoxNewModel"  HorizontalAlignment="Left" Margin="548,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Height="24" Width="138"/>
         <Label   x:Name="labelTextBoxNewModel" Content="Insert a new model:" HorizontalAlignment="Left" Margin="536,85,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
         <Button  x:Name="NewModel" Content="update" HorizontalAlignment="Left" Margin="560,161,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="updateButton_Click" FontSize="14" FontWeight="Black"/>
-        <TextBox x:Name="WeightTextBox" HorizontalAlignment="Left" Margin="222,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="TextBoxParcelTransfer" HorizontalAlignment="Left" Margin="224,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="WeightTextBox"  Text="{Binding  MaxWeight}" HorizontalAlignment="Left" Margin="222,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+
+
         <Button  x:Name="changeModelButton" Content="set model" HorizontalAlignment="Left" Margin="367,89,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="ModelButton_Click"/>
         <Button  x:Name="sendOrReleaseButton" Content="charge" HorizontalAlignment="Left" Margin="367,125,0,0" VerticalAlignment="Top"  FontSize="14" FontWeight="Black" Click="sendOrRelease_Click"/>
         <Button  x:Name="delivery" Content="AllDelivery" HorizontalAlignment="Left" Margin="367,159,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="allDeliveryButtonButton_Click"/>
         <Button  x:Name="Back_Button" HorizontalAlignment="Left" Margin="703,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Back_Button_Click">
             <Image Source="/back-button.png" />
         </Button>
-        <ListView Name="ListParcelTransfer" HorizontalAlignment="Left" Margin="208,290,0,30" Height="130" Width="500" MouseDoubleClick="OpenParcelTransfer">
+        <ListView Name="ListParcelTransfer" HorizontalAlignment="Left" Margin="172,303,0,19" Width="500" MouseDoubleClick="OpenParcelTransfer" Visibility="{Binding ElementName=changeModelButton,Path=Visibility}">
             <ListView.View>
                 <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="auto"/>

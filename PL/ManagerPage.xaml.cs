@@ -26,16 +26,12 @@ namespace PL
         public ObservableCollection<DroneToList> droneToListObservabl;
         public ObservableCollection<CustomerToList> customerToListObservabl;
         public ObservableCollection<ParcelToList> parcelToListObservabl;
-        public ObservableCollection<StationToList> stationToListObservabl { get; set; }
-
+        public ObservableCollection<StationToList> stationToListObservabl;
         public ManagerPage()
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
-            
         }
-
-       
 
         private void DoubleClickUpdateDrone(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {

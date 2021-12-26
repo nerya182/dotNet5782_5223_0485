@@ -225,7 +225,7 @@ namespace PL
                     droneId = selected.Id;
                     bl.AffiliateParcelToDrone(droneId);
                     dronePage.TextBoxLongitude.Text = bl.DroneDisplay(droneId).ParcelTransfer.ToString();
-                    dronePage.TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
+                    //dronePage.TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
                     dronePage.TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
                     dronePage.TextBoxDelivery.Text = DroneStatuses.Delivery.ToString();
                     MessageBox.Show("Update successfully");
@@ -371,6 +371,12 @@ namespace PL
             DroneInCharging temp = stationPage.listOfDrones.SelectedItem as DroneInCharging;
             Drone drone = bl.DroneDisplay(temp.DroneId);
             dronePage = new DronePage(drone);
+            dronePage.changeModelButton.Click += ChangeModelButton_Click;
+            dronePage.sendOrReleaseButton.Click += SendOrReleaseButton_Click;
+            dronePage.Back_Button.Click += Back_Button_Click;
+            dronePage.delivery.Click += Delivery_Click;
+            dronePage.NewModel.Click += NewModel_Click;
+            dronePage.ListParcelTransfer.MouseDoubleClick += ListParcelTransfer_MouseDoubleClick;
             this.Content = dronePage;
         }
 
@@ -711,7 +717,7 @@ namespace PL
                 try
                 {
                     bl.ReleaseDroneFromCharging(droneId);
-                    dronePage.TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
+                    //dronePage.TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
                     dronePage.TextBoxDelivery.Text = DroneStatuses.Available.ToString();
                     dronePage.TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
@@ -731,7 +737,7 @@ namespace PL
                 {
                     bl.ParcelCollectionByDrone(droneId);
                     dronePage.TextBoxLongitude.Text = bl.DroneDisplay(droneId).ParcelTransfer.ToString();
-                    dronePage.TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
+                    //dronePage.TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
                     dronePage.TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
                     dronePage.sendOrReleaseButton.Content = "Package delivery";
@@ -748,7 +754,7 @@ namespace PL
                 {
                     bl.DeliveryOfParcelByDrone(droneId);
                     dronePage.TextBoxLongitude.Text = bl.DroneDisplay(droneId).ParcelTransfer.ToString();
-                    dronePage.TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
+                   // dronePage.TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
                     dronePage.TextBoxDelivery.Text = DroneStatuses.Available.ToString();
                     dronePage.TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");

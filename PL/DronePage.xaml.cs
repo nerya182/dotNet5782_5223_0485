@@ -36,7 +36,7 @@ namespace PL
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();  
-            TextBoxParcelTransfer.Visibility = Visibility.Hidden;
+           
             WeightTextBox.Visibility = Visibility.Hidden;
             label_id.Content = "Enter ID Number:";
             changeModelButton.Visibility = Visibility.Hidden;
@@ -92,21 +92,17 @@ namespace PL
             NewModel.Visibility = Visibility.Hidden;
             selected = drone;           
             droneSelected = bl.DroneDisplay(selected.Id);
-            TextBox_id.Text = selected.Id.ToString();
-            WeightTextBox.Text = selected.MaxWeight.ToString();
-            TextBox_model.Text = selected.Model;
+            mainDrone.DataContext = droneSelected;
             TextBoxLattitude.Text = selected.Location.ToString();
             TextBoxDelivery.Text = selected.Status.ToString();
             TextBoxLongitude.Visibility = Visibility.Hidden;
             ListParcelTransfer.Items.Add(droneSelected.ParcelTransfer);
-            TextBoxParcelTransfer.Text = selected.Battery.ToString();
             TextBoxLongitude.Width = 300;
             TextBoxLongitude.Height = 100;
             TextBox_id.IsEnabled = false;
             TextBox_model.IsEnabled = false;
             WeightTextBox.IsEnabled = false;
             TextBoxDelivery.IsEnabled = false;
-            TextBoxParcelTransfer.IsEnabled = false;
             TextBoxLattitude.IsEnabled = false;
             TextBoxLongitude.IsEnabled = false;
             TextBoxLongitude.FontSize = 10;

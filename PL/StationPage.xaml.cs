@@ -37,10 +37,6 @@ namespace PL
             listOfDrones.Visibility = Visibility.Hidden;
         }
 
-        
-        
-        
-        
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
           
@@ -77,9 +73,7 @@ namespace PL
             TextBoxLongitude.IsEnabled = false;
             TextBoxLongitude.FontSize = 10;
             close_button.Visibility = Visibility.Visible;
-            TextBoxNewName.Visibility = Visibility.Hidden;
             labelTextBoxNewName.Visibility = Visibility.Hidden;
-            NewName.Visibility = Visibility.Hidden;
             listOfDrones.ItemsSource = stationSelected.droneInCharging;
         }
         private void idInput_TextChanged(object sender, TextChangedEventArgs e)
