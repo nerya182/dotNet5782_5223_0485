@@ -11,7 +11,7 @@ namespace DO
         public double Lattitude { get; set; }
         public override string ToString()
         {
-            return $"Customer #{Id}, Name:{Name}, Phone #:{Phone}, {Convert.ConvertLongitude(Longitude)}, {Convert.ConvertLattitude(Lattitude)}";
+            return $"Customer #{Id}, Name:{Name}, Phone #:{Phone}, {BO.Convert.ConvertLongitude(Longitude)}, {BO.Convert.ConvertLattitude(Lattitude)}";
         }
     }
 }

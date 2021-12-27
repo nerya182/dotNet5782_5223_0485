@@ -67,7 +67,6 @@ namespace PL
             managerPage.customerToListObservabl= new ObservableCollection<CustomerToList>();
             managerPage.droneToListObservabl = new ObservableCollection<DroneToList>();
             List<StationToList> stationToLists = (List<StationToList>)bl.GetStations();
-
             foreach (var item in stationToLists)
             {
                 managerPage.stationToListObservabl.Add(item);
@@ -219,7 +218,7 @@ namespace PL
             dronePage.NewModel.Visibility = Visibility.Hidden;
             string str = (string)dronePage.delivery.Content;
             if (str == "Affiliation")
-            {
+             {
                 try
                 {
                     droneId = selected.Id;
@@ -333,7 +332,7 @@ namespace PL
         private void Back_Button_Click1(object sender, RoutedEventArgs e)
         {
             this.Content = managerPage;
-            managerPage.listParcel.ItemsSource = bl.GetParcels();
+            //managerPage.listParcel.ItemsSource = bl.GetParcels();
             managerPage.TabManager.SelectedIndex = 1;
         }
 
@@ -436,7 +435,6 @@ namespace PL
         {
             this.Content = managerPage;
             managerPage.TabManager.SelectedIndex = 3;
-            managerPage.listCustomers.ItemsSource = bl.GetListCustomer();
         }
 
         private void Add_button_Click3(object sender, RoutedEventArgs e)
@@ -483,6 +481,7 @@ namespace PL
                 locationCustomer.Longitude = location;
                 newCustomer.Location = locationCustomer;
                 bl.AddCustomer(newCustomer);
+                managerPage.customerToListObservabl.Add(bl.MakeCustomerToList(newCustomer));
                 MessageBox.Show("Added successfully");
                 customerPage.TextBox_id.IsEnabled = false;
                 customerPage.TextBox_name.IsEnabled = false;
@@ -521,7 +520,6 @@ namespace PL
             }
         }
 
-     
         private void Add_button_Click2(object sender, RoutedEventArgs e)
         {
             try
@@ -623,6 +621,7 @@ namespace PL
                 }
                 newParcel.Priority = (Priorities)parcelPage.PrioritySelector.SelectedItem;
                 bl.AddParcel(newParcel);
+                managerPage.parcelToListObservabl.Add(bl.MakeParcelToList(newParcel));
                 MessageBox.Show("Added successfully");
                 parcelPage.TextBox_SenderID.IsEnabled = false;
                 parcelPage.TextBox_TargetID.IsEnabled = false;
@@ -640,7 +639,6 @@ namespace PL
         {
             this.Content = managerPage;
             managerPage.TabManager.SelectedIndex = 0;
-            managerPage.listDrones.ItemsSource = bl.GetListDrone();
         }
 
         private void Add_button_Click(object sender, RoutedEventArgs e)
@@ -679,6 +677,7 @@ namespace PL
                 dronePage.TextBoxLattitude.Text = bl.BaseStationDisplay(chargingStationId).location.Lattitude.ToString();
                 dronePage.TextBoxLongitude.Text = bl.BaseStationDisplay(chargingStationId).location.Longitude.ToString();
                 bl.AddDrone(newDrone, chargingStationId);
+                managerPage.droneToListObservabl.Add(newDrone);
                 MessageBox.Show("Added successfully");
                 dronePage.TextBox_id.IsEnabled = false;
                 dronePage.chargeStationId.IsEnabled = false;
@@ -790,14 +789,29 @@ namespace PL
             ParceltAtCustomer temp = customerPage.listFromeCustomer.SelectedItem as ParceltAtCustomer;
             Parcel parcel = bl.ParcelDisplay(temp.Id);
             parcelPage = new parcelPage(parcel);
+            parcelPage.Back_Button.Click += Back_Button_Click2; 
             this.Content = parcelPage;
         }
 
+        private void Back_Button_Click2(object sender, RoutedEventArgs e)
+        {
+            CustomerToList temp = (CustomerToList)managerPage.listCustomers.SelectedItem;
+            customer = bl.CustomerDisplay(temp.Id);
+            customerPage = new CustomerPage(customer);
+            customerPage.NameButton.Click += NameButton_Click;
+            customerPage.NewUpdate.Click += NewUpdate_Click;
+            customerPage.PhoneButton.Click += PhoneButton_Click;
+            customerPage.close_customer.Click += Close_customer_Click;
+            customerPage.listFromeCustomer.MouseDoubleClick += Listview_FromCustomer_MouseDoubleClick;
+            customerPage.listToCustomer.MouseDoubleClick += Listview_ToCustomer_MouseDoubleClick;
+            this.Content = customerPage;
+        }
         private void Listview_ToCustomer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ParceltAtCustomer temp = customerPage.listToCustomer.SelectedItem as ParceltAtCustomer;
             Parcel parcel = bl.ParcelDisplay(temp.Id);
             parcelPage = new parcelPage(parcel);
+            parcelPage.Back_Button.Click += Back_Button_Click2;
             this.Content = parcelPage;
         }
     }

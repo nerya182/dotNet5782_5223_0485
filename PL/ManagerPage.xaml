@@ -7,18 +7,31 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ManagerPage">
+    <Page.Resources>
+        <local:BatteryToColorConverter x:Key="BatteryToColorConverter"/>
+        <local:BatteryToProgressBarConverter x:Key="BatteryToProgressBarConverter"/>
+        <local:LatitudeToSexaConvert x:Key="LatitudeToSexaConvert"/>
+        <local:LongitudeToSexaConvert x:Key="LongitudeToSexaConvert"/>
+    </Page.Resources>
 
     <Grid Background="White">
         <TabControl Name="TabManager" Margin="2,0,283,2" SelectionChanged="TabManager_SelectionChanged">
             <TabItem Name="tabDrones" Header="list drone">
                 <Grid Background="White"  Height="422" HorizontalAlignment="Left" Width="507">
-                    <ListView Name="listDrones" ItemsSource="{Binding}"  MouseDoubleClick="DoubleClickUpdateDrone" Margin="0,0,5,6"  >
+                    <ListView Name="listDrones" ItemsSource="{Binding}" Width="auto"  Height="auto" MouseDoubleClick="DoubleClickUpdateDrone" Margin="0,0,14,13"  >
                         <ListView.View>
                             <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
-                                <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="auto"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Model}" x:Name="Model" Header="Model" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="45"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Model}" x:Name="Model" Header="Model" Width="50"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Location}" x:Name="Location" Header="Location" Width="auto"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Battery}" x:Name="Battery" Header="Battery %" Width="auto"/>
+                                <GridViewColumn  Header="Battery %" Width="auto">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ProgressBar Name="Battrey"  Minimum="0" Maximum="100" Value="{Binding Battery,Converter={StaticResource BatteryToProgressBarConverter}}" Visibility="{Binding ElementName=changeModelButton,Path=Visibility}" 
+                                                         Foreground="{Binding Battery,Converter={StaticResource BatteryToColorConverter}}" HorizontalAlignment="Left" Height="20"  VerticalAlignment="Top"  Width="40"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" x:Name="Weight" Header="Weight" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Status}" x:Name="DronesStatus" Header="DronesStatus" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding ParcelBeingPassedId}" x:Name="ParcelTransfer"  Header="num parcel" Width="auto"/>
@@ -96,7 +109,6 @@
                 <Grid Margin="0,0,0,0">
                     <Button x:Name="ADD" Content="ADD" Click="ADD_Click" Width="auto" Height="auto" Margin="-3,66,3,266"/>
                     <Button x:Name="deleteButton" Content="delete" Click="delete_Click" Width="auto" Height="auto" Margin="0,132,0,200"/>
-                   
                 </Grid>
             </TabItem>
             <TabItem Header="Display" Margin="0,-2,-2,0" Height="44" VerticalAlignment="Top" >
@@ -113,3 +125,5 @@
 
     </Grid>
 </Page>
+
+    

@@ -38,24 +38,8 @@ namespace PL
             DroneToList temp = listDrones.SelectedItem as DroneToList;
             Drone drone = bl.DroneDisplay(temp.Id);
             DronePage dronePage = new DronePage(drone);
-        }
+        } 
 
-        private void display_Click(object sender, RoutedEventArgs e)
-        {
-            var selected = TabManager.SelectedIndex;
-            switch (selected)
-            {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-
-                    break;
-                default:
-                    break;
-            }
-        }
 
         private void TabManager_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

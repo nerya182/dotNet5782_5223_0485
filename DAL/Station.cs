@@ -16,7 +16,7 @@ namespace DO
 
         public override string ToString()
         {
-            return $"Station #{Id}, Name:{Name},{Convert.ConvertLongitude(Longitude)},{Convert.ConvertLattitude(Lattitude)},{AvailableChargeSlots}";
+            return $"Station #{Id}, Name:{Name},{BO.Convert.ConvertLongitude(Longitude)},{BO.Convert.ConvertLattitude(Lattitude)},{AvailableChargeSlots}";
         }
     }
 }

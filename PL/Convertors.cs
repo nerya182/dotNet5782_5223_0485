@@ -15,7 +15,7 @@ namespace PL
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (Double)value * 100;
+            return (Double)value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -28,15 +28,15 @@ namespace PL
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double battery = (double)value;
-            if (battery < 0.1)
+            if (battery < 10)
                 return Brushes.DarkRed;
-            if (battery < 0.2)
+            if (battery < 20)
                 return Brushes.Red;
-            if (battery < 0.4)
+            if (battery < 40)
                 return Brushes.Yellow;
-            if (battery < 0.6)
+            if (battery < 60)
                 return Brushes.GreenYellow;
-            
+
             return Brushes.DarkGreen;
         }
 
@@ -45,4 +45,31 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+    internal class LatitudeToSexaConvert : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            double lattitude = ((BO.Location)value).Lattitude;
+            return BO.Convert.ConvertLattitude(lattitude);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    internal class LongitudeToSexaConvert : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            double Longitude = ((BO.Location)value).Longitude;
+            return BO.Convert.ConvertLattitude(Longitude);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
+  
