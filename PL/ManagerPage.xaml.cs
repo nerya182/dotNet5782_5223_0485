@@ -107,5 +107,23 @@ namespace PL
         {
 
         }
+
+        private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        private void PrioritySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void backToMain_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }     
 }

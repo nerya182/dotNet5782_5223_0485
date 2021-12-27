@@ -37,6 +37,8 @@ namespace PL
         {
             InitializeComponent();
             manager.Visibility = Visibility.Hidden;
+            add.Visibility = Visibility.Hidden;
+            enter.Visibility = Visibility.Hidden;
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)
@@ -56,6 +58,12 @@ namespace PL
             managerPage.deleteButton.Click += DeleteButton_Click;
             managerPage.Grouping_first.Click += Grouping_first_Click1;
             managerPage.Grouping_seconde.Click += Grouping_seconde_Click;
+            managerPage.ComboBox_WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            managerPage.ComboBox_StatusSelector.ItemsSource = Enum.GetValues(typeof(ParcelStatus));
+            managerPage.ComboBox_PrioritySelector.ItemsSource = Enum.GetValues(typeof(Priorities));
+            managerPage.ComboBox_WeightSelector.SelectionChanged += WeightSelector_SelectionChanged;
+            managerPage.ComboBox_StatusSelector.SelectionChanged += StatusSelector_SelectionChanged;
+            managerPage.ComboBox_PrioritySelector.SelectionChanged += PrioritySelector_SelectionChanged;
             Observables();
             this.Content = managerPage;
         }
@@ -74,7 +82,6 @@ namespace PL
             managerPage.listStaions.DataContext = managerPage.stationToListObservabl;
 
             List<DroneToList> droneToLists = (List<DroneToList>)bl.GetListDrone();
-
             foreach (var item in droneToLists)
             {
                 managerPage.droneToListObservabl.Add(item);
@@ -82,7 +89,6 @@ namespace PL
             managerPage.listDrones.DataContext = managerPage.droneToListObservabl;
 
             List<CustomerToList> customerToLists = (List<CustomerToList>)bl.GetListCustomer();
-
             foreach (var item in customerToLists)
             {
                 managerPage.customerToListObservabl.Add(item);
@@ -90,7 +96,6 @@ namespace PL
             managerPage.listCustomers.DataContext = managerPage.customerToListObservabl;
 
             List<ParcelToList> parcelToLists = (List<ParcelToList>)bl.GetParcels();
-
             foreach (var item in parcelToLists)
             {
                 managerPage.parcelToListObservabl.Add(item);
@@ -130,6 +135,35 @@ namespace PL
                     break;
             } 
         }
+
+        private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (managerPage.ComboBox_WeightSelector.SelectedItem != null)
+            {
+                BO.WeightCategories selectedWeight = (BO.WeightCategories)managerPage.ComboBox_WeightSelector.SelectedItem;
+                managerPage.listParcel.ItemsSource = bl.GetParcelByWeight(selectedWeight);
+            }
+        }
+
+        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (managerPage.ComboBox_StatusSelector.SelectedItem != null)
+            {
+                BO.ParcelStatus selectedStatus = (BO.ParcelStatus)managerPage.ComboBox_StatusSelector.SelectedItem;
+                managerPage.listParcel.ItemsSource = bl.GetParcelByStatus(selectedStatus);
+            }
+        }
+
+        private void PrioritySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (managerPage.ComboBox_PrioritySelector.SelectedItem != null)
+            {
+                BO.Priorities selectedPriority = (BO.Priorities)managerPage.ComboBox_PrioritySelector.SelectedItem;
+                managerPage.listParcel.ItemsSource = bl.GetParcelByPriority(selectedPriority);
+            }
+        }
+
+
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
@@ -183,8 +217,24 @@ namespace PL
         {
             ParcelTransfer temp = dronePage.ListParcelTransfer.SelectedItem as ParcelTransfer;
             Parcel parcel = bl.ParcelDisplay(temp.Id);
-            parcelPage parcelPage = new parcelPage(parcel);
+            parcelPage parcelPage = new parcelPage(parcel);          
+            parcelPage.Back_Button.Click += Back_Button_Click4; 
             this.Content = parcelPage;
+        }
+
+        private void Back_Button_Click4(object sender, RoutedEventArgs e)
+        {
+            selectedItem = managerPage.listDrones.SelectedItem;
+            DroneToList droneToList = (DroneToList)selectedItem;
+            drone = bl.DroneDisplay(droneToList.Id);
+            dronePage = new DronePage(drone);
+            dronePage.changeModelButton.Click += ChangeModelButton_Click;
+            dronePage.sendOrReleaseButton.Click += SendOrReleaseButton_Click;
+            dronePage.Back_Button.Click += Back_Button_Click;
+            dronePage.delivery.Click += Delivery_Click;
+            dronePage.NewModel.Click += NewModel_Click;
+            dronePage.ListParcelTransfer.MouseDoubleClick += ListParcelTransfer_MouseDoubleClick;
+            this.Content = dronePage;
         }
 
         private void NewModel_Click(object sender, RoutedEventArgs e)
@@ -341,6 +391,7 @@ namespace PL
             CustomerInParcel temp = parcelPage.Listview_Sender.SelectedItem as CustomerInParcel;
             Customer customer = bl.CustomerDisplay(temp.Id);
             customerPage = new CustomerPage(customer);
+            customerPage.close_customer.Click += Back_Button_Click3;
             this.Content = customerPage;
         }
 
@@ -349,6 +400,7 @@ namespace PL
             CustomerInParcel temp = parcelPage.Listview_Target.SelectedItem as CustomerInParcel;
             Customer customer = bl.CustomerDisplay(temp.Id);
             customerPage = new CustomerPage(customer);
+            customerPage.close_customer.Click += Back_Button_Click3;
             this.Content = customerPage;
         }
 
@@ -357,7 +409,21 @@ namespace PL
             DroneInParcel temp =  parcelPage.Listview_droneinparcel.SelectedItem as DroneInParcel;
             Drone drone = bl.DroneDisplay(temp.DroneId);
             dronePage = new DronePage(drone);
+            dronePage.Back_Button.Click += Back_Button_Click3;
             this.Content = dronePage;
+        }
+
+        private void Back_Button_Click3(object sender, RoutedEventArgs e)
+        {
+            ParcelToList temp = (ParcelToList)managerPage.listParcel.SelectedItem;
+            Parcel parcel = bl.ParcelDisplay(temp.Id);
+            parcelPage = new parcelPage(parcel);
+            parcelPage.Back_Button.Click += Back_Button_Click1;
+            parcelPage.Update_parcel.Click += Update_parcel_Click;
+            parcelPage.Listview_droneinparcel.MouseDoubleClick += Listview_droneinparcel_MouseDoubleClick;
+            parcelPage.Listview_Target.MouseDoubleClick += Listview_Target_MouseDoubleClick;
+            parcelPage.Listview_Sender.MouseDoubleClick += Listview_Sender_MouseDoubleClick;
+            this.Content = parcelPage;
         }
 
         private void ListStaions_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -376,13 +442,19 @@ namespace PL
             DroneInCharging temp = stationPage.listOfDrones.SelectedItem as DroneInCharging;
             Drone drone = bl.DroneDisplay(temp.DroneId);
             dronePage = new DronePage(drone);
-            dronePage.changeModelButton.Click += ChangeModelButton_Click;
-            dronePage.sendOrReleaseButton.Click += SendOrReleaseButton_Click;
-            dronePage.Back_Button.Click += Back_Button_Click;
-            dronePage.delivery.Click += Delivery_Click;
-            dronePage.NewModel.Click += NewModel_Click;
-            dronePage.ListParcelTransfer.MouseDoubleClick += ListParcelTransfer_MouseDoubleClick;
+            dronePage.Back_Button.Click += Back_Button_Click5; ;
             this.Content = dronePage;
+        }
+
+        private void Back_Button_Click5(object sender, RoutedEventArgs e)
+        {
+            selectedItem = managerPage.listStaions.SelectedItem;
+            stationPage = new StationPage(selectedItem);
+            stationPage.close_button.Click += Close_button_Click1;
+            stationPage.UpdateName.Click += UpdateName_Click;
+            stationPage.NewName.Click += NewName_Click;
+            stationPage.listOfDrones.MouseDoubleClick += ListOfDrones_MouseDoubleClick;
+            this.Content = stationPage;
         }
 
         private void UpdateName_Click(object sender, RoutedEventArgs e)
@@ -813,6 +885,94 @@ namespace PL
             parcelPage = new parcelPage(parcel);
             parcelPage.Back_Button.Click += Back_Button_Click2;
             this.Content = parcelPage;
+        }
+
+        private void Client_Click(object sender, RoutedEventArgs e)
+        {
+            enter.Visibility = Visibility.Visible;
+        }
+
+        private void New_Client_Click(object sender, RoutedEventArgs e)
+        {
+            add.Visibility = Visibility.Visible;
+        }
+
+        private void Enter_Click(object sender, RoutedEventArgs e)
+        {
+            bool flag;
+            int id;
+            flag = int.TryParse(textbox_id.Text, out id);
+            if (!flag)
+            {
+                MessageBox.Show("error, id was not entered ");
+                return;
+            }
+            try
+            {
+                bl.CustomerDisplay(id);
+            }
+            catch 
+            {
+                MessageBox.Show("id of customer does not exist");
+                return;
+            }
+        }
+
+        private void AddNewClient_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bool flag;
+                int id;
+                double location;
+                BO.Customer newCustomer = new BO.Customer();
+                flag = int.TryParse(textbox_newId.Text, out id);
+                if (!flag)
+                {
+                    MessageBox.Show("error ,customer id was not entered ");
+                    return;
+                }
+                newCustomer.Id = int.Parse(textbox_newId.Text);
+                if (textbox_newName.Text == null)
+                {
+                    MessageBox.Show("error ,name customer was not entered ");
+                    return;
+                }
+                newCustomer.Name = textbox_newName.Text;
+                if (textbox_newNumber.Text == null)
+                {
+                    MessageBox.Show("error ,phone customer was not entered ");
+                    return;
+                }
+                newCustomer.Phone = textbox_newNumber.Text;
+                BO.Location locationCustomer = new BO.Location();
+                flag = double.TryParse(textbox_newLatt.Text, out location);
+                if (!flag)
+                {
+                    MessageBox.Show("error ,latitude was not entered ");
+                    return;
+                }
+                locationCustomer.Lattitude = location;
+                flag = double.TryParse(textbox_newLong.Text, out location);
+                if (!flag)
+                {
+                    MessageBox.Show("error ,longitude was not entered ");
+                    return;
+                }
+                locationCustomer.Longitude = location;
+                newCustomer.Location = locationCustomer;
+                bl.AddCustomer(newCustomer);
+                MessageBox.Show("Added successfully");
+                textbox_newId.Text = "";
+                textbox_newName.Text = "";
+                textbox_newNumber.Text = "";
+                textbox_newLong.Text = "";
+                textbox_newLatt.Text = "";
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
     }
 }

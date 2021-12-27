@@ -170,10 +170,10 @@ namespace BL
             return temp;
         }
 
-        public IEnumerable<ParcelToList> GetParcelByStatus(IEnumerable itemsSource, ParcelStatus selectedStatus)
+        public IEnumerable<ParcelToList> GetParcelByStatus(ParcelStatus selectedStatus)
         {
             List<ParcelToList> temp = new List<ParcelToList>();
-            foreach (ParcelToList parcel in itemsSource)
+            foreach (ParcelToList parcel in GetParcels())
             {
                 if (parcel.ShipmentStatus == selectedStatus)
                 {
@@ -182,10 +182,10 @@ namespace BL
             }
             return temp;
         }
-        public IEnumerable<ParcelToList> GetParcelByWeight(IEnumerable itemsSource, WeightCategories selectedWeight)
+        public IEnumerable<ParcelToList> GetParcelByWeight(WeightCategories selectedWeight)
         {
             List<ParcelToList> temp = new List<ParcelToList>();
-            foreach (ParcelToList parcel in itemsSource)
+            foreach (ParcelToList parcel in GetParcels())
             {
                 if (parcel.Weight == selectedWeight)
                 {
@@ -195,10 +195,10 @@ namespace BL
             return temp;
         }
 
-        public IEnumerable<ParcelToList> GetParcelByPriority(IEnumerable itemsSource, Priorities selectedPriority)
+        public IEnumerable<ParcelToList> GetParcelByPriority(Priorities selectedPriority)
         {
             List<ParcelToList> temp = new List<ParcelToList>();
-            foreach (ParcelToList parcel in itemsSource)
+            foreach (ParcelToList parcel in GetParcels())
             {
                 if (parcel.Priority == selectedPriority)
                 {

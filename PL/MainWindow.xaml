@@ -9,6 +9,22 @@
     <Grid>
         <Image Source="/Drone-Fast-Delivery.jpg" Stretch="UniformToFill"></Image>
         <Button x:Name="start" Content="start" HorizontalAlignment="Left" Margin="128,180,0,0" VerticalAlignment="Top" Click="Start_Click" Height="33" FontWeight="Bold" Width="70"/>
-        <Button x:Name="manager" Content="manager" HorizontalAlignment="Left" Margin="251,176,0,0" VerticalAlignment="Top" Click="Manager_Click" Height="33" FontWeight="Bold" Width="70"/>
+        <Button x:Name="manager" Content="manager" HorizontalAlignment="Left" Margin="221,176,0,0" VerticalAlignment="Top" Click="Manager_Click" Height="33" FontWeight="Bold" Width="70"/>
+        <Button x:Name="client" Content="client" HorizontalAlignment="Left" Margin="221,216,0,0" VerticalAlignment="Top" Height="33" FontWeight="Bold" Width="70" Click="Client_Click" Visibility="{Binding ElementName=manager, Path=Visibility}"/>
+        <Button x:Name="newClient" Content="new client" HorizontalAlignment="Left" Margin="221,256,0,0" VerticalAlignment="Top" Height="33" FontWeight="Bold" Width="70" Click="New_Client_Click" Visibility="{Binding ElementName=manager, Path=Visibility}"/>
+        <Label x:Name="label_id" Content="Enter your ID:" HorizontalAlignment="Left" Margin="466,192,0,0" VerticalAlignment="Top" FontWeight="Bold" Visibility="{Binding ElementName=enter, Path=Visibility}"/>
+        <TextBox x:Name="textbox_id" HorizontalAlignment="Left" Margin="466,232,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=enter, Path=Visibility}"/>
+        <Button x:Name="enter" Content="Enter" HorizontalAlignment="Left" Margin="490,269,0,0" VerticalAlignment="Top" Height="33" FontWeight="Bold" Width="70" Click="Enter_Click"/>
+        <Label x:Name="label_newId" Content="Enter your ID:" HorizontalAlignment="Left" Margin="366,80,0,0" VerticalAlignment="Top" FontWeight="Bold" Visibility="{Binding ElementName=add, Path=Visibility}"/>
+        <Label x:Name="label_newName" Content="Enter your Name:" HorizontalAlignment="Left" Margin="366,110,0,0" VerticalAlignment="Top" FontWeight="Bold" Visibility="{Binding ElementName=add, Path=Visibility}"/>
+        <Label x:Name="label_newPhone" Content="Enter your Number:" HorizontalAlignment="Left" Margin="366,140,0,0" VerticalAlignment="Top" FontWeight="Bold" Visibility="{Binding ElementName=add, Path=Visibility}"/>
+        <Label x:Name="label_newLongtitude" Content="Enter your Longtitude:" HorizontalAlignment="Left" Margin="366,170,0,0" VerticalAlignment="Top" FontWeight="Bold" Visibility="{Binding ElementName=add, Path=Visibility}"/>
+        <Label x:Name="label_newLattitude" Content="Enter your Lattitude:" HorizontalAlignment="Left" Margin="366,200,0,0" VerticalAlignment="Top" FontWeight="Bold" Visibility="{Binding ElementName=add, Path=Visibility}"/>
+        <TextBox x:Name="textbox_newId" HorizontalAlignment="Left" Margin="530,80,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=add, Path=Visibility}"/>
+        <TextBox x:Name="textbox_newName" HorizontalAlignment="Left" Margin="530,110,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=add, Path=Visibility}"/>
+        <TextBox x:Name="textbox_newNumber" HorizontalAlignment="Left" Margin="530,140,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=add, Path=Visibility}"/>
+        <TextBox x:Name="textbox_newLong" HorizontalAlignment="Left" Margin="530,170,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=add, Path=Visibility}"/>
+        <TextBox x:Name="textbox_newLatt" HorizontalAlignment="Left" Margin="530,200,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=add, Path=Visibility}"/>
+        <Button x:Name="add" Content="Add" HorizontalAlignment="Left" Margin="470,240,0,0" VerticalAlignment="Top" Height="33" FontWeight="Bold" Width="70" Click="AddNewClient_Click"/>
     </Grid>
 </Window>
