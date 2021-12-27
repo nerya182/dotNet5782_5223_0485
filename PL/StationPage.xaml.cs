@@ -28,13 +28,10 @@ namespace PL
         {
             InitializeComponent();
             bl= BlApi.BlFactory.GetBl();
-            close_button.Visibility = Visibility.Hidden;
-            TextBoxNewName.Visibility = Visibility.Hidden;
-            labelTextBoxNewName.Visibility = Visibility.Hidden;
-            NewName.Visibility = Visibility.Hidden;
-            close_button.Visibility = Visibility.Visible;
             UpdateName.Visibility = Visibility.Hidden;
-            listOfDrones.Visibility = Visibility.Hidden;
+            labelTextBoxNewName.Visibility = Visibility.Hidden;
+            TextBoxNewName.Visibility = Visibility.Hidden;
+            NewName.Visibility = Visibility.Hidden;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -49,31 +46,24 @@ namespace PL
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
-            close_button.Visibility = Visibility.Visible;
-            label_id.Content = "ID Number:";
-            label_name.Content = "Name:";
             add_button.Visibility = Visibility.Hidden;
-            TextBoxLattitude.FontSize = 10;
+            TextBoxLongitude.Visibility = Visibility.Hidden;
+            label_id.Content = "ID Number:";
+            label_name.Content = "Name:";                      
             label_number_of_chargeslots.Content = "Available Charge Slots:";
             Lattitude.Content = "Location: ";
             Longitud.Content = "List of Drones:";
+            TextBoxLattitude.FontSize = 10;
             selected = (StationToList)selectedItem;
             stationSelected = bl.BaseStationDisplay(selected.Id);
             TextBox_id.Text = stationSelected.Id.ToString();
             TextBox_name.Text = stationSelected.Name;
             TextBoxLattitude.Text = stationSelected.location.ToString();
-            TextBoxLongitude.Visibility = Visibility.Hidden;
             TextBoxChargeSlots.Text = stationSelected.AvailableChargeSlots.ToString();
             TextBoxLongitude.Width = 300;
             TextBoxLongitude.Height = 100;
-            TextBox_id.IsEnabled = false;
-            TextBox_name.IsEnabled = false;
-            TextBoxChargeSlots.IsEnabled = false;
-            TextBoxLattitude.IsEnabled = false;
-            TextBoxLongitude.IsEnabled = false;
             TextBoxLongitude.FontSize = 10;
-            close_button.Visibility = Visibility.Visible;
-            labelTextBoxNewName.Visibility = Visibility.Hidden;
+            TextBox_id.IsEnabled = false;
             listOfDrones.ItemsSource = stationSelected.droneInCharging;
         }
         private void idInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -107,9 +97,6 @@ namespace PL
         {
            
         }
-        
-        
-        
         
         private void UpdateName_Click_1(object sender, RoutedEventArgs e)
         {

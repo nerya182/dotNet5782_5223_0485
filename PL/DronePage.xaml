@@ -7,8 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DronePage">
-
-
+    
     <Grid x:Name="mainDrone" DataContext="{Binding}">
         <Image Source="/maxresdefault.jpg" Stretch="UniformToFill"/>
         <Label Name="label_id" Content="Enter  ID number:" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>

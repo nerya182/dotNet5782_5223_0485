@@ -96,18 +96,22 @@
                 <Grid Margin="0,0,0,0">
                     <Button x:Name="ADD" Content="ADD" Click="ADD_Click" Width="auto" Height="auto" Margin="-3,66,3,266"/>
                     <Button x:Name="deleteButton" Content="delete" Click="delete_Click" Width="auto" Height="auto" Margin="0,132,0,200"/>
-                   
+
                 </Grid>
             </TabItem>
             <TabItem Header="Display" Margin="0,-2,-2,0" Height="44" VerticalAlignment="Top" >
                 <Grid Margin="0,0,0,0">
                     <Button x:Name="Grouping_first" Content="Grouping" Click="Grouping_first_Click" Width="auto" Height="auto" Margin="-3,36,3,296"/>
                     <Button x:Name="Grouping_seconde" Content="Grouping" Click="Grouping_Seconde_Click" Width="auto" Height="auto" Margin="-3,100,3,232"/>
+                    <ComboBox x:Name="ComboBox_WeightSelector" Text="Select Weight" Margin="-3,164,3,168" Width="248" SelectionChanged="WeightSelector_SelectionChanged" Visibility="{Binding ElementName=deleteButton, Path=Visibility}"/>
+                    <ComboBox x:Name="ComboBox_StatusSelector" Text="Select Status" Margin="-3,228,3,104" Width="248" SelectionChanged="StatusSelector_SelectionChanged" Visibility="{Binding ElementName=deleteButton, Path=Visibility}"/>
+                    <ComboBox x:Name="ComboBox_PrioritySelector" Text="Select Priority" Margin="-3,292,3,40" Width="248" SelectionChanged="PrioritySelector_SelectionChanged" Visibility="{Binding ElementName=deleteButton, Path=Visibility}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Graphs" Height="47" Margin="0,-2,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" >
             </TabItem>
         </TabControl>
+        <Button x:Name="backButton" Content="Back" HorizontalAlignment="Left" Margin="750,0,0,0" VerticalAlignment="Top" Width="40" Height="25" Click="backToMain_Click"/>
 
 
 

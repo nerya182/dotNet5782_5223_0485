@@ -38,36 +38,21 @@ namespace PL
             TextBox_id.Text = customerSelected.Id.ToString();
             TextBox_name.Text = customerSelected.Name.ToString();
             PhoneTextBox.Text = customerSelected.Phone.ToString();
-            TextBoxLatitude.Text = customerSelected.Location.ToString();
-            TextBox_longitude.Visibility = Visibility.Hidden;
+            TextBoxLatitude.Text = customerSelected.Location.ToString();          
             listFromeCustomer.ItemsSource = customerSelected.FromCustomer;
             listToCustomer.ItemsSource = customerSelected.ToCustomer;
-            label_longitude.Visibility = Visibility.Hidden;
-            label_received.Visibility = Visibility.Hidden;
-            label_TextBoxNew.Visibility = Visibility.Hidden;
-            TextBoxNewModel.Visibility = Visibility.Hidden;
-            NewUpdate.Visibility = Visibility.Hidden;
-            TextBox_id.IsEnabled = false;
-            TextBox_name.IsEnabled = false;
-            PhoneTextBox.IsEnabled = false;
-            TextBoxLatitude.IsEnabled = false;
-            TextBox_longitude.IsEnabled = false;
             add_button.Visibility = Visibility.Hidden;
+            TextBox_id.IsEnabled = false;
         }
         public CustomerPage()
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
             NameButton.Visibility = Visibility.Hidden;
-            PhoneButton.Visibility = Visibility.Hidden;
             label_TextBoxNew.Visibility = Visibility.Hidden;
             TextBoxNewModel.Visibility = Visibility.Hidden;
             NewUpdate.Visibility = Visibility.Hidden;
             label_received.Visibility = Visibility.Hidden;
-            listFromeCustomer.Visibility = Visibility.Hidden;
-            listToCustomer.Visibility = Visibility.Hidden;
-            lable_parcelsto.Visibility = Visibility.Hidden;
-            lable_parcelsfo.Visibility = Visibility.Hidden;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

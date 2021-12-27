@@ -29,31 +29,11 @@ namespace PL
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
             label_DroneInParcel.Visibility = Visibility.Hidden;
-            label_created.Visibility = Visibility.Hidden;
-            label_affiliated.Visibility = Visibility.Hidden;
-            label_pickedUp.Visibility = Visibility.Hidden;
-            label_delivered.Visibility = Visibility.Hidden;
-            label_status.Visibility = Visibility.Hidden;
-            TextBox_Created.Visibility = Visibility.Hidden;
-            TextBox_Affiliated.Visibility = Visibility.Hidden;
-            TextBox_PickedUp.Visibility = Visibility.Hidden;
-            TextBox_Delivered.Visibility = Visibility.Hidden;
-            TextBox_DisplayWeight.Visibility = Visibility.Hidden;
-            TextBox_DisplayPriority.Visibility = Visibility.Hidden;
-            TextBox_DisplayStatus.Visibility = Visibility.Hidden;
-            Sender.Visibility = Visibility.Hidden;
-            Target.Visibility = Visibility.Hidden;
-            label_DroneInParcel.Visibility = Visibility.Hidden;
-            Listview_droneinparcel.Visibility = Visibility.Hidden;
-            Listview_Sender.Visibility = Visibility.Hidden;
-            Listview_Target.Visibility = Visibility.Hidden;
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             PrioritySelector.ItemsSource = Enum.GetValues(typeof(Priorities));
             WeightSelector.Text = "Select weight";
             PrioritySelector.Text = "Select priority";
             WeightSelector.IsEditable = true;
-            PrioritySelector.IsEditable = true;
-            Update_parcel.Visibility = Visibility.Hidden;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -69,8 +49,6 @@ namespace PL
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
             WeightSelector.Visibility = Visibility.Hidden;
-            PrioritySelector.Visibility = Visibility.Hidden;
-            Back_Button.Visibility = Visibility.Visible;
             label_SenderID.Content = "Sender:";
             selected = parcel;
             parcelSelected = bl.ParcelDisplay(selected.Id);
@@ -80,14 +58,10 @@ namespace PL
                 Update_parcel.Content = "Deliver Parcel";
             else if (parcelSelected.PickedUp == null && parcelSelected.Affiliation != null)
                 Update_parcel.Content = "Pick-Up Parcel";
-            TextBox_SenderID.Visibility = Visibility.Hidden;
+            TextBox_DisplayPriority.IsEnabled = false;
             label_TargetID.Content = "Target:";
-            TextBox_TargetID.Visibility = Visibility.Hidden;
             TextBox_DisplayWeight.Text = parcelSelected.Weight.ToString();
             TextBox_DisplayPriority.Text = parcelSelected.Priority.ToString();
-            add_button.Visibility = Visibility.Hidden;
-            label_SenderID.Visibility = Visibility.Hidden;
-            label_TargetID.Visibility = Visibility.Hidden;
             Listview_Sender.Items.Add(parcelSelected.Sender);
             Listview_Target.Items.Add(parcelSelected.Target);
             if (parcelSelected.Delivered != null)
@@ -133,16 +107,7 @@ namespace PL
             {
                 TextBox_Delivered.Visibility = Visibility.Hidden;
                 label_delivered.Visibility = Visibility.Hidden;
-            }
-
-            TextBox_DisplayPriority.IsEnabled = false;
-            TextBox_DisplayWeight.IsEnabled = false;
-            TextBox_DisplayPriority.IsEnabled = false;
-            TextBox_DisplayStatus.IsEnabled = false;
-            TextBox_Created.IsEnabled = false;
-            TextBox_Affiliated.IsEnabled = false;
-            TextBox_PickedUp.IsEnabled = false;
-            TextBox_Delivered.IsEnabled = false;
+            }           
         }
 
         private void Back_Button_Click1(object sender, RoutedEventArgs e)
