@@ -24,7 +24,7 @@ namespace BO
             string output = $"Id: {Id}         Weight: {Weight}         Priority: {Priority}   \n" +
                 $"Collect location: {collection}   \n" +
                 $"Supply location: {SupplyPoint}  \n" +
-                $"distance transportation: {(int)distanceTransportation} k\"m \n" +
+                $"distance transportation: {distanceTransportation} k\"m \n" +
                 $"Sender: {Sender}\n" +
                 $"Target: {Receiver}\n" +
                 $"Parcel Situation:";

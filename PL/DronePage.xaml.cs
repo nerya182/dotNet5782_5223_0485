@@ -35,17 +35,10 @@ namespace PL
         public DronePage()
         {
             InitializeComponent();
-            bl = BlApi.BlFactory.GetBl();  
-           
-            WeightTextBox.Visibility = Visibility.Hidden;
-            label_id.Content = "Enter ID Number:";
-            ListParcelTransfer.Visibility = Visibility.Hidden;
+            bl = BlApi.BlFactory.GetBl();
             changeModelButton.Visibility = Visibility.Hidden;
-            TextBoxNewModel.Visibility = Visibility.Hidden;
             labelTextBoxNewModel.Visibility = Visibility.Hidden;
-            NewModel.Visibility = Visibility.Hidden;
-            sendOrReleaseButton.Visibility = Visibility.Hidden;
-            delivery.Visibility = Visibility.Hidden;
+            label_id.Content = "Enter ID Number:";
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             chargeStationId.ItemsSource = from BO.Station s in bl.GetListStation()
                                           where s.AvailableChargeSlots > 0
@@ -79,34 +72,23 @@ namespace PL
             bl = BlApi.BlFactory.GetBl();
             label_id.Content = "ID Number:";
             label_model.Content = "Model:";
-            WeightSelector.Visibility = Visibility.Hidden;
+            add_button.Visibility = Visibility.Hidden;
+            labelTextBoxNewModel.Visibility = Visibility.Hidden;
             label_weight.Content = "Weight:";
             label_charge_Station_id.Content = "Battery %:";
-            add_button.Visibility = Visibility.Hidden;
             Delivery.Content = "Status:";
             TextBoxLattitude.FontSize = 10;
             Lattitude.Content = "Location: ";
-            Longitud.Content = "Parcel Tranfer:";
-            chargeStationId.Visibility = Visibility.Hidden;
-            TextBoxNewModel.Visibility = Visibility.Hidden;
-            labelTextBoxNewModel.Visibility = Visibility.Hidden;
-            NewModel.Visibility = Visibility.Hidden;
             selected = drone;           
             droneSelected = bl.DroneDisplay(selected.Id);
             mainDrone.DataContext = droneSelected;
-            TextBoxLattitude.Text = selected.Location.ToString();
             TextBoxDelivery.Text = selected.Status.ToString();
-            TextBoxLongitude.Visibility = Visibility.Hidden;
             ListParcelTransfer.Items.Add(droneSelected.ParcelTransfer);
-            TextBoxLongitude.Width = 300;
-            TextBoxLongitude.Height = 100;
+            if (droneSelected.ParcelTransfer.Id==0)
+            {
+                ListParcelTransfer.Visibility = Visibility.Hidden; 
+            }
             TextBox_id.IsEnabled = false;
-            TextBox_model.IsEnabled = false;
-            WeightTextBox.IsEnabled = false;
-            TextBoxDelivery.IsEnabled = false;
-            TextBoxLattitude.IsEnabled = false;
-            TextBoxLongitude.IsEnabled = false;
-            TextBoxLongitude.FontSize = 10;
             switch (droneSelected.Status)
             {
                 case DroneStatuses.Available:
@@ -197,7 +179,6 @@ namespace PL
         }
 
        
-
         private void allDeliveryButtonButton_Click(object sender, RoutedEventArgs e)
         {
     
@@ -217,6 +198,8 @@ namespace PL
         {
 
         }
+
+        
     }
 }
 

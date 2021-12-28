@@ -38,7 +38,6 @@ namespace PL
             StatusSelector.Text = "Select Status";
             WeightSelector.IsEditable = true;
         }
-
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
            

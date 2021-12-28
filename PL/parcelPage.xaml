@@ -8,17 +8,12 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="parcelPage">
 
-    <Grid x:Name="pw">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="389*"/>
-            <ColumnDefinition Width="411*"/>
-        </Grid.ColumnDefinitions>
-
-        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill" Height="500" Margin="0,-25,0,-25" Grid.ColumnSpan="2"/>
-        <Label Name="label_SenderID" Content="Enter sender ID:" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
-        <Label Name="label_TargetID" Content="Enter target ID:" HorizontalAlignment="Left" Height="29" Margin="35,106,0,0" VerticalAlignment="Top" Width="199" FontSize="16" FontWeight="Black" Visibility="{Binding ElementName=label_SenderID, Path=Visibility}"/>
-        <TextBox x:Name="TextBox_SenderID" TextChanged="SenderID_TextChanged" HorizontalAlignment="Left" Margin="221,85,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=label_SenderID, Path=Visibility}"/>
-        <TextBox x:Name="TextBox_TargetID" TextChanged="TargetID_TextChanged" HorizontalAlignment="Left" Margin="221,114,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=label_SenderID, Path=Visibility}"/>
+    <Grid x:Name="mainParcel" DataContext="{Binding}">
+        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill" Height="450" Width="800" Margin="0,-25,0,-25" Grid.ColumnSpan="2"/>
+        <Label Name="label_SenderID" Content="Enter sender ID:" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black" Visibility="{Binding ElementName=WeightSelector, Path=Visibility}"/>
+        <Label Name="label_TargetID" Content="Enter target ID:" HorizontalAlignment="Left" Height="29" Margin="35,106,0,0" VerticalAlignment="Top" Width="199" FontSize="16" FontWeight="Black" Visibility="{Binding ElementName=WeightSelector, Path=Visibility}"/>
+        <TextBox x:Name="TextBox_SenderID" Text="{Binding Id}" TextChanged="SenderID_TextChanged" HorizontalAlignment="Left" Margin="221,85,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=WeightSelector, Path=Visibility}" />
+        <TextBox x:Name="TextBox_TargetID" TextChanged="TargetID_TextChanged" HorizontalAlignment="Left" Margin="221,114,0,0" Text="{Binding SenderName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=WeightSelector, Path=Visibility}"/>
         <Label x:Name="label_weight" Content="Weight:" HorizontalAlignment="Left" Margin="35,143,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
         <ComboBox  Name="WeightSelector" Text="Weight" HorizontalAlignment="Left" Margin="221,149,0,0" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=label_SenderID, Path=Visibility}"/>
         <Label x:Name="label_priority" Content="Priority:" HorizontalAlignment="Left" Margin="35,176,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Black"/>

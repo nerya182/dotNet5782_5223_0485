@@ -73,7 +73,7 @@ namespace DalObject
                 Drones.Add(newDrone);
             }
         }
-        /// <summary>
+        /// <summar y>
         /// Creating 10 Customers Randomly
         /// </summary>
         private static void CreateCustomers()
@@ -82,7 +82,7 @@ namespace DalObject
             for (int i = 0; i < 10; i++)
             {
                 CustomerName customerName = (CustomerName)R.Next(0, 11);
-                Customer newCustomer = new Customer() { Id = R.Next(100000000, 1000000000), Name = customerName.ToString(), Phone = "050" + R.Next(1111111,9999999), Lattitude = R.Next(3180424, 3276699) / 100000.0, Longitude = R.Next(3502056, 3520499) / 100000.0 };
+                Customer newCustomer = new Customer() { Id = R.Next(100000000, 1000000000), Name = customerName.ToString(), Phone = "050" + R.Next(1111111,9999999), Lattitude = (R.Next(31591956, 32049510)) / ((1000000.0)), Longitude = (R.Next(34802513, 35393515)) / ((1000000.0)) };
                 Customers.Add(newCustomer);
             }
         }

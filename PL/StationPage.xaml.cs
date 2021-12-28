@@ -46,24 +46,15 @@ namespace PL
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
-            add_button.Visibility = Visibility.Hidden;
-            TextBoxLongitude.Visibility = Visibility.Hidden;
             label_id.Content = "ID Number:";
             label_name.Content = "Name:";                      
             label_number_of_chargeslots.Content = "Available Charge Slots:";
-            Lattitude.Content = "Location: ";
-            Longitud.Content = "List of Drones:";
-            TextBoxLattitude.FontSize = 10;
             selected = (StationToList)selectedItem;
             stationSelected = bl.BaseStationDisplay(selected.Id);
-            TextBox_id.Text = stationSelected.Id.ToString();
-            TextBox_name.Text = stationSelected.Name;
-            TextBoxLattitude.Text = stationSelected.location.ToString();
-            TextBoxChargeSlots.Text = stationSelected.AvailableChargeSlots.ToString();
-            TextBoxLongitude.Width = 300;
-            TextBoxLongitude.Height = 100;
-            TextBoxLongitude.FontSize = 10;
+            mainStation.DataContext = stationSelected;
             TextBox_id.IsEnabled = false;
+            add_button.Visibility = Visibility.Collapsed;
+            labelTextBoxNewName.Visibility = Visibility.Collapsed;
             listOfDrones.ItemsSource = stationSelected.droneInCharging;
         }
         private void idInput_TextChanged(object sender, TextChangedEventArgs e)

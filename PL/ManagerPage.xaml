@@ -7,18 +7,31 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ManagerPage">
+    <Page.Resources>
+        <local:BatteryToColorConverter x:Key="BatteryToColorConverter"/>
+        <local:BatteryToProgressBarConverter x:Key="BatteryToProgressBarConverter"/>
+        <local:LatitudeToSexaConvert x:Key="LatitudeToSexaConvert"/>
+        <local:LongitudeToSexaConvert x:Key="LongitudeToSexaConvert"/>
+    </Page.Resources>
 
     <Grid Background="White">
         <TabControl Name="TabManager" Margin="2,0,283,2" SelectionChanged="TabManager_SelectionChanged">
             <TabItem Name="tabDrones" Header="list drone">
                 <Grid Background="White"  Height="422" HorizontalAlignment="Left" Width="507">
-                    <ListView Name="listDrones" ItemsSource="{Binding}"  MouseDoubleClick="DoubleClickUpdateDrone" Margin="0,0,5,6"  >
+                    <ListView Name="listDrones" ItemsSource="{Binding}" Width="auto"  Height="auto" MouseDoubleClick="DoubleClickUpdateDrone" Margin="0,0,14,13"  >
                         <ListView.View>
                             <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
-                                <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="auto"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Model}" x:Name="Model" Header="Model" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="45"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Model}" x:Name="Model" Header="Model" Width="50"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Location}" x:Name="Location" Header="Location" Width="auto"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Battery}" x:Name="Battery" Header="Battery %" Width="auto"/>
+                                <GridViewColumn  Header="Battery %" Width="auto">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ProgressBar Name="Battrey"  Minimum="0" Maximum="100" Value="{Binding Battery,Converter={StaticResource BatteryToProgressBarConverter}}" 
+                                                         Foreground="{Binding Battery,Converter={StaticResource BatteryToColorConverter}}" HorizontalAlignment="Left" Height="20"  VerticalAlignment="Top"  Width="40"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" x:Name="Weight" Header="Weight" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Status}" x:Name="DronesStatus" Header="DronesStatus" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding ParcelBeingPassedId}" x:Name="ParcelTransfer"  Header="num parcel" Width="auto"/>
@@ -92,28 +105,29 @@
                     <Setter Property="Padding" Value="3" />
                 </Style>
             </TabControl.Resources>
-            <TabItem Header="Options" Margin="0,-3,-2,-1">
+            <TabItem Header="Options" Margin="0,-3,-2,0" Height="52" VerticalAlignment="Top">
                 <Grid Margin="0,0,0,0">
                     <Button x:Name="ADD" Content="ADD" Click="ADD_Click" Width="auto" Height="auto" Margin="-3,66,3,266"/>
-                    <Button x:Name="deleteButton" Content="delete" Click="delete_Click" Width="auto" Height="auto" Margin="0,132,0,200"/>
-
+                    <Button x:Name="deleteButton" Visibility="Hidden" Content="delete" Click="delete_Click" Width="auto" Height="auto" Margin="0,132,0,200"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Display" Margin="0,-2,-2,0" Height="44" VerticalAlignment="Top" >
                 <Grid Margin="0,0,0,0">
                     <Button x:Name="Grouping_first" Content="Grouping" Click="Grouping_first_Click" Width="auto" Height="auto" Margin="-3,36,3,296"/>
-                    <Button x:Name="Grouping_seconde" Content="Grouping" Click="Grouping_Seconde_Click" Width="auto" Height="auto" Margin="-3,100,3,232"/>
-                    <ComboBox x:Name="ComboBox_WeightSelector" Text="Select Weight" Margin="-3,164,3,168" Width="248" SelectionChanged="WeightSelector_SelectionChanged" Visibility="{Binding ElementName=deleteButton, Path=Visibility}"/>
-                    <ComboBox x:Name="ComboBox_StatusSelector" Text="Select Status" Margin="-3,228,3,104" Width="248" SelectionChanged="StatusSelector_SelectionChanged" Visibility="{Binding ElementName=deleteButton, Path=Visibility}"/>
-                    <ComboBox x:Name="ComboBox_PrioritySelector" Text="Select Priority" Margin="-3,292,3,40" Width="248" SelectionChanged="PrioritySelector_SelectionChanged" Visibility="{Binding ElementName=deleteButton, Path=Visibility}"/>
+                    <Button x:Name="Grouping_seconde" Content="Grouping" Visibility="{Binding ElementName=Grouping_first,Path=Visibility}" Click="Grouping_Seconde_Click" Width="auto" Height="auto" Margin="-3,100,3,232"/>
+                    <ComboBox x:Name="ComboBox_WeightSelector" Text="Select Weight" IsEditable="True"  Margin="-3,164,3,168" Width="auto" SelectionChanged="WeightSelector_SelectionChanged" Visibility="{Binding ElementName=deleteButton, Path=Visibility}"/>
+                    <ComboBox x:Name="ComboBox_StatusSelector" Text="Select Status" Visibility="{Binding ElementName=ComboBox_WeightSelector, Path=Visibility}" IsEditable="{Binding ElementName=ComboBox_WeightSelector, Path=IsEditable}" Margin="-3,228,3,104" Width="auto" SelectionChanged="StatusSelector_SelectionChanged"/>
+                    <ComboBox x:Name="ComboBox_PrioritySelector"  Text="Select Priority"  Visibility="{Binding ElementName=ComboBox_WeightSelector, Path=Visibility}"  IsEditable="{Binding ElementName=ComboBox_WeightSelector, Path=IsEditable}" Margin="-3,292,3,40" Width="auto" SelectionChanged="PrioritySelector_SelectionChanged" />
+                    <ComboBox x:Name="ComboBox_date"  Text="Select date"  Visibility="{Binding Visibility, ElementName=ComboBox_WeightSelector}"  IsEditable="{Binding IsEditable, ElementName=ComboBox_WeightSelector}" Margin="1,328,-1,4" Width="auto" SelectionChanged="ComboBox_date_SelectionChanged" />
+                    <Button x:Name="filter" Content="Refresh list" Click="Refresh_list_Click" Width="235" Margin="1,3,7,329"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Graphs" Height="47" Margin="0,-2,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" >
+            <TabItem Header="Maps" Height="47" Margin="0,-2,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" >
+                <Button x:Name="maps" Content="show list on maps" Click="list_maps_Click" Width="auto" Height="auto" Margin="-3,36,3,296"/>
             </TabItem>
         </TabControl>
         <Button x:Name="backButton" Content="Back" HorizontalAlignment="Left" Margin="750,0,0,0" VerticalAlignment="Top" Width="40" Height="25" Click="backToMain_Click"/>
-
-
-
     </Grid>
 </Page>
+
+    

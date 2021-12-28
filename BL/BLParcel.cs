@@ -221,32 +221,28 @@ namespace BL
                 throw new IllegalActionException("The package could not be deleted because it is in delivery mode");
             }
         }
-        public IEnumerable<ParcelToList> GroupingSenderName()
+        public IEnumerable<IGrouping<string,ParcelToList>> GroupingSenderName()
         {
-            List<ParcelToList> listParcel = new List<ParcelToList>();
-            var groups = GetParcels().GroupBy(p=>p.SenderName);
-            foreach (var group in groups)
+            return GetParcels().GroupBy(p => p.SenderName);
+        }
+        public IEnumerable<IGrouping<string, ParcelToList>> GroupingTargetNam()
+        {
+            return GetParcels().GroupBy(p => p.TargetName);
+        }
+        public IEnumerable<ParcelToList> filterToday(int num)
+        {
+            List<ParcelToList> parcels =new List <ParcelToList>();
+            foreach (var item in GetListParcel())
             {
-                foreach (BO.ParcelToList item in group)
+                var a = (DateTime.Now - item.Creating).Value.Hours;
+                if ((DateTime.Now - item.Creating).Value.Hours < num|| (DateTime.Now - item.Affiliation).Value.Hours<num||(DateTime.Now - item.PickedUp).Value.Hours<num|| (DateTime.Now - item.Delivered).Value.Hours<num)
                 {
-                    listParcel.Add(item);
+                    parcels.Add(MakeParcelToList(item));
                 }
             }
-            return (IEnumerable<ParcelToList>)listParcel;
+            return parcels;
         }
-        public IEnumerable<ParcelToList> GroupingTargetNam()
-        {
-            List<ParcelToList> listParcel = new List<ParcelToList>();
-            var groups = GetParcels().GroupBy(p => p.TargetName);
-            foreach (var group in groups)
-            {
-                foreach (BO.ParcelToList item in group)
-                {
-                    listParcel.Add(item);
-                }
-            }
-            return (IEnumerable<ParcelToList>)listParcel;
-        }
+
     }
 }
 

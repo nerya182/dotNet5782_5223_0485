@@ -89,7 +89,17 @@ namespace BL
             }
             return temp;
         }
-
+        public IEnumerable<Customer> GetListCustomers()
+        {
+            IEnumerable<DO.Customer> customers = dal.ListCustomer(i => true);
+            List<Customer> temp = new List<Customer>();
+            foreach (var customer in customers)
+            {
+                Customer obj = CustomerDisplay(customer.Id);
+                temp.Add(obj);
+            }
+            return temp;
+        }
         /// <summary>
         /// Retrieving the info needed to transform the 'customer' into a 'customertolist'
         /// </summary>
