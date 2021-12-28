@@ -24,7 +24,6 @@ namespace PL
     public partial class MainWindow : Window
     {
         private IBL bl = BlApi.BlFactory.GetBl();
-        MainWindow mainWindow;
         ManagerPage managerPage;
         DronePage dronePage;
         parcelPage parcelPage;
