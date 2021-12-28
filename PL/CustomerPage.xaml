@@ -21,7 +21,7 @@
         <TextBox x:Name="PhoneTextBox" HorizontalAlignment="Left" Margin="221,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" IsEnabled="{Binding ElementName=TextBox_id, Path=IsEnabled}"/>
         <TextBox x:Name="TextBoxLatitude" HorizontalAlignment="Left" Margin="221,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135" IsEnabled="{Binding ElementName=TextBox_id, Path=IsEnabled}"/>
         <Button  x:Name="NameButton" Content="set name" HorizontalAlignment="Left" Margin="367,89,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="NameButton_Click"/>
-        <Button  x:Name="PhoneButton" Content="set phone" HorizontalAlignment="Left" Margin="379,125,0,0" VerticalAlignment="Top"  FontSize="14" FontWeight="Black" Click="PhoneButton_Click" Visibility="{Binding ElementName=NameButton, Path=Visibility}"/>
+        <Button  x:Name="PhoneButton" Content="set phone" HorizontalAlignment="Left" Margin="367,125,0,0" VerticalAlignment="Top"  FontSize="14" FontWeight="Black" Height="25" Width="100" Click="PhoneButton_Click" Visibility="{Binding ElementName=NameButton, Path=Visibility}"/>
         <Label   x:Name="label_TextBoxNew" Content="Insert a new name" HorizontalAlignment="Left" Margin="536,85,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Visibility="{Binding ElementName=add_button, Path=Visibility}"/>
         <TextBox x:Name="TextBoxNewModel"  HorizontalAlignment="Left" Margin="548,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Height="24" Width="138" Visibility="{Binding ElementName=add_button, Path=Visibility}"/>
         <Button  x:Name="NewUpdate" Content="update" HorizontalAlignment="Left" Margin="560,161,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="updateButton_Click" FontSize="14" FontWeight="Black" Visibility="{Binding ElementName=add_button, Path=Visibility}"/>
@@ -53,6 +53,7 @@
         <Button Name="close_customer" HorizontalAlignment="Left" Margin="703,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Cancel_Add_Button_Click">
             <Image Source="/back-button.png" />
         </Button>
+        <Button x:Name="AddParcel" Content="Add Parcel" HorizontalAlignment="Left" Margin="367,159,0,0" VerticalAlignment="Top" FontSize="14" Height="25" Width="100" FontWeight="Black" Click="AddParcel_Click"/>
 
     </Grid>
 </Page>

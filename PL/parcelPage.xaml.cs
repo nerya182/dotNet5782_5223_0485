@@ -29,10 +29,13 @@ namespace PL
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
             label_DroneInParcel.Visibility = Visibility.Hidden;
+            Sender.Visibility = Visibility.Hidden;
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             PrioritySelector.ItemsSource = Enum.GetValues(typeof(Priorities));
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(ParcelStatus));
             WeightSelector.Text = "Select weight";
             PrioritySelector.Text = "Select priority";
+            StatusSelector.Text = "Select Status";
             WeightSelector.IsEditable = true;
         }
 
@@ -49,7 +52,7 @@ namespace PL
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
             WeightSelector.Visibility = Visibility.Hidden;
-            label_SenderID.Content = "Sender:";
+            label_SenderID.Visibility = Visibility.Hidden;
             selected = parcel;
             parcelSelected = bl.ParcelDisplay(selected.Id);
             if (parcelSelected.Affiliation == null || parcelSelected.Delivered != null)

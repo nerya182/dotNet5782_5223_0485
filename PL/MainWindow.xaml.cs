@@ -24,6 +24,7 @@ namespace PL
     public partial class MainWindow : Window
     {
         private IBL bl = BlApi.BlFactory.GetBl();
+        MainWindow mainWindow;
         ManagerPage managerPage;
         DronePage dronePage;
         parcelPage parcelPage;
@@ -297,6 +298,7 @@ namespace PL
             customerPage.NameButton.Click += NameButton_Click;
             customerPage.NewUpdate.Click += NewUpdate_Click;
             customerPage.PhoneButton.Click += PhoneButton_Click;
+            customerPage.AddParcel.Click += Add_button_Click1;
             customerPage.close_customer.Click += Close_customer_Click;
             customerPage.listFromeCustomer.MouseDoubleClick += Listview_FromCustomer_MouseDoubleClick;
             customerPage.listToCustomer.MouseDoubleClick += Listview_ToCustomer_MouseDoubleClick;
@@ -498,9 +500,19 @@ namespace PL
                     customerPage = new CustomerPage();
                     customerPage.add_button.Click += Add_button_Click3;
                     customerPage.close_customer.Click += Close_customer_Click;
+                    customerPage.AddParcel.Click += AddParcel_Click;
                     this.Content = customerPage;
                     break;
             }
+        }
+
+        private void AddParcel_Click(object sender, RoutedEventArgs e)
+        {
+            parcelPage = new parcelPage();
+            parcelPage.add_button.Click += Add_button_Click1;
+            //parcelPage.Back_Button.Click
+            this.Content = parcelPage;
+
         }
 
         private void Close_customer_Click(object sender, RoutedEventArgs e)
@@ -903,7 +915,12 @@ namespace PL
                 MessageBox.Show("id of customer does not exist");
                 return;
             }
-
+            customerPage = new CustomerPage(bl.CustomerDisplay(id));
+            customerPage.NameButton.Click += NameButton_Click;
+            customerPage.NewUpdate.Click += NewUpdate_Click;
+            customerPage.PhoneButton.Click += PhoneButton_Click;
+            customerPage.AddParcel.Click += AddParcel_Click;
+            this.Content = customerPage;
         }
 
         private void AddNewClient_Click(object sender, RoutedEventArgs e)

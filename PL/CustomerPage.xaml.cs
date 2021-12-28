@@ -114,6 +114,11 @@ namespace PL
         {
 
         }
+
+        private void AddParcel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 
