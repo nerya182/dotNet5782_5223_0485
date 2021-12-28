@@ -875,11 +875,13 @@ namespace PL
         private void Client_Click(object sender, RoutedEventArgs e)
         {
             enter.Visibility = Visibility.Visible;
+            add.Visibility = Visibility.Hidden;
         }
 
         private void New_Client_Click(object sender, RoutedEventArgs e)
         {
             add.Visibility = Visibility.Visible;
+            enter.Visibility = Visibility.Hidden;
         }
 
         private void Enter_Click(object sender, RoutedEventArgs e)
@@ -901,6 +903,7 @@ namespace PL
                 MessageBox.Show("id of customer does not exist");
                 return;
             }
+
         }
 
         private void AddNewClient_Click(object sender, RoutedEventArgs e)
