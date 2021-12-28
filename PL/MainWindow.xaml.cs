@@ -31,6 +31,7 @@ namespace PL
         CustomerPage customerPage;
         Customer customer;
         Drone drone;
+        Maps maps;
         int selectedTab;
         object selectedItem;
         public MainWindow()
@@ -58,14 +59,69 @@ namespace PL
             managerPage.deleteButton.Click += DeleteButton_Click;
             managerPage.Grouping_first.Click += Grouping_first_Click1;
             managerPage.Grouping_seconde.Click += Grouping_seconde_Click;
-            managerPage.ComboBox_WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            managerPage.ComboBox_StatusSelector.ItemsSource = Enum.GetValues(typeof(ParcelStatus));
-            managerPage.ComboBox_PrioritySelector.ItemsSource = Enum.GetValues(typeof(Priorities));
             managerPage.ComboBox_WeightSelector.SelectionChanged += WeightSelector_SelectionChanged;
             managerPage.ComboBox_StatusSelector.SelectionChanged += StatusSelector_SelectionChanged;
             managerPage.ComboBox_PrioritySelector.SelectionChanged += PrioritySelector_SelectionChanged;
+            managerPage.ComboBox_date.SelectionChanged += ComboBox_date_SelectionChanged;
+            managerPage.maps.Click += Maps_Click;
+            managerPage.filter.Click += Filter_Click;
             Observables();
             this.Content = managerPage;
+        }
+
+        private void Filter_Click(object sender, RoutedEventArgs e)
+        {
+            Observables();
+        }
+
+        private void ComboBox_date_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (managerPage.ComboBox_date.SelectedItem != null)
+            {
+                var selectedDate = managerPage.ComboBox_date.SelectedIndex;
+                switch (selectedDate)
+                {
+                    case 0:
+                        managerPage.listParcel.ItemsSource = bl.filterToday(24);
+                        break;
+                    case 1:
+                        managerPage.listParcel.ItemsSource = bl.filterToday(24*4);
+                        break;
+                    case 2:
+                        managerPage.listParcel.ItemsSource = bl.filterToday(24*7);
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        }
+
+        private void Maps_Click(object sender, RoutedEventArgs e)
+        {
+            switch (managerPage.TabManager.SelectedIndex)
+            {
+                case 0:
+                    maps = new Maps(bl.GetListDrone());
+                    maps.Back_Button.Click += Back_Button_Click6;
+                    this.Content = maps;
+                    break;
+                case 2:
+                    maps = new Maps(bl.GetListStation());
+                    maps.Back_Button.Click += Back_Button_Click6;
+                    this.Content = maps;
+                    break;
+                case 3:
+                    maps = new Maps(bl.GetListCustomers());
+                    maps.Back_Button.Click += Back_Button_Click6;
+                    this.Content = maps;
+                    break;
+            }
+        }
+
+        private void Back_Button_Click6(object sender, RoutedEventArgs e)
+        {
+            Manager_Click(sender, e);
         }
 
         private void Observables()
@@ -1000,8 +1056,7 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Maps maps = new Maps(bl);
-            this.Content = maps;
+           
         }
     }
 }

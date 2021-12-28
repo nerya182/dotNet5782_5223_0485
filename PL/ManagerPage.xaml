@@ -118,15 +118,15 @@
                     <ComboBox x:Name="ComboBox_WeightSelector" Text="Select Weight" IsEditable="True"  Margin="-3,164,3,168" Width="auto" SelectionChanged="WeightSelector_SelectionChanged" Visibility="{Binding ElementName=deleteButton, Path=Visibility}"/>
                     <ComboBox x:Name="ComboBox_StatusSelector" Text="Select Status" Visibility="{Binding ElementName=ComboBox_WeightSelector, Path=Visibility}" IsEditable="{Binding ElementName=ComboBox_WeightSelector, Path=IsEditable}" Margin="-3,228,3,104" Width="auto" SelectionChanged="StatusSelector_SelectionChanged"/>
                     <ComboBox x:Name="ComboBox_PrioritySelector"  Text="Select Priority"  Visibility="{Binding ElementName=ComboBox_WeightSelector, Path=Visibility}"  IsEditable="{Binding ElementName=ComboBox_WeightSelector, Path=IsEditable}" Margin="-3,292,3,40" Width="auto" SelectionChanged="PrioritySelector_SelectionChanged" />
+                    <ComboBox x:Name="ComboBox_date"  Text="Select date"  Visibility="{Binding Visibility, ElementName=ComboBox_WeightSelector}"  IsEditable="{Binding IsEditable, ElementName=ComboBox_WeightSelector}" Margin="1,328,-1,4" Width="auto" SelectionChanged="ComboBox_date_SelectionChanged" />
+                    <Button x:Name="filter" Content="Refresh list" Click="Refresh_list_Click" Width="235" Margin="1,3,7,329"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Graphs" Height="47" Margin="0,-2,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" >
+            <TabItem Header="Maps" Height="47" Margin="0,-2,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" >
+                <Button x:Name="maps" Content="show list on maps" Click="list_maps_Click" Width="auto" Height="auto" Margin="-3,36,3,296"/>
             </TabItem>
         </TabControl>
         <Button x:Name="backButton" Content="Back" HorizontalAlignment="Left" Margin="750,0,0,0" VerticalAlignment="Top" Width="40" Height="25" Click="backToMain_Click"/>
-
-
-
     </Grid>
 </Page>
 

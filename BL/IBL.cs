@@ -191,5 +191,7 @@ namespace BlApi
         IEnumerable<IGrouping<int, StationToList>> GroupingChargeSlots();
         IEnumerable<IGrouping<string, ParcelToList>> GroupingTargetNam();
         IEnumerable<IGrouping<string, ParcelToList>> GroupingSenderName();
+        IEnumerable<Customer> GetListCustomers();
+        IEnumerable<ParcelToList> filterToday(int num);
     }
 }

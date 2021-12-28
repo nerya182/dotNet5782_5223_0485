@@ -10,10 +10,6 @@
       Title="Maps">
 
     <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="35" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
         <m:Map x:Name="myMap" Grid.RowSpan="2"
                     Center="31.771170,35.214086" ZoomLevel="13"
                     Mode="Road" 

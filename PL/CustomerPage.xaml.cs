@@ -32,14 +32,12 @@ namespace PL
             label_id.Content = "ID number";
             label_name.Content = "name";
             label_phon.Content = "phone number";
-            label_latitude.Content = "Location";
+            label_latitude.Content = "Latitude";
+            label_longitude.Content ="longitude";
             selected =bl.MakeCustomerToList(customer);
             customerSelected = bl.CustomerDisplay(selected.Id);
-            TextBox_id.Text = customerSelected.Id.ToString();
-            TextBox_name.Text = customerSelected.Name.ToString();
-            PhoneTextBox.Text = customerSelected.Phone.ToString();
-            TextBoxLatitude.Text = customerSelected.Location.ToString();          
-            listFromeCustomer.ItemsSource = customerSelected.FromCustomer;
+            mainCustomer.DataContext = customerSelected;       
+            //listFromeCustomer.ItemsSource = customerSelected.FromCustomer;
             listToCustomer.ItemsSource = customerSelected.ToCustomer;
             add_button.Visibility = Visibility.Hidden;
             TextBox_id.IsEnabled = false;
@@ -52,7 +50,6 @@ namespace PL
             label_TextBoxNew.Visibility = Visibility.Hidden;
             TextBoxNewModel.Visibility = Visibility.Hidden;
             NewUpdate.Visibility = Visibility.Hidden;
-            label_received.Visibility = Visibility.Hidden;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -114,6 +111,8 @@ namespace PL
         {
 
         }
+
+    
     }
 }
 

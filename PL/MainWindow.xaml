@@ -26,6 +26,5 @@
         <TextBox x:Name="textbox_newLong" HorizontalAlignment="Left" Margin="530,170,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=add, Path=Visibility}"/>
         <TextBox x:Name="textbox_newLatt" HorizontalAlignment="Left" Margin="530,200,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=add, Path=Visibility}"/>
         <Button x:Name="add" Content="Add" HorizontalAlignment="Left" Margin="470,240,0,0" VerticalAlignment="Top" Height="33" FontWeight="Bold" Width="70" Click="AddNewClient_Click"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="128,330,0,0" VerticalAlignment="Top" Click="Button_Click"/>
     </Grid>
 </Window>

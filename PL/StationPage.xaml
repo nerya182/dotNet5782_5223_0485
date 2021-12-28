@@ -39,7 +39,14 @@
             <ListView.View>
                 <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
                     <GridViewColumn DisplayMemberBinding="{Binding DroneId}" x:Name="Id_charge" Header="Id" Width="auto"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Battery}" x:Name="Battery_charge" Header="Battery" Width="auto"/>
+                    <GridViewColumn  Header="Battery %" Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ProgressBar Name="Battrey"  Minimum="0" Maximum="100" Value="{Binding Battery,Converter={StaticResource BatteryToProgressBarConverter}}" 
+                                                         Foreground="{Binding Battery,Converter={StaticResource BatteryToColorConverter}}" HorizontalAlignment="Left" Height="20"  VerticalAlignment="Top"  Width="40"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

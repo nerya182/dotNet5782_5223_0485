@@ -229,6 +229,20 @@ namespace BL
         {
             return GetParcels().GroupBy(p => p.TargetName);
         }
+        public IEnumerable<ParcelToList> filterToday(int num)
+        {
+            List<ParcelToList> parcels =new List <ParcelToList>();
+            foreach (var item in GetListParcel())
+            {
+                var a = (DateTime.Now - item.Creating).Value.Hours;
+                if ((DateTime.Now - item.Creating).Value.Hours < num|| (DateTime.Now - item.Affiliation).Value.Hours<num||(DateTime.Now - item.PickedUp).Value.Hours<num|| (DateTime.Now - item.Delivered).Value.Hours<num)
+                {
+                    parcels.Add(MakeParcelToList(item));
+                }
+            }
+            return parcels;
+        }
+
     }
 }
 

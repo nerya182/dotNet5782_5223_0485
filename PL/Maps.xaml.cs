@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BlApi;
+using BO;
 using Microsoft.Maps.MapControl.WPF;
 
 
@@ -22,29 +24,84 @@ namespace PL
     /// </summary>
     public partial class Maps : Page
     {
-        public Maps(BlApi.IBL IBL)
+        private IBL bl = BlApi.BlFactory.GetBl();
+        public Maps(IEnumerable<DroneToList> listsDrone)
         {
             InitializeComponent();
             Pushpin pin;
-            foreach (var item in IBL.GetListDrone())
+            List<Pushpin> points = new();
+            int i = 1;
+            foreach (var item in listsDrone)
             {
                 pin = new();
                 pin.Location = new(item.Location.Lattitude, item.Location.Longitude);
-                myMap.Children.Add(pin);
-            }
-            var a = IBL.GetListDrone();
-            foreach (var item in IBL.GetListStation())
-            {
-              // pin = new();
-                //pin.Location = new(item.location.Lattitude, item.location.Longitude);
-                //myMap.Children.Add(pin);
+                if (points.Find(p => p.Location == p.Location) == null)
+                {
+                    points.Add(pin);
+                    myMap.Children.Add(pin);
+                }
+                else
+                {
+                    points.Add(pin);
+                    pin.Location = new(item.Location.Lattitude + 0.0001 * i, item.Location.Longitude + 0.0001 * i);
+                    i++;
+                    myMap.Children.Add(pin);
+                }
+
             }
         }
-
         private void Back_Button_Click(object sender, RoutedEventArgs e)
         {
             ManagerPage manager = new();
             this.Content = manager;
+        }
+        public Maps(IEnumerable<Station> listStation)
+        {
+            InitializeComponent();
+            Pushpin pin;
+            List<Pushpin> points = new();
+            int i = 1;
+            foreach (var item in listStation)
+            {
+                pin = new();
+                pin.Location = new(item.location.Lattitude, item.location.Longitude);
+                if (points.Find(p => p.Location == p.Location) == null)
+                {
+                    points.Add(pin);
+                    myMap.Children.Add(pin);
+                }
+                else
+                {
+                    points.Add(pin);
+                    pin.Location = new(item.location.Lattitude + 0.0001 * i, item.location.Longitude + 0.0001 * i);
+                    i++;
+                    myMap.Children.Add(pin);
+                }
+            }
+        }
+        public Maps(IEnumerable<Customer> listcustomers)
+        {
+            InitializeComponent();
+            Pushpin pin;
+            List<Pushpin> points = new();
+            int i = 1;
+            foreach (var item in listcustomers)
+            {
+                pin = new();
+                pin.Location = new(item.Location.Lattitude, item.Location.Longitude);
+                if (points.Find(p => p.Location == p.Location) == null)
+                {
+                    points.Add(pin);
+                    myMap.Children.Add(pin);
+                }
+                else
+                {
+                    points.Add(pin);
+                    pin.Location = new(item.Location.Lattitude + 0.0001 * i, item.Location.Longitude + 0.0001 * i);
+                    i++;
+                    myMap.Children.Add(pin);
+                }
+            }
         }
     }
 }
