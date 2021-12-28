@@ -35,7 +35,6 @@ namespace PL
             PrioritySelector.Text = "Select priority";
             WeightSelector.IsEditable = true;
         }
-
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
            

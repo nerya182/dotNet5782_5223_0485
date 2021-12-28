@@ -50,26 +50,32 @@ namespace PL
                     ADD.Content = "add drone";
                     Grouping_first.Content = "Grouping of status drones";
                     Grouping_seconde.Content = "Grouping of weight drones";
-                    deleteButton.Visibility = Visibility.Hidden;
+                    deleteButton.Visibility = Visibility.Collapsed;
+                    Grouping_first.Visibility = Visibility.Visible;
+                    ComboBox_WeightSelector.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     ADD.Content = "add parcel";
                     deleteButton.Content = "delete parcel";
                     Grouping_first.Content = "Grouping of sender";
                     Grouping_seconde.Content = "Grouping of target";
+                    Grouping_first.Visibility = Visibility.Visible;
                     deleteButton.Visibility = Visibility.Visible;
+                    ComboBox_WeightSelector.Visibility = Visibility.Visible;
                     break;
                 case 2:
                     ADD.Content = "add station";
                     Grouping_first.Content = "Grouping of charge-slots availables";
                     Grouping_seconde.Content = "Grouping of number charge-slots";
-                    deleteButton.Visibility = Visibility.Hidden;
+                    Grouping_first.Visibility = Visibility.Visible;
+                    deleteButton.Visibility = Visibility.Collapsed;
+                    ComboBox_WeightSelector.Visibility = Visibility.Collapsed;
                     break;
                 case 3:
                     ADD.Content = "add customer";
                     Grouping_first.Visibility = Visibility.Hidden;
-                    Grouping_seconde.Visibility = Visibility.Hidden;
-                    deleteButton.Visibility = Visibility.Hidden;
+                    deleteButton.Visibility = Visibility.Collapsed;
+                    ComboBox_WeightSelector.Visibility = Visibility.Collapsed;
                     break;
             }
         }

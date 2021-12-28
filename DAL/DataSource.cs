@@ -73,7 +73,7 @@ namespace DalObject
                 Drones.Add(newDrone);
             }
         }
-        /// <summary>
+        /// <summar y>
         /// Creating 10 Customers Randomly
         /// </summary>
         private static void CreateCustomers()

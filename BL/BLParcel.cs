@@ -221,31 +221,13 @@ namespace BL
                 throw new IllegalActionException("The package could not be deleted because it is in delivery mode");
             }
         }
-        public IEnumerable<ParcelToList> GroupingSenderName()
+        public IEnumerable<IGrouping<string,ParcelToList>> GroupingSenderName()
         {
-            List<ParcelToList> listParcel = new List<ParcelToList>();
-            var groups = GetParcels().GroupBy(p=>p.SenderName);
-            foreach (var group in groups)
-            {
-                foreach (BO.ParcelToList item in group)
-                {
-                    listParcel.Add(item);
-                }
-            }
-            return (IEnumerable<ParcelToList>)listParcel;
+            return GetParcels().GroupBy(p => p.SenderName);
         }
-        public IEnumerable<ParcelToList> GroupingTargetNam()
+        public IEnumerable<IGrouping<string, ParcelToList>> GroupingTargetNam()
         {
-            List<ParcelToList> listParcel = new List<ParcelToList>();
-            var groups = GetParcels().GroupBy(p => p.TargetName);
-            foreach (var group in groups)
-            {
-                foreach (BO.ParcelToList item in group)
-                {
-                    listParcel.Add(item);
-                }
-            }
-            return (IEnumerable<ParcelToList>)listParcel;
+            return GetParcels().GroupBy(p => p.TargetName);
         }
     }
 }

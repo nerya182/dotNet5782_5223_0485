@@ -8,23 +8,18 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="parcelPage">
 
-    <Grid x:Name="pw">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="389*"/>
-            <ColumnDefinition Width="411*"/>
-        </Grid.ColumnDefinitions>
-
-        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill" Height="500" Margin="0,-25,0,-25" Grid.ColumnSpan="2"/>
+    <Grid x:Name="mainParcel" DataContext="{Binding}">
+        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill" Height="450" Width="800" Margin="0,-25,0,-25" Grid.ColumnSpan="2"/>
         <Label Name="label_SenderID" Content="Enter sender ID:" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black" Visibility="{Binding ElementName=WeightSelector, Path=Visibility}"/>
         <Label Name="label_TargetID" Content="Enter target ID:" HorizontalAlignment="Left" Height="29" Margin="35,106,0,0" VerticalAlignment="Top" Width="199" FontSize="16" FontWeight="Black" Visibility="{Binding ElementName=WeightSelector, Path=Visibility}"/>
-        <TextBox x:Name="TextBox_SenderID" TextChanged="SenderID_TextChanged" HorizontalAlignment="Left" Margin="221,85,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=WeightSelector, Path=Visibility}" />
-        <TextBox x:Name="TextBox_TargetID" TextChanged="TargetID_TextChanged" HorizontalAlignment="Left" Margin="221,114,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=WeightSelector, Path=Visibility}"/>
+        <TextBox x:Name="TextBox_SenderID" Text="{Binding Id}" TextChanged="SenderID_TextChanged" HorizontalAlignment="Left" Margin="221,85,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=WeightSelector, Path=Visibility}" />
+        <TextBox x:Name="TextBox_TargetID" TextChanged="TargetID_TextChanged" HorizontalAlignment="Left" Margin="221,114,0,0" Text="{Binding SenderName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=WeightSelector, Path=Visibility}"/>
         <Label x:Name="label_weight" Content="Weight:" HorizontalAlignment="Left" Margin="35,143,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black"/>
         <ComboBox  Name="WeightSelector" Text="Weight" HorizontalAlignment="Left" Margin="221,149,0,0" VerticalAlignment="Top" Width="120" />
         <Label x:Name="label_priority" Content="Priority:" HorizontalAlignment="Left" Margin="35,176,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Black"/>
         <ComboBox Name="PrioritySelector" Text="Priority" HorizontalAlignment="Left" Margin="221,179,0,0" VerticalAlignment="Top" Width="120" IsEditable="{Binding ElementName=WeightSelector, Path=IsEditable}" Visibility="{Binding ElementName=WeightSelector, Path=Visibility}"/>
         <Button  Name="add_button" Content="Add" HorizontalAlignment="Left" Margin="221,240,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="AddButton_Click" FontWeight="Black" Visibility="{Binding ElementName=WeightSelector, Path=Visibility}"/>
-        <TextBox   x:Name="TextBox_DisplayWeight" HorizontalAlignment="Left" Margin="221,149,0,0" VerticalAlignment="Top" Width="120" Height="18" Visibility="{Binding ElementName=label_DroneInParcel, Path=Visibility}" IsEnabled="{Binding ElementName=TextBox_DisplayPriority, Path=IsEnabled}"/>
+        <TextBox   x:Name="TextBox_DisplayWeight" HorizontalAlignment="Left" Text="{Binding TargetName}" Margin="221,149,0,0" VerticalAlignment="Top" Width="120" Height="18" Visibility="{Binding ElementName=label_DroneInParcel, Path=Visibility}" IsEnabled="{Binding ElementName=TextBox_DisplayPriority, Path=IsEnabled}"/>
         <TextBox   x:Name="TextBox_DisplayPriority" HorizontalAlignment="Left" Margin="221,179,0,0" VerticalAlignment="Top" Width="120" Height="18" Visibility="{Binding ElementName=label_DroneInParcel, Path=Visibility}" IsEnabled="{Binding ElementName=TextBox_DisplayPriority, Path=IsEnabled}"/>
         <Label     x:Name="label_status" Content="Status:" HorizontalAlignment="Left" Margin="35,209,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Black" Visibility="{Binding ElementName=label_DroneInParcel, Path=Visibility}"/>
         <TextBox   x:Name="TextBox_DisplayStatus" HorizontalAlignment="Left" Margin="221,209,0,0" VerticalAlignment="Top" Width="120" Height="18" Visibility="{Binding ElementName=label_DroneInParcel, Path=Visibility}"/>
@@ -50,7 +45,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="Listview_Sender" Margin="171,196,120,164" Height="90" Width="120" MouseDoubleClick="OpenSenderInParcel" Grid.Column="1" Visibility="{Binding ElementName=label_DroneInParcel, Path=Visibility}">
+        <ListView x:Name="Listview_Sender" Margin="366,196,242,164" Height="90" MouseDoubleClick="OpenSenderInParcel" Visibility="{Binding ElementName=label_DroneInParcel, Path=Visibility}">
             <ListView.View>
                 <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="SenderId" Header="Id" Width="auto"/>
@@ -58,7 +53,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="Listview_Target" Margin="171,322,120,38" Height="90" Width="120" MouseDoubleClick="OpenTargetInParcel" Grid.Column="1" Visibility="{Binding ElementName=label_DroneInParcel, Path=Visibility}">
+        <ListView x:Name="Listview_Target" Margin="366,322,231,38" Height="90" MouseDoubleClick="OpenTargetInParcel" Visibility="{Binding ElementName=label_DroneInParcel, Path=Visibility}">
             <ListView.View>
                 <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="TargetId" Header="Id" Width="auto"/>

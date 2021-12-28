@@ -185,11 +185,11 @@ namespace BlApi
          void DeleteParcel(ParcelToList parcel);
          void DeleteCustomer(CustomerToList customer);
          void DeleteStation(StationToList station);
-         IEnumerable<DroneToList> GroupingStatus();
-         IEnumerable<DroneToList> GroupingWeight();
-        IEnumerable<StationToList> GroupingAvailableChargeSlots();
-        IEnumerable<StationToList> GroupingChargeSlots();
-        IEnumerable<ParcelToList> GroupingTargetNam();
-        IEnumerable<ParcelToList> GroupingSenderName();
+        IEnumerable<IGrouping<DroneStatuses, DroneToList>> GroupingStatus();
+        IEnumerable<IGrouping<WeightCategories, DroneToList>> GroupingWeight();
+        IEnumerable<IGrouping<bool, StationToList>> GroupingAvailableChargeSlots();
+        IEnumerable<IGrouping<int, StationToList>> GroupingChargeSlots();
+        IEnumerable<IGrouping<string, ParcelToList>> GroupingTargetNam();
+        IEnumerable<IGrouping<string, ParcelToList>> GroupingSenderName();
     }
 }

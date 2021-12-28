@@ -545,33 +545,14 @@ namespace BL
             }
             return temp;
         }
-        public IEnumerable<DroneToList> GroupingStatus()
+        public IEnumerable<IGrouping<DroneStatuses,DroneToList>> GroupingStatus()
         {
-           List<DroneToList> listDrones = new List<DroneToList>();
-            var groups = GetListDrone().GroupBy(d => d.Status);
-            foreach (var group in groups)
-            {
-                foreach (BO.DroneToList item in group)
-                {
-                    listDrones.Add(item);
-                }
-            }
-            return (IEnumerable<DroneToList>)listDrones;
+            return listDrone.GroupBy(d => d.Status);
         }
-        public IEnumerable<DroneToList> GroupingWeight()
+        public IEnumerable<IGrouping<WeightCategories, DroneToList>> GroupingWeight()
         {
-            List<DroneToList> listDrones = new List<DroneToList>();
-            var groups = GetListDrone().GroupBy(d => d.MaxWeight);
-            foreach (var group in groups)
-            {
-                foreach (BO.DroneToList item in group)
-                {
-                    listDrones.Add(item);
-                }
-            }
-            return (IEnumerable<DroneToList>)listDrones;
+            return listDrone.GroupBy(d => d.MaxWeight);
+           
         }
-
-
     }
 }

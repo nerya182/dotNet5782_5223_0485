@@ -82,9 +82,12 @@ namespace PL
             selected = drone;           
             droneSelected = bl.DroneDisplay(selected.Id);
             mainDrone.DataContext = droneSelected;
-            TextBoxLattitude.Text = selected.Location.ToString();
             TextBoxDelivery.Text = selected.Status.ToString();
             ListParcelTransfer.Items.Add(droneSelected.ParcelTransfer);
+            if (droneSelected.ParcelTransfer.Id==0)
+            {
+                ListParcelTransfer.Visibility = Visibility.Hidden; 
+            }
             TextBox_id.IsEnabled = false;
             switch (droneSelected.Status)
             {

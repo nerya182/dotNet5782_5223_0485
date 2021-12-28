@@ -108,16 +108,42 @@ namespace PL
             switch (managerPage.TabManager.SelectedIndex)
             {
                 case 0:
-                    managerPage.listDrones.ItemsSource = bl.GroupingStatus();
+                    managerPage.droneToListObservabl.Clear();
+                    var groups = bl.GroupingStatus();
+                    foreach (var group in groups)
+                    {
+                        foreach (var item in group)
+                        {
+                            managerPage.droneToListObservabl.Add(item);
+                        }
+                    }
+                    managerPage.listDrones.ItemsSource = managerPage.droneToListObservabl;
                     break;
                 case 2:
-                    managerPage.listStaions.ItemsSource = bl.GroupingAvailableChargeSlots();
+                    managerPage.stationToListObservabl.Clear();
+                    var groups1 = bl.GroupingAvailableChargeSlots();
+                    foreach (var group in groups1)
+                    {
+                        foreach (var item in group)
+                        {
+                            managerPage.stationToListObservabl.Add(item);
+                        }
+                    }
+                    managerPage.listStaions.ItemsSource = managerPage.stationToListObservabl;
                     break;
                 case 1:
-                    managerPage.listParcel.ItemsSource = bl.GroupingSenderName();
+                    managerPage.parcelToListObservabl.Clear();
+                    var groups2 = bl.GroupingSenderName();
+                    foreach (var group in groups2)
+                    {
+                        foreach (var item in group)
+                        {
+                            managerPage.parcelToListObservabl.Add(item);
+                        }
+                    }
+                    managerPage.listParcel.ItemsSource = managerPage.parcelToListObservabl;
                     break;
-            }
-            
+            }   
         }
 
         private void Grouping_seconde_Click(object sender, RoutedEventArgs e)
@@ -125,13 +151,40 @@ namespace PL
             switch (managerPage.TabManager.SelectedIndex)
             {
                 case 0:
-                    managerPage.listDrones.ItemsSource = bl.GroupingWeight();
+                    managerPage.droneToListObservabl.Clear();
+                    var groups = bl.GroupingWeight();
+                    foreach (var group in groups)
+                    {
+                        foreach (var item in group)
+                        {
+                            managerPage.droneToListObservabl.Add(item);
+                        }
+                    }
+                    managerPage.listDrones.ItemsSource = managerPage.droneToListObservabl;
                     break;
                 case 2:
-                    managerPage.listStaions.ItemsSource = bl.GroupingChargeSlots();
+                    managerPage.stationToListObservabl.Clear();
+                    var groups1 = bl.GroupingChargeSlots();
+                    foreach (var group in groups1)
+                    {
+                        foreach (var item in group)
+                        {
+                            managerPage.stationToListObservabl.Add(item);
+                        }
+                    }
+                    managerPage.listStaions.ItemsSource = managerPage.stationToListObservabl;
                     break;
                 case 1:
-                    managerPage.listParcel.ItemsSource = bl.GroupingTargetNam();
+                    managerPage.parcelToListObservabl.Clear();
+                    var groups2 = bl.GroupingTargetNam();
+                    foreach (var group in groups2)
+                    {
+                        foreach (var item in group)
+                        {
+                            managerPage.parcelToListObservabl.Add(item);
+                        }
+                    }
+                    managerPage.listParcel.ItemsSource = managerPage.parcelToListObservabl;
                     break;
             } 
         }
@@ -162,9 +215,6 @@ namespace PL
                 managerPage.listParcel.ItemsSource = bl.GetParcelByPriority(selectedPriority);
             }
         }
-
-
-
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             selectedTab = managerPage.TabManager.SelectedIndex;
@@ -273,14 +323,14 @@ namespace PL
                 {
                     droneId = selected.Id;
                     bl.AffiliateParcelToDrone(droneId);
-                    dronePage.TextBoxLongitude.Text = bl.DroneDisplay(droneId).ParcelTransfer.ToString();
-                    //dronePage.TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
-                    dronePage.TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
+                    dronePage.ListParcelTransfer.Items.Clear();
+                    dronePage.ListParcelTransfer.Items.Add(bl.DroneDisplay(droneId).ParcelTransfer);
                     dronePage.TextBoxDelivery.Text = DroneStatuses.Delivery.ToString();
                     MessageBox.Show("Update successfully");
                     dronePage.sendOrReleaseButton.Content = "Package collection";
                     dronePage.sendOrReleaseButton.Visibility = Visibility.Visible;
                     dronePage.delivery.Visibility = Visibility.Hidden;
+                    dronePage.ListParcelTransfer.Visibility = Visibility.Visible;
                 }
                 catch (Exception exception)
                 {
@@ -382,7 +432,6 @@ namespace PL
         private void Back_Button_Click1(object sender, RoutedEventArgs e)
         {
             this.Content = managerPage;
-            //managerPage.listParcel.ItemsSource = bl.GetParcels();
             managerPage.TabManager.SelectedIndex = 1;
         }
 
@@ -419,7 +468,6 @@ namespace PL
             Parcel parcel = bl.ParcelDisplay(temp.Id);
             parcelPage = new parcelPage(parcel);
             parcelPage.Back_Button.Click += Back_Button_Click1;
-            parcelPage.Update_parcel.Click += Update_parcel_Click;
             parcelPage.Listview_droneinparcel.MouseDoubleClick += Listview_droneinparcel_MouseDoubleClick;
             parcelPage.Listview_Target.MouseDoubleClick += Listview_Target_MouseDoubleClick;
             parcelPage.Listview_Sender.MouseDoubleClick += Listview_Sender_MouseDoubleClick;
@@ -460,8 +508,6 @@ namespace PL
         private void UpdateName_Click(object sender, RoutedEventArgs e)
         {
             stationPage.labelTextBoxNewName.Visibility = Visibility.Visible;
-            stationPage.TextBoxNewName.Visibility = Visibility.Visible;
-            stationPage.NewName.Visibility = Visibility.Visible;   
         }
 
         private void Close_button_Click1(object sender, RoutedEventArgs e)
@@ -556,10 +602,6 @@ namespace PL
                 managerPage.customerToListObservabl.Add(bl.MakeCustomerToList(newCustomer));
                 MessageBox.Show("Added successfully");
                 customerPage.TextBox_id.IsEnabled = false;
-                customerPage.TextBox_name.IsEnabled = false;
-                customerPage.PhoneTextBox.IsEnabled = false;
-                customerPage.TextBoxLatitude.IsEnabled = false;
-                customerPage.TextBox_longitude.IsEnabled = false;
             }
             catch (Exception exception)
             {
@@ -641,11 +683,6 @@ namespace PL
                 managerPage.stationToListObservabl.Add(bl.MakeStationToList(newStation));
                 MessageBox.Show("Added successfully");
                 stationPage.TextBox_id.IsEnabled = false;
-                stationPage.TextBox_name.IsEnabled = false;
-                stationPage.TextBoxChargeSlots.IsEnabled = false;
-                stationPage.TextBoxLattitude.IsEnabled = false;
-                stationPage.TextBoxLongitude.IsEnabled = false;
-                stationPage.add_button.IsEnabled = false;
             }
             catch (Exception exception)
             {
@@ -695,11 +732,7 @@ namespace PL
                 bl.AddParcel(newParcel);
                 managerPage.parcelToListObservabl.Add(bl.MakeParcelToList(newParcel));
                 MessageBox.Show("Added successfully");
-                parcelPage.TextBox_SenderID.IsEnabled = false;
-                parcelPage.TextBox_TargetID.IsEnabled = false;
                 parcelPage.WeightSelector.IsEnabled = false;
-                parcelPage.PrioritySelector.IsEnabled = false;
-                parcelPage.add_button.IsEnabled = false;
             }
             catch (Exception exception)
             {
@@ -752,17 +785,12 @@ namespace PL
                 managerPage.droneToListObservabl.Add(newDrone);
                 MessageBox.Show("Added successfully");
                 dronePage.TextBox_id.IsEnabled = false;
-                dronePage.chargeStationId.IsEnabled = false;
-                dronePage.TextBox_model.IsEnabled = false;
-                dronePage.WeightSelector.IsEnabled = false;
-                dronePage.add_button.IsEnabled = false;
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
             }
         }
-
         private void SendOrReleaseButton_Click(object sender, RoutedEventArgs e)
         {
             dronePage.TextBoxNewModel.Visibility = Visibility.Hidden;
@@ -777,13 +805,12 @@ namespace PL
                 try
                 {
                     bl.SendingDroneForCharging(droneId);
+                    dronePage.mainDrone.DataContext = bl.DroneDisplay(droneId);
                     dronePage.TextBoxDelivery.Text = DroneStatuses.Charging.ToString();
-                    dronePage.TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
                     dronePage.sendOrReleaseButton.Content = "Release drone";
                     dronePage.sendOrReleaseButton.Visibility = Visibility.Visible;
                     dronePage.delivery.Visibility = Visibility.Hidden;
-
                 }
                 catch (Exception exception)
                 {
@@ -795,9 +822,8 @@ namespace PL
                 try
                 {
                     bl.ReleaseDroneFromCharging(droneId);
-                    //dronePage.TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
+                    dronePage.mainDrone.DataContext = bl.DroneDisplay(droneId);
                     dronePage.TextBoxDelivery.Text = DroneStatuses.Available.ToString();
-                    dronePage.TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
                     dronePage.sendOrReleaseButton.Content = "Sending to charging";
                     dronePage.sendOrReleaseButton.Visibility = Visibility.Visible;
@@ -814,9 +840,7 @@ namespace PL
                 try
                 {
                     bl.ParcelCollectionByDrone(droneId);
-                    dronePage.TextBoxLongitude.Text = bl.DroneDisplay(droneId).ParcelTransfer.ToString();
-                    //dronePage.TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
-                    dronePage.TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
+                    dronePage.mainDrone.DataContext = bl.DroneDisplay(droneId);
                     MessageBox.Show("Update successfully");
                     dronePage.sendOrReleaseButton.Content = "Package delivery";
                     dronePage.sendOrReleaseButton.Visibility = Visibility.Visible;
@@ -831,16 +855,14 @@ namespace PL
                 try
                 {
                     bl.DeliveryOfParcelByDrone(droneId);
-                    dronePage.TextBoxLongitude.Text = bl.DroneDisplay(droneId).ParcelTransfer.ToString();
-                   // dronePage.TextBoxParcelTransfer.Text = ((int)bl.DroneDisplay(droneId).Battery).ToString();
+                    dronePage.mainDrone.DataContext=bl.DroneDisplay(droneId);
                     dronePage.TextBoxDelivery.Text = DroneStatuses.Available.ToString();
-                    dronePage.TextBoxLattitude.Text = bl.DroneDisplay(droneId).Location.ToString();
                     MessageBox.Show("Update successfully");
                     dronePage.sendOrReleaseButton.Content = "Sending to charging";
                     dronePage.sendOrReleaseButton.Visibility = Visibility.Visible;
                     dronePage.delivery.Content = "Affiliation";
                     dronePage.delivery.Visibility = Visibility.Visible;
-
+                    dronePage.ListParcelTransfer.Visibility = Visibility.Collapsed;
                 }
                 catch (Exception exception)
                 {
@@ -850,10 +872,8 @@ namespace PL
         }
 
         private void ChangeModelButton_Click(object sender, RoutedEventArgs e)
-        {
-            dronePage.TextBoxNewModel.Visibility = Visibility.Visible;
+        {  
             dronePage.labelTextBoxNewModel.Visibility = Visibility.Visible;
-            dronePage.NewModel.Visibility = Visibility.Visible;
         }
 
         private void Listview_FromCustomer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -973,6 +993,12 @@ namespace PL
             {
                 MessageBox.Show(exception.Message);
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Maps maps = new Maps(bl);
+            this.Content = maps;
         }
     }
 }
