@@ -126,7 +126,6 @@
                 <Button x:Name="maps" Content="show list on maps" Click="list_maps_Click" Width="auto" Height="auto" Margin="-3,36,3,296"/>
             </TabItem>
         </TabControl>
-        <Button x:Name="backButton" Content="Back" HorizontalAlignment="Left" Margin="750,0,0,0" VerticalAlignment="Top" Width="40" Height="25" Click="backToMain_Click"/>
     </Grid>
 </Page>
 
