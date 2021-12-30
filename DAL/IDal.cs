@@ -236,11 +236,11 @@ namespace DalApi
         /// <param name="updateDrone"></param>
         void UpdateDrone(Drone updateDrone);
 
-        public void DeleteParcel(int id);
+        void DeleteParcel(int id);
 
-        public void DeleteStation(int id);
+        void DeleteStation(int id);
 
-        public void DeleteCustomer(int id);
+        void DeleteCustomer(int id);
 
     }
 }
