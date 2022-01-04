@@ -55,6 +55,7 @@ namespace PL
                 case 0:
                     ADD.Content = "add drone";
                     Grouping_first.Content = "Grouping of status drones";
+                    Grouping_seconde.Content = "Grouping by Weight drones";
                     deleteButton.Visibility = Visibility.Collapsed;
                     Grouping_first.Visibility = Visibility.Visible;
                     ComboBox_WeightSelector.Visibility = Visibility.Collapsed;
@@ -153,6 +154,11 @@ namespace PL
         }
 
         private void Refresh_list_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Back_Button_Click(object sender, RoutedEventArgs e)
         {
 
         }

@@ -112,18 +112,25 @@ namespace BL
             customerToList.Name = objCustomer.Name;
             customerToList.Phone = objCustomer.Phone;
             int count1 = 0;
-            foreach (ParceltAtCustomer parcelAtCustomer in objCustomer.ToCustomer)
+            if (objCustomer.ToCustomer.Count!=null)
             {
-                if (parcelAtCustomer.status == ParcelStatus.Supplied)
-                    count1++;
+                foreach (ParceltAtCustomer parcelAtCustomer in objCustomer.ToCustomer)
+                {
+                    if (parcelAtCustomer.status == ParcelStatus.Supplied)
+                        count1++;
+                }
             }
+            
             customerToList.ReceivedParcels = count1;
             customerToList.OnTheWayParcels = objCustomer.ToCustomer.Count - count1;
             int count2 = 0;
-            foreach (ParceltAtCustomer parcelAtCustomer1 in objCustomer.FromCustomer)
+            if (objCustomer.FromCustomer.Count!=0)
             {
-                if (parcelAtCustomer1.status == ParcelStatus.Supplied)
-                    count2++;
+                foreach (ParceltAtCustomer parcelAtCustomer1 in objCustomer.FromCustomer)
+                {
+                    if (parcelAtCustomer1.status == ParcelStatus.Supplied)
+                        count2++;
+                }
             }
             customerToList.DeliveredSuppliedParcels = count2;
             customerToList.DeliveredNotSuppliedParcels = objCustomer.FromCustomer.Count - count2;

@@ -65,8 +65,14 @@ namespace PL
             managerPage.ComboBox_date.SelectionChanged += ComboBox_date_SelectionChanged;
             managerPage.maps.Click += Maps_Click;
             managerPage.filter.Click += Filter_Click;
+            managerPage.Back_Button.Click += Back_Button_Click7;
             Observables();
             this.Content = managerPage;
+        }
+
+        private void Back_Button_Click7(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
         private void Filter_Click(object sender, RoutedEventArgs e)
@@ -611,7 +617,6 @@ namespace PL
         {
             parcelPage = new parcelPage();
             parcelPage.add_button.Click += Add_button_Click1;
-            //parcelPage.Back_Button.Click
             this.Content = parcelPage;
 
         }
@@ -620,6 +625,7 @@ namespace PL
         {
             this.Content = managerPage;
             managerPage.TabManager.SelectedIndex = 3;
+            Observables(); 
         }
 
         private void Add_button_Click3(object sender, RoutedEventArgs e)
@@ -666,6 +672,7 @@ namespace PL
                 locationCustomer.Longitude = location;
                 newCustomer.Location = locationCustomer;
                 bl.AddCustomer(newCustomer);
+                newCustomer=bl.CustomerDisplay(newCustomer.Id);
                 managerPage.customerToListObservabl.Add(bl.MakeCustomerToList(newCustomer));
                 MessageBox.Show("Added successfully");
                 customerPage.TextBox_id.IsEnabled = false;
@@ -680,6 +687,7 @@ namespace PL
         {
             this.Content=managerPage;
             managerPage.TabManager.SelectedIndex = 2;
+            Observables();
         }
 
         private void NewName_Click(object sender, RoutedEventArgs e)
@@ -694,6 +702,7 @@ namespace PL
                 stationPage.TextBoxNewName.Visibility = Visibility.Hidden;
                 stationPage.labelTextBoxNewName.Visibility = Visibility.Hidden;
                 stationPage.NewName.Visibility = Visibility.Hidden;
+                Observables();
             }
             catch (Exception exception)
             {
@@ -811,6 +820,7 @@ namespace PL
         {
             this.Content = managerPage;
             managerPage.TabManager.SelectedIndex = 0;
+            Observables();
         }
 
         private void Add_button_Click(object sender, RoutedEventArgs e)

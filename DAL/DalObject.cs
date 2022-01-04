@@ -113,91 +113,7 @@ namespace DalObject
             }
             return (Parcel)newParcel;
         }
-        /// <summary>
-        /// Returns the time the parcel was created
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <returns> DateTime </returns>
-        public  DateTime GetParcelCreating(int parcelId) 
-        {
-            DateTime? time =null;
-            foreach (Parcel objParcel in DataSource.Parcels)
-            {
-                if (objParcel.Id == parcelId)
-                {
-                    time = objParcel.Creating;
-                }
-            }
-            if (time==null)
-            {
-                throw new ItemNotFoundException(parcelId, "ERROR :id of parcel not found\n");
-            }
-            return (DateTime)time; 
-
-        }
-        /// <summary>
-        /// Returns the time the parcel was affiliated with a drone
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <returns> DateTime</returns>
-        public  DateTime GetParcelAffiliation(int parcelId) 
-        {
-            DateTime? time = null;
-            foreach (Parcel objParcel in DataSource.Parcels)
-            {
-                if (objParcel.Id == parcelId)
-                {
-                    time = objParcel.Affiliation;
-                }
-            }
-            if (time==null)
-            {
-                throw new ItemNotFoundException(parcelId, "ERROR :id of parcel not found\n");
-            }
-            return (DateTime)time;
-        }
-        /// <summary>
-        /// Returns the time the parcel was picked up
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <returns> DateTime </returns>
-        public  DateTime GetParcelPickedUp(int parcelId)   
-        {
-            DateTime? time = null;
-            foreach (Parcel objParcel in DataSource.Parcels)
-            {
-                if (objParcel.Id == parcelId)
-                {
-                    time = objParcel.PickedUp;
-                }
-            }
-            if (time==null)
-            {
-                throw new ItemNotFoundException(parcelId,"ERROR :id of parcel not found\n");
-            }
-            return (DateTime)time;
-        }
-        /// <summary>
-        /// Returns the time the parcel was delivered
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <returns> DateTime </returns>
-        public  DateTime GetParcelDelivered(int parcelId)  
-        {
-            DateTime? time = null;
-            foreach (Parcel objParcel in DataSource.Parcels)
-            {
-                if (objParcel.Id == parcelId)
-                {
-                    time = objParcel.Delivered;
-                }
-            }
-            if (time==null)
-            {
-                throw new ItemNotFoundException(parcelId,"ERROR :id of parcel not found\n");
-            }
-            return (DateTime)time;
-        }
+   
         /// <summary>
         /// Adding a station to the next open index
         /// </summary>
@@ -273,7 +189,6 @@ namespace DalObject
                 if (objStation.Id == droneId)
                 {
                     flag = true;
-                    break;
                 }
             }
             if (!flag)
@@ -464,7 +379,7 @@ namespace DalObject
         public IEnumerable<Parcel> ListParcelOnAir()  
         {
             List<Parcel> PrintParcelOnAir = new List<Parcel>();
-            foreach(Parcel parcel in ListParcel(i => i.DroneId != 0))
+            foreach(Parcel parcel in ListParcel(i => i.DroneId == 0))
             {
                 PrintParcelOnAir.Add(parcel);   
             }
@@ -565,7 +480,6 @@ namespace DalObject
                 if (objStation.Id == droneCharge.StationId)
                 {
                     flag = true;
-                    break;
                 }
             }
             if (!flag)
@@ -588,15 +502,15 @@ namespace DalObject
         /// return power consumption
         /// </summary>
         /// <returns>double</returns>
-        public double[] GetElectricUsage()
+        public List<double> GetElectricUsage()
         {
-            double[] array = new double[5];
-            array[0] = DataSource.Config.available;
-            array[1] = DataSource.Config.lightWeight;
-            array[2] = DataSource.Config.mediumWeight;
-            array[3] = DataSource.Config.heavyWeight;
-            array[4] = DataSource.Config.chargeSpeed;
-            return array;
+            List<double> list = new();
+            list.Add(DataSource.Config.available);
+            list.Add(DataSource.Config.lightWeight);
+            list.Add(DataSource.Config.mediumWeight);
+            list.Add(DataSource.Config.heavyWeight);
+            list.Add(DataSource.Config.chargeSpeed);
+            return list;
         }
         /// <summary>
         /// Returns the charging rate

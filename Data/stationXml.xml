@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Station>
+    <Id>56</Id>
+    <Name>Tachana Merkazit</Name>
+    <Longitude>35.20301</Longitude>
+    <Lattitude>31.78945</Lattitude>
+    <AvailableChargeSlots>8</AvailableChargeSlots>
+  </Station>
+  <Station>
+    <Id>67</Id>
+    <Name>Shuk Machane Yehudah</Name>
+    <Longitude>35.21257</Longitude>
+    <Lattitude>31.78489</Lattitude>
+    <AvailableChargeSlots>8</AvailableChargeSlots>
+  </Station>
+</ArrayOfStation>

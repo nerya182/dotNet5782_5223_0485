@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<ArrayOfParcel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Parcel>
+    <Id>1</Id>
+    <SenderId>841552474</SenderId>
+    <TargetId>674619754</TargetId>
+    <DroneId>0</DroneId>
+    <Weight>Light</Weight>
+    <Priority>Regular</Priority>
+    <Creating>2022-01-05T00:00:23.3401862+02:00</Creating>
+    <Affiliation xsi:nil="true" />
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>2</Id>
+    <SenderId>841552474</SenderId>
+    <TargetId>826421919</TargetId>
+    <DroneId>0</DroneId>
+    <Weight>Light</Weight>
+    <Priority>Express</Priority>
+    <Creating>2022-01-05T00:00:23.3446296+02:00</Creating>
+    <Affiliation xsi:nil="true" />
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>3</Id>
+    <SenderId>532134558</SenderId>
+    <TargetId>532134558</TargetId>
+    <DroneId>0</DroneId>
+    <Weight>Medium</Weight>
+    <Priority>Express</Priority>
+    <Creating>2022-01-05T00:00:23.3446892+02:00</Creating>
+    <Affiliation xsi:nil="true" />
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>4</Id>
+    <SenderId>398478917</SenderId>
+    <TargetId>462077850</TargetId>
+    <DroneId>48576</DroneId>
+    <Weight>Medium</Weight>
+    <Priority>Regular</Priority>
+    <Creating>2022-01-04T23:00:23.3449105+02:00</Creating>
+    <Affiliation>2022-01-04T23:30:23.3449174+02:00</Affiliation>
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>5</Id>
+    <SenderId>674619754</SenderId>
+    <TargetId>826421919</TargetId>
+    <DroneId>19480</DroneId>
+    <Weight>Medium</Weight>
+    <Priority>Regular</Priority>
+    <Creating>2022-01-04T23:00:23.3449199+02:00</Creating>
+    <Affiliation>2022-01-04T23:30:23.3449207+02:00</Affiliation>
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>6</Id>
+    <SenderId>532134558</SenderId>
+    <TargetId>826421919</TargetId>
+    <DroneId>58478</DroneId>
+    <Weight>Medium</Weight>
+    <Priority>Express</Priority>
+    <Creating>2022-01-04T23:00:23.3449234+02:00</Creating>
+    <Affiliation>2022-01-04T23:30:23.3449244+02:00</Affiliation>
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>7</Id>
+    <SenderId>851318212</SenderId>
+    <TargetId>682784640</TargetId>
+    <DroneId>81928</DroneId>
+    <Weight>Heavy</Weight>
+    <Priority>Regular</Priority>
+    <Creating>2022-01-04T22:00:23.3449261+02:00</Creating>
+    <Affiliation>2022-01-04T22:30:23.344927+02:00</Affiliation>
+    <PickedUp>2022-01-04T23:00:23.344928+02:00</PickedUp>
+    <Delivered xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>8</Id>
+    <SenderId>851318212</SenderId>
+    <TargetId>398478917</TargetId>
+    <DroneId>84979</DroneId>
+    <Weight>Heavy</Weight>
+    <Priority>Express</Priority>
+    <Creating>2022-01-04T22:00:23.3449286+02:00</Creating>
+    <Affiliation>2022-01-04T22:30:23.344929+02:00</Affiliation>
+    <PickedUp>2022-01-04T23:00:23.34493+02:00</PickedUp>
+    <Delivered xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>9</Id>
+    <SenderId>462077850</SenderId>
+    <TargetId>462077850</TargetId>
+    <DroneId>0</DroneId>
+    <Weight>Heavy</Weight>
+    <Priority>Regular</Priority>
+    <Creating>2022-01-04T21:00:23.3449317+02:00</Creating>
+    <Affiliation>2022-01-04T22:00:23.3449347+02:00</Affiliation>
+    <PickedUp>2022-01-04T22:30:23.3449336+02:00</PickedUp>
+    <Delivered>2022-01-04T23:30:23.3449328+02:00</Delivered>
+  </Parcel>
+  <Parcel>
+    <Id>10</Id>
+    <SenderId>462077850</SenderId>
+    <TargetId>532134558</TargetId>
+    <DroneId>0</DroneId>
+    <Weight>Heavy</Weight>
+    <Priority>Regular</Priority>
+    <Creating>2022-01-04T21:00:23.3449554+02:00</Creating>
+    <Affiliation>2022-01-04T22:00:23.3449584+02:00</Affiliation>
+    <PickedUp>2022-01-04T22:30:23.3449576+02:00</PickedUp>
+    <Delivered>2022-01-04T23:30:23.3449567+02:00</Delivered>
+  </Parcel>
+</ArrayOfParcel>

@@ -21,7 +21,7 @@
         <TextBox x:Name="TextBox_name"  TextChanged="DroneName_TextChanged" HorizontalAlignment="Left" Margin="221,114,0,0" Text="{Binding Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" IsEnabled="{Binding ElementName=TextBox_id, Path=IsEnabled}"/>
         <Label x:Name="label_latitude" Content="Enter your latitude" HorizontalAlignment="Left" Margin="35,174,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Black"/>
         <Button  x:Name="add_button" Content="Add" HorizontalAlignment="Left" Margin="225,303,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="AddButton_Click" FontWeight="Black"/>
-        <Label   x:Name="label_longitude" Content="Enter your longitude" HorizontalAlignment="Left" Margin="37,211,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black" Visibility="{Binding ElementName=NameButton, Path=Visibility}"/>
+        <Label   x:Name="label_longitude" Content="Enter your longitude" HorizontalAlignment="Left" Margin="37,211,0,0" VerticalAlignment="Top" Width="174" FontSize="16" FontWeight="Black" Visibility="{Binding ElementName=label_latitude, Path=Visibility}"/>
         <TextBox x:Name="TextBox_longitude" Text="{Binding Path=Location ,Converter={StaticResource LongitudeToSexaConvert}}" HorizontalAlignment="Left" Margin="221,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" Visibility="{Binding ElementName=TextBoxLatitude, Path=Visibility}" IsEnabled="{Binding ElementName=TextBox_id, Path=IsEnabled}" />
         <TextBox x:Name="PhoneTextBox" HorizontalAlignment="Left" Margin="221,149,0,0" Text="{Binding Phone}" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" IsEnabled="{Binding ElementName=TextBox_id, Path=IsEnabled}"/>
         <TextBox x:Name="TextBoxLatitude" Text="{Binding Path=Location ,Converter={StaticResource LatitudeToSexaConvert}}" HorizontalAlignment="Left" Margin="221,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135" IsEnabled="{Binding ElementName=TextBox_id, Path=IsEnabled}"/>
@@ -37,7 +37,6 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Weight}" x:Name="Weight_customer" Header="Weight" Width="auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Priority}" x:Name="Priority" Header="Priority" Width="auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding status}" x:Name="status" Header="status" Width="auto"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding OpposingSide}" x:Name="OpposingSide" Header="Opposing Side" Width="auto"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -48,7 +47,6 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Weight}" x:Name="Weight_customer1" Header="Weight" Width="auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Priority}" x:Name="Priority1" Header="Priority" Width="auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding status}" x:Name="status1" Header="status" Width="auto"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding OpposingSide}" x:Name="OpposingSide1" Header="Opposing Side" Width="auto"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -57,7 +55,7 @@
         <Button Name="close_customer" HorizontalAlignment="Left" Margin="703,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Cancel_Add_Button_Click">
             <Image Source="/back-button.png" />
         </Button>
-        <Button x:Name="AddParcel" Content="Add Parcel" HorizontalAlignment="Left" Margin="367,159,0,0" VerticalAlignment="Top" FontSize="14" Height="25" Width="100" FontWeight="Black" Click="AddParcel_Click"/>
+        <Button x:Name="AddParcel" Content="Add Parcel" HorizontalAlignment="Left" Margin="367,159,0,0" VerticalAlignment="Top" FontSize="14" Height="25" Width="100" FontWeight="Black" Click="AddParcel_Click" Visibility="{Binding ElementName=NameButton, Path=Visibility}"/>
 
     </Grid>
 </Page>

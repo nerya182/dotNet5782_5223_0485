@@ -35,30 +35,6 @@ namespace DalApi
         /// <returns>Parcel</returns>
         Parcel GetParcel(int parcelId);
         /// <summary>
-        /// Returns the time the parcel was created
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <returns>DateTime</returns>
-        DateTime GetParcelCreating(int parcelId);
-        /// <summary>
-        /// Returns the time the parcel was affiliated with a drone
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <returns>DateTime</returns>
-        DateTime GetParcelAffiliation(int parcelId);
-        /// <summary>
-        /// Returns the time the parcel was picked up
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <returns>DateTime</returns>
-        DateTime GetParcelPickedUp(int parcelId);
-        /// <summary>
-        /// Returns the time the parcel was delivered
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <returns>DateTime</returns>
-        DateTime GetParcelDelivered(int parcelId);
-        /// <summary>
         ///  Adding a station to the next open index
         /// </summary>
         /// <param name="newStation"></param>
@@ -132,11 +108,7 @@ namespace DalApi
         /// <param name="id"></param>
         /// <param name="temp"></param>
         /// <returns>double-distance</returns>
-        double distanceCalculation(double lat1, double lon1, int id, char temp);
-        /// <summary>
-        /// /Returning a list of all the Parcels that have not been affiliated with a Drone
-        /// </summary>
-        /// <returns></returns>
+       
         IEnumerable<Parcel> ListParcelOnAir();
         /// <summary>
         /// return the next number of new parcel 
@@ -181,7 +153,7 @@ namespace DalApi
         /// return power consumption
         /// </summary>
         /// <returns>double</returns>
-        double[] GetElectricUsage();
+        List<double> GetElectricUsage();
         /// <summary>
         /// Returns the charging rate
         /// </summary>

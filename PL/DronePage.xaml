@@ -12,9 +12,10 @@
         <local:BatteryToProgressBarConverter x:Key="BatteryToProgressBarConverter"/>
         <local:LatitudeToSexaConvert x:Key="LatitudeToSexaConvert"/>
         <local:LongitudeToSexaConvert x:Key="LongitudeToSexaConvert"/>
+        <local:IntByEnumConverter x:Key="IntByEnumConverter"/>
     </Page.Resources>
     <Grid Name="mainDrone" DataContext="{Binding}">
-        <Image Source="/maxresdefault.jpg" Stretch="UniformToFill" Margin="-8,-5,8,5"/>
+        <Image Source="/maxresdefault.jpg" Margin="-8,-30,0,-21"/>
         <Label Name="label_id" Content="Enter  ID number:" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
         <Label Name="label_model" Content="Insert the model" HorizontalAlignment="Left" Height="29" Margin="34,106,0,0" VerticalAlignment="Top" Width="199" FontSize="16" FontWeight="Black"/>
         <ComboBox  Name="WeightSelector"  IsEnabled="{Binding ElementName= TextBox_id,Path=IsEnabled}"  HorizontalAlignment="Left" Margin="221,149,0,0" VerticalAlignment="Top" Width="120"  Visibility="{Binding ElementName=add_button,Path=Visibility}"/>
@@ -42,18 +43,12 @@
         </Button>
 
 
-        <ListView Name="ListParcelTransfer" DataContext="{Binding}" HorizontalAlignment="Left" Margin="216,309,0,19" Width="500" MouseDoubleClick="OpenParcelTransfer" Visibility="{Binding ElementName=changeModelButton,Path=Visibility}">
+        <ListView Name="ListParcelTransfer"  HorizontalAlignment="Left" Margin="216,309,0,45" Width="158" MouseDoubleClick="OpenParcelTransfer" Visibility="{Binding ElementName=changeModelButton,Path=Visibility}">
             <ListView.View>
                 <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Weight}" x:Name="Weight" Header="Weight" Width="auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Priority}" x:Name="Priority" Header="Priority" Width="auto"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding ParcelSituation}" x:Name="ParcelSituation" Header="ParcelSituation" Width="auto"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding collection}" x:Name="collection" Header="collection" Width="auto"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding SupplyPoint}" x:Name="SupplyPoint" Header="SupplyPoint" Width="auto"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Sender}" x:Name="Sender" Header="Sender" Width="auto"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Receiver}" x:Name="Receiver" Header="Receiver" Width="auto"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding distanceTransportation}" x:Name="distanceTransportation" Header="distanceTransportation" Width="auto"/>
                 </GridView>
             </ListView.View>
         </ListView>

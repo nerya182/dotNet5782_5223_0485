@@ -21,10 +21,10 @@ namespace DalApi
             {
                 case "List":
                     return DalObject.DalObject.Instance;
+                case "DalXml":
+                    return DalXml.DalXml.Instance;
                 default:
-                    throw new ItemNotFoundException(2);
-
-
+                    throw new IllegalActionException("Not found");
             }
         }
     }

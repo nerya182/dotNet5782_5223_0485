@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DO;
 
-
 namespace DalObject
 {
     public class DataSource
@@ -44,6 +43,8 @@ namespace DalObject
 
             Station newStation2 = new Station() { Id = 67, Name = "Shuk Machane Yehudah", AvailableChargeSlots = 10, Lattitude = 31.78489, Longitude = 35.21257 };
             Stations.Add(newStation2);
+
+
         }
         /// <summary>
         /// Creating 5 Drones Randomly
@@ -79,10 +80,16 @@ namespace DalObject
         private static void CreateCustomers()
         {
             Random R = new Random();
+            int id;
             for (int i = 0; i < 10; i++)
             {
+                do
+                {
+                    id = R.Next(100000000, 1000000000);
+                } while (!CheckId(id));
+
                 CustomerName customerName = (CustomerName)R.Next(0, 11);
-                Customer newCustomer = new Customer() { Id = R.Next(100000000, 1000000000), Name = customerName.ToString(), Phone = "050" + R.Next(1111111,9999999), Lattitude = (R.Next(31591956, 32049510)) / ((1000000.0)), Longitude = (R.Next(34802513, 35393515)) / ((1000000.0)) };
+                Customer newCustomer = new Customer() { Id =id , Name = customerName.ToString(), Phone = "050" + R.Next(1111111,9999999), Lattitude = (R.Next(31591956, 32049510)) / ((1000000.0)), Longitude = (R.Next(34802513, 35393515)) / ((1000000.0)) };
                 Customers.Add(newCustomer);
             }
         }
@@ -174,6 +181,41 @@ namespace DalObject
                 Config.NewParcelId++;
             }
         }
+        public static bool CheckId(int id)
+        {
+            int number = id / 10;
+            int s = 0, kefel = 0, SumOfDigitsOfProduct = 0;
+            for (int i = 1; i <= 8; i++)
+            {
+                if (i % 2 == 0)
+                    kefel = (number % 10);
+                else
+                    kefel = (number % 10) * 2;
+                number /= 10;
+                SumOfDigitsOfProduct = sumDigits(kefel);
+                s += SumOfDigitsOfProduct;
+            }
+            if (s % 10 == 0)
+                return 0 == id % 10;
+            else
+                return (10 - s % 10) == id % 10;
+        }
+        /// <summary>
+        /// help function
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns>int</returns>
+        private static int sumDigits(int num)
+        {
+            int s = 0;
+            while (num > 0)
+            {
+                s = s + num % 10;
+                num /= 10;
+            }
+            return s;
+        }
+
     }
 }
 

@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Image Source="/Drone-Fast-Delivery.jpg" Stretch="UniformToFill"></Image>
+    <Grid Margin="0,-13,0,0">
+        <Image Source="/Drone-Fast-Delivery.jpg" Stretch="UniformToFill" Margin="-17,-8,-12,-9"></Image>
         <Button x:Name="start" Content="start" HorizontalAlignment="Left" Margin="128,180,0,0" VerticalAlignment="Top" Click="Start_Click" Height="33" FontWeight="Bold" Width="70"/>
         <Button x:Name="manager" Content="manager" HorizontalAlignment="Left" Margin="221,176,0,0" VerticalAlignment="Top" Click="Manager_Click" Height="33" FontWeight="Bold" Width="70"/>
         <Button x:Name="client" Content="client" HorizontalAlignment="Left" Margin="221,216,0,0" VerticalAlignment="Top" Height="33" FontWeight="Bold" Width="70" Click="Client_Click" Visibility="{Binding ElementName=manager, Path=Visibility}"/>

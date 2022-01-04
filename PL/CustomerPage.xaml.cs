@@ -50,7 +50,6 @@ namespace PL
             label_TextBoxNew.Visibility = Visibility.Hidden;
             TextBoxNewModel.Visibility = Visibility.Hidden;
             NewUpdate.Visibility = Visibility.Hidden;
-            //label_received.Visibility = Visibility.Hidden;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

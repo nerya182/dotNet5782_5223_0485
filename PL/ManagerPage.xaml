@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:PL"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ManagerPage">
+      Title="ManagerPage" >
     <Page.Resources>
         <local:BatteryToColorConverter x:Key="BatteryToColorConverter"/>
         <local:BatteryToProgressBarConverter x:Key="BatteryToProgressBarConverter"/>
@@ -14,7 +14,7 @@
         <local:LongitudeToSexaConvert x:Key="LongitudeToSexaConvert"/>
     </Page.Resources>
 
-    <Grid Background="White">
+    <Grid Background="White"  >
         <TabControl Name="TabManager" Margin="2,0,283,2" SelectionChanged="TabManager_SelectionChanged">
             <TabItem Name="tabDrones" Header="list drone">
                 <Grid Background="White"  Height="422" HorizontalAlignment="Left" Width="507">
@@ -27,7 +27,7 @@
                                 <GridViewColumn  Header="Battery %" Width="auto">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <ProgressBar Name="Battrey"  Minimum="0" Maximum="100" Value="{Binding Battery,Converter={StaticResource BatteryToProgressBarConverter}}" 
+                                            <ProgressBar Name="Battrey"   Minimum="0" Maximum="100" Value="{Binding Battery,Converter={StaticResource BatteryToProgressBarConverter}}" 
                                                          Foreground="{Binding Battery,Converter={StaticResource BatteryToColorConverter}}" HorizontalAlignment="Left" Height="20"  VerticalAlignment="Top"  Width="40"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -88,7 +88,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <TabControl TabStripPlacement="Right" Margin="520,24,0,25"  >
+        <TabControl TabStripPlacement="Right" Margin="520,27,0,25"  >
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabItem}">
                     <Setter Property="HeaderTemplate">
@@ -106,7 +106,7 @@
                 </Style>
             </TabControl.Resources>
             <TabItem Header="Options" Margin="0,-3,-2,0" Height="52" VerticalAlignment="Top">
-                <Grid Margin="0,0,0,0">
+                <Grid Margin="0,8,0,-8">
                     <Button x:Name="ADD" Content="ADD" Click="ADD_Click" Width="auto" Height="auto" Margin="-3,66,3,266"/>
                     <Button x:Name="deleteButton" Visibility="Hidden" Content="delete" Click="delete_Click" Width="auto" Height="auto" Margin="0,132,0,200"/>
                 </Grid>
@@ -119,13 +119,16 @@
                     <ComboBox x:Name="ComboBox_StatusSelector" Text="Select Status" Visibility="{Binding ElementName=ComboBox_WeightSelector, Path=Visibility}" IsEditable="{Binding ElementName=ComboBox_WeightSelector, Path=IsEditable}" Margin="-3,228,3,104" Width="auto" SelectionChanged="StatusSelector_SelectionChanged"/>
                     <ComboBox x:Name="ComboBox_PrioritySelector"  Text="Select Priority"  Visibility="{Binding ElementName=ComboBox_WeightSelector, Path=Visibility}"  IsEditable="{Binding ElementName=ComboBox_WeightSelector, Path=IsEditable}" Margin="-3,292,3,40" Width="auto" SelectionChanged="PrioritySelector_SelectionChanged" />
                     <ComboBox x:Name="ComboBox_date"  Text="Select date"  Visibility="{Binding Visibility, ElementName=ComboBox_WeightSelector}"  IsEditable="{Binding IsEditable, ElementName=ComboBox_WeightSelector}" Margin="1,328,-1,4" Width="auto" SelectionChanged="ComboBox_date_SelectionChanged" />
-                    <Button x:Name="filter" Content="Refresh list" Click="Refresh_list_Click" Width="235" Margin="1,3,7,329"/>
+                    <Button x:Name="filter" Content="Refresh list" Click="Refresh_list_Click" Width="235" Margin="4,3,10,357"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Maps" Height="47" Margin="0,-2,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="24" >
                 <Button x:Name="maps" Content="show list on maps" Click="list_maps_Click" Width="auto" Height="auto" Margin="-3,36,3,296"/>
             </TabItem>
         </TabControl>
+        <Button  x:Name="Back_Button" HorizontalAlignment="Left"  Margin="700,2,0,0" Content="exit program" VerticalAlignment="Top" FontFamily="Verdana" Height="20" Width="auto" Click="Back_Button_Click"/>
+
+
     </Grid>
 </Page>
 
