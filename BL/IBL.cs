@@ -193,7 +193,7 @@ namespace BlApi
         IEnumerable<IGrouping<string, ParcelToList>> GroupingSenderName();
         IEnumerable<Customer> GetListCustomers();
         IEnumerable<ParcelToList> filterToday(int num);
-        void StartSimulator(int droneId, Action<Drone> func, Func<bool> checkStop);
+        //void StartSimulator(int droneId, Action<Drone> func, Func<bool> checkStop);
         
     }
 }
