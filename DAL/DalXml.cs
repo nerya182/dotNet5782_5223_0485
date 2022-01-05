@@ -8,6 +8,8 @@ using System.Xml.Linq;
 using DalApi;
 using DalObject;
 using DO;
+using System.Runtime.CompilerServices;
+
 namespace DalXml
 {
     internal sealed class DalXml : IDal
@@ -21,7 +23,6 @@ namespace DalXml
         string droneChargePath = @"droneChargeXml.xml";
         string customerPath = @"customerXml.xml";
         string configPath= @"configXml.xml";
-
         DalXml()
         {
             //DataSource.Initialize();
@@ -32,7 +33,7 @@ namespace DalXml
             //XMLTools.SaveListToXMLSerializer<Station>(DataSource.Stations, stationPath);
             //XMLTools.SaveListToXMLSerializer<double>(GetElectricUsage(), configPath);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone newDrone)
         {
             XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
@@ -43,6 +44,7 @@ namespace DalXml
             droneRootElem.Add(New_drone);
             XMLTools.SaveListToXMLElement(droneRootElem, dronesPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int droneId) 
         {
             XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
@@ -58,6 +60,7 @@ namespace DalXml
                 throw new ItemNotFoundException(droneId);
             return (Drone)drone;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Affiliate(int idParcel, int droneId)
         {
             List<Parcel> listParcel = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -69,6 +72,7 @@ namespace DalXml
             listParcel[indexaforParcel] = temp;
             XMLTools.SaveListToXMLSerializer<Parcel>(listParcel, parcelsPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickupParcelUpdate(int parcelId)
         {
             List<Parcel> listParcel = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -78,6 +82,7 @@ namespace DalXml
             listParcel[indexaforParcel] = temp;
             XMLTools.SaveListToXMLSerializer<Parcel>(listParcel, parcelsPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void SupplyParcelUpdate(int parcelId)
         {
             List<Parcel> listParcel = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -87,6 +92,7 @@ namespace DalXml
             listParcel[indexaforParcel] = temp;
             XMLTools.SaveListToXMLSerializer<Parcel>(listParcel, parcelsPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneFromCharger(int droneId)
         {
             List<DroneCharge> list = XMLTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
@@ -103,18 +109,21 @@ namespace DalXml
             XMLTools.SaveListToXMLSerializer<DroneCharge>(list, droneChargePath);
             XMLTools.SaveListToXMLElement(stationRootElem, stationPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> ListDroneCharge()
         {
             IEnumerable<DroneCharge> listDroneCharge = XMLTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
             return listDroneCharge;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> ListDrone(Predicate<Drone> predicate)
         {
             List<Drone> listDrone = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
                 listDrone = listDrone.FindAll(predicate);
             return listDrone;             
         }
-        public  void AddDroneToCharge(DroneCharge droneCharge)
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void AddDroneToCharge(DroneCharge droneCharge)
         {
             List<DroneCharge> list = XMLTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
             XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationPath);
@@ -129,6 +138,7 @@ namespace DalXml
             XMLTools.SaveListToXMLSerializer<DroneCharge>(list, droneChargePath);
             XMLTools.SaveListToXMLElement(stationRootElem, stationPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(Drone updateDrone)
         {
             XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
@@ -141,6 +151,7 @@ namespace DalXml
             drone.Element("Model").Value = updateDrone.Model.ToString();
             XMLTools.SaveListToXMLElement(droneRootElem,dronesPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int id)
         {
             XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationPath);
@@ -158,6 +169,7 @@ namespace DalXml
                 throw new ItemNotFoundException(id);
             return (Station)station;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int id)
         {
             XElement customerRootElem = XMLTools.LoadListFromXMLElement(customerPath);
@@ -175,6 +187,7 @@ namespace DalXml
                 throw new ItemNotFoundException(id);
             return (Customer)customer;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int id)
         {
             Parcel parcel = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath).FirstOrDefault(p=>p.Id==id);
@@ -205,6 +218,7 @@ namespace DalXml
             else
                 throw new ItemAlreadyExistsException(newStation.Id);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer newCustomer)
         {
             XElement customerRootElem = XMLTools.LoadListFromXMLElement(customerPath);
@@ -227,6 +241,7 @@ namespace DalXml
             else
                 throw new ItemAlreadyExistsException(newCustomer.Id);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(Parcel newParcel)
         {
             XElement parcelootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
@@ -249,6 +264,7 @@ namespace DalXml
                 XMLTools.SaveListToXMLElement(parcelootElem,parcelsPath);
                 XMLTools.SaveListToXMLSerializer<double>(listConfig, configPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> ListBaseStation(Predicate<DO.Station> predicate)
         {
 
@@ -256,49 +272,60 @@ namespace DalXml
             listStation.FindAll(predicate);
             return listStation;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> ListCustomer(Predicate<Customer> predicate)
         {
             List<Customer> listCustomer = XMLTools.LoadListFromXMLSerializer<Customer>(customerPath);
             listCustomer.FindAll(predicate);
             return listCustomer;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> ListParcel(Predicate<DO.Parcel> predicate)
         {
             List<Parcel> listParcel = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath).ToList();
             listParcel.FindAll(predicate);
             return listParcel;
         }
-        public  IEnumerable<Parcel> ListParcelOnAir()
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Parcel> ListParcelOnAir()
         {
             List<Parcel> listParcelOnAir = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath).FindAll(p=>p.DroneId==0);
             return listParcelOnAir;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int GetParcelId()
         {
+            //double id = XMLTools.LoadListFromXMLSerializer<double>(configPath).ElementAt(5);
             return DataSource.Config.NewParcelId;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel ParcelDisplay(int id)
         {
             return GetParcel(id);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station BaseStationDisplay(int id)
         {
             return GetStation(id);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> ListStationsWithOpenSlots()
         {
             List<Station> listStationsWithOpenSlots = XMLTools.LoadListFromXMLSerializer<Station>(stationPath).FindAll(s => s.AvailableChargeSlots > 0);
             return listStationsWithOpenSlots;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone DroneDisplay(int id)
         {
             return GetDrone(id);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer CustomerDisplay(int id)
         {
             return GetCustomer(id);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public List<double> GetElectricUsage()
         {
             List<double> list = new();
@@ -310,10 +337,12 @@ namespace DalXml
             list.Add(DataSource.Config.NewParcelId);
             return list;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetChargeSpeed()
         {
             return DataSource.Config.chargeSpeed;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2)
         {
             var R = 6371; // Radius of the earth in km
@@ -328,10 +357,12 @@ namespace DalXml
             var d = R * c; // Distance in km
             return d;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double Deg2rad(double deg)
         {
             return deg * (Math.PI / 180);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool CheckId(int id)
         {
             int number = id / 10;
@@ -361,12 +392,14 @@ namespace DalXml
             }
             return s;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int AvailableChargeSlotsInStation(int id)
         {
             List<DroneCharge> listDroneChrage = XMLTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
             listDroneChrage.FindAll(d => d.StationId == id);
             return listDroneChrage.Count;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetElectricUsageNumber(WeightCategories weight)
         {
             if (weight == (WeightCategories)1) return DataSource.Config.lightWeight;
@@ -377,6 +410,7 @@ namespace DalXml
 
             return DataSource.Config.heavyWeight;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(Customer updateCustomer)
         {
             XElement customerRootElem = XMLTools.LoadListFromXMLElement(customerPath);
@@ -394,6 +428,7 @@ namespace DalXml
             }
             XMLTools.SaveListToXMLElement(customerRootElem, customerPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(Station updateStation)
         {
             XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationPath);
@@ -413,6 +448,7 @@ namespace DalXml
             }
              XMLTools.SaveListToXMLElement(stationRootElem, stationPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int id)
         {
             List<Parcel> listParcel = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -420,6 +456,7 @@ namespace DalXml
             listParcel.Remove(parcel);
             XMLTools.SaveListToXMLSerializer<Parcel>(listParcel, parcelsPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(int id)
         {
             List<Station> listStation = XMLTools.LoadListFromXMLSerializer<Station>(stationPath);
@@ -427,6 +464,7 @@ namespace DalXml
             listStation.Remove(station);
             XMLTools.SaveListToXMLSerializer<Station>(listStation, stationPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteCustomer(int id)
         {
             List<Customer> listCustomer = XMLTools.LoadListFromXMLSerializer<Customer>(customerPath);

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DO;
 using static DalObject.DataSource;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace DalObject 
 {

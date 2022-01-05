@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None">
     <Grid Margin="0,-13,0,0">
         <Image Source="/Drone-Fast-Delivery.jpg" Stretch="UniformToFill" Margin="-17,-8,-12,-9"></Image>
         <Button x:Name="start" Content="start" HorizontalAlignment="Left" Margin="128,180,0,0" VerticalAlignment="Top" Click="Start_Click" Height="33" FontWeight="Bold" Width="70"/>
