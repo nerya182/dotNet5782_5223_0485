@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DO;
 using static DalObject.DataSource;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace DalObject 
 {
@@ -22,6 +23,7 @@ namespace DalObject
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneCharge GetDroneCharge(int index)
         {
             return DroneCharges[index];
@@ -32,6 +34,7 @@ namespace DalObject
         /// </summary>
         /// <param name="StationId"></param>
         /// <returns>Station</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  Station GetStation(int StationId)  
         {
             Station ?newStation = null;
@@ -55,6 +58,7 @@ namespace DalObject
         /// </summary>
         /// <param name="droneId"></param>
         /// <returns> Drone </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int droneId)  
         {
             Drone? newDrone = null;
@@ -76,6 +80,7 @@ namespace DalObject
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns> Customer</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  Customer GetCustomer(int customerId)  
         {
             Customer? newCustomer = null;
@@ -97,6 +102,7 @@ namespace DalObject
         /// </summary>
         /// <param name="parcelId"></param>
         /// <returns> Parcel </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  Parcel GetParcel(int parcelId)  
         {
             Parcel? newParcel = null;
@@ -113,11 +119,12 @@ namespace DalObject
             }
             return (Parcel)newParcel;
         }
-   
+
         /// <summary>
         /// Adding a station to the next open index
         /// </summary>
         /// <param name="newStation"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station newStation)  
         {
             foreach (Station objStation in DataSource.Stations)
@@ -133,6 +140,7 @@ namespace DalObject
         /// Adding a drone to the next open index
         /// </summary>
         /// <param name="newDrone"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  void AddDrone(Drone newDrone)  
         {
             foreach (Drone objDrone in DataSource.Drones)
@@ -148,6 +156,7 @@ namespace DalObject
         /// Adding a customer to the next open index
         /// </summary>
         /// <param name="newCustomer"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  void AddCustomer(Customer newCustomer)   
         {
             foreach (Customer objCustomer in DataSource.Customers)
@@ -163,6 +172,7 @@ namespace DalObject
         /// Adding a parcel to the next open index
         /// </summary>
         /// <param name="newParcel"></param> 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  void AddParcel(Parcel newParcel)    
         {
             foreach (Parcel objParcel in DataSource.Parcels)
@@ -181,6 +191,7 @@ namespace DalObject
         /// </summary>
         /// <param name="idParcel"></param>
         /// <param name="droneId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  void Affiliate(int idParcel,int droneId)
         {
             bool flag = false;
@@ -212,6 +223,7 @@ namespace DalObject
         /// Changing drone status, and time of pickup
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  void PickupParcelUpdate(int ParcelId)  
         {
             for (int i = 0; i < Parcels.Count; i++)
@@ -229,6 +241,7 @@ namespace DalObject
         /// Delivering the parcel
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  void SupplyParcelUpdate(int ParcelId)   
         {
             for (int i = 0; i < Parcels.Count; i++)
@@ -247,6 +260,7 @@ namespace DalObject
         /// We find the charger and the station the drone is  charging again
         /// </summary>
         /// <param name="DroneId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  void ReleaseDroneFromCharger(int DroneId)
         {
             for (int i = 0; i < DroneCharges.Count; i++)
@@ -273,6 +287,7 @@ namespace DalObject
         /// Returning a list of all the Stations
         /// </summary>
         /// <returns> List </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> ListBaseStation(Predicate<Station> predicate)  
         {
             List<Station> PrintStation = DataSource.Stations.FindAll(predicate);          
@@ -282,6 +297,7 @@ namespace DalObject
         /// Returning a list of all the drone charge
         /// </summary>
         /// <returns>List</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> ListDroneCharge()
         {
             List<DroneCharge> PrintDroneCharge = new List<DroneCharge>();
@@ -295,6 +311,7 @@ namespace DalObject
         /// Returning a list of all the Drones
         /// </summary>
         /// <returns> List </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> ListDrone(Predicate<Drone> predicate)
         {
             List<Drone> printDrone = DataSource.Drones.FindAll(predicate);
@@ -305,6 +322,7 @@ namespace DalObject
         /// Returning a list of all the Customers
         /// </summary>
         /// <returns> List </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> ListCustomer(Predicate<Customer> predicate)
         {
             List<Customer> PrintCustomer = DataSource.Customers.FindAll(predicate);
@@ -315,67 +333,18 @@ namespace DalObject
         /// Returning a list of all the Parcels
         /// </summary>
         /// <returns> List </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> ListParcel(Predicate<Parcel> predicate)  
         {
             List<Parcel> PrintParcel = DataSource.Parcels.FindAll(predicate);
             return PrintParcel;
-        }
-        /// <summary>
-        /// distance calculation
-        /// </summary>
-        /// <param name="lat1"></param>
-        /// <param name="lon1"></param>
-        /// <param name="id"></param>
-        /// <param name="temp"></param>
-        /// <returns>double</returns>
-        public  double distanceCalculation(double lat1, double lon1,int id,char temp)
-        {
-            double[] arr = new double[2];
-            double lat2, lon2;
-            if (temp=='s')
-            {
-                for (int i = 0; i <Stations.Count; i++)
-                {
-                    if (GetStation(i).Id == id)
-                    {
-                        arr[0] = GetStation(i).Lattitude;
-                        arr[1] = GetStation(i).Longitude;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i <Customers.Count; i++)
-                {
-                    if (GetCustomer(i).Id == id)
-                    {
-                        arr[0] = GetCustomer(i).Lattitude;
-                        arr[1] = GetCustomer(i).Longitude;
-                        break;
-                    }
-                }
-            }
-            lat2 = arr[0];
-            lon2 = arr[1];
-            int R = 6371; 
-            double φ1 = lat1 * Math.PI / 180; 
-            double φ2 = lat2 * Math.PI / 180;
-            double Δφ = (lat2 - lat1) * Math.PI / 180;
-            double Δλ = (lon2 - lon1) * Math.PI / 180;
-
-           double a = Math.Sin(Δφ / 2) * Math.Sin(Δφ / 2) +
-                      Math.Cos(φ1) * Math.Cos(φ2) *
-                      Math.Sin(Δλ / 2) * Math.Sin(Δλ / 2);
-            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-
-            return  R * c; 
         }
 
         /// <summary>
         /// Returning a list of all the Parcels that have not been affiliated with a Drone
         /// </summary>
         /// <returns> List </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> ListParcelOnAir()  
         {
             List<Parcel> PrintParcelOnAir = new List<Parcel>();
@@ -389,6 +358,7 @@ namespace DalObject
         /// return the next number of new parcel 
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  int GetParcelId()
         {
             return DataSource.Config.NewParcelId;
@@ -399,6 +369,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id"></param>
         /// <returns> Parcel </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  Parcel ParcelDisplay(int id)  
         {
             int i;
@@ -414,6 +385,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id"></param>
         /// <returns> Station </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station BaseStationDisplay(int id)  
         {
             int i;
@@ -427,6 +399,7 @@ namespace DalObject
         /// Adding the stations that have open slot to the list
         /// </summary>
         /// <returns> List </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> ListStationsWithOpenSlots()
         {
             List<Station>PrintCustomer = new List<Station>();
@@ -442,6 +415,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id"></param>
         /// <returns> Drone </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  Drone DroneDisplay(int id)  
         {
             int i;
@@ -457,6 +431,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id"></param>
         /// <returns> Customer </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  Customer CustomerDisplay(int id)  
         {
             int i;
@@ -472,6 +447,7 @@ namespace DalObject
         /// </summary>
         /// <param name="droneCharge"></param>
         /// <param name="StationId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public  void AddDroneToCharge(DroneCharge droneCharge)
         {
             bool flag = false;
@@ -502,6 +478,7 @@ namespace DalObject
         /// return power consumption
         /// </summary>
         /// <returns>double</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public List<double> GetElectricUsage()
         {
             List<double> list = new();
@@ -516,6 +493,7 @@ namespace DalObject
         /// Returns the charging rate
         /// </summary>
         /// <returns>double</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetChargeSpeed()
         {
             return DataSource.Config.chargeSpeed;
@@ -528,6 +506,7 @@ namespace DalObject
         /// <param name="lat2"></param>
         /// <param name="lon2"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2)
         {
             var R = 6371; // Radius of the earth in km
@@ -547,6 +526,7 @@ namespace DalObject
         /// </summary>
         /// <param name="deg"></param>
         /// <returns>double</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double Deg2rad(double deg)
         {
             return deg * (Math.PI / 180);
@@ -556,6 +536,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id"></param>
         /// <returns>int</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int AvailableChargeSlotsInStation(int id)
         {
             int count = 0;
@@ -573,6 +554,7 @@ namespace DalObject
         /// </summary>
         /// <param name="weight"></param>
         /// <returns>double</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetElectricUsageNumber(WeightCategories weight)
         {
             if (weight == (WeightCategories)1)
@@ -594,6 +576,7 @@ namespace DalObject
         /// Update Customer-name/phone
         /// </summary>
         /// <param name="updateCustomer"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(Customer updateCustomer)
         {
             for (int i = 0; i < Customers.Count; i++)
@@ -618,6 +601,7 @@ namespace DalObject
         /// Update station name/available charge slots
         /// </summary>
         /// <param name="updateStation"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(Station updateStation)
         {
             bool flag = false;
@@ -656,6 +640,7 @@ namespace DalObject
         /// Update drone-model
         /// </summary>
         /// <param name="updateDrone"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(Drone updateDrone)
         {
             bool flag = false;
@@ -680,6 +665,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id"></param>
         /// <returns>bool</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool CheckId(int id)
         {
             int number = id / 10;
@@ -715,16 +701,19 @@ namespace DalObject
             return s;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int id)
         {
             Parcels.Remove(ParcelDisplay(id));          
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(int id)
         {
             Stations.Remove(BaseStationDisplay(id));
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteCustomer(int id)
         {
             Customers.Remove(CustomerDisplay(id));
