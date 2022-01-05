@@ -16,7 +16,7 @@ namespace DalApi
         /// <param name="str"></param>
         /// <returns>return obj of DalObject</returns>
         public static IDal GetDal(string str)
-        {
+        { 
             switch(str)
             {
                 case "List":
