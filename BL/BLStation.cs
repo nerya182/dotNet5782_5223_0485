@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BlApi;
 using BO;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
@@ -12,30 +13,35 @@ namespace BL
         /// Adding a station to our data source
         /// </summary>
         /// <param name="newStation"> IBL BO type station </param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station newStation)
         {
-            DO.Station temp = new DO.Station();
-            if (newStation.location.Lattitude > 90 || newStation.location.Lattitude < -90)
+            lock(dal)
             {
-                throw new IllegalActionException("Invalid lattitude value");
-            } 
-            if (newStation.location.Longitude > 180 || newStation.location.Longitude < -180)
-            {
-                throw new IllegalActionException("Invalid longitude value");
+                DO.Station temp = new DO.Station();
+                if (newStation.location.Lattitude > 90 || newStation.location.Lattitude < -90)
+                {
+                    throw new IllegalActionException("Invalid lattitude value");
+                }
+                if (newStation.location.Longitude > 180 || newStation.location.Longitude < -180)
+                {
+                    throw new IllegalActionException("Invalid longitude value");
+                }
+                try
+                {
+                    temp.Id = newStation.Id;
+                    temp.Name = newStation.Name;
+                    temp.AvailableChargeSlots = newStation.AvailableChargeSlots;
+                    temp.Lattitude = newStation.location.Lattitude;
+                    temp.Longitude = newStation.location.Longitude;
+                    dal.AddStation(temp);
+                }
+                catch (Exception e)
+                {
+                    throw new ItemAlreadyExistsException(temp.Id, "Enter a new station number\n", e);
+                }
             }
-            try
-            {
-                temp.Id = newStation.Id;
-                temp.Name = newStation.Name;
-                temp.AvailableChargeSlots = newStation.AvailableChargeSlots;
-                temp.Lattitude = newStation.location.Lattitude;
-                temp.Longitude = newStation.location.Longitude;
-                dal.AddStation(temp);
-            }
-            catch (Exception e)
-            {
-                throw new ItemAlreadyExistsException(temp.Id, "Enter a new station number\n", e);
-            }
+            
         }
         /// <summary>
         /// Retrieving the closest station to the drone
@@ -44,64 +50,84 @@ namespace BL
         /// <returns> closest station </returns>
         private DO.Station GetClosestStation(DroneToList drone)
         {
-            List<DO.Station> stations = dal.ListBaseStation(i => true).ToList();
-            Location closestStation = new Location();
-            closestStation.Lattitude = stations[0].Lattitude;
-            closestStation.Longitude = stations[0].Longitude;
-            int i = 0, index = 0;
-            foreach (var station in stations)
+            lock(dal)
             {
-                if (dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude, station.Lattitude, station.Longitude) <
-                    dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude, closestStation.Lattitude, closestStation.Longitude) && station.AvailableChargeSlots > 0)
+                List<DO.Station> stations = dal.ListBaseStation(i => true).ToList();
+                Location closestStation = new Location();
+                closestStation.Lattitude = stations[0].Lattitude;
+                closestStation.Longitude = stations[0].Longitude;
+                int i = 0, index = 0;
+                foreach (var station in stations)
                 {
-                    index = i;
-                    closestStation.Lattitude = drone.Location.Lattitude;
-                    closestStation.Longitude = drone.Location.Longitude;
+                    if (dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude, station.Lattitude, station.Longitude) <
+                        dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude, closestStation.Lattitude, closestStation.Longitude) && station.AvailableChargeSlots > 0)
+                    {
+                        index = i;
+                        closestStation.Lattitude = drone.Location.Lattitude;
+                        closestStation.Longitude = drone.Location.Longitude;
+                    }
+                    i++;
                 }
-                i++;
+                return stations[index];
             }
-            return stations[index];
+            
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationToList> GetStations()
         {
-            List<StationToList> temp = new List<StationToList>();
-            foreach (DO.Station station in dal.ListBaseStation(i => true))
+            lock(dal)
             {
-                Station obj = BaseStationDisplay(station.Id);
-                temp.Add(MakeStationToList(obj));
+                List<StationToList> temp = new List<StationToList>();
+                foreach (DO.Station station in dal.ListBaseStation(i => true))
+                {
+                    Station obj = BaseStationDisplay(station.Id);
+                    temp.Add(MakeStationToList(obj));
+                }
+                return temp;
             }
-            return temp;
+            
         }
 
         /// <summary>
         /// Returns our list of stations
         /// </summary>
         /// <returns> IEnumerable of stations</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetListStation()
         {
-            List<Station> temp = new List<Station>();
-            foreach (DO.Station station in dal.ListBaseStation(i=>true))
+            lock(dal)
             {
-                Station obj = BaseStationDisplay(station.Id);
-                temp.Add(obj);
+                List<Station> temp = new List<Station>();
+                foreach (DO.Station station in dal.ListBaseStation(i => true))
+                {
+                    Station obj = BaseStationDisplay(station.Id);
+                    temp.Add(obj);
+                }
+                return temp;
             }
-            return temp;
+            
         }
         /// <summary>
         /// Returns the stations that have an open charge slot
         /// </summary>
         /// <returns> IEnumerable of stations </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetListStationsWithOpenSlots()
         {
-            IEnumerable<DO.Station> stations = dal.ListStationsWithOpenSlots();
-            return (IEnumerable<Station>)stations;
+            lock(dal)
+            {
+                IEnumerable<DO.Station> stations = dal.ListStationsWithOpenSlots();
+                return (IEnumerable<Station>)stations;
+            }
+            
         }
         /// <summary>
         /// Retrieving info to transform station into station to list
         /// </summary>
         /// <param name="objStation"> Station that we will recieve rest of its info</param>
         /// <returns> stationto list after we recieved the necessary info </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public StationToList MakeStationToList( Station objStation)
         {
             StationToList stationToList = new StationToList();
@@ -116,95 +142,125 @@ namespace BL
         /// </summary>
         /// <param name="id"> Id number </param>
         /// <returns> Station to be displayed </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station BaseStationDisplay(int id)
         {
-            try
+            lock(dal)
             {
-                DO.Station station = dal.GetStation(id);
-                IEnumerable<DO.DroneCharge> droneCharge = dal.ListDroneCharge();
-                List<DroneInCharging> lstDrnInChrg = new List<DroneInCharging>();
-                Station temp = new Station();
-                Location location = new Location();
-                location.Longitude = station.Longitude;
-                location.Lattitude = station.Lattitude;
-                temp.Id = station.Id;
-                temp.Name = station.Name;
-                temp.location = location;
-                temp.AvailableChargeSlots = station.AvailableChargeSlots;
-                List<DO.DroneCharge> asList = droneCharge.ToList();
-                foreach (var drnChrg in droneCharge)
+                try
                 {
-                    if (drnChrg.StationId == id)
+                    DO.Station station = dal.GetStation(id);
+                    IEnumerable<DO.DroneCharge> droneCharge = dal.ListDroneCharge();
+                    List<DroneInCharging> lstDrnInChrg = new List<DroneInCharging>();
+                    Station temp = new Station();
+                    Location location = new Location();
+                    location.Longitude = station.Longitude;
+                    location.Lattitude = station.Lattitude;
+                    temp.Id = station.Id;
+                    temp.Name = station.Name;
+                    temp.location = location;
+                    temp.AvailableChargeSlots = station.AvailableChargeSlots;
+                    List<DO.DroneCharge> asList = droneCharge.ToList();
+                    foreach (var drnChrg in droneCharge)
                     {
-                        DroneInCharging DrnInChrg = new DroneInCharging();
-                        DrnInChrg.DroneId = drnChrg.DroneId;
-                        DrnInChrg.Battery = GetDroneFromLstDrone(drnChrg.DroneId).Battery;
-                        lstDrnInChrg.Add(DrnInChrg);
+                        if (drnChrg.StationId == id)
+                        {
+                            DroneInCharging DrnInChrg = new DroneInCharging();
+                            DrnInChrg.DroneId = drnChrg.DroneId;
+                            DrnInChrg.Battery = GetDroneFromLstDrone(drnChrg.DroneId).Battery;
+                            lstDrnInChrg.Add(DrnInChrg);
+                        }
                     }
+                    temp.droneInCharging = lstDrnInChrg;
+                    return temp;
                 }
-                temp.droneInCharging = lstDrnInChrg;
-                return temp;
+                catch (Exception e)
+                {
+                    throw new ItemNotFoundException(id, "Enter an existing station in the system", e);
+                }
             }
-            catch (Exception e)
-            {
-                throw new ItemNotFoundException(id, "Enter an existing station in the system", e);
-            }
+            
         }
         /// <summary>
         /// Updating the amount of available slots the station has
         /// </summary>
         /// <param name="stationId"> ID of Station </param>
         /// <param name="chargingPositions"> Amount of available charge slots </param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStationPositions(int stationId, int chargingPositions)
         {
-            try
+            lock(dal)
             {
-                List<DO.Station> Stations = dal.ListBaseStation(i => true).ToList();
-                DO.Station station = new DO.Station { Id =stationId,AvailableChargeSlots = chargingPositions};
-                dal.UpdateStation(station);
+                try
+                {
+                    List<DO.Station> Stations = dal.ListBaseStation(i => true).ToList();
+                    DO.Station station = new DO.Station { Id = stationId, AvailableChargeSlots = chargingPositions };
+                    dal.UpdateStation(station);
+                }
+                catch (Exception e)
+                {
+                    throw new IllegalActionException("Enter the correct number of charging points", e);
+                }
             }
-            catch (Exception e)
-            {
-                throw new IllegalActionException("Enter the correct number of charging points", e);
-            }
+            
         }
         /// <summary>
         /// Updating the stations name
         /// </summary>
         /// <param name="stationId"> Station ID</param>
         /// <param name="stationName"> The name that the station will be changed to </param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStationName(int stationId, string stationName)
         {
-            try
+            lock(dal)
             {
-                List<DO.Station> stations = dal.ListBaseStation(i => true).ToList();
-                DO.Station station = new DO.Station { Id = stationId,Name = stationName };
-                dal.UpdateStation(station);
+                try
+                {
+                    List<DO.Station> stations = dal.ListBaseStation(i => true).ToList();
+                    DO.Station station = new DO.Station { Id = stationId, Name = stationName };
+                    dal.UpdateStation(station);
+                }
+                catch (Exception e)
+                {
+                    throw new IllegalActionException("Enter the correct number of charging points", e);
+                }
             }
-            catch (Exception e)
-            {
-                throw new IllegalActionException("Enter the correct number of charging points", e);
-            }
+            
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(StationToList station)
         {
-            if (station == null) { throw new IllegalActionException("Please click once on a station and then click delete"); }
-            if (station.UsedChargeSlots== 0)
-                dal.DeleteStation(station.Id);
-            else
+            lock(dal)
             {
-                throw new IllegalActionException("It is not possible to delete the station because there are drones in charge");
+                if (station == null) { throw new IllegalActionException("Please click once on a station and then click delete"); }
+                if (station.UsedChargeSlots == 0)
+                    dal.DeleteStation(station.Id);
+                else
+                {
+                    throw new IllegalActionException("It is not possible to delete the station because there are drones in charge");
+                }
             }
+            
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<bool,StationToList>> GroupingAvailableChargeSlots()
         {
-            var listStation = GetStations();
-            return listStation.GroupBy(s => s.AvailableChargeSlots > 0);
+            lock(dal)
+            {
+                var listStation = GetStations();
+                return listStation.GroupBy(s => s.AvailableChargeSlots > 0);
+            }
+            
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<int, StationToList>> GroupingChargeSlots()
         {
-             return (IEnumerable<IGrouping<int, StationToList>>)GetStations().GroupBy(s => s.AvailableChargeSlots);
+            lock(dal)
+            {
+                return (IEnumerable<IGrouping<int, StationToList>>)GetStations().GroupBy(s => s.AvailableChargeSlots);
+            }
+            
         }
     }
 }
