@@ -193,7 +193,8 @@ namespace BlApi
         IEnumerable<IGrouping<string, ParcelToList>> GroupingSenderName();
         IEnumerable<Customer> GetListCustomers();
         IEnumerable<ParcelToList> filterToday(int num);
-        //void StartSimulator(int droneId, Action<Drone> func, Func<bool> checkStop);
-        
+        void StartSimulator(int droneId, Action<Drone> func, Func<bool> checkStop);
+        double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2);
+
     }
 }

@@ -13,7 +13,8 @@ namespace BL
     class Simulator
     {
         private Stopwatch stopWatch;
-        double speedDrone=3;
+        double speedDrone=4;
+        double distance,timeTask;
         Drone drone;
         internal volatile bool stopSim = false;
         internal Simulator(BlApi.IBL bl, int droneId, Action action, Func<bool> checkStop) 
@@ -25,8 +26,34 @@ namespace BL
             {
                 switch(drone.Status)
                 {
-                 
-              
+                    case DroneStatuses.Available:
+                        try
+                        {
+                            lock (bl) { bl.AffiliateParcelToDrone(drone.Id); }
+                            action();
+                            drone = bl.DroneDisplay(drone.Id);
+                            distance = bl.GetDistanceFromLatLonInKm(drone.Location.Lattitude,drone.Location.Longitude,drone.ParcelTransfer.collection.Lattitude, drone.ParcelTransfer.collection.Longitude);
+                            timeTask = distance / speedDrone;
+                            
+                            Thread.Sleep(1000);
+
+                            lock (bl) { bl.ParcelCollectionByDrone(drone.Id); }
+                            distance = bl.GetDistanceFromLatLonInKm(drone.ParcelTransfer.collection.Lattitude, drone.ParcelTransfer.collection.Longitude, drone.ParcelTransfer.SupplyPoint.Lattitude, drone.ParcelTransfer.SupplyPoint.Longitude);
+                            timeTask = distance / speedDrone;
+                             
+                        }
+                        catch (Exception)
+                        {
+
+                            throw;
+                        }
+                        break;
+                    case DroneStatuses.Charging:
+                        break;
+                    case DroneStatuses.Delivery:
+                        break;
+
+
                 }
 
             }

@@ -23,7 +23,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IBL bl = BlApi.BlFactory.GetBl();
+        IBL bl = BlApi.BlFactory.GetBl();
         ManagerPage managerPage;
         DronePage dronePage;
         parcelPage parcelPage;
@@ -806,6 +806,7 @@ namespace PL
                 }
                 newParcel.Priority = (Priorities)parcelPage.PrioritySelector.SelectedItem;
                 bl.AddParcel(newParcel);
+                newParcel.Id = bl.GetParcelId();
                 managerPage.parcelToListObservabl.Add(bl.MakeParcelToList(newParcel));
                 MessageBox.Show("Added successfully");
                 parcelPage.WeightSelector.IsEnabled = false;

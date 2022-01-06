@@ -197,8 +197,8 @@ namespace ConsoleUI
             char.TryParse(Console.ReadLine(), out temp);
             Console.WriteLine("What is the station or customer of Id?");
             int.TryParse(Console.ReadLine(), out id);
-            distance =DO.distanceCalculation(latitude, longitude,id,temp);
-            Console.WriteLine( $"The distance is: {distance} km");
+           // distance =DO.distanceCalculation(latitude, longitude,id,temp);
+            //Console.WriteLine( $"The distance is: {distance} km");
         }
         /// <summary>
         /// Delivering Parcel

@@ -27,8 +27,7 @@ namespace BL
         /// </summary> 
         internal BL()
         {
-            lock(dal)
-            {
+           
                 Random R = new Random();
                 dal = DalFactory.GetDal("DalXml");
                 List<double> elecUsage = dal.GetElectricUsage();
@@ -130,7 +129,7 @@ namespace BL
                         }
                     }
                 }
-            }
+           
         }
         public void StartSimulator(int droneId, Action<Drone> func, Func<bool> checkStop)
         {
@@ -632,6 +631,10 @@ namespace BL
             {
                 return listDrone.GroupBy(d => d.MaxWeight);
             }
+        }
+        public double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2)
+        {
+            return dal.GetDistanceFromLatLonInKm(lat1, lon1, lat2, lon2);
         }
     }
 }

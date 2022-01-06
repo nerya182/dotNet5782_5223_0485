@@ -119,7 +119,7 @@ namespace DalXml
         public IEnumerable<Drone> ListDrone(Predicate<Drone> predicate)
         {
             List<Drone> listDrone = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
-                listDrone = listDrone.FindAll(predicate);
+            listDrone = listDrone.FindAll(predicate);
             return listDrone;             
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -245,24 +245,22 @@ namespace DalXml
         public void AddParcel(Parcel newParcel)
         {
             XElement parcelootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
-            List<double> listConfig = XMLTools.LoadListFromXMLSerializer<double>(configPath);
-           
-            
-                int CountIdPackage =(int)listConfig[5]++;
-                XElement parcel_New = new XElement("Station",
-                                       new XElement("Id", CountIdPackage),
-                                       new XElement("SenderId", newParcel.SenderId),
-                                       new XElement("TargetId", newParcel.TargetId),
-                                       new XElement("DroneId", newParcel.DroneId),
-                                       new XElement("Weight", newParcel.Weight),
-                                       new XElement("Priority", newParcel.Priority),
-                                       new XElement("Creating", newParcel.Creating),
-                                       new XElement("Affiliation", newParcel.Affiliation),
-                                       new XElement("PickedUp", newParcel.PickedUp),
-                                       new XElement("Delivered", newParcel.Delivered));
-                parcelootElem.Add(parcel_New);
-                XMLTools.SaveListToXMLElement(parcelootElem,parcelsPath);
-                XMLTools.SaveListToXMLSerializer<double>(listConfig, configPath);
+            List<double> listConfig = XMLTools.LoadListFromXMLSerializer<double>(configPath);     
+            XElement parcel_New = new XElement("Station",
+                                   new XElement("Id", newParcel.Id),
+                                   new XElement("SenderId", newParcel.SenderId),
+                                   new XElement("TargetId", newParcel.TargetId),
+                                   new XElement("DroneId", newParcel.DroneId),
+                                   new XElement("Weight", newParcel.Weight),
+                                   new XElement("Priority", newParcel.Priority),
+                                   new XElement("Creating", newParcel.Creating),
+                                   new XElement("Affiliation", newParcel.Affiliation),
+                                   new XElement("PickedUp", newParcel.PickedUp),
+                                   new XElement("Delivered", newParcel.Delivered));
+            parcelootElem.Add(parcel_New);
+            listConfig[5]++;
+            XMLTools.SaveListToXMLElement(parcelootElem, parcelsPath);
+            XMLTools.SaveListToXMLSerializer<double>(listConfig, configPath);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> ListBaseStation(Predicate<DO.Station> predicate)
@@ -282,7 +280,7 @@ namespace DalXml
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> ListParcel(Predicate<DO.Parcel> predicate)
         {
-            List<Parcel> listParcel = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath).ToList();
+            List<Parcel> listParcel = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
             listParcel.FindAll(predicate);
             return listParcel;
         }
@@ -295,8 +293,8 @@ namespace DalXml
         [MethodImpl(MethodImplOptions.Synchronized)]
         public int GetParcelId()
         {
-            //double id = XMLTools.LoadListFromXMLSerializer<double>(configPath).ElementAt(5);
-            return DataSource.Config.NewParcelId;
+            double id = XMLTools.LoadListFromXMLSerializer<double>(configPath).ElementAt(5);
+            return (int)id;
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel ParcelDisplay(int id)
