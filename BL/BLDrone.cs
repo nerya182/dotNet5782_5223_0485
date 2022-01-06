@@ -636,5 +636,6 @@ namespace BL
         {
             return dal.GetDistanceFromLatLonInKm(lat1, lon1, lat2, lon2);
         }
+        public void StartSimulator(int id, Action update, Func<bool> checkStop) => new Simulator(this, id, update, checkStop);
     }
 }

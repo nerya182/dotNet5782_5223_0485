@@ -1,73 +1,73 @@
 <?xml version="1.0"?>
 <ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Customer>
-    <Id>745436949</Id>
-    <Name>Gadi</Name>
-    <Phone>0506597723</Phone>
-    <Longitude>34.968888</Longitude>
-    <Lattitude>32.032404</Lattitude>
+    <Id>974713836</Id>
+    <Name>Tal</Name>
+    <Phone>0503554899</Phone>
+    <Longitude>35.275402</Longitude>
+    <Lattitude>32.043973</Lattitude>
   </Customer>
   <Customer>
-    <Id>739577997</Id>
-    <Name>Nati</Name>
-    <Phone>0502449114</Phone>
-    <Longitude>35.139881</Longitude>
-    <Lattitude>31.995943</Lattitude>
-  </Customer>
-  <Customer>
-    <Id>187197868</Id>
-    <Name>Oren</Name>
-    <Phone>0502167022</Phone>
-    <Longitude>34.921096</Longitude>
-    <Lattitude>31.761179</Lattitude>
-  </Customer>
-  <Customer>
-    <Id>665034997</Id>
-    <Name>Oren</Name>
-    <Phone>0502539570</Phone>
-    <Longitude>35.232671</Longitude>
-    <Lattitude>31.853741</Lattitude>
-  </Customer>
-  <Customer>
-    <Id>516772050</Id>
-    <Name>Oren</Name>
-    <Phone>0501319754</Phone>
-    <Longitude>35.34547</Longitude>
-    <Lattitude>31.865642</Lattitude>
-  </Customer>
-  <Customer>
-    <Id>180401952</Id>
-    <Name>Alex</Name>
-    <Phone>0505169264</Phone>
-    <Longitude>35.129731</Longitude>
-    <Lattitude>31.770619</Lattitude>
-  </Customer>
-  <Customer>
-    <Id>308636059</Id>
+    <Id>596176594</Id>
     <Name>Danny</Name>
-    <Phone>0505071452</Phone>
-    <Longitude>35.102219</Longitude>
-    <Lattitude>31.715859</Lattitude>
+    <Phone>0509411381</Phone>
+    <Longitude>35.021729</Longitude>
+    <Lattitude>31.88426</Lattitude>
   </Customer>
   <Customer>
-    <Id>409281334</Id>
-    <Name>channan</Name>
-    <Phone>0503957861</Phone>
-    <Longitude>34.932607</Longitude>
-    <Lattitude>32.026591</Lattitude>
+    <Id>527431803</Id>
+    <Name>Nati</Name>
+    <Phone>0509320654</Phone>
+    <Longitude>34.989962</Longitude>
+    <Lattitude>32.03918</Lattitude>
   </Customer>
   <Customer>
-    <Id>853354306</Id>
-    <Name>channan</Name>
-    <Phone>0504468071</Phone>
-    <Longitude>34.854273</Longitude>
-    <Lattitude>31.875488</Lattitude>
+    <Id>404715260</Id>
+    <Name>Gadi</Name>
+    <Phone>0504294550</Phone>
+    <Longitude>34.913113</Longitude>
+    <Lattitude>31.975053</Lattitude>
   </Customer>
   <Customer>
-    <Id>361189343</Id>
-    <Name>Freddy</Name>
-    <Phone>0501901028</Phone>
-    <Longitude>35.348061</Longitude>
-    <Lattitude>31.795455</Lattitude>
+    <Id>138083886</Id>
+    <Name>Benny</Name>
+    <Phone>0503349506</Phone>
+    <Longitude>35.238293</Longitude>
+    <Lattitude>31.797517</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>636807513</Id>
+    <Name>Tal</Name>
+    <Phone>0503632610</Phone>
+    <Longitude>35.298342</Longitude>
+    <Lattitude>31.710633</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>713088375</Id>
+    <Name>Yair</Name>
+    <Phone>0509616785</Phone>
+    <Longitude>34.896264</Longitude>
+    <Lattitude>31.72766</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>971605282</Id>
+    <Name>Danny</Name>
+    <Phone>0506943499</Phone>
+    <Longitude>35.072012</Longitude>
+    <Lattitude>32.028849</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>294767876</Id>
+    <Name>Avi</Name>
+    <Phone>0508691634</Phone>
+    <Longitude>35.011333</Longitude>
+    <Lattitude>31.945394</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>797319043</Id>
+    <Name>Oren</Name>
+    <Phone>0507446745</Phone>
+    <Longitude>34.980253</Longitude>
+    <Lattitude>31.845753</Lattitude>
   </Customer>
 </ArrayOfCustomer>

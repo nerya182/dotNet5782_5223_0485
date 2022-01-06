@@ -23,7 +23,7 @@ namespace BL
             stopWatch.Start();
             drone = bl.DroneDisplay(droneId);
              while(checkStop())
-            {
+             {
                 switch(drone.Status)
                 {
                     case DroneStatuses.Available:

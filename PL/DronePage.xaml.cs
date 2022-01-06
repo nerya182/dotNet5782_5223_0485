@@ -26,7 +26,6 @@ namespace PL
         BlApi.IBL bl;
         BO.Drone selected = new BO.Drone();
         BO.Drone droneSelected = new BO.Drone();
-       
         /// <summary>
         /// constructor for add drone  window
         /// </summary>
