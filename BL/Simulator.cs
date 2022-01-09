@@ -8,6 +8,7 @@ using System.Threading;
 using static BL.BL;
 using System.Diagnostics;
 using BlApi;
+using static System.Math;
 
 namespace BL
 {
@@ -68,8 +69,8 @@ namespace BL
                     default:
                         break;
                 }
-
-            } while ();
+               
+            } while (!checkStop());
 
 
 
@@ -77,9 +78,17 @@ namespace BL
 
         }
 
-        private bool sleepDelayTime()
+        private static bool sleepDelayTime()
         {
-            throw new NotImplementedException();
+            try
+            {
+                Thread.Sleep(delay);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
