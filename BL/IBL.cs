@@ -50,6 +50,7 @@ namespace BlApi
         /// <returns>Drone to be displayed</returns>
         Drone DroneDisplay(int id);
         IEnumerable<DroneToList> GetByWeight(IEnumerable itemsSource, WeightCategories selectedWeight);
+        double RequiredBattery(int id);
 
         /// <summary>
         /// Returns the stations that have an open charge slot

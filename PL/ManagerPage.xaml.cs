@@ -40,38 +40,6 @@ namespace PL
             ComboBox_date.Items.Add("Today");
             ComboBox_date.Items.Add("Half a week ago");
             ComboBox_date.Items.Add("A week ago");
-            dronePage.simulator.Click += Simulator_Click;
-            worker.DoWork += Worker_DoWork;
-            worker.ProgressChanged += Worker_ProgressChanged;
-            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-            worker.WorkerReportsProgress = true;
-            worker.WorkerSupportsCancellation = true;
-        }
-
-        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Simulator_Click(object sender, RoutedEventArgs e)
-        {
-            worker = new BackgroundWorker();
-            if (worker.IsBusy != true)
-                worker.RunWorkerAsync(); 
-
-        }
-
-        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            Func<bool> func = null;
-            Action action = () => worker.ReportProgress(50);
-            bl.StartSimulator(int.Parse(dronePage.TextBox_id.Text), action, func);
-
         }
 
         private void DoubleClickUpdateDrone(object sender, System.Windows.Input.MouseButtonEventArgs e)

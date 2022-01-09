@@ -637,5 +637,12 @@ namespace BL
             return dal.GetDistanceFromLatLonInKm(lat1, lon1, lat2, lon2);
         }
         public void StartSimulator(int id, Action update, Func<bool> checkStop) => new Simulator(this, id, update, checkStop);
+        public double RequiredBattery(int id)
+        {
+            DO.Parcel parcel= dal.ListParcel(p => p.Id == id).FirstOrDefault();
+            DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
+            DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
+            return GetMinimumBatteryToShip((DroneToList)listDrone.Where(d => d.Id == parcel.DroneId), customerSender, customerTarget, parcel.Weight);
+        }
     }
 }

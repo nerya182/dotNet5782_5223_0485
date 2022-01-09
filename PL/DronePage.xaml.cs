@@ -26,6 +26,9 @@ namespace PL
         BlApi.IBL bl;
         BO.Drone selected = new BO.Drone();
         BO.Drone droneSelected = new BO.Drone();
+        BackgroundWorker worker;
+        private void updateDrone() => worker.ReportProgress(0);
+        private bool checkStop() => worker.CancellationPending;
         /// <summary>
         /// constructor for add drone  window
         /// </summary>
@@ -198,7 +201,26 @@ namespace PL
 
         }
 
-        
+        private void Simulator_Click(object sender, RoutedEventArgs e)
+        {
+            worker = new()
+            { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+            worker.DoWork += (sender, args) => bl.StartSimulator((int)args.Argument, updateDrone, checkStop);
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+            worker.ProgressChanged += (sender, args) => updateDroneView();
+            worker.RunWorkerAsync(droneSelected.Id);
+        }
+
+        private void updateDroneView()
+        {
+          ///לבדוק מה צריך לעשות פה
+        }
+
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //לבדוק בדיוק מה צריך לעשות פה, יאיר עשה משהו שקשור לMODEL
+            throw new NotImplementedException();
+        }
     }
 }
 

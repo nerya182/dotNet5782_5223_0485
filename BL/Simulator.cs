@@ -7,57 +7,79 @@ using BO;
 using System.Threading;
 using static BL.BL;
 using System.Diagnostics;
+using BlApi;
 
 namespace BL
 {
     class Simulator
     {
         private Stopwatch stopWatch;
-        double speedDrone=4;
-        double distance,timeTask;
+        private const double speedDrone = 1.5;
+        private const int delay = 500;
+        private const double time = delay / 1000.0;
+        private const double step = speedDrone / time;
+
         Drone drone;
-        internal volatile bool stopSim = false;
-        internal Simulator(BlApi.IBL bl, int droneId, Action action, Func<bool> checkStop) 
+        BlApi.IBL bl;
+
+        internal Simulator(BlApi.IBL BL, int droneId, Action action, Func<bool> checkStop)
         {
-            stopWatch = new Stopwatch();
-            stopWatch.Start();
+            bl = BL;
             drone = bl.DroneDisplay(droneId);
-             while(checkStop())
-             {
-                switch(drone.Status)
+            int? parcelId = null;
+            int? satationId = null;
+            Station station = null;
+            double distance = 0.0;
+            int batteryUsage = 0;
+            BO.Parcel parcel = null;
+            bool pickedUp = false;
+            Customer customer = null;
+            int id = 0;
+
+            void initDeliverry(int id)
+            {
+                parcel = bl.ParcelDisplay(id);
+                batteryUsage = (int)parcel.Weight;
+                pickedUp = parcel.PickedUp is not null;
+                customer = bl.CustomerDisplay((int)(pickedUp ? parcel.Target.Id : parcel.Sender.Id));
+            }
+
+            do
+            {
+                switch (drone.Status)
                 {
                     case DroneStatuses.Available:
-                        try
                         {
-                            lock (bl) { bl.AffiliateParcelToDrone(drone.Id); }
-                            action();
-                            drone = bl.DroneDisplay(drone.Id);
-                            distance = bl.GetDistanceFromLatLonInKm(drone.Location.Lattitude,drone.Location.Longitude,drone.ParcelTransfer.collection.Lattitude, drone.ParcelTransfer.collection.Longitude);
-                            timeTask = distance / speedDrone;
-                            
-                            Thread.Sleep(1000);
-
-                            lock (bl) { bl.ParcelCollectionByDrone(drone.Id); }
-                            distance = bl.GetDistanceFromLatLonInKm(drone.ParcelTransfer.collection.Lattitude, drone.ParcelTransfer.collection.Longitude, drone.ParcelTransfer.SupplyPoint.Lattitude, drone.ParcelTransfer.SupplyPoint.Longitude);
-                            timeTask = distance / speedDrone;
-                             
+                            if (!sleepDelayTime()) break;
+                            lock (bl)
+                            {
+                                parcelId = bl.GetListParcel().Where(p => p?.Affiliation == null
+                                && (WeightCategories)(p.Weight) <= drone.MaxWeight
+                                && bl.RequiredBattery((int)p?.Id) < drone.Battery).OrderByDescending(p => p.Priority).ThenByDescending(p => p.Weight).FirstOrDefault().Id;
+                            }
                         }
-                        catch (Exception)
-                        {
+                        
 
-                            throw;
-                        }
-                        break;
                     case DroneStatuses.Charging:
                         break;
                     case DroneStatuses.Delivery:
                         break;
-
-
+                   
+                    default:
+                        break;
                 }
 
-            }
+            } while ();
+
+
+
+
+
         }
 
+        private bool sleepDelayTime()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

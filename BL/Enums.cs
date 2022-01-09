@@ -12,11 +12,11 @@ namespace BO
     }
     public enum WeightCategories
     {
-        Light = 1, Medium, Heavy
+        Light = 1, Medium, Heavy,None
     }
     public enum ParcelStatus { Created, Assigned, PickedUp, Supplied }
     public enum Priorities { Regular = 1, Express, Urgent }
-    public enum DroneStatuses { Available = 1, Charging, Delivery }
+    public enum DroneStatuses { Available = 1, Charging, Delivery , None }
 
 }
 

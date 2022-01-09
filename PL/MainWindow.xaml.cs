@@ -864,6 +864,9 @@ namespace PL
                 managerPage.droneToListObservabl.Add(newDrone);
                 MessageBox.Show("Added successfully");
                 dronePage.TextBox_id.IsEnabled = false;
+                
+                DroneToList droneToList = new();
+                
             }
             catch (Exception exception)
             {
