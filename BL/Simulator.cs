@@ -76,6 +76,7 @@ namespace BL
                                         try
                                         {
                                             dal.Affiliate(parcelId, drone.Id);
+                                            bl.AffiliateParcelToDrone(droneId);
                                             drone.ParcelBeingPassedId= parcelId;
                                             initDeliverry(parcelId);
                                             drone.Status = DroneStatuses.Delivery;

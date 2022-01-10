@@ -53,7 +53,7 @@
             </ListView.View>
         </ListView>
         <ProgressBar Name="Battrey" Minimum="0" Maximum="100"  Value="{Binding Battery,Converter={StaticResource BatteryToProgressBarConverter}}" Visibility="{Binding ElementName=changeModelButton,Path=Visibility}" Foreground="{Binding Battery,Converter={StaticResource BatteryToColorConverter}}" HorizontalAlignment="Left" Height="20" Margin="222,181,0,0" VerticalAlignment="Top"  Width="120"/>
-        <TextBlock HorizontalAlignment="Left"  Visibility="{Binding ElementName=changeModelButton,Path=Visibility}" Margin="270,181,0,0" Width="20" Height="20" Text="{Binding ElementName=Battrey,Path=Value,StringFormat={}{0:0}%}" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock  HorizontalAlignment="Left"  Visibility="{Binding ElementName=changeModelButton,Path=Visibility}" Margin="270,181,0,0" Width="20" Height="20" Text="{Binding ElementName=Battrey,Path=Value,StringFormat={}{0:0}%}" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Label x:Name="parcelInTransfer" Content="parcel:" Visibility="{Binding ElementName=ListParcelTransfer,Path=Visibility}" HorizontalAlignment="Left" Margin="35,318,0,0" VerticalAlignment="Top" Width="174" FontWeight="Heavy" FontStretch="Medium" FontSize="16"/>
         <Button  x:Name="simulator" Content="Simulator start" HorizontalAlignment="Left" Margin="366,195,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="Simulator_Click" Visibility="{Binding Visibility, ElementName=changeModelButton}"/>
     </Grid>

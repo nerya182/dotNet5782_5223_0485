@@ -20,7 +20,7 @@ namespace PL
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return (Double)value;
         }
     }
     internal class BatteryToColorConverter : IValueConverter

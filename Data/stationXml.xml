@@ -5,7 +5,7 @@
     <Name>Tachana Merkazit</Name>
     <Longitude>35.20301</Longitude>
     <Lattitude>31.78945</Lattitude>
-    <AvailableChargeSlots>10</AvailableChargeSlots>
+    <AvailableChargeSlots>8</AvailableChargeSlots>
   </Station>
   <Station>
     <Id>67</Id>

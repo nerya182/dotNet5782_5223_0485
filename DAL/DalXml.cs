@@ -71,6 +71,7 @@ namespace DalXml
             temp.Affiliation = DateTime.Now;
             listParcel[indexaforParcel] = temp;
             XMLTools.SaveListToXMLSerializer<Parcel>(listParcel, parcelsPath);
+
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickupParcelUpdate(int parcelId)

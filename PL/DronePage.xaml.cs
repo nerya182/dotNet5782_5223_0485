@@ -213,14 +213,17 @@ namespace PL
 
         private void updateDroneView()
         {
-            DataContext = bl.DroneDisplay(droneSelected.Id);
-          
+            //mainDrone.DataContext = bl.DroneDisplay(droneSelected.Id);
+            Drone drone = bl.DroneDisplay(droneSelected.Id);
+            TextBoxDelivery.Text = drone.Status.ToString();
+           // Battrey.Value = (int)drone.Battery;
+            mainDrone.DataContext = drone;
         }
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             //לבדוק בדיוק מה צריך לעשות פה, יאיר עשה משהו שקשור לMODEL
-            throw new NotImplementedException();
+            
         }
     }
 }
