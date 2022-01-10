@@ -25,13 +25,13 @@ namespace DalXml
         string configPath= @"configXml.xml";
         DalXml()
         {
-            //DataSource.Initialize();
-            //XMLTools.SaveListToXMLSerializer<Customer>(DataSource.Customers, customerPath);
-            //XMLTools.SaveListToXMLSerializer<Drone>(DataSource.Drones, dronesPath);
-            //XMLTools.SaveListToXMLSerializer<Parcel>(DataSource.Parcels, parcelsPath);
-            //XMLTools.SaveListToXMLSerializer<DroneCharge>(DataSource.DroneCharges, droneChargePath);
-            //XMLTools.SaveListToXMLSerializer<Station>(DataSource.Stations, stationPath);
-            //XMLTools.SaveListToXMLSerializer<double>(GetElectricUsage(), configPath);
+            DataSource.Initialize();
+            XMLTools.SaveListToXMLSerializer<Customer>(DataSource.Customers, customerPath);
+            XMLTools.SaveListToXMLSerializer<Drone>(DataSource.Drones, dronesPath);
+            XMLTools.SaveListToXMLSerializer<Parcel>(DataSource.Parcels, parcelsPath);
+            XMLTools.SaveListToXMLSerializer<DroneCharge>(DataSource.DroneCharges, droneChargePath);
+            XMLTools.SaveListToXMLSerializer<Station>(DataSource.Stations, stationPath);
+            XMLTools.SaveListToXMLSerializer<double>(GetElectricUsage(), configPath);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone newDrone)
@@ -190,7 +190,8 @@ namespace DalXml
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int id)
         {
-            Parcel parcel = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath).FirstOrDefault(p=>p.Id==id);
+            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            Parcel parcel = parcels.FirstOrDefault(p => p.Id == id);
             if (parcel.Id==0)
                 throw new ItemNotFoundException(id);
             return (Parcel)parcel;

@@ -43,9 +43,9 @@
         </Button>
 
 
-        <ListView Name="ListParcelTransfer"  HorizontalAlignment="Left" Margin="216,309,0,45" Width="158" MouseDoubleClick="OpenParcelTransfer" Visibility="{Binding ElementName=changeModelButton,Path=Visibility}">
+        <ListView Name="ListParcelTransfer" ItemsSource="{Binding}"  HorizontalAlignment="Left" Margin="216,309,0,45" Width="158" MouseDoubleClick="OpenParcelTransfer" Visibility="{Binding ElementName=changeModelButton,Path=Visibility}">
             <ListView.View>
-                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information" >
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Weight}" x:Name="Weight" Header="Weight" Width="auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Priority}" x:Name="Priority" Header="Priority" Width="auto"/>

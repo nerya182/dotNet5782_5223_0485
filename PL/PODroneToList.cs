@@ -18,7 +18,7 @@ namespace PO
         }
 
         private string model;
-        public string Model
+        public string Model 
         {
             get => model;
             set { model = value; OnPropertyChanged("model"); }

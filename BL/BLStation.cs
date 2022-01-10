@@ -48,7 +48,7 @@ namespace BL
         /// </summary>
         /// <param name="drone"> drone which we are looking for closest station to</param>
         /// <returns> closest station </returns>
-        private DO.Station GetClosestStation(DroneToList drone)
+       public DO.Station GetClosestStation(DroneToList drone)
         {
             lock(dal)
             {

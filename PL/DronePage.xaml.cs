@@ -213,7 +213,8 @@ namespace PL
 
         private void updateDroneView()
         {
-          ///לבדוק מה צריך לעשות פה
+            DataContext = bl.DroneDisplay(droneSelected.Id);
+          
         }
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

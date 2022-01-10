@@ -5,13 +5,13 @@
     <Name>Tachana Merkazit</Name>
     <Longitude>35.20301</Longitude>
     <Lattitude>31.78945</Lattitude>
-    <AvailableChargeSlots>7</AvailableChargeSlots>
+    <AvailableChargeSlots>10</AvailableChargeSlots>
   </Station>
   <Station>
     <Id>67</Id>
     <Name>Shuk Machane Yehudah</Name>
     <Longitude>35.21257</Longitude>
     <Lattitude>31.78489</Lattitude>
-    <AvailableChargeSlots>8</AvailableChargeSlots>
+    <AvailableChargeSlots>9</AvailableChargeSlots>
   </Station>
 </ArrayOfStation>

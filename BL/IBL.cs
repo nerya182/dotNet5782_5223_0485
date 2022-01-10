@@ -50,7 +50,7 @@ namespace BlApi
         /// <returns>Drone to be displayed</returns>
         Drone DroneDisplay(int id);
         IEnumerable<DroneToList> GetByWeight(IEnumerable itemsSource, WeightCategories selectedWeight);
-        double RequiredBattery(int id);
+        double RequiredBattery(int id,DroneToList  drone);
 
         /// <summary>
         /// Returns the stations that have an open charge slot
@@ -196,6 +196,7 @@ namespace BlApi
         IEnumerable<ParcelToList> filterToday(int num);
         void StartSimulator(int droneId, Action func, Func<bool> checkStop);
         double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2);
+        DO.Station GetClosestStation(DroneToList drone);
 
     }
 }
