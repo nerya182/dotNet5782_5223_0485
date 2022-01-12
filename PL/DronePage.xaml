@@ -14,7 +14,7 @@
         <local:LongitudeToSexaConvert x:Key="LongitudeToSexaConvert"/>
         <local:IntByEnumConverter x:Key="IntByEnumConverter"/>
     </Page.Resources>
-    <Grid Name="mainDrone" DataContext="{Binding}">
+    <Grid Name="mainDrone" >
         <Image Source="/maxresdefault.jpg" Margin="-8,-30,0,-21"/>
         <Label Name="label_id" Content="Enter  ID number:" HorizontalAlignment="Left" Height="38" Margin="35,76,0,0" VerticalAlignment="Top" Width="154" FontSize="16" FontWeight="Black"/>
         <Label Name="label_model" Content="Insert the model" HorizontalAlignment="Left" Height="29" Margin="34,106,0,0" VerticalAlignment="Top" Width="199" FontSize="16" FontWeight="Black"/>
@@ -34,14 +34,13 @@
         <TextBox Name="TextBoxNewModel"  HorizontalAlignment="Left" Margin="548,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Height="24" Width="138" Visibility="{Binding ElementName=labelTextBoxNewModel,Path=Visibility }"/>
         <Label   x:Name="labelTextBoxNewModel" Content="Insert a new model:" HorizontalAlignment="Left" Margin="536,85,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" />
         <Button  x:Name="NewModel" Content="update" HorizontalAlignment="Left" Margin="560,161,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="updateButton_Click" FontSize="14" FontWeight="Black" Visibility="{Binding ElementName=labelTextBoxNewModel,Path=Visibility }" />
-        <TextBox x:Name="WeightTextBox"  Text="{Binding  MaxWeight}" IsEnabled="{Binding ElementName= TextBox_id,Path=IsEnabled}" HorizontalAlignment="Left" Margin="222,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="{Binding ElementName=changeModelButton,Path=Visibility}"/>
+        <TextBox x:Name="WeightTextBox"  Text="{Binding  MaxWeight}" IsEnabled="{Binding ElementName= TextBox_id,Path=IsEnabled}" HorizontalAlignment="Left" Margin="222,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" />
         <Button  x:Name="changeModelButton" Content="set model" HorizontalAlignment="Left" Margin="367,89,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="ModelButton_Click"/>
         <Button  x:Name="sendOrReleaseButton" Content="send to charge" HorizontalAlignment="Left" Margin="367,125,0,0" VerticalAlignment="Top"  FontSize="14" FontWeight="Black" Click="sendOrRelease_Click" Visibility="{Binding ElementName=changeModelButton,Path=Visibility}" />
         <Button  x:Name="delivery" Content="AllDelivery" HorizontalAlignment="Left" Margin="367,159,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="allDeliveryButtonButton_Click" Visibility="{Binding ElementName=changeModelButton,Path=Visibility}"/>
         <Button  x:Name="Back_Button" HorizontalAlignment="Left" Margin="703,7,0,0" VerticalAlignment="Top" FontFamily="Verdana" Height="38" Width="auto" Click="Back_Button_Click">
             <Image Source="/back-button.png" />
         </Button>
-
 
         <ListView Name="ListParcelTransfer" ItemsSource="{Binding}"  HorizontalAlignment="Left" Margin="216,309,0,45" Width="158" MouseDoubleClick="OpenParcelTransfer" Visibility="{Binding ElementName=changeModelButton,Path=Visibility}">
             <ListView.View>
@@ -52,9 +51,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ProgressBar Name="Battrey" Minimum="0" Maximum="100"  Value="{Binding Battery,Converter={StaticResource BatteryToProgressBarConverter}}" Visibility="{Binding ElementName=changeModelButton,Path=Visibility}" Foreground="{Binding Battery,Converter={StaticResource BatteryToColorConverter}}" HorizontalAlignment="Left" Height="20" Margin="222,181,0,0" VerticalAlignment="Top"  Width="120"/>
-        <TextBlock HorizontalAlignment="Left"  Visibility="{Binding ElementName=changeModelButton,Path=Visibility}" Margin="270,181,0,0" Width="20" Height="20" Text="{Binding ElementName=Battrey,Path=Value,StringFormat={}{0:0}%}" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ProgressBar Name="Battrey" Minimum="0" Maximum="100"  Value="{Binding Battery,Converter={StaticResource BatteryToProgressBarConverter}}" Visibility="{Binding ElementName=WeightTextBox,Path=Visibility}" Foreground="{Binding Battery,Converter={StaticResource BatteryToColorConverter}}" HorizontalAlignment="Left" Height="20" Margin="222,181,0,0" VerticalAlignment="Top"  Width="120" />
+        <TextBlock HorizontalAlignment="Left"  Visibility="{Binding ElementName=WeightTextBox,Path=Visibility}" Margin="270,181,0,0" Width="20" Height="20" Text="{Binding ElementName=Battrey,Path=Value,StringFormat={}{0:0}%}" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Label x:Name="parcelInTransfer" Content="parcel:" Visibility="{Binding ElementName=ListParcelTransfer,Path=Visibility}" HorizontalAlignment="Left" Margin="35,318,0,0" VerticalAlignment="Top" Width="174" FontWeight="Heavy" FontStretch="Medium" FontSize="16"/>
-        <Button  x:Name="simulator" Content="Simulator start" HorizontalAlignment="Left" Margin="366,195,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="Simulator_Click" Visibility="{Binding Visibility, ElementName=changeModelButton}"/>
+        <Button  x:Name="simulator" Content="Simulator" HorizontalAlignment="Left" Margin="366,195,0,0" VerticalAlignment="Top" Height="25" Width="100"  FontSize="14" FontWeight="Black" Click="Simulator_Click" Visibility="{Binding Visibility, ElementName=TextBoxLattitude}"/>
     </Grid>
 </Page>

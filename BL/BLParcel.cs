@@ -5,13 +5,13 @@ using System.Linq;
 using BlApi;
 using BO;
 using System.Runtime.CompilerServices;
-
-
+using DalApi;
 
 namespace BL
 {
     internal partial class BL : IBL
     {
+       
         /// <summary>
         /// Adding a Parcel to our Data Source
         /// </summary>
@@ -77,13 +77,9 @@ namespace BL
         {
             lock(dal)
             {
-                List<Parcel> temp = new List<Parcel>();
-                foreach (DO.Parcel parcel in dal.ListParcel(i => true))
-                {
-                    Parcel obj = ParcelDisplay(parcel.Id);
-                    temp.Add(obj);
-                }
-                return temp;
+                return (from DO.Parcel parcel in dal.ListParcel(i => true)
+                        let obj = ParcelDisplay(parcel.Id)
+                        select obj).ToList();
             }         
         }
 

@@ -13,11 +13,11 @@ namespace DalObject
         {
             internal static int NewParcelId = 1;
 
-            internal static double available=0.05;
-            internal static double lightWeight=0.1;
-            internal static double mediumWeight=0.15;
-            internal static double heavyWeight=0.2;
-            internal static double chargeSpeed=500;
+            internal static double available=30;
+            internal static double lightWeight=35;
+            internal static double mediumWeight=40;
+            internal static double heavyWeight=45;
+            internal static double chargeSpeed=10;
         }
      
         public static List<Customer> Customers = new List<Customer>();

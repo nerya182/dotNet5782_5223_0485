@@ -6,10 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using DalApi;
+
 namespace BlApi
 {
     public interface IBL
     {
+        double AvailbleElec { get; set; }
+        IDal dal { get; set; }
+
         /// <summary>
         /// Adding a station to our data source
         /// </summary>
@@ -42,6 +47,7 @@ namespace BlApi
         /// <returns>IEnumerable of stations</returns>
         IEnumerable<Station> GetListStation();
         IEnumerable<DroneToList> GetByStatus(IEnumerable itemsSource, DroneStatuses selectedStatus);
+        void Affiliate(int id, int parcelId);
 
         /// <summary>
         /// Returning Drone according to ID in order to be displayed
@@ -50,7 +56,7 @@ namespace BlApi
         /// <returns>Drone to be displayed</returns>
         Drone DroneDisplay(int id);
         IEnumerable<DroneToList> GetByWeight(IEnumerable itemsSource, WeightCategories selectedWeight);
-        double RequiredBattery(int id,DroneToList  drone);
+        double RequiredBattery(int id,Drone drone);
 
         /// <summary>
         /// Returns the stations that have an open charge slot
@@ -76,11 +82,15 @@ namespace BlApi
 
         public IEnumerable<ParcelToList> GetParcels();
         IEnumerable<DroneToList> GetListDrone();
+        void updateDrone(int droneId, int timerCheck);
+
         /// <summary>
         /// Retrieving the list of drones
         /// </summary>
         /// <returns>UEnumerable of drones</returns>
         IEnumerable<Drone> GetDrones();
+        void updateReleaseDrone(int droneId);
+
         /// <summary>
         /// Retrieving info to transform parcel into parceltolist and returning it
         /// </summary>
@@ -99,6 +109,8 @@ namespace BlApi
         /// <param name="objDrone"></param>
         /// <returns>dronetolist after we've found necessary info</returns>
         DroneToList MakeDroneToList(Drone objDrone);
+        void updateCollectionByDron(int droneId);
+
         /// <summary>
         /// Retrieving info to transform station into station to list
         /// </summary>
@@ -115,6 +127,8 @@ namespace BlApi
         /// </summary>
         /// <param name="droneId"></param>
         void ParcelCollectionByDrone(int droneId);
+        void DeliveryByDron(int droneId);
+
         /// <summary>
         /// Affiliating drone with the parcel that answers the criterias that were given to us
         /// </summary>
@@ -182,7 +196,6 @@ namespace BlApi
          IEnumerable<ParcelToList> GetParcelByWeight(WeightCategories selectedWeight);
 
          IEnumerable<ParcelToList> GetParcelByPriority(Priorities selectedPriority);
-
          void DeleteParcel(ParcelToList parcel);
          void DeleteCustomer(CustomerToList customer);
          void DeleteStation(StationToList station);
@@ -197,6 +210,7 @@ namespace BlApi
         void StartSimulator(int droneId, Action func, Func<bool> checkStop);
         double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2);
         DO.Station GetClosestStation(DroneToList drone);
-
+        Location GoTowards(int DroneId, Location Destination, double speedInKm, double Elec);
+        List<double> GetElectricUsage();
     }
 }

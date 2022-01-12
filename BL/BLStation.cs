@@ -161,16 +161,16 @@ namespace BL
                     temp.location = location;
                     temp.AvailableChargeSlots = station.AvailableChargeSlots;
                     List<DO.DroneCharge> asList = droneCharge.ToList();
-                    foreach (var drnChrg in droneCharge)
+                    foreach (var (drnChrg, DrnInChrg) in from drnChrg in droneCharge
+                                                         where drnChrg.StationId == id
+                                                         let DrnInChrg = new DroneInCharging()
+                                                         select (drnChrg, DrnInChrg))
                     {
-                        if (drnChrg.StationId == id)
-                        {
-                            DroneInCharging DrnInChrg = new DroneInCharging();
-                            DrnInChrg.DroneId = drnChrg.DroneId;
-                            DrnInChrg.Battery = GetDroneFromLstDrone(drnChrg.DroneId).Battery;
-                            lstDrnInChrg.Add(DrnInChrg);
-                        }
+                        DrnInChrg.DroneId = drnChrg.DroneId;
+                        DrnInChrg.Battery = GetDroneFromLstDrone(drnChrg.DroneId).Battery;
+                        lstDrnInChrg.Add(DrnInChrg);
                     }
+
                     temp.droneInCharging = lstDrnInChrg;
                     return temp;
                 }
@@ -261,6 +261,42 @@ namespace BL
                 return (IEnumerable<IGrouping<int, StationToList>>)GetStations().GroupBy(s => s.AvailableChargeSlots);
             }
             
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public Location GoTowards(int DroneId, Location Destination, double speedInKm, double Elec)
+        {
+            DroneToList drone = listDrone.First(d => d.Id == DroneId);
+            if (drone.Location.Lattitude == Destination.Lattitude && drone.Location.Longitude == Destination.Longitude)
+            {
+                return Destination;
+            }
+            double speedInCoords = speedInKm / 111;
+            if (drone.Location == Destination)
+            {
+                return Destination;
+            }
+            double distanceInKM = GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude, Destination.Lattitude, Destination.Longitude);
+            Location Vector = new Location() { Lattitude = Destination.Lattitude - drone.Location.Lattitude, Longitude = Destination.Longitude - drone.Location.Longitude };
+            double vectorLengthInCoords = GetDistanceFromLatLonInKm(0, 0, Vector.Lattitude, Vector.Longitude);
+            Vector = new Location() { Lattitude = Vector.Lattitude / vectorLengthInCoords, Longitude = Vector.Longitude / vectorLengthInCoords };
+            listDrone.Remove(drone);
+
+            if (vectorLengthInCoords <= speedInCoords)
+            {
+                drone.Battery -= (GetDistanceFromLatLonInKm(0, 0, Vector.Lattitude, Vector.Longitude) / Elec);
+                drone.Location = Destination;
+                listDrone.Add(drone);
+                return Destination;
+            }
+
+             drone.Battery -= (speedInKm / Elec);
+            drone.Location = new Location()
+            {
+                Longitude = drone.Location.Longitude + (Vector.Longitude * speedInCoords),
+                Lattitude = drone.Location.Lattitude + (Vector.Lattitude * speedInCoords)
+            };
+            listDrone.Add(drone);
+            return drone.Location;
         }
     }
 }

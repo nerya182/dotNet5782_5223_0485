@@ -38,13 +38,13 @@ namespace DalObject
         public  Station GetStation(int StationId)  
         {
             Station ?newStation = null;
-            foreach (Station objStation in DataSource.Stations)
+            foreach (var objStation in from Station objStation in DataSource.Stations
+                                       where objStation.Id == StationId
+                                       select objStation)
             {
-                if (objStation.Id==StationId)
-                {
-                    newStation = objStation;
-                }
+                newStation = objStation;
             }
+
             if (newStation==null)
             {
                throw new ItemNotFoundException(StationId,"ERROR :id of Station not found\n");
@@ -62,13 +62,13 @@ namespace DalObject
         public Drone GetDrone(int droneId)  
         {
             Drone? newDrone = null;
-            foreach (Drone objDrone in DataSource.Drones)
+            foreach (var objDrone in from Drone objDrone in DataSource.Drones
+                                     where objDrone.Id == droneId
+                                     select objDrone)
             {
-                if (objDrone.Id == droneId)
-                {
-                    newDrone = objDrone;
-                }
+                newDrone = objDrone;
             }
+
             if (newDrone== null)
             {
                 throw new ItemNotFoundException(droneId, "ERROR :id of drone not found\n");
@@ -84,13 +84,13 @@ namespace DalObject
         public  Customer GetCustomer(int customerId)  
         {
             Customer? newCustomer = null;
-            foreach (Customer objCustomer in DataSource.Customers)
+            foreach (var objCustomer in from Customer objCustomer in DataSource.Customers
+                                        where objCustomer.Id == customerId
+                                        select objCustomer)
             {
-                if (objCustomer.Id == customerId)
-                {
-                    newCustomer = objCustomer;
-                }
+                newCustomer = objCustomer;
             }
+
             if (newCustomer== null)
             {
                 throw new ItemNotFoundException(customerId, "ERROR :id of customer not found\n");
@@ -106,13 +106,13 @@ namespace DalObject
         public  Parcel GetParcel(int parcelId)  
         {
             Parcel? newParcel = null;
-            foreach (Parcel objParcel in DataSource.Parcels)
+            foreach (var objParcel in from Parcel objParcel in DataSource.Parcels
+                                      where objParcel.Id == parcelId
+                                      select objParcel)
             {
-                if (objParcel.Id == parcelId)
-                {
-                    newParcel = objParcel;
-                }
+                newParcel = objParcel;
             }
+
             if (newParcel == null)
             {
                 throw new ItemNotFoundException(parcelId, "ERROR :id of parcel not found\n");
@@ -127,13 +127,13 @@ namespace DalObject
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station newStation)  
         {
-            foreach (Station objStation in DataSource.Stations)
+            foreach (var _ in from Station objStation in DataSource.Stations
+                              where objStation.Id == newStation.Id
+                              select new { })
             {
-                if (objStation.Id == newStation.Id)
-                {
-                    throw new ItemAlreadyExistsException(newStation.Id, "ERROR: id of Station already exists\n");
-                }
+                throw new ItemAlreadyExistsException(newStation.Id, "ERROR: id of Station already exists\n");
             }
+
             Stations.Add(newStation);
         }
         /// <summary>
@@ -143,13 +143,13 @@ namespace DalObject
         [MethodImpl(MethodImplOptions.Synchronized)]
         public  void AddDrone(Drone newDrone)  
         {
-            foreach (Drone objDrone in DataSource.Drones)
+            foreach (var _ in from Drone objDrone in DataSource.Drones
+                              where objDrone.Id == newDrone.Id
+                              select new { })
             {
-                if (objDrone.Id == newDrone.Id)
-                {
-                    throw new ItemAlreadyExistsException(newDrone.Id, "ERROR: id of Drone already exists\n");
-                }
+                throw new ItemAlreadyExistsException(newDrone.Id, "ERROR: id of Drone already exists\n");
             }
+
             Drones.Add(newDrone);
         }
         /// <summary>
@@ -159,13 +159,13 @@ namespace DalObject
         [MethodImpl(MethodImplOptions.Synchronized)]
         public  void AddCustomer(Customer newCustomer)   
         {
-            foreach (Customer objCustomer in DataSource.Customers)
+            foreach (var _ in from Customer objCustomer in DataSource.Customers
+                              where objCustomer.Id == newCustomer.Id
+                              select new { })
             {
-                if (objCustomer.Id == newCustomer.Id)
-                {
-                    throw new ItemAlreadyExistsException(newCustomer.Id, "ERROR: id of Customer already exists\n");
-                }
+                throw new ItemAlreadyExistsException(newCustomer.Id, "ERROR: id of Customer already exists\n");
             }
+
             Customers.Add(newCustomer);
         }
         /// <summary>
@@ -175,13 +175,13 @@ namespace DalObject
         [MethodImpl(MethodImplOptions.Synchronized)]
         public  void AddParcel(Parcel newParcel)    
         {
-            foreach (Parcel objParcel in DataSource.Parcels)
+            foreach (var _ in from Parcel objParcel in DataSource.Parcels
+                              where objParcel.Id == newParcel.Id
+                              select new { })
             {
-                if (objParcel.Id == newParcel.Id)
-                {
-                    throw new ItemAlreadyExistsException(newParcel.Id, "ERROR: id of Parcel already exists\n");
-                }
-            }     
+                throw new ItemAlreadyExistsException(newParcel.Id, "ERROR: id of Parcel already exists\n");
+            }
+
             Parcels.Add(newParcel);
             DataSource.Config.NewParcelId++;
             Console.WriteLine(Config.NewParcelId);
@@ -195,13 +195,13 @@ namespace DalObject
         public  void Affiliate(int idParcel,int droneId)
         {
             bool flag = false;
-            foreach (Drone objStation in DataSource.Drones)
+            foreach (var _ in from Drone objStation in DataSource.Drones
+                              where objStation.Id == droneId
+                              select new { })
             {
-                if (objStation.Id == droneId)
-                {
-                    flag = true;
-                }
+                flag = true;
             }
+
             if (!flag)
             {
                 throw new ItemNotFoundException(droneId, "ERROR: id of Drone not found\n");

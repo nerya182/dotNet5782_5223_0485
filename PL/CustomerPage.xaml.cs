@@ -37,7 +37,7 @@ namespace PL
             selected =bl.MakeCustomerToList(customer);
             customerSelected = bl.CustomerDisplay(selected.Id);
             mainCustomer.DataContext = customerSelected;       
-            //listFromeCustomer.ItemsSource = customerSelected.FromCustomer;
+            listFromeCustomer.ItemsSource = customerSelected.FromCustomer;
             listToCustomer.ItemsSource = customerSelected.ToCustomer;
             add_button.Visibility = Visibility.Hidden;
             TextBox_id.IsEnabled = false;
