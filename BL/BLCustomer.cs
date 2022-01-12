@@ -240,7 +240,7 @@ namespace BL
         /// </summary>
         /// <param name="updateCustomer">Customer to be updated </param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateCustomer(Customer updateCustomer)
+        public void UpdateCustomer(CustomerToList updateCustomer)
         {
             lock(dal)
             {
