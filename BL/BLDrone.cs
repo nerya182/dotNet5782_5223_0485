@@ -13,130 +13,123 @@ namespace BL
     {
         static readonly IBL instance = new BL();
         public static IBL Instance { get => instance; }
-
-
         public List<DroneToList> listDrone = new List<DroneToList>();
-        internal DalApi.IDal dal;
+        public DalApi.IDal dal { get; set; }
         public double AvailbleElec { get; set; }
         public double LightElec { get; set; }
         public double IntermeduateElec { get; set; }
         public double HeavyElec { get; set; }
-     
+        public double ChargeSpeed { get; set; }
+
         /// <summary>
         /// BL Ctor
         /// </summary> 
         internal BL()
         {
-           
-                Random R = new Random();
-                dal = DalFactory.GetDal("DalXml");
-                List<double> elecUsage = dal.GetElectricUsage();
-                AvailbleElec = elecUsage[0];
-                LightElec = elecUsage[1];
-                IntermeduateElec = elecUsage[2];
-                HeavyElec = elecUsage[3];
 
-                List<DO.Parcel> dalParcels = dal.ListParcel(i => true).ToList();
-                List<DO.Drone> dalDrones = dal.ListDrone(i => true).ToList();
-                for (int i = 0; i < dalDrones.Count; i++)
+            Random R = new Random();
+            dal = DalFactory.GetDal("DalXml");
+            List<double> elecUsage = dal.GetElectricUsage();
+            AvailbleElec = elecUsage[0];
+            LightElec = elecUsage[1];
+            IntermeduateElec = elecUsage[2];
+            HeavyElec = elecUsage[3];
+            ChargeSpeed = elecUsage[4];
+            List<DO.Parcel> dalParcels = dal.ListParcel(i => true).ToList();
+            List<DO.Drone> dalDrones = dal.ListDrone(i => true).ToList();
+            for (int i = 0; i < dalDrones.Count; i++)
+            {
+                DroneToList droneToList = new DroneToList { Id = dalDrones[i].Id, Model = dalDrones[i].Model, MaxWeight = (WeightCategories)dalDrones[i].MaxWeight };
+                listDrone.Add(droneToList);
+            }
+            foreach (DO.Parcel parcel in dal.ListParcel(i => true))
+            {
+                if (parcel.Delivered == null && parcel.DroneId != 0)
                 {
-                    DroneToList droneToList = new DroneToList { Id = dalDrones[i].Id, Model = dalDrones[i].Model, MaxWeight = (WeightCategories)dalDrones[i].MaxWeight };
-                    listDrone.Add(droneToList);
-                }
-                foreach (DO.Parcel parcel in dal.ListParcel(i => true))
-                {
-                    if (parcel.Delivered == null && parcel.DroneId != 0)
+                    for (int i = 0; i < listDrone.Count; i++)
                     {
-                        for (int i = 0; i < listDrone.Count; i++)
+                        if (listDrone[i].Id == parcel.DroneId)
                         {
-                            if (listDrone[i].Id == parcel.DroneId)
+                            listDrone[i].ParcelBeingPassedId = parcel.Id;
+                            listDrone[i].Status = DroneStatuses.Delivery;
+                            DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
+                            DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
+                            if (parcel.PickedUp == null)
                             {
-                                listDrone[i].ParcelBeingPassedId = parcel.Id;
-                                listDrone[i].Status = DroneStatuses.Delivery;
-                                DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
-                                DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
-                                if (parcel.PickedUp == null)
+                                DO.Station stationCloset = GetClosestCustomer(customerSender);
+                                Location locationUpdate = new Location();
+                                locationUpdate.Lattitude = stationCloset.Lattitude;
+                                locationUpdate.Longitude = stationCloset.Longitude;
+                                listDrone[i].Location = locationUpdate;
+                            }
+                            else
+                            {
+                                if (parcel.Delivered == null)
                                 {
-                                    DO.Station stationCloset = GetClosestCustomer(customerSender);
                                     Location locationUpdate = new Location();
-                                    locationUpdate.Lattitude = stationCloset.Lattitude;
-                                    locationUpdate.Longitude = stationCloset.Longitude;
+                                    locationUpdate.Lattitude = customerSender.Lattitude;
+                                    locationUpdate.Longitude = customerSender.Longitude;
                                     listDrone[i].Location = locationUpdate;
                                 }
-                                else
-                                {
-                                    if (parcel.Delivered == null)
-                                    {
-                                        Location locationUpdate = new Location();
-                                        locationUpdate.Lattitude = customerSender.Lattitude;
-                                        locationUpdate.Longitude = customerSender.Longitude;
-                                        listDrone[i].Location = locationUpdate;
-                                    }
-                                }
-                                listDrone[i].Battery =
-                                    R.Next(
-                                        (int)GetMinimumBatteryToShip(listDrone[i], customerSender, customerTarget,
-                                            parcel.Weight), 100);
                             }
+                            listDrone[i].Battery =
+                                R.Next(
+                                    (int)GetMinimumBatteryToShip(listDrone[i], customerSender, customerTarget,
+                                        parcel.Weight), 100);
                         }
                     }
                 }
-                foreach (DroneToList drone in listDrone)
+            }
+            foreach (DroneToList drone in listDrone)
+            {
+                if (drone.Status != DroneStatuses.Delivery)
                 {
-                    if (drone.Status != DroneStatuses.Delivery)
+                    DO.DroneCharge droneInCharging = dal.ListDroneCharge().FirstOrDefault(d => d.DroneId == drone.Id);
+                    if (droneInCharging.DroneId != 0)
                     {
-                        DO.DroneCharge droneInCharging = dal.ListDroneCharge().FirstOrDefault(d => d.DroneId == drone.Id);
-                        if (droneInCharging.DroneId != 0)
+                        drone.Status = DroneStatuses.Charging;
+                        drone.ParcelBeingPassedId = 0;
+                        Location locationDrone = new Location
+                        { Lattitude = GetListStation().First(s => s.Id == droneInCharging.StationId).location.Lattitude, Longitude = GetListStation().FirstOrDefault(s => s.Id == droneInCharging.StationId).location.Longitude };
+                        drone.Location = locationDrone;
+                        drone.Battery = R.Next(0, 21);
+                    }
+                    else
+                    {
+                        drone.Status = (DroneStatuses)R.Next(1, 3);
+                        drone.ParcelBeingPassedId = 0;
+                        if (drone.Status == DroneStatuses.Charging)
                         {
-                            drone.Status = DroneStatuses.Charging;
-                            drone.ParcelBeingPassedId = 0;
+                            DO.DroneCharge droneCharge = new DO.DroneCharge();
+                            List<DO.Station> stations = dal.ListStationsWithOpenSlots().ToList();
+                            DO.Station station = stations[R.Next(0, stations.Count)];
                             Location locationDrone = new Location
-                            { Lattitude = GetListStation().First(s => s.Id == droneInCharging.StationId).location.Lattitude, Longitude = GetListStation().FirstOrDefault(s => s.Id == droneInCharging.StationId).location.Longitude };
+                            { Lattitude = station.Lattitude, Longitude = station.Longitude };
                             drone.Location = locationDrone;
                             drone.Battery = R.Next(0, 21);
+                            droneCharge.StationId = station.Id;
+                            droneCharge.DroneId = drone.Id;
+                            droneCharge.EntryTime = DateTime.Now;
+                            dal.AddDroneToCharge(droneCharge);
                         }
-                        else
-                        {
-                            drone.Status = (DroneStatuses)R.Next(1, 3);
-                            drone.ParcelBeingPassedId = 0;
-                            if (drone.Status == DroneStatuses.Charging)
-                            {
-                                DO.DroneCharge droneCharge = new DO.DroneCharge();
-                                List<DO.Station> stations = dal.ListStationsWithOpenSlots().ToList();
-                                DO.Station station = stations[R.Next(0, stations.Count)];
-                                Location locationDrone = new Location
-                                { Lattitude = station.Lattitude, Longitude = station.Longitude };
-                                drone.Location = locationDrone;
-                                drone.Battery = R.Next(0, 21);
-                                droneCharge.StationId = station.Id;
-                                droneCharge.DroneId = drone.Id;
-                                droneCharge.EntryTime = DateTime.Now;
-                                dal.AddDroneToCharge(droneCharge);
-                            }
 
-                            if (drone.Status == DroneStatuses.Available)
-                            {
-                                List<DO.Parcel> parcels = dal.ListParcel(i => i.Delivered != null).ToList();
-                                DO.Parcel parcel = parcels.ElementAt(R.Next(0, parcels.Count));
-                                DO.Customer customer = dal.GetCustomer(parcel.TargetId);
-                                Location locationCustomer = new Location { Lattitude = customer.Lattitude, Longitude = customer.Longitude };
-                                drone.Location = locationCustomer;
-                                DO.Station station = GetClosestStation(drone);
-                                double distance = (int)dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude,
-                                    drone.Location.Longitude, customer.Lattitude, customer.Longitude);
-                                drone.Battery = R.Next((int)(distance * AvailbleElec) + 1, 101);
-                            }
+                        if (drone.Status == DroneStatuses.Available)
+                        {
+                            List<DO.Parcel> parcels = dal.ListParcel(i => i.Delivered != null).ToList();
+                            DO.Parcel parcel = parcels.ElementAt(R.Next(0, parcels.Count));
+                            DO.Customer customer = dal.GetCustomer(parcel.TargetId);
+                            Location locationCustomer = new Location { Lattitude = customer.Lattitude, Longitude = customer.Longitude };
+                            drone.Location = locationCustomer;
+                            DO.Station station = GetClosestStation(drone);
+                            double distance = (int)dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude,
+                                drone.Location.Longitude, customer.Lattitude, customer.Longitude);
+                            drone.Battery = R.Next((int)(distance/AvailbleElec) + 1, 101);
                         }
                     }
                 }
-           
-        }
-        public void StartSimulator(int droneId, Action<Drone> func, Func<bool> checkStop)
-        {
-            //Simulator(BlFactory.GetBl(),droneId,func,checkStop);
-        }
+            }
 
-
+        }
 
         /// <summary>
         /// Adding a drone
@@ -146,7 +139,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(DroneToList newDrone, int chargingStationId)
         {
-            lock(dal)
+            lock (dal)
             {
                 DO.Drone temp = new DO.Drone();
                 temp.Id = newDrone.Id;
@@ -189,7 +182,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(DroneToList newDrone)
         {
-            lock(dal)
+            lock (dal)
             {
                 try
                 {
@@ -218,7 +211,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone DroneDisplay(int id)
         {
-            lock(dal)
+            lock (dal)
             {
                 try
                 {
@@ -283,7 +276,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> GetListDrone()
         {
-            lock(dal)
+            lock (dal)
             {
                 List<DroneToList> temp = new List<DroneToList>();
                 foreach (DroneToList drone in listDrone)
@@ -302,18 +295,18 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneToList MakeDroneToList(Drone objDrone)
         {
-                DroneToList droneToList = new DroneToList();
-                droneToList.Id = objDrone.Id;
-                droneToList.Location = objDrone.Location;
-                droneToList.Battery = objDrone.Battery;
-                droneToList.Model = objDrone.Model;
-                droneToList.MaxWeight = objDrone.MaxWeight;
-                droneToList.Status = objDrone.Status;
-                if (objDrone.Status != DroneStatuses.Delivery)
-                    droneToList.ParcelBeingPassedId = 0;
-                else
-                    droneToList.ParcelBeingPassedId = objDrone.ParcelTransfer.Id;
-                return droneToList;
+            DroneToList droneToList = new DroneToList();
+            droneToList.Id = objDrone.Id;
+            droneToList.Location = objDrone.Location;
+            droneToList.Battery = objDrone.Battery;
+            droneToList.Model = objDrone.Model;
+            droneToList.MaxWeight = objDrone.MaxWeight;
+            droneToList.Status = objDrone.Status;
+            if (objDrone.Status != DroneStatuses.Delivery)
+                droneToList.ParcelBeingPassedId = 0;
+            else
+                droneToList.ParcelBeingPassedId = objDrone.ParcelTransfer.Id;
+            return droneToList;
         }
         /// <summary>
         /// Drone delivering the parcel that answers the criterias that were given to us
@@ -322,25 +315,28 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliveryOfParcelByDrone(int droneId)
         {
-            lock(dal)
+            lock (dal)
             {
                 DroneToList drone = listDrone.Find(i => i.Id == droneId);
                 if (drone.Status != DroneStatuses.Delivery)
                 {
                     throw new IllegalActionException("The drone is not in delivery mode");
                 }
+
                 DO.Parcel parcel = dal.GetParcel(drone.ParcelBeingPassedId);
                 DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
                 if (parcel.DroneId == droneId && parcel.PickedUp != null && parcel.Delivered == null)
                 {
+                    listDrone.Remove(drone);
                     double distance = dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,
                         customerTarget.Lattitude, customerTarget.Longitude);
-                    drone.Battery -= distance * dal.GetElectricUsageNumber(parcel.Weight);
+                    drone.Battery -= distance/dal.GetElectricUsageNumber(parcel.Weight);
                     drone.Location.Lattitude = customerTarget.Lattitude;
                     drone.Location.Longitude = customerTarget.Longitude;
                     drone.Status = DroneStatuses.Available;
                     drone.ParcelBeingPassedId = 0;
                     dal.SupplyParcelUpdate(parcel.Id);
+                    listDrone.Add(drone);
                 }
                 else
                 {
@@ -355,7 +351,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ParcelCollectionByDrone(int droneId)
         {
-            lock(dal)
+            lock (dal)
             {
                 DroneToList drone = listDrone.Find(i => i.Id == droneId);
                 if (drone == null)
@@ -372,13 +368,16 @@ namespace BL
                 DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
                 if (parcel.Affiliation != null && parcel.PickedUp == null && parcel.DroneId == drone.Id && drone.Status == DroneStatuses.Delivery)
                 {
+                    listDrone.Remove(drone);
                     double distance = dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,
                         customerSender.Lattitude, customerSender.Longitude);
 
-                    drone.Battery -= distance * dal.GetElectricUsage()[0];
+                    drone.Battery -= distance/dal.GetElectricUsage()[0];
                     drone.Location.Lattitude = customerSender.Lattitude;
                     drone.Location.Longitude = customerSender.Longitude;
+
                     dal.PickupParcelUpdate(parcel.Id);
+                    listDrone.Add(drone);
                 }
                 else
                 {
@@ -393,7 +392,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AffiliateParcelToDrone(int droneId)
         {
-            lock(dal)
+            lock (dal)
             {
                 bool flag = false;
                 DroneToList drone = listDrone.Find(i => i.Id == droneId);
@@ -435,9 +434,11 @@ namespace BL
 
                     if (drone.Battery > minimumBattery)
                     {
+                        listDrone.Remove(drone);
                         drone.Status = DroneStatuses.Delivery;
                         dal.Affiliate(parcel.Id, drone.Id);
                         drone.ParcelBeingPassedId = parcel.Id;
+                        listDrone.Add(drone);
                         flag = true;
                     }
                     parcels.Remove(parcel);
@@ -461,7 +462,7 @@ namespace BL
         /// <returns></returns>
         private double GetMinimumBatteryToShip(DroneToList drone, DO.Customer customerSender, DO.Customer customerTarget, DO.WeightCategories weight)
         {
-            lock(dal)
+            lock (dal)
             {
                 double distance1 = dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,//distance to send
                 customerSender.Lattitude, customerSender.Longitude);
@@ -472,8 +473,8 @@ namespace BL
                 droneInTarget.Location = locationDroneInTarget;
                 double distance3 = dal.GetDistanceFromLatLonInKm(GetClosestStation(droneInTarget).Lattitude,// distance target to closest station
                     GetClosestStation(droneInTarget).Longitude, customerTarget.Lattitude, customerTarget.Longitude);
-                return (distance2 * GetElectricUsageNumber(weight) + distance1 * AvailbleElec +
-                        distance3 * AvailbleElec);
+                return (distance2/GetElectricUsageNumber(weight) + distance1/AvailbleElec +
+                        distance3/AvailbleElec);
             }
         }
         /// <summary>
@@ -483,7 +484,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneFromCharging(int droneId)
         {
-            lock(dal)
+            lock (dal)
             {
                 DateTime? timeOfCharging = null;
                 DroneToList drone = listDrone.Find(i => i.Id == droneId);
@@ -513,7 +514,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendingDroneForCharging(int droneId)
         {
-            lock(dal)
+            lock (dal)
             {
                 DroneToList drone = listDrone.Find(i => i.Id == droneId);
                 if (drone == null)
@@ -538,7 +539,7 @@ namespace BL
                     DO.DroneCharge droneCharge = new()
                     { DroneId = drone.Id, StationId = closestStation.Id, EntryTime = DateTime.Now };
                     dal.AddDroneToCharge(droneCharge);
-                    drone.Battery += distance * dal.GetElectricUsage()[0];
+                    drone.Battery += distance/dal.GetElectricUsage()[0];
                     drone.Location.Lattitude = closestStation.Lattitude;
                     drone.Location.Longitude = closestStation.Longitude;
                     drone.Status = DroneStatuses.Charging;
@@ -579,7 +580,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDrones()
         {
-            lock(dal)
+            lock (dal)
             {
                 List<Drone> temp = new List<Drone>();
                 foreach (DO.Drone drone in dal.ListDrone(i => true))
@@ -617,9 +618,9 @@ namespace BL
             return temp;
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<IGrouping<DroneStatuses,DroneToList>> GroupingStatus()
+        public IEnumerable<IGrouping<DroneStatuses, DroneToList>> GroupingStatus()
         {
-            lock(dal)
+            lock (dal)
             {
                 return listDrone.GroupBy(d => d.Status);
             }
@@ -627,22 +628,152 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<WeightCategories, DroneToList>> GroupingWeight()
         {
-            lock(dal)
+            lock (dal)
             {
                 return listDrone.GroupBy(d => d.MaxWeight);
             }
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2)
         {
-            return dal.GetDistanceFromLatLonInKm(lat1, lon1, lat2, lon2);
+            lock(dal)
+            { return dal.GetDistanceFromLatLonInKm(lat1, lon1, lat2, lon2); }
+           
         }
         public void StartSimulator(int id, Action update, Func<bool> checkStop) => new Simulator(this, id, update, checkStop);
-        public double RequiredBattery(int id, DroneToList drone)
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public double RequiredBattery(int id, Drone drone)
         {
-            DO.Parcel parcel= dal.ListParcel(p => p.Id == id).FirstOrDefault();
-            DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
-            DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
-            return GetMinimumBatteryToShip(drone, customerSender, customerTarget, parcel.Weight);
+            lock(dal)
+            {
+                DO.Parcel parcel = dal.ListParcel(p => p.Id == id).FirstOrDefault();
+                DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
+                DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
+                DroneToList droneToList = MakeDroneToList(drone);
+                return GetMinimumBatteryToShip(droneToList, customerSender, customerTarget, parcel.Weight);
+            }
         }
-    }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public List<double> GetElectricUsage() 
+        {
+            lock (dal) { return dal.GetElectricUsage(); }
+            }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void updateDrone(int droneId, int timerCheck)
+        {
+            lock (dal)
+            {
+                DroneToList drone = listDrone.Find(i => i.Id == droneId);
+                Station stationId = GetListStation().FirstOrDefault(s => s.location.Lattitude == drone.Location.Lattitude);
+                dal.ReleaseDroneFromCharger(droneId);
+                listDrone.Remove(drone);
+                drone.Battery += (timerCheck / 1000.0) * GetElectricUsage()[4];
+                DO.DroneCharge droneCharge = new()
+                { DroneId = drone.Id, StationId = stationId.Id, EntryTime = DateTime.Now };
+                dal.AddDroneToCharge(droneCharge);
+                listDrone.Add(drone);
+            }
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void updateCollectionByDron(int droneId)
+        {
+            lock(dal)
+            {
+                DroneToList drone = listDrone.Find(i => i.Id == droneId);
+                DO.Parcel parcel = dal.GetParcel(drone.ParcelBeingPassedId);
+                DO.Customer customerSender = dal.GetCustomer(parcel.SenderId);
+                if (parcel.Affiliation != null && parcel.PickedUp == null && parcel.DroneId == drone.Id && drone.Status == DroneStatuses.Delivery)
+                {
+                    dal.PickupParcelUpdate(parcel.Id);
+                }
+                else
+                {
+                    throw new IllegalActionException("The drone is not  not associated with this parcel");
+                }
+            }
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeliveryByDron(int droneId)
+        {
+            lock (dal)
+            {
+                DroneToList drone = listDrone.Find(i => i.Id == droneId);
+                if (drone.Status != DroneStatuses.Delivery)
+                {
+                    throw new IllegalActionException("The drone is not in delivery mode");
+                }
+                DO.Parcel parcel = dal.GetParcel(drone.ParcelBeingPassedId);
+                DO.Customer customerTarget = dal.GetCustomer(parcel.TargetId);
+                if (parcel.DroneId == droneId && parcel.PickedUp != null && parcel.Delivered == null)
+                {
+                    listDrone.Remove(drone);
+                    double distance = dal.GetDistanceFromLatLonInKm(drone.Location.Lattitude, drone.Location.Longitude,
+                        customerTarget.Lattitude, customerTarget.Longitude);
+                    drone.Status = DroneStatuses.Available;
+                    drone.ParcelBeingPassedId = 0;
+                    dal.SupplyParcelUpdate(parcel.Id);
+                    listDrone.Add(drone);
+                }
+            }
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void updateReleaseDrone(int droneId)
+        {
+            lock(dal)
+            {
+                DroneToList drone = listDrone.Find(i => i.Id == droneId);
+                if (drone == null)
+                {
+                    throw new ItemNotFoundException(droneId, "Enter an existing drone number in the system");
+                }
+                if (drone.Status != DroneStatuses.Charging)
+                {
+                    throw new IllegalActionException("The drone is not charging");
+                }
+                listDrone.Remove(drone);
+                dal.ReleaseDroneFromCharger(droneId);
+                drone.Status = DroneStatuses.Available;
+                if (drone.Battery > 100)
+                {
+                    drone.Battery = 100;
+                }
+                listDrone.Add(drone);
+            }
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void Affiliate(int id, int parcelId)
+        {
+            lock (dal)
+            {
+                bool flag = false;
+                DroneToList drone = listDrone.Find(i => i.Id == id);
+                if (drone == null)
+                {
+                    throw new ItemNotFoundException(id, "Enter an existing skimmer number in the system");
+                }
+                if (drone.Status == DroneStatuses.Charging || drone.Status == DroneStatuses.Delivery)
+                {
+                    throw new IllegalActionException("The drone is in charge / delivery mode");
+                }
+
+                Parcel parcel = GetListParcel().FirstOrDefault(p => p.Id == parcelId);
+                DO.Customer customerSender = dal.GetCustomer(parcel.Sender.Id);
+                DO.Customer customerTarget = dal.GetCustomer(parcel.Target.Id);
+                double minimumBattery =
+                    GetMinimumBatteryToShip(drone, customerSender, customerTarget, (DO.WeightCategories)parcel.Weight);
+
+                if (drone.Battery > minimumBattery)
+                {
+                    listDrone.Remove(drone);
+                    dal.Affiliate(parcel.Id, drone.Id);
+                    drone.Status = DroneStatuses.Delivery;
+                    drone.ParcelBeingPassedId = parcel.Id;
+                    listDrone.Add(drone);
+
+                }
+            }
+        
+        }
+    }   
+        
 }

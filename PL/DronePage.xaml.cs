@@ -26,9 +26,11 @@ namespace PL
         BlApi.IBL bl;
         BO.Drone selected = new BO.Drone();
         BO.Drone droneSelected = new BO.Drone();
-        BackgroundWorker worker;
-        private void updateDrone() => worker.ReportProgress(0);
-        private bool checkStop() => worker.CancellationPending;
+       
+        bool simulatorIsActive = false;
+        public BackgroundWorker SimulatorWorker = new BackgroundWorker();
+        public Action Invoke;
+       
         /// <summary>
         /// constructor for add drone  window
         /// </summary>
@@ -40,6 +42,8 @@ namespace PL
             bl = BlApi.BlFactory.GetBl();
             changeModelButton.Visibility = Visibility.Hidden;
             labelTextBoxNewModel.Visibility = Visibility.Hidden;
+            WeightTextBox.Visibility = Visibility.Collapsed;
+            simulator.Visibility = Visibility.Collapsed;
             label_id.Content = "Enter ID Number:";
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             chargeStationId.ItemsSource = from BO.Station s in bl.GetListStation()
@@ -81,14 +85,20 @@ namespace PL
             Delivery.Content = "Status:";
             TextBoxLattitude.FontSize = 10;
             Lattitude.Content = "Location: ";
-            selected = drone;           
+            selected = drone;
             droneSelected = bl.DroneDisplay(selected.Id);
             mainDrone.DataContext = droneSelected;
             TextBoxDelivery.Text = selected.Status.ToString();
-            ListParcelTransfer.Items.Add(droneSelected.ParcelTransfer);
-            if (droneSelected.ParcelTransfer.Id==0)
+            WeightTextBox.Visibility = Visibility.Visible;
+            if (droneSelected.ParcelTransfer.Id == 0)
             {
-                ListParcelTransfer.Visibility = Visibility.Hidden; 
+                ListParcelTransfer.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                List<ParcelTransfer> parcelT = new();
+                parcelT.Add(droneSelected.ParcelTransfer);
+                ListParcelTransfer.DataContext = parcelT;
             }
             TextBox_id.IsEnabled = false;
             switch (droneSelected.Status)
@@ -121,8 +131,6 @@ namespace PL
                     }
                     delivery.Visibility = Visibility.Hidden;
                     break;
-                default:
-                    break;
             }
         }
         /// <summary>
@@ -132,15 +140,15 @@ namespace PL
         /// <param name="e"></param>
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
         /// <summary>
         /// closing the current window
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-      
-       
+
+
         /// <summary>
         /// model of drone has been entered
         /// </summary>
@@ -180,10 +188,10 @@ namespace PL
         {
         }
 
-       
+
         private void allDeliveryButtonButton_Click(object sender, RoutedEventArgs e)
         {
-    
+
         }
 
         private void sendOrRelease_Click(object sender, RoutedEventArgs e)
@@ -193,7 +201,7 @@ namespace PL
 
         private void OpenParcelTransfer(object sender, MouseButtonEventArgs e)
         {
-           
+
         }
 
         private void Back_Button_Click(object sender, RoutedEventArgs e)
@@ -203,27 +211,97 @@ namespace PL
 
         private void Simulator_Click(object sender, RoutedEventArgs e)
         {
-            worker = new()
-            { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
-            worker.DoWork += (sender, args) => bl.StartSimulator((int)args.Argument, updateDrone, checkStop);
-            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-            worker.ProgressChanged += (sender, args) => updateDroneView();
-            worker.RunWorkerAsync(droneSelected.Id);
+
+            if (!simulatorIsActive)
+            {
+                simulatorIsActive = true;
+                resetSimulatorWoker();
+                SimulatorWorker.RunWorkerAsync();
+                simulator.Content= "Manual";
+                changeModelButton.Visibility = Visibility.Collapsed;
+                sendOrReleaseButton.Visibility = Visibility.Collapsed;
+                delivery.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                simulator.Content= "Simulator";
+                simulatorIsActive = false;
+                BO.Drone drone = bl.DroneDisplay(droneSelected.Id);
+                if (drone.Status==DroneStatuses.Delivery)
+                {
+                    changeModelButton.Visibility = Visibility.Visible;
+                    Parcel parcel = bl.GetListParcel().FirstOrDefault(p => p.Id == drone.ParcelTransfer.Id);
+                    if (parcel.PickedUp == null)
+                    {
+                        sendOrReleaseButton.Content = "Package collection";
+                        sendOrReleaseButton.Visibility = Visibility.Visible;
+                    }
+                    else if (parcel.Delivered == null)
+                    {
+                        sendOrReleaseButton.Content = "Package delivery";
+                        sendOrReleaseButton.Visibility = Visibility.Visible;
+                    }
+                    delivery.Visibility = Visibility.Hidden;
+                }
+                else if (drone.Status == DroneStatuses.Charging)
+                {
+                    changeModelButton.Visibility = Visibility.Visible;
+                    sendOrReleaseButton.Content = "Release drone";
+                    sendOrReleaseButton.Visibility = Visibility.Visible;
+                    delivery.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    changeModelButton.Visibility = Visibility.Visible;
+                    sendOrReleaseButton.Content = "Release drone";
+                    sendOrReleaseButton.Visibility = Visibility.Visible;
+                    delivery.Visibility = Visibility.Hidden;
+                }       
+            }
+        }
+        private void resetSimulatorWoker()
+        {
+            Invoke += InvokeMainThread;
+            SimulatorWorker.WorkerReportsProgress = true;
+            SimulatorWorker.WorkerSupportsCancellation = true;
+            SimulatorWorker.ProgressChanged += refresh;
+            SimulatorWorker.DoWork += (s, e) =>
+            {
+                bl.StartSimulator(droneSelected.Id, Invoke, ToCancel);
+            };
         }
 
-        private void updateDroneView()
+        private bool ToCancel()
         {
-            //mainDrone.DataContext = bl.DroneDisplay(droneSelected.Id);
-            Drone drone = bl.DroneDisplay(droneSelected.Id);
-            TextBoxDelivery.Text = drone.Status.ToString();
-           // Battrey.Value = (int)drone.Battery;
-            mainDrone.DataContext = drone;
+            return !simulatorIsActive;
+        }
+        private void refresh(object sender, ProgressChangedEventArgs e)
+        {
+            try
+            {
+                BO.Drone drone = bl.DroneDisplay(droneSelected.Id);
+                if (drone.ParcelTransfer.Id == 0)
+                {
+                    ListParcelTransfer.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    List<ParcelTransfer> parcelT = new();
+                    parcelT.Add(drone.ParcelTransfer);
+                    ListParcelTransfer.DataContext = parcelT;
+                }
+                this.Title = drone.Status.ToString();
+                mainDrone.DataContext = drone;
+            }
+            catch (BO.ItemNotFoundException ex)
+            {
+                MessageBox.Show("Drone has crashed due to low battery");
+            }
         }
 
-        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void InvokeMainThread()
         {
-            //לבדוק בדיוק מה צריך לעשות פה, יאיר עשה משהו שקשור לMODEL
-            
+            SimulatorWorker.ReportProgress(1);
         }
     }
 }
