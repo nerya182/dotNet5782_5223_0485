@@ -25,4 +25,9 @@
     <StationId>67</StationId>
     <EntryTime>2022-01-11T20:16:08.6503615+02:00</EntryTime>
   </DroneCharge>
+  <DroneCharge>
+    <DroneId>23652</DroneId>
+    <StationId>56</StationId>
+    <EntryTime>2022-01-12T11:49:13.2435872+02:00</EntryTime>
+  </DroneCharge>
 </ArrayOfDroneCharge>

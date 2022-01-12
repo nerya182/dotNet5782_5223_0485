@@ -9,8 +9,8 @@
     <Priority>Regular</Priority>
     <Creating>2022-01-11T20:13:34.3049222+02:00</Creating>
     <Affiliation>2022-01-11T20:16:26.0187344+02:00</Affiliation>
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <PickedUp>2022-01-12T11:47:48.2797312+02:00</PickedUp>
+    <Delivered>2022-01-12T11:48:04.6097404+02:00</Delivered>
   </Parcel>
   <Parcel>
     <Id>2</Id>
@@ -28,13 +28,13 @@
     <Id>3</Id>
     <SenderId>356057570</SenderId>
     <TargetId>597155050</TargetId>
-    <DroneId>0</DroneId>
+    <DroneId>23652</DroneId>
     <Weight>Light</Weight>
     <Priority>Regular</Priority>
     <Creating>2022-01-11T20:13:34.3100674+02:00</Creating>
-    <Affiliation xsi:nil="true" />
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <Affiliation>2022-01-12T11:48:34.7377104+02:00</Affiliation>
+    <PickedUp>2022-01-12T11:48:42.4403698+02:00</PickedUp>
+    <Delivered>2022-01-12T11:48:54.233947+02:00</Delivered>
   </Parcel>
   <Parcel>
     <Id>4</Id>
@@ -69,8 +69,8 @@
     <Priority>Regular</Priority>
     <Creating>2022-01-11T19:13:34.3102462+02:00</Creating>
     <Affiliation>2022-01-11T19:43:34.3102474+02:00</Affiliation>
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <PickedUp>2022-01-12T11:50:02.445886+02:00</PickedUp>
+    <Delivered>2022-01-12T11:50:41.346004+02:00</Delivered>
   </Parcel>
   <Parcel>
     <Id>7</Id>
@@ -94,7 +94,7 @@
     <Creating>2022-01-11T18:13:34.310251+02:00</Creating>
     <Affiliation>2022-01-11T18:43:34.3102514+02:00</Affiliation>
     <PickedUp>2022-01-11T19:13:34.3102518+02:00</PickedUp>
-    <Delivered xsi:nil="true" />
+    <Delivered>2022-01-12T11:50:56.1594412+02:00</Delivered>
   </Parcel>
   <Parcel>
     <Id>9</Id>
