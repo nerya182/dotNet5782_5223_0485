@@ -172,7 +172,7 @@ namespace BlApi
         /// Updating the customer's info
         /// </summary>
         /// <param name="updateCustomer"></param>
-        void UpdateCustomer(Customer updateCustomer);
+        void UpdateCustomer(CustomerToList updateCustomer);
         /// <summary>
         /// Updating the amount of available slots the station has
         /// </summary>

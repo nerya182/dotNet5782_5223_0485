@@ -428,7 +428,7 @@ namespace PL
         private void NewUpdate_Click(object sender, RoutedEventArgs e)
         {
             string str = customerPage.label_TextBoxNew.Content.ToString();
-            BO.Customer updateCustomer = (Customer)managerPage.listCustomers.SelectedItem;
+            BO.CustomerToList updateCustomer = (CustomerToList)managerPage.listCustomers.SelectedItem;
             try
             {
                 if (str == "Insert a new phone")
