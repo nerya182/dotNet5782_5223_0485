@@ -741,7 +741,7 @@ namespace BL
             }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void Affiliate(int id, int parcelId)
+        public void Affiliate(int id, int? parcelId)
         {
             lock (dal)
             {

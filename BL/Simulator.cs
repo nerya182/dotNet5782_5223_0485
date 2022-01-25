@@ -21,7 +21,7 @@ namespace BL
         DroneToList droneToList;
         Parcel Parcel;
         Station stationCharge;
-        int parcelId=0;
+        int? parcelId=null;
         BlApi.IBL bl;
         DalApi.IDal dal;
 
@@ -40,12 +40,20 @@ namespace BL
                 switch(drone.Status)
                 {
                     case DroneStatuses.Available:
-                        parcelId = bl.GetListParcel().Where(p => p?.Affiliation == null
-                                && (WeightCategories)(p.Weight) <= drone.MaxWeight
-                                && bl.RequiredBattery((int)p?.Id, drone) < drone.Battery).OrderByDescending(p => p.Priority).ThenByDescending(p => p.Weight).FirstOrDefault().Id;
+                        Parcel? p = bl.GetListParcel().Where(p => p?.Affiliation == null
+                                  && (WeightCategories)(p.Weight) <= drone.MaxWeight
+                                  && bl.RequiredBattery((int)p?.Id, drone) < drone.Battery).OrderByDescending(p => p.Priority).ThenByDescending(p => p.Weight).FirstOrDefault();
+                        if (p is null)
+                        {
+                            parcelId = 0;
+                        }
+                        else
+                        {
+                            parcelId = p.Id;
+                        }
                         if (parcelId != 0 || drone.Battery > 95)
                         {
-                            try { bl.Affiliate(drone.Id,parcelId); }
+                            try { if(parcelId!=0)bl.Affiliate(drone.Id,parcelId); }
                             catch (BO.IllegalActionException ex)
                             {
                                 updateDrone();

@@ -1,53 +1,63 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfDrone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Drone>
-    <Id>37023</Id>
-    <Model>Pioneer</Model>
+    <Id>82774</Id>
+    <Model>beck</Model>
     <MaxWeight>Medium</MaxWeight>
   </Drone>
   <Drone>
-    <Id>27818</Id>
-    <Model>Snowgoose</Model>
+    <Id>64202</Id>
+    <Model>syma</Model>
     <MaxWeight>Light</MaxWeight>
   </Drone>
   <Drone>
-    <Id>43191</Id>
-    <Model>Hunter</Model>
+    <Id>71484</Id>
+    <Model>bean</Model>
     <MaxWeight>Light</MaxWeight>
   </Drone>
   <Drone>
-    <Id>47583</Id>
-    <Model>bean</Model>
-    <MaxWeight>Medium</MaxWeight>
-  </Drone>
-  <Drone>
-    <Id>23652</Id>
-    <Model>bean</Model>
-    <MaxWeight>Medium</MaxWeight>
-  </Drone>
-  <Drone>
-    <Id>61532</Id>
+    <Id>2722</Id>
     <Model>syma</Model>
     <MaxWeight>Medium</MaxWeight>
   </Drone>
   <Drone>
-    <Id>3557</Id>
-    <Model>Snowgoose</Model>
+    <Id>82682</Id>
+    <Model>Hunter</Model>
+    <MaxWeight>Medium</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>97557</Id>
+    <Model>GNAT</Model>
+    <MaxWeight>Medium</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>8216</Id>
+    <Model>flybird</Model>
     <MaxWeight>Heavy</MaxWeight>
   </Drone>
   <Drone>
-    <Id>50313</Id>
-    <Model>shadow</Model>
+    <Id>36402</Id>
+    <Model>Pioneer</Model>
     <MaxWeight>Heavy</MaxWeight>
   </Drone>
   <Drone>
-    <Id>71388</Id>
-    <Model>Snowgoose</Model>
+    <Id>77870</Id>
+    <Model>worm</Model>
     <MaxWeight>Heavy</MaxWeight>
   </Drone>
   <Drone>
-    <Id>8405</Id>
-    <Model>Hawk</Model>
+    <Id>53787</Id>
+    <Model>mavic</Model>
     <MaxWeight>Heavy</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>226588593</Id>
+    <Model>de2</Model>
+    <MaxWeight>Light</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>208915224</Id>
+    <Model>rre</Model>
+    <MaxWeight>Light</MaxWeight>
   </Drone>
 </ArrayOfDrone>

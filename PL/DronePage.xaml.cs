@@ -289,9 +289,11 @@ namespace PL
                     List<ParcelTransfer> parcelT = new();
                     parcelT.Add(drone.ParcelTransfer);
                     ListParcelTransfer.DataContext = parcelT;
+                    ListParcelTransfer.Visibility = Visibility.Visible;
                 }
                 this.Title = drone.Status.ToString();
                 mainDrone.DataContext = drone;
+                TextBoxDelivery.Text = drone.Status.ToString();
             }
             catch (BO.ItemNotFoundException ex)
             {

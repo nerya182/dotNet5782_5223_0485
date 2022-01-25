@@ -47,7 +47,7 @@ namespace BlApi
         /// <returns>IEnumerable of stations</returns>
         IEnumerable<Station> GetListStation();
         IEnumerable<DroneToList> GetByStatus(IEnumerable itemsSource, DroneStatuses selectedStatus);
-        void Affiliate(int id, int parcelId);
+        void Affiliate(int id, int? parcelId);
 
         /// <summary>
         /// Returning Drone according to ID in order to be displayed
